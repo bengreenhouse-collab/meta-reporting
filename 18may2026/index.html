@@ -254,11 +254,31 @@ td{padding:7px 8px;vertical-align:middle}
 </div>
 
 <div id="tab-flags" class="country-section">
-  <div class="section-hd" style="margin-bottom:8px"><h2>Weekly Flags</h2></div>
-  <div style="color:#64748b;font-size:11px;margin-bottom:16px">Auto-generated each week from the data. No repeats across reports.</div>
-  <div id="auto-flags"></div>
-  <div class="flag-card info" style="margin-top:16px">
-    <div class="flag-title">Top scale priorities — best ROAS this week</div>
+  <div class="section-hd" style="margin-bottom:16px"><h2>Flags &amp; Context</h2></div>
+  <div class="flag-card crit">
+    <div class="flag-title">CRITICAL: Solar Panel creative (adset 52568731969468)</div>
+    <div class="flag-body">4x House Clearance copy variants running on Solar Panel adset. Remove mis-matched copy, then reactivate.</div>
+  </div>
+  <div class="flag-card crit">
+    <div class="flag-title">CRITICAL: Wrong captions on live ads</div>
+    <div class="flag-body"><ul>
+      <li><strong>Painter &amp; Decorator</strong> — 8 ads showing /gardeners. Fix to /painters-decorators.</li>
+      <li><strong>Air Conditioning</strong> — 2 ads showing /asbestos-removal. Fix to /air-conditioning.</li>
+    </ul></div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">Revenue attribution lag — don't panic-pause long-cycle categories</div>
+    <div class="flag-body">Revenue is attributed to click date not booking date. Week of Apr 13 will understate revenue ~20–30% for construction/reno categories. Wait 3–5 days before acting on weak ROAS in: Bathroom Install, Landscaping, Loft Conversion, Painting &amp; Decoration.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">Structural response lag — apply a looser ROAS threshold here</div>
+    <div class="flag-body"><ul>
+      <li><strong>High lag</strong>: Personal Trainers, Wedding Photography, Event &amp; Party Planners, Residential Interior Design</li>
+      <li><strong>Drift lag</strong>: Painting &amp; Decoration, Bathroom Install, Home &amp; Domiciliary Care</li>
+    </ul></div>
+  </div>
+  <div class="flag-card info">
+    <div class="flag-title">Top scale priorities — safe to increase budget 20–30%</div>
     <div class="flag-body"><ul id="top-scale-list"></ul></div>
   </div>
 </div>
@@ -694,75 +714,105 @@ function buildFlagsTab(){
       '</tr>';
     }).join('')+
     '</tbody></table></div></div>';
+}
 
-  // 🔄 Fatigue Watch: adsets with CTR drops over 3 months (13 weeks)
-  const WEEKS_13_SHORT_LOCAL = ['16Fe','23Fe','2Ma','9Ma','16Ma','23Ma','30Ma','6Ap','13Ap','20Ap','27Ap','4My','11My'];
-  const fatigued=[];
-  ACTIVE_ADSETS.forEach(a=>{
+
+function buildFatigueTab(){
+  const el = document.getElementById('fatigue-content');
+  if(!el) return;
+  // 12 weeks - drop earliest week of the 13-week series
+  const WEEKS_12_SHORT = ['23Fe','2Ma','9Ma','16Ma','23Ma','30Ma','6Ap','13Ap','20Ap','27Ap','4My','11My'];
+  const fatigued = [];
+  ACTIVE_ADSETS.forEach(a => {
     if(!a.ctrs13) return;
-    const ctrs=a.ctrs13.split(',').map(Number);
-    if(ctrs.length<13) return;
-    const nonzero=ctrs.filter(v=>v>0);
-    if(nonzero.length<4) return;
-    if((a.impressions||0)<1000) return;
-    const latest=ctrs[12];
-    if(latest===0) return;
-    const peak=Math.max(...ctrs);
-    if(peak===0) return;
-    const peakIdx=ctrs.indexOf(peak);
-    if(peakIdx>=11) return;  // peak in last 2 weeks isn't fatigue
-    const dropPct=(peak-latest)/peak*100;
-    if(dropPct<35) return;
+    const all = a.ctrs13.split(',').map(Number);
+    if(all.length < 13) return;
+    const ctrs = all.slice(1);  // last 12 weeks
+    const nonzero = ctrs.filter(v => v > 0);
+    if(nonzero.length < 6) return;  // need at least 6 weeks of data
+    if((a.impressions || 0) < 1000) return;
+    const latest = ctrs[11];
+    if(latest === 0) return;
+    const peak = Math.max(...ctrs);
+    if(peak === 0) return;
+    const peakIdx = ctrs.indexOf(peak);
+    if(peakIdx >= 10) return;  // peak in last 2 weeks isn't fatigue
+    // Compute decline: drop from peak
+    const dropPct = (peak - latest) / peak * 100;
+    if(dropPct < 25) return;
+    // Trend slope: linear regression of last 8 weeks (most recent)
+    const last8 = ctrs.slice(-8);
+    let xs = last8.map((_,i) => i), ys = last8;
+    const n = ys.length;
+    const xm = xs.reduce((a,b)=>a+b,0)/n, ym = ys.reduce((a,b)=>a+b,0)/n;
+    let num=0, den=0;
+    for(let k=0;k<n;k++){ num += (xs[k]-xm)*(ys[k]-ym); den += (xs[k]-xm)**2; }
+    const slope = den>0 ? num/den : 0;
+    // Slope normalised: pct decline per week relative to peak
+    const slopePctOfPeak = peak>0 ? (slope/peak)*100 : 0;
+    // Severity score
+    const severity = dropPct - slopePctOfPeak * 4;  // bigger negative slope → higher severity
     fatigued.push({ag:a.ag, cat:a.cat, cty:a.cty, status:a.status,
-                   peak, latest, dropPct, peakIdx, spend:a.spend, ctrs, imps:a.impressions});
+                   peak, latest, dropPct, peakIdx, spend:a.spend, ctrs, imps:a.impressions,
+                   slope, slopePctOfPeak, severity});
   });
-  fatigued.sort((a,b)=>b.dropPct-a.dropPct);
+  fatigued.sort((a,b) => b.severity - a.severity);
 
-  const fatigueHtml = (function(){
-    if(!fatigued.length){
-      return '<div class="flag-card info" style="margin-top:24px"><div class="flag-title">🔄 Fatigue Watch — no flagged adsets this week</div><div class="flag-body" style="color:#94a3b8;font-size:11px">No active adsets dropped ≥35% CTR from peak with sufficient volume.</div></div>';
-    }
-    const cAmber='#f7bf53';
-    const tdSt='padding:6px 10px;font-size:12px';
-    return '<div class="flag-card" style="background:rgba(247,191,83,.08);border:1px solid rgba(247,191,83,.3);margin-top:24px">'+
-      '<div class="flag-title" style="color:'+cAmber+'">🔄 Fatigue Watch — '+fatigued.length+' adsets need creative refresh</div>'+
-      '<div class="flag-body"><div style="color:#94a3b8;font-size:11px;margin-bottom:10px">Active adsets with ≥35% CTR drop from 13-week (3-month) peak · ≥4 weeks active · ≥1,000 impressions last week. Sorted by drop severity.</div>'+
-      '<table style="width:100%;border-collapse:collapse">'+
-      '<thead><tr style="color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.06)">'+
-        '<th style="text-align:left;padding:6px 10px">Adset · Category</th>'+
-        '<th style="text-align:right;padding:6px 10px">Peak CTR</th>'+
-        '<th style="text-align:right;padding:6px 10px">Now</th>'+
-        '<th style="text-align:right;padding:6px 10px">Drop</th>'+
-        '<th style="text-align:right;padding:6px 10px">Spend (wk)</th>'+
-        '<th style="text-align:left;padding:6px 10px">CTR trend (8wk)</th>'+
-      '</tr></thead><tbody>'+
-      fatigued.map(f=>{
-        const mk=f.cty.includes('Kingdom')?'🇬🇧':f.cty.includes('States')?'🇺🇸':f.cty.includes('Ireland')?'🇮🇪':f.cty.includes('Deutschland')?'🇩🇪':f.cty.includes('France')?'🇫🇷':f.cty.includes('South Africa')?'🇿🇦':'🇨🇦';
-        const peakLbl=WEEKS_13_SHORT_LOCAL[f.peakIdx]||'';
-        const dropCol=f.dropPct>=60?'#ef4444':f.dropPct>=45?'#f97316':'#f7bf53';
-        // 13-week mini CTR sparkline (wider to accommodate)
-        const maxV=Math.max(...f.ctrs,0.01);
-        const spark='<div style="display:flex;align-items:flex-end;gap:2px;height:24px;width:170px">'+
-          f.ctrs.map(v=>{
-            if(v<=0) return '<div style="flex:1;height:2px;background:rgba(255,255,255,.06);align-self:flex-end;border-radius:1px"></div>';
-            const h=Math.max(3,Math.round(v/maxV*24));
-            return '<div style="flex:1;height:'+h+'px;background:'+cAmber+';border-radius:2px 2px 0 0;opacity:.85"></div>';
-          }).join('')+'</div>';
-        return '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'+
-          '<td style="'+tdSt+';color:#e2e8f0;max-width:340px"><div style="display:flex;flex-direction:column">'+
-            '<span style="font-weight:600" title="'+f.ag+'">'+mk+' '+(f.ag.length>55?f.ag.slice(0,52)+'…':f.ag)+'</span>'+
-            '<span style="color:#64748b;font-size:10px">'+f.cat+'</span>'+
-          '</div></td>'+
-          '<td style="'+tdSt+';text-align:right;color:#10b981">'+f.peak.toFixed(2)+'% <span style="color:#475569;font-size:10px">('+peakLbl+')</span></td>'+
-          '<td style="'+tdSt+';text-align:right;color:'+dropCol+'">'+f.latest.toFixed(2)+'%</td>'+
-          '<td style="'+tdSt+';text-align:right;color:'+dropCol+';font-weight:700">−'+Math.round(f.dropPct)+'%</td>'+
-          '<td style="'+tdSt+';text-align:right;color:#60a5fa">£'+Math.round(f.spend).toLocaleString()+'</td>'+
-          '<td style="'+tdSt+'">'+spark+'</td>'+
-        '</tr>';
-      }).join('')+
-      '</tbody></table></div></div>';
-  })();
-  el.innerHTML += fatigueHtml;
+  if(!fatigued.length){
+    el.innerHTML = '<div class="flag-card info"><div class="flag-title">No fatigued adsets detected</div><div class="flag-body" style="color:#94a3b8;font-size:11px">No active adsets show clear CTR decline over the 12-week window.</div></div>';
+    return;
+  }
+
+  const cAmber = '#f7bf53';
+  const tdSt = 'padding:10px 12px;font-size:13px';
+  el.innerHTML =
+    '<div style="margin-bottom:20px">'+
+      '<h2 style="margin:0 0 4px;color:#e2e8f0">🔄 Ad Fatigue Watch — 12 week period</h2>'+
+      '<p style="color:#94a3b8;font-size:12px;margin:0">Active adsets in clear CTR decline. ≥25% drop from 12-week peak + downward slope over last 8 weeks. ≥1,000 impressions latest week. ≥6 weeks of data. Sorted by severity.</p>'+
+    '</div>'+
+    '<div style="background:rgba(247,191,83,.05);border:1px solid rgba(247,191,83,.2);border-radius:8px;overflow:hidden">'+
+    '<table style="width:100%;border-collapse:collapse">'+
+    '<thead><tr style="color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)">'+
+      '<th style="text-align:left;padding:10px 12px">Adset · Category · Market</th>'+
+      '<th style="text-align:right;padding:10px 12px">Peak CTR</th>'+
+      '<th style="text-align:right;padding:10px 12px">Latest CTR</th>'+
+      '<th style="text-align:right;padding:10px 12px">Drop from peak</th>'+
+      '<th style="text-align:right;padding:10px 12px">Trend slope</th>'+
+      '<th style="text-align:right;padding:10px 12px">Spend (latest wk)</th>'+
+      '<th style="text-align:left;padding:10px 12px">CTR trend (12 wk)</th>'+
+    '</tr></thead><tbody>'+
+    fatigued.map(f => {
+      const mk = f.cty.includes('Kingdom') ? '🇬🇧' : f.cty.includes('States') ? '🇺🇸' :
+                 f.cty.includes('Ireland') ? '🇮🇪' : f.cty.includes('Deutschland') ? '🇩🇪' :
+                 f.cty.includes('France') ? '🇫🇷' : f.cty.includes('South Africa') ? '🇿🇦' : '🇨🇦';
+      const peakLbl = WEEKS_12_SHORT[f.peakIdx] || '';
+      const dropCol = f.dropPct >= 60 ? '#ef4444' : f.dropPct >= 45 ? '#f97316' : '#f7bf53';
+      const slopeStr = (f.slopePctOfPeak >= 0 ? '+' : '') + f.slopePctOfPeak.toFixed(1) + '%/wk';
+      const slopeCol = f.slopePctOfPeak <= -3 ? '#ef4444' : f.slopePctOfPeak <= -1 ? '#f97316' : '#94a3b8';
+      const maxV = Math.max(...f.ctrs, 0.01);
+      const spark = '<div style="display:flex;align-items:flex-end;gap:2px;height:32px;width:200px">' +
+        f.ctrs.map((v,i) => {
+          if(v <= 0) return '<div style="flex:1;height:2px;background:rgba(255,255,255,.06);align-self:flex-end;border-radius:1px"></div>';
+          const h = Math.max(4, Math.round(v / maxV * 32));
+          const isLatest = i === f.ctrs.length - 1;
+          const isPeakBar = i === f.peakIdx;
+          const col = isPeakBar ? '#10b981' : isLatest ? dropCol : cAmber;
+          return '<div style="flex:1;height:'+h+'px;background:'+col+';border-radius:2px 2px 0 0;opacity:.9"></div>';
+        }).join('') + '</div>';
+      return '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'+
+        '<td style="'+tdSt+';color:#e2e8f0;max-width:380px"><div style="display:flex;flex-direction:column">'+
+          '<span style="font-weight:600" title="'+f.ag+'">'+mk+' '+(f.ag.length>60 ? f.ag.slice(0,57)+'…' : f.ag)+'</span>'+
+          '<span style="color:#64748b;font-size:10px">'+f.cat+' · '+f.status+'</span>'+
+        '</div></td>'+
+        '<td style="'+tdSt+';text-align:right;color:#10b981">'+f.peak.toFixed(2)+'% <span style="color:#475569;font-size:10px">('+peakLbl+')</span></td>'+
+        '<td style="'+tdSt+';text-align:right;color:'+dropCol+'">'+f.latest.toFixed(2)+'%</td>'+
+        '<td style="'+tdSt+';text-align:right;color:'+dropCol+';font-weight:700">−'+Math.round(f.dropPct)+'%</td>'+
+        '<td style="'+tdSt+';text-align:right;color:'+slopeCol+'">'+slopeStr+'</td>'+
+        '<td style="'+tdSt+';text-align:right;color:#60a5fa">£'+Math.round(f.spend).toLocaleString()+'</td>'+
+        '<td style="'+tdSt+'">'+spark+'</td>'+
+      '</tr>';
+    }).join('')+
+    '</tbody></table></div>';
 }
 
 function init(){
@@ -794,6 +844,7 @@ function init(){
   buildOverviewTab();
   buildGrowthTab();
   buildFlagsTab();
+  buildFatigueTab();
   const topScale=ROAS_POS.slice(0,8);
   document.getElementById('top-scale-list').innerHTML=topScale
     .map(d=>'<li>'+shortAg(d.ag)+' — ROAS '+d.roas+'x, APR +£'+Math.round(d.apr).toLocaleString()+'</li>').join('');
@@ -1630,7 +1681,7 @@ function buildOverviewTab(){
     });
     const arrow=c=>s.col===c?(s.dir===-1?' ↓':' ↑'):'<span style="opacity:.25">↕</span>';
     const th=(label,col,align)=>'<th style="'+thSt+';text-align:'+(align||'right')+';cursor:pointer" onclick="sortWtd(\''+col+'\')">'+label+' '+arrow(col)+'</th>';
-    const tdSt='padding:7px 10px';
+    const tdSt='padding:18px 16px;font-size:36px;font-weight:700;line-height:1.1';
     // Helper to render WoW% inline (same row, right of value)
     const wowInline=(cur, prev, isApr)=>{
       if(prev===0||!isFinite(prev)) return '';
@@ -1656,44 +1707,13 @@ function buildOverviewTab(){
       '<td class="n" style="color:#47BF9C;font-weight:700;'+tdSt+';white-space:nowrap">£'+Math.round(wTR).toLocaleString()+wowInline(wTR,prevTR,false)+'</td>'+
       '<td class="n" style="color:#60a5fa;font-weight:700;'+tdSt+';white-space:nowrap">£'+Math.round(wTS).toLocaleString()+wowInline(wTS,prevTS,false)+'</td>'+
     '</tr>';
-    // Top: big combined-totals cards (title huge → value huge → % small)
-    const aprPct = wowInline(wTA, prevTA, true);
-    const roasPct = wowInline(wTRo, prevTRo, false);
-    const revPct = wowInline(wTR, prevTR, false);
-    const spendPct = wowInline(wTS, prevTS, false);
-    const bigTitle = 'font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;line-height:1';
-    const bigVal = 'font-size:72px;font-weight:800;letter-spacing:-2px;line-height:1.05;margin-top:14px;color:#60a5fa';
-    const cards =
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:24px;padding:28px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px">'+
-        '<div>'+
-          '<div style="'+bigTitle+'">APR</div>'+
-          '<div style="'+bigVal+'">'+(wTA>=0?'+':'−')+'£'+Math.round(Math.abs(wTA)).toLocaleString()+'</div>'+
-          '<div style="margin-top:10px">'+aprPct.replace('margin-left:8px','').replace('font-size:11px','font-size:14px')+'</div>'+
-        '</div>'+
-        '<div>'+
-          '<div style="'+bigTitle+'">ROAS</div>'+
-          '<div style="'+bigVal+'">'+wTRo.toFixed(2)+'x</div>'+
-          '<div style="margin-top:10px">'+roasPct.replace('margin-left:8px','').replace('font-size:11px','font-size:14px')+'</div>'+
-        '</div>'+
-        '<div>'+
-          '<div style="'+bigTitle+'">Revenue</div>'+
-          '<div style="'+bigVal+'">£'+Math.round(wTR).toLocaleString()+'</div>'+
-          '<div style="margin-top:10px">'+revPct.replace('margin-left:8px','').replace('font-size:11px','font-size:14px')+'</div>'+
-        '</div>'+
-        '<div>'+
-          '<div style="'+bigTitle+'">Spend</div>'+
-          '<div style="'+bigVal+'">£'+Math.round(wTS).toLocaleString()+'</div>'+
-          '<div style="margin-top:10px">'+spendPct.replace('margin-left:8px','').replace('font-size:11px','font-size:14px')+'</div>'+
-        '</div>'+
-      '</div>';
+          '</div>';
 
     document.getElementById('ov-wtd').innerHTML=
       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">'+
         '<span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#f7bf53">📅 '+WTD_LABEL+'</span>'+
         '<span style="font-size:10px;color:#475569;font-style:italic">Complete week · vs previous week WoW</span>'+
       '</div>'+
-      cards+
-      '<div style="font-size:10px;color:#64748b;margin-bottom:6px;font-style:italic">Per-market breakdown · click any column header to sort</div>'+
       '<table style="border-collapse:collapse;width:100%">'+
         '<thead><tr>'+
           th('Market','order','left')+
