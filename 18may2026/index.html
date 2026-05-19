@@ -1649,12 +1649,45 @@ function buildOverviewTab(){
       '<td class="n" style="color:#47BF9C;font-weight:700;'+tdSt+';white-space:nowrap">£'+Math.round(wTR).toLocaleString()+wowInline(wTR,prevTR,false)+'</td>'+
       '<td class="n" style="color:#60a5fa;font-weight:700;'+tdSt+';white-space:nowrap">£'+Math.round(wTS).toLocaleString()+wowInline(wTS,prevTS,false)+'</td>'+
     '</tr>';
+    // Top: big combined-totals cards (title huge → value huge → % small)
+    const aprPct = wow(wTA, prevTA, true);
+    const roasPct = wow(wTRo, prevTRo, false);
+    const revPct = wow(wTR, prevTR, false);
+    const spendPct = wow(wTS, prevTS, false);
+    const bigTitle = 'font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;line-height:1';
+    const bigVal = 'font-size:36px;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-top:10px';
+    const cards =
+      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:24px;padding:24px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px">'+
+        '<div>'+
+          '<div style="'+bigTitle+'">APR</div>'+
+          '<div style="'+bigVal+';color:'+(wTA>=0?'#10b981':'#ef4444')+'">'+(wTA>=0?'+':'−')+'£'+Math.round(Math.abs(wTA)).toLocaleString()+'</div>'+
+          '<div style="margin-top:6px">'+aprPct.replace('margin-left:8px','').replace('font-size:11px','font-size:13px')+'</div>'+
+        '</div>'+
+        '<div>'+
+          '<div style="'+bigTitle+'">ROAS</div>'+
+          '<div style="'+bigVal+';color:'+(wTRo>=1.2?'#10b981':wTRo>=0.8?'#f97316':'#ef4444')+'">'+wTRo.toFixed(2)+'x</div>'+
+          '<div style="margin-top:6px">'+roasPct.replace('margin-left:8px','').replace('font-size:11px','font-size:13px')+'</div>'+
+        '</div>'+
+        '<div>'+
+          '<div style="'+bigTitle+'">Revenue</div>'+
+          '<div style="'+bigVal+';color:#47BF9C">£'+Math.round(wTR).toLocaleString()+'</div>'+
+          '<div style="margin-top:6px">'+revPct.replace('margin-left:8px','').replace('font-size:11px','font-size:13px')+'</div>'+
+        '</div>'+
+        '<div>'+
+          '<div style="'+bigTitle+'">Spend</div>'+
+          '<div style="'+bigVal+';color:#60a5fa">£'+Math.round(wTS).toLocaleString()+'</div>'+
+          '<div style="margin-top:6px">'+spendPct.replace('margin-left:8px','').replace('font-size:11px','font-size:13px')+'</div>'+
+        '</div>'+
+      '</div>';
+
     document.getElementById('ov-wtd').innerHTML=
-      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'+
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">'+
         '<span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#f7bf53">📅 '+WTD_LABEL+'</span>'+
-        '<span style="font-size:10px;color:#475569;font-style:italic">Complete week · click any column header to sort</span>'+
+        '<span style="font-size:10px;color:#475569;font-style:italic">Complete week · vs previous week WoW</span>'+
       '</div>'+
-      '<table style="border-collapse:collapse">'+
+      cards+
+      '<div style="font-size:10px;color:#64748b;margin-bottom:6px;font-style:italic">Per-market breakdown · click any column header to sort</div>'+
+      '<table style="border-collapse:collapse;width:100%">'+
         '<thead><tr>'+
           th('Market','order','left')+
           th('APR','apr')+
@@ -1662,7 +1695,7 @@ function buildOverviewTab(){
           th('Revenue','rev')+
           th('Spend','spend')+
         '</tr></thead>'+
-        '<tbody>'+tbody+wtdCombRow+'</tbody>'+
+        '<tbody>'+tbody+'</tbody>'+
       '</table>';
   };
   window.renderWtdTable();
