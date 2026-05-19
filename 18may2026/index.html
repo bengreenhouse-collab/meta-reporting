@@ -108,8 +108,8 @@ td{padding:7px 8px;vertical-align:middle}
 
 <div id="tab-overview" class="country-section active">
   <div class="section">
-    <div class="section-hd"><h2>Combined Overview</h2><span class="badge" style="background:rgba(59,130,246,.15);color:#3b82f6">UK + US + CA + ZA + IE + DE + FR</span></div>
-    <div class="section-sub">All markets · latest complete week w/e 17 May 2026 · 8-week trends: 23 Mar – 11 May</div>
+    <div class="section-hd"><h2>Combined Overview</h2><span class="badge" style="background:rgba(59,130,246,.15);color:#3b82f6">Core: UK + US + CA</span></div>
+    <div class="section-sub">Core markets · latest complete week w/e 17 May 2026 · 8-week trends: 23 Mar – 11 May</div>
     <div id="ov-kpis" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px"></div>
     <div id="ov-wtd" style="margin-top:12px"></div>
   </div>
@@ -1556,8 +1556,11 @@ function ovBigBar(vals, isApr, colorFn, fmtFn){
 
 function buildOverviewTab(){
   // Aggregate 8-week totals across all categories/markets
+  // KPI pills aggregate Core markets only (UK+US+CA) to match top-level dashboard
   const wkS=[0,0,0,0,0,0,0,0], wkR=[0,0,0,0,0,0,0,0];
+  const CORE_KEYS=['Kingdom','States','Canada'];
   CAT_DATA.forEach(d=>{
+    if(!CORE_KEYS.some(k=>d.cty.includes(k))) return;
     arr8(d.spends8).forEach((v,i)=>wkS[i]+=v);
     arr8(d.revs8).forEach((v,i)=>wkR[i]+=v);
   });
@@ -1591,114 +1594,45 @@ function buildOverviewTab(){
 
   // WTD section (current partial week)
   const wtdMkts=[{lbl:'🇬🇧 UK',k:'Kingdom'},{lbl:'🇺🇸 US',k:'States'},{lbl:'🇨🇦 CA',k:'Canada'},{lbl:'🇮🇪 IE',k:'Ireland'},{lbl:'🇩🇪 DE',k:'Deutschland'},{lbl:'🇫🇷 FR',k:'France'},{lbl:'🇿🇦 ZA',k:'South Africa'}];
-  // Build WTD per-market data once with WoW comparison vs week 7 (the previous week)
-  window.__WTD_ROWS = wtdMkts.map((m,i)=>{
+  const wtdMktRows=wtdMkts.map(m=>{
     const wd=WTD_DATA.filter(d=>d.cty.includes(m.k));
-    if(!wd.length) return null;
+    if(!wd.length) return '';
     const ws=wd.reduce((a,d)=>a+d.spend,0), wr=wd.reduce((a,d)=>a+d.rev,0);
-    // Previous week from CAT_DATA: spends8[6] (index 6 = week before latest)
-    const cd=CAT_DATA.filter(d=>d.cty.includes(m.k));
-    const prevS=cd.reduce((a,d)=>a+(arr8(d.spends8)[6]||0),0);
-    const prevR=cd.reduce((a,d)=>a+(arr8(d.revs8)[6]||0),0);
-    const prevA=prevR-prevS, prevRo=prevS>0?prevR/prevS:0;
-    return {lbl:m.lbl, spend:ws, rev:wr, roas:ws>0?wr/ws:0, apr:wr-ws,
-            prevSpend:prevS, prevRev:prevR, prevApr:prevA, prevRoas:prevRo, order:i};
-  }).filter(Boolean);
-  const wTS=WTD_DATA.reduce((a,d)=>a+d.spend,0), wTR=WTD_DATA.reduce((a,d)=>a+d.rev,0);
-  const wTA=wTR-wTS, wTRo=wTS>0?wTR/wTS:0;
-  const prevTS=window.__WTD_ROWS.reduce((a,r)=>a+r.prevSpend,0);
-  const prevTR=window.__WTD_ROWS.reduce((a,r)=>a+r.prevRev,0);
-  const prevTA=prevTR-prevTS, prevTRo=prevTS>0?prevTR/prevTS:0;
-  window.__WTD_SORT = window.__WTD_SORT || {col:'order', dir:1};
-  window.sortWtd = function(col){
-    const s=window.__WTD_SORT;
-    if(s.col===col){ s.dir=-s.dir; } else { s.col=col; s.dir = col==='order' ? 1 : -1; }
-    window.renderWtdTable();
-  };
-  window.renderWtdTable = function(){
-    const s=window.__WTD_SORT;
-    const rows=[...window.__WTD_ROWS].sort((a,b)=>{
-      const av=a[s.col], bv=b[s.col];
-      return (av<bv?-1:av>bv?1:0)*s.dir;
-    });
-    const arrow=c=>s.col===c?(s.dir===-1?' ↓':' ↑'):'<span style="opacity:.25">↕</span>';
-    const th=(label,col,align)=>'<th style="'+thSt+';text-align:'+(align||'right')+';cursor:pointer" onclick="sortWtd(\''+col+'\')">'+label+' '+arrow(col)+'</th>';
-    const tdSt='padding:7px 10px';
-    // Helper to render WoW% inline (same row, right of value)
-    const wowInline=(cur, prev, isApr)=>{
-      if(prev===0||!isFinite(prev)) return '';
-      const delta=(cur-prev)/Math.abs(prev)*100;
-      if(!isFinite(delta)) return '';
-      const c=Math.abs(delta)<1 ? '#475569' : (delta>0?'#10b981':'#ef4444');
-      const sym=delta>=0?'+':'';
-      return '<span style="font-size:11px;color:'+c+';font-weight:600;margin-left:8px">'+sym+delta.toFixed(0)+'%</span>';
-    };
-    const tbody=rows.map(r=>{
-      return '<tr>'+
-        '<td style="padding:7px 12px;font-weight:700;font-size:12px;color:#e2e8f0">'+r.lbl+'</td>'+
-        '<td class="n" style="color:'+(r.apr>=0?'#10b981':'#ef4444')+';'+tdSt+';white-space:nowrap">'+(r.apr>=0?'+':'−')+'£'+Math.round(Math.abs(r.apr)).toLocaleString()+wowInline(r.apr,r.prevApr,true)+'</td>'+
-        '<td class="n" style="color:'+(r.roas>=1.2?'#10b981':r.roas>=0.8?'#f97316':'#ef4444')+';'+tdSt+';white-space:nowrap">'+r.roas.toFixed(2)+'x'+wowInline(r.roas,r.prevRoas,false)+'</td>'+
-        '<td class="n" style="color:#47BF9C;'+tdSt+';white-space:nowrap">£'+Math.round(r.rev).toLocaleString()+wowInline(r.rev,r.prevRev,false)+'</td>'+
-        '<td class="n" style="color:#60a5fa;'+tdSt+';white-space:nowrap">£'+Math.round(r.spend).toLocaleString()+wowInline(r.spend,r.prevSpend,false)+'</td>'+
-      '</tr>';
-    }).join('');
-    const wtdCombRow='<tr style="background:rgba(247,191,83,.07);border-top:1px solid rgba(247,191,83,.2)">'+
-      '<td style="padding:7px 12px;font-weight:800;font-size:12px;color:#f7bf53">Combined</td>'+
-      '<td class="n" style="color:'+(wTA>=0?'#10b981':'#ef4444')+';font-weight:700;'+tdSt+';white-space:nowrap">'+(wTA>=0?'+':'−')+'£'+Math.round(Math.abs(wTA)).toLocaleString()+wowInline(wTA,prevTA,true)+'</td>'+
-      '<td class="n" style="color:'+(wTRo>=1.2?'#10b981':wTRo>=0.8?'#f97316':'#ef4444')+';font-weight:700;'+tdSt+';white-space:nowrap">'+wTRo.toFixed(2)+'x'+wowInline(wTRo,prevTRo,false)+'</td>'+
-      '<td class="n" style="color:#47BF9C;font-weight:700;'+tdSt+';white-space:nowrap">£'+Math.round(wTR).toLocaleString()+wowInline(wTR,prevTR,false)+'</td>'+
-      '<td class="n" style="color:#60a5fa;font-weight:700;'+tdSt+';white-space:nowrap">£'+Math.round(wTS).toLocaleString()+wowInline(wTS,prevTS,false)+'</td>'+
+    const wa=wr-ws, wro=ws>0?wr/ws:0;
+    return '<tr>'+
+      '<td style="padding:7px 12px;font-weight:700;font-size:12px;color:#e2e8f0">'+m.lbl+'</td>'+
+      '<td class="n" style="color:#60a5fa;padding:7px 10px">£'+Math.round(ws).toLocaleString()+'</td>'+
+      '<td class="n" style="color:#47BF9C;padding:7px 10px">£'+Math.round(wr).toLocaleString()+'</td>'+
+      '<td class="n" style="color:'+(wro>=1.2?'#10b981':wro>=0.8?'#f97316':'#ef4444')+';padding:7px 10px">'+wro.toFixed(2)+'x</td>'+
+      '<td class="n" style="color:'+(wa>=0?'#10b981':'#ef4444')+';padding:7px 10px">'+(wa>=0?'+':'−')+'£'+Math.round(Math.abs(wa)).toLocaleString()+'</td>'+
     '</tr>';
-    // Top: big combined-totals cards (title huge → value huge → % small)
-    const aprPct = wow(wTA, prevTA, true);
-    const roasPct = wow(wTRo, prevTRo, false);
-    const revPct = wow(wTR, prevTR, false);
-    const spendPct = wow(wTS, prevTS, false);
-    const bigTitle = 'font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;line-height:1';
-    const bigVal = 'font-size:36px;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-top:10px';
-    const cards =
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:24px;padding:24px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px">'+
-        '<div>'+
-          '<div style="'+bigTitle+'">APR</div>'+
-          '<div style="'+bigVal+';color:'+(wTA>=0?'#10b981':'#ef4444')+'">'+(wTA>=0?'+':'−')+'£'+Math.round(Math.abs(wTA)).toLocaleString()+'</div>'+
-          '<div style="margin-top:6px">'+aprPct.replace('margin-left:8px','').replace('font-size:11px','font-size:13px')+'</div>'+
-        '</div>'+
-        '<div>'+
-          '<div style="'+bigTitle+'">ROAS</div>'+
-          '<div style="'+bigVal+';color:'+(wTRo>=1.2?'#10b981':wTRo>=0.8?'#f97316':'#ef4444')+'">'+wTRo.toFixed(2)+'x</div>'+
-          '<div style="margin-top:6px">'+roasPct.replace('margin-left:8px','').replace('font-size:11px','font-size:13px')+'</div>'+
-        '</div>'+
-        '<div>'+
-          '<div style="'+bigTitle+'">Revenue</div>'+
-          '<div style="'+bigVal+';color:#47BF9C">£'+Math.round(wTR).toLocaleString()+'</div>'+
-          '<div style="margin-top:6px">'+revPct.replace('margin-left:8px','').replace('font-size:11px','font-size:13px')+'</div>'+
-        '</div>'+
-        '<div>'+
-          '<div style="'+bigTitle+'">Spend</div>'+
-          '<div style="'+bigVal+';color:#60a5fa">£'+Math.round(wTS).toLocaleString()+'</div>'+
-          '<div style="margin-top:6px">'+spendPct.replace('margin-left:8px','').replace('font-size:11px','font-size:13px')+'</div>'+
-        '</div>'+
-      '</div>';
-
-    document.getElementById('ov-wtd').innerHTML=
-      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">'+
-        '<span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#f7bf53">📅 '+WTD_LABEL+'</span>'+
-        '<span style="font-size:10px;color:#475569;font-style:italic">Complete week · vs previous week WoW</span>'+
-      '</div>'+
-      cards+
-      '<div style="font-size:10px;color:#64748b;margin-bottom:6px;font-style:italic">Per-market breakdown · click any column header to sort</div>'+
-      '<table style="border-collapse:collapse;width:100%">'+
-        '<thead><tr>'+
-          th('Market','order','left')+
-          th('APR','apr')+
-          th('ROAS','roas')+
-          th('Revenue','rev')+
-          th('Spend','spend')+
-        '</tr></thead>'+
-        '<tbody>'+tbody+'</tbody>'+
-      '</table>';
-  };
-  window.renderWtdTable();
+  }).filter(Boolean).join('');
+  const CORE_KEYS_WTD=['Kingdom','States','Canada'];
+  const _coreWTD=WTD_DATA.filter(d=>CORE_KEYS_WTD.some(k=>d.cty.includes(k)));
+  const wTS=_coreWTD.reduce((a,d)=>a+d.spend,0), wTR=_coreWTD.reduce((a,d)=>a+d.rev,0);
+  const wTA=wTR-wTS, wTRo=wTS>0?wTR/wTS:0;
+  const wtdCombRow='<tr style="background:rgba(247,191,83,.07);border-top:1px solid rgba(247,191,83,.2)">'+
+    '<td style="padding:7px 12px;font-weight:800;font-size:12px;color:#f7bf53">Combined</td>'+
+    '<td class="n" style="color:#60a5fa;font-weight:700;padding:7px 10px">£'+Math.round(wTS).toLocaleString()+'</td>'+
+    '<td class="n" style="color:#47BF9C;font-weight:700;padding:7px 10px">£'+Math.round(wTR).toLocaleString()+'</td>'+
+    '<td class="n" style="color:'+(wTRo>=1.2?'#10b981':wTRo>=0.8?'#f97316':'#ef4444')+';font-weight:700;padding:7px 10px">'+wTRo.toFixed(2)+'x</td>'+
+    '<td class="n" style="color:'+(wTA>=0?'#10b981':'#ef4444')+';font-weight:700;padding:7px 10px">'+(wTA>=0?'+':'−')+'£'+Math.round(Math.abs(wTA)).toLocaleString()+'</td>'+
+  '</tr>';
+  document.getElementById('ov-wtd').innerHTML=
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'+
+      '<span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#f7bf53">📅 '+WTD_LABEL+'</span>'+
+      '<span style="font-size:10px;color:#475569;font-style:italic">Partial week · Mon 4 May through Wed 7 May · spend / revenue / ROAS / APR</span>'+
+    '</div>'+
+    '<table style="border-collapse:collapse">'+
+      '<thead><tr>'+
+        '<th style="'+thSt+';text-align:left">Market</th>'+
+        '<th style="'+thSt+';text-align:right">Spend</th>'+
+        '<th style="'+thSt+';text-align:right">Revenue</th>'+
+        '<th style="'+thSt+';text-align:right">ROAS</th>'+
+        '<th style="'+thSt+';text-align:right">APR</th>'+
+      '</tr></thead>'+
+      '<tbody>'+wtdMktRows+wtdCombRow+'</tbody>'+
+    '</table>';
 
   // 8-week trend — 2×2 big bar chart grid
   const trendMetrics=[
