@@ -1657,10 +1657,10 @@ function buildOverviewTab(){
       '<td class="n" style="color:#60a5fa;font-weight:700;'+tdSt+';white-space:nowrap">£'+Math.round(wTS).toLocaleString()+wowInline(wTS,prevTS,false)+'</td>'+
     '</tr>';
     // Top: big combined-totals cards (title huge → value huge → % small)
-    const aprPct = wow(wTA, prevTA, true);
-    const roasPct = wow(wTRo, prevTRo, false);
-    const revPct = wow(wTR, prevTR, false);
-    const spendPct = wow(wTS, prevTS, false);
+    const aprPct = wowInline(wTA, prevTA, true);
+    const roasPct = wowInline(wTRo, prevTRo, false);
+    const revPct = wowInline(wTR, prevTR, false);
+    const spendPct = wowInline(wTS, prevTS, false);
     const bigTitle = 'font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;line-height:1';
     const bigVal = 'font-size:72px;font-weight:800;letter-spacing:-2px;line-height:1.05;margin-top:14px;color:#60a5fa';
     const cards =
