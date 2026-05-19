@@ -1831,5 +1831,153 @@ function buildOverviewTab(){
 
 init();
 </script>
+
+<!-- 🎨 Style Controls panel (live size editor) -->
+<style>
+  #style-ctl-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+    background: rgba(96,165,250,.2); border: 1px solid rgba(96,165,250,.5); color: #60a5fa;
+    width: 44px; height: 44px; border-radius: 22px; cursor: pointer; font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s; }
+  #style-ctl-toggle:hover { background: rgba(96,165,250,.35); }
+  #style-ctl-panel { position: fixed; bottom: 75px; right: 20px; z-index: 9999;
+    width: 320px; background: #0d1126; border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px; padding: 16px; display: none; box-shadow: 0 12px 32px rgba(0,0,0,.5);
+    color: #e2e8f0; font-family: -apple-system, sans-serif; }
+  #style-ctl-panel.open { display: block; }
+  #style-ctl-panel h3 { margin: 0 0 12px; font-size: 14px; font-weight: 700; color: #f1f5f9; }
+  #style-ctl-panel .ctl-row { margin-bottom: 12px; }
+  #style-ctl-panel label { display: flex; justify-content: space-between; font-size: 11px;
+    color: #94a3b8; margin-bottom: 4px; }
+  #style-ctl-panel label .val { color: #60a5fa; font-weight: 700; }
+  #style-ctl-panel input[type=range] { width: 100%; accent-color: #60a5fa; }
+  #style-ctl-panel .ctl-actions { display: flex; gap: 8px; margin-top: 12px;
+    padding-top: 12px; border-top: 1px solid rgba(255,255,255,.08); }
+  #style-ctl-panel button { flex: 1; padding: 6px 10px; font-size: 11px;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+    color: #cbd5e1; border-radius: 4px; cursor: pointer; font-family: inherit; }
+  #style-ctl-panel button:hover { background: rgba(255,255,255,.1); }
+  #style-ctl-panel button.primary { background: rgba(96,165,250,.2);
+    border-color: rgba(96,165,250,.4); color: #60a5fa; }
+  #style-ctl-output { font-family: monospace; font-size: 10px;
+    background: rgba(0,0,0,.3); padding: 8px; border-radius: 4px;
+    color: #94a3b8; word-break: break-all; margin-top: 8px; max-height: 80px; overflow-y: auto; }
+</style>
+<button id="style-ctl-toggle" title="Style controls">🎨</button>
+<div id="style-ctl-panel">
+  <h3>🎨 Style Controls (live)</h3>
+  <div class="ctl-row">
+    <label>WTD cell value size <span class="val" id="lbl-wtd-cell">36px</span></label>
+    <input type="range" min="10" max="80" step="1" id="slider-wtd-cell" value="36">
+  </div>
+  <div class="ctl-row">
+    <label>WTD cell padding <span class="val" id="lbl-wtd-pad">18px</span></label>
+    <input type="range" min="4" max="40" step="1" id="slider-wtd-pad" value="18">
+  </div>
+  <div class="ctl-row">
+    <label>WTD WoW % size <span class="val" id="lbl-wtd-pct">11px</span></label>
+    <input type="range" min="8" max="24" step="1" id="slider-wtd-pct" value="11">
+  </div>
+  <div class="ctl-row">
+    <label>Overview KPI value size <span class="val" id="lbl-kpi-val">22px</span></label>
+    <input type="range" min="14" max="60" step="1" id="slider-kpi-val" value="22">
+  </div>
+  <div class="ctl-row">
+    <label>Trend chart title size <span class="val" id="lbl-trend-title">16px</span></label>
+    <input type="range" min="10" max="36" step="1" id="slider-trend-title" value="16">
+  </div>
+  <div class="ctl-row">
+    <label>Trend chart value size <span class="val" id="lbl-trend-val">22px</span></label>
+    <input type="range" min="12" max="48" step="1" id="slider-trend-val" value="22">
+  </div>
+  <div class="ctl-row">
+    <label>All-tables cell font <span class="val" id="lbl-tbl-font">13px</span></label>
+    <input type="range" min="9" max="24" step="1" id="slider-tbl-font" value="13">
+  </div>
+  <div class="ctl-actions">
+    <button onclick="window.__resetStyles()">Reset</button>
+    <button class="primary" onclick="window.__copyStyles()">Copy values</button>
+  </div>
+  <div id="style-ctl-output"></div>
+</div>
+<script>
+(function(){
+  const CONFIG = [
+    {id:'wtd-cell',  selector:'#ov-wtd table tbody td.n',     prop:'font-size', unit:'px', defaultVal:36, key:'wtdCellSize'},
+    {id:'wtd-pad',   selector:'#ov-wtd table tbody td',        prop:'padding',   unit:'px', defaultVal:18, key:'wtdCellPad', formatter:v=>`${v}px ${Math.round(v*0.9)}px`},
+    {id:'wtd-pct',   selector:'#ov-wtd table tbody td span',   prop:'font-size', unit:'px', defaultVal:11, key:'wtdPctSize'},
+    {id:'kpi-val',   selector:'#ov-kpis .stat-pill .num',      prop:'font-size', unit:'px', defaultVal:22, key:'kpiValSize'},
+    {id:'trend-title', selector:'#ov-trend-tbl span[style*="text-transform:uppercase"]', prop:'font-size', unit:'px', defaultVal:16, key:'trendTitleSize'},
+    {id:'trend-val', selector:'#ov-trend-tbl span[style*="font-weight:800"]',  prop:'font-size', unit:'px', defaultVal:22, key:'trendValSize'},
+    {id:'tbl-font',  selector:'#uk-all-tbl, #us-all-tbl, #ca-all-tbl, #za-all-tbl, #ie-all-tbl, #de-all-tbl, #fr-all-tbl',
+                     prop:'font-size', unit:'px', defaultVal:13, key:'tblFontSize'},
+  ];
+  const sheet = document.createElement('style');
+  sheet.id = '__style-controls-overrides';
+  document.head.appendChild(sheet);
+
+  function apply(){
+    const rules = [];
+    CONFIG.forEach(c => {
+      const slider = document.getElementById('slider-'+c.id);
+      const val = parseInt(slider.value, 10);
+      const lbl = document.getElementById('lbl-'+c.id);
+      const formatted = c.formatter ? c.formatter(val) : val + c.unit;
+      lbl.textContent = formatted;
+      const selectors = c.selector.split(',').map(s => s.trim());
+      selectors.forEach(sel => {
+        rules.push(sel + ' { ' + c.prop + ': ' + formatted + ' !important; }');
+      });
+      try { localStorage.setItem('__style_' + c.key, val); } catch(e) {}
+    });
+    sheet.textContent = rules.join('\n');
+    const out = document.getElementById('style-ctl-output');
+    if(out){
+      out.textContent = CONFIG.map(c => {
+        const v = document.getElementById('slider-'+c.id).value;
+        return c.key + ': ' + v + 'px';
+      }).join(' · ');
+    }
+  }
+
+  function init(){
+    CONFIG.forEach(c => {
+      const slider = document.getElementById('slider-'+c.id);
+      if(!slider) return;
+      try {
+        const saved = localStorage.getItem('__style_' + c.key);
+        if(saved !== null) slider.value = saved;
+      } catch(e) {}
+      slider.addEventListener('input', apply);
+    });
+    apply();
+  }
+
+  window.__resetStyles = function(){
+    CONFIG.forEach(c => {
+      const slider = document.getElementById('slider-'+c.id);
+      slider.value = c.defaultVal;
+      try { localStorage.removeItem('__style_' + c.key); } catch(e) {}
+    });
+    apply();
+  };
+
+  window.__copyStyles = function(){
+    const txt = CONFIG.map(c => c.key + '=' + document.getElementById('slider-'+c.id).value).join('  ');
+    try { navigator.clipboard.writeText(txt); alert('Copied:\n' + txt); }
+    catch(e) { prompt('Copy these values:', txt); }
+  };
+
+  document.getElementById('style-ctl-toggle').addEventListener('click', () => {
+    document.getElementById('style-ctl-panel').classList.toggle('open');
+  });
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else { init(); }
+})();
+</script>
+<!-- /style controls -->
+
 </body>
 </html>
