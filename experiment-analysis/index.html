@@ -1,0 +1,3345 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Experiment Analysis Report · Bark Meta</title>
+<style>
+:root { --bg:#0a0d18; --panel:#121731; --card:#171d3d; --line:#262e58;
+        --text:#e6e9f4; --muted:#8b93b8; --accent:#5b8def; --green:#47BF9C;
+        --amber:#F7BF53; --red:#ff6b6b; }
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; background:var(--bg); color:var(--text);
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+header { padding:24px 32px; border-bottom:1px solid var(--line); }
+h1 { font-size:24px; margin:0; }
+h2 { font-size:18px; margin:24px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--line); }
+h3 { font-size:14px; margin:16px 0 8px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; }
+.subhead { color:var(--muted); font-size:13px; margin-top:4px; }
+.tabs { padding:0 32px; border-bottom:1px solid var(--line); display:flex; gap:0; overflow-x:auto; background:var(--panel); }
+.tab-btn { background:none; border:none; color:var(--muted); padding:14px 18px; cursor:pointer; font-size:13px;
+        border-bottom:2px solid transparent; white-space:nowrap; font-family:inherit; }
+.tab-btn:hover { color:var(--text); }
+.tab-btn.active { color:var(--text); border-bottom-color:var(--accent); }
+.tab { display:none; padding:24px 32px; }
+.tab.active { display:block; }
+.row { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-bottom:16px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px; }
+.card .label { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; }
+.card .value { font-size:28px; font-weight:600; margin-top:6px; }
+.card .sub { color:var(--muted); font-size:12px; margin-top:4px; }
+.badge { display:inline-block; font-size:10px; font-weight:600; text-transform:uppercase;
+        padding:2px 8px; border-radius:10px; letter-spacing:0.04em; vertical-align:middle; }
+.badge.meta { background:#1f3a5f; color:#90b8ff; }
+.badge.tableau { background:#2c3d2d; color:#a3d99c; }
+.badge.both { background:#3f3068; color:#c9b4ff; }
+.badge.awaiting { background:#3a2d1a; color:#f0bc7f; }
+.badge.ok { background:#1e3d33; color:#7ed4a8; }
+.badge.warn { background:#3d3417; color:#f0d077; }
+.badge.bad { background:#3d1f1f; color:#ff8a8a; }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+th,td { padding:8px 10px; text-align:left; border-bottom:1px solid var(--line); }
+th { color:var(--muted); font-weight:500; text-transform:uppercase; font-size:10px; letter-spacing:0.05em;
+        background:var(--panel); position:sticky; top:0; cursor:pointer; user-select:none; }
+th:hover { color:var(--text); }
+td.num,th.num { text-align:right; font-variant-numeric:tabular-nums; }
+td.pos { color:var(--green); }
+td.neg { color:var(--red); }
+.note { color:var(--muted); font-size:11px; margin-top:8px; font-style:italic; }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:18px; margin-bottom:16px; }
+.panel-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.panel-title { font-size:15px; font-weight:600; }
+.panel-source { font-size:11px; color:var(--muted); }
+.scroll-x { overflow-x:auto; }
+.bar { display:inline-block; height:8px; background:var(--accent); border-radius:3px; vertical-align:middle; }
+.bar-bg { display:inline-block; height:8px; background:var(--line); border-radius:3px; width:120px; vertical-align:middle; }
+.bar-wrap { display:inline-block; position:relative; width:120px; height:8px; }
+.bar-wrap .bar { position:absolute; left:0; top:0; }
+</style>
+</head><body>
+<header>
+  <h1>Experiment Analysis Report</h1>
+  <div class="subhead">Comprehensive Meta performance audit across the 5-level framework.
+    Sources: Meta Graph API v19.0 + Tableau PPC Adgroup Stats.
+    Period: last 12 weeks ending 20 May 2026.
+    Generated 2026-05-20 15:08 .
+    UK = act_992420150824125 · US = act_3485916144834553.</div>
+</header>
+<nav class="tabs"><button id="btn-overview" class="tab-btn active" onclick="showTab('overview')">Overview · Reconciliation</button><button id="btn-l1" class="tab-btn" onclick="showTab('l1')">L1 · Creative Operations</button><button id="btn-l2" class="tab-btn" onclick="showTab('l2')">L2 · Adset Mechanics</button><button id="btn-l3" class="tab-btn" onclick="showTab('l3')">L3 · Placement & Audience</button><button id="btn-l4" class="tab-btn" onclick="showTab('l4')">L4 · Measurement</button><button id="btn-l5" class="tab-btn" onclick="showTab('l5')">L5 · Strategic</button></nav>
+<main><div id="tab-overview" class="tab active">
+    <h2>Top-line reconciliation — Meta API vs Tableau</h2>
+    <p class="subhead">
+      Every number below is sourced from two systems. Where they agree (±5%), the report
+      is verifiable. Where they drift, the source is named so you can trust nothing blindly.
+      <br>FX: USD→GBP @ 0.79 (assumption — flag in report).
+    </p>
+    <div class="row">
+        <div class="card">
+          <div class="label">UK · 12wk reconciliation</div>
+          <div style="margin-top:8px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;">
+              <span style="color:var(--muted)">Spend</span>
+              <span class="badge bad">-35.6% drift</span>
+            </div>
+            <div style="font-size:18px;margin-top:4px;">
+              Meta £330,362 <span style="color:var(--muted)">vs</span>
+              Tableau £513,379
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;">
+              <span style="color:var(--muted)">Revenue (Meta pixel vs Tableau PPR)</span>
+              <span class="badge warn">-17.1% drift</span>
+            </div>
+            <div style="font-size:18px;margin-top:4px;">
+              Meta £537,841 <span style="color:var(--muted)">vs</span>
+              Tableau £648,868
+            </div>
+          </div>
+          <div class="sub" style="margin-top:8px;">
+            791 adsets matched · 187 Meta-only · 574 Tableau-only
+          </div>
+        </div>
+        <div class="card">
+          <div class="label">US · 12wk reconciliation</div>
+          <div style="margin-top:8px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;">
+              <span style="color:var(--muted)">Spend</span>
+              <span class="badge ok">-3.2% drift</span>
+            </div>
+            <div style="font-size:18px;margin-top:4px;">
+              Meta £373,696 <span style="color:var(--muted)">vs</span>
+              Tableau £386,122
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;">
+              <span style="color:var(--muted)">Revenue (Meta pixel vs Tableau PPR)</span>
+              <span class="badge warn">+11.9% drift</span>
+            </div>
+            <div style="font-size:18px;margin-top:4px;">
+              Meta £581,965 <span style="color:var(--muted)">vs</span>
+              Tableau £520,192
+            </div>
+          </div>
+          <div class="sub" style="margin-top:8px;">
+            921 adsets matched · 176 Meta-only · 225 Tableau-only
+          </div>
+        </div></div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Week × market reconciliation</div>
+        <div class="panel-source"><span class="badge both">Meta + Tableau</span></div>
+      </div>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Week</th>
+          <th class="num">Meta spend</th><th class="num">Tableau spend</th><th class="num">Δ</th>
+          <th class="num">Meta rev (pixel)</th><th class="num">Tableau rev (PPR)</th><th class="num">Δ</th>
+          <th class="num">Matched</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>UK</td><td>2026-02-23</td>
+          <td class="num">£19,735</td>
+          <td class="num">£0</td>
+          <td class="num"><span class="badge ok">+0.0%</span></td>
+          <td class="num">£33,797</td>
+          <td class="num">£0</td>
+          <td class="num">+0.0%</td>
+          <td class="num">0</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-03-02</td>
+          <td class="num">£20,410</td>
+          <td class="num">£54,399</td>
+          <td class="num"><span class="badge bad">-62.5%</span></td>
+          <td class="num">£58,504</td>
+          <td class="num">£69,304</td>
+          <td class="num">-15.6%</td>
+          <td class="num">46</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-03-09</td>
+          <td class="num">£21,060</td>
+          <td class="num">£51,349</td>
+          <td class="num"><span class="badge bad">-59.0%</span></td>
+          <td class="num">£36,077</td>
+          <td class="num">£65,170</td>
+          <td class="num">-44.6%</td>
+          <td class="num">46</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-03-16</td>
+          <td class="num">£22,337</td>
+          <td class="num">£48,919</td>
+          <td class="num"><span class="badge bad">-54.3%</span></td>
+          <td class="num">£38,784</td>
+          <td class="num">£63,632</td>
+          <td class="num">-39.0%</td>
+          <td class="num">46</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-03-23</td>
+          <td class="num">£25,699</td>
+          <td class="num">£61,467</td>
+          <td class="num"><span class="badge bad">-58.2%</span></td>
+          <td class="num">£35,447</td>
+          <td class="num">£70,972</td>
+          <td class="num">-50.1%</td>
+          <td class="num">50</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-03-30</td>
+          <td class="num">£23,358</td>
+          <td class="num">£43,565</td>
+          <td class="num"><span class="badge bad">-46.4%</span></td>
+          <td class="num">£32,407</td>
+          <td class="num">£46,639</td>
+          <td class="num">-30.5%</td>
+          <td class="num">59</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-04-06</td>
+          <td class="num">£29,680</td>
+          <td class="num">£39,111</td>
+          <td class="num"><span class="badge warn">-24.1%</span></td>
+          <td class="num">£44,791</td>
+          <td class="num">£52,774</td>
+          <td class="num">-15.1%</td>
+          <td class="num">63</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-04-13</td>
+          <td class="num">£35,085</td>
+          <td class="num">£52,155</td>
+          <td class="num"><span class="badge bad">-32.7%</span></td>
+          <td class="num">£46,994</td>
+          <td class="num">£61,654</td>
+          <td class="num">-23.8%</td>
+          <td class="num">80</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-04-20</td>
+          <td class="num">£34,298</td>
+          <td class="num">£44,344</td>
+          <td class="num"><span class="badge warn">-22.7%</span></td>
+          <td class="num">£52,005</td>
+          <td class="num">£54,501</td>
+          <td class="num">-4.6%</td>
+          <td class="num">84</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-04-27</td>
+          <td class="num">£32,075</td>
+          <td class="num">£38,395</td>
+          <td class="num"><span class="badge warn">-16.5%</span></td>
+          <td class="num">£50,217</td>
+          <td class="num">£50,705</td>
+          <td class="num">-1.0%</td>
+          <td class="num">82</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-05-04</td>
+          <td class="num">£32,851</td>
+          <td class="num">£38,413</td>
+          <td class="num"><span class="badge warn">-14.5%</span></td>
+          <td class="num">£52,372</td>
+          <td class="num">£54,216</td>
+          <td class="num">-3.4%</td>
+          <td class="num">84</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-05-11</td>
+          <td class="num">£30,904</td>
+          <td class="num">£31,879</td>
+          <td class="num"><span class="badge ok">-3.1%</span></td>
+          <td class="num">£52,097</td>
+          <td class="num">£45,409</td>
+          <td class="num">+14.7%</td>
+          <td class="num">87</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-05-18</td>
+          <td class="num">£2,870</td>
+          <td class="num">£9,383</td>
+          <td class="num"><span class="badge bad">-69.4%</span></td>
+          <td class="num">£4,349</td>
+          <td class="num">£13,892</td>
+          <td class="num">-68.7%</td>
+          <td class="num">64</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-02-23</td>
+          <td class="num">£32,072</td>
+          <td class="num">£0</td>
+          <td class="num"><span class="badge ok">+0.0%</span></td>
+          <td class="num">£49,497</td>
+          <td class="num">£0</td>
+          <td class="num">+0.0%</td>
+          <td class="num">0</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-03-02</td>
+          <td class="num">£32,479</td>
+          <td class="num">£40,927</td>
+          <td class="num"><span class="badge warn">-20.6%</span></td>
+          <td class="num">£78,020</td>
+          <td class="num">£55,062</td>
+          <td class="num">+41.7%</td>
+          <td class="num">75</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-03-09</td>
+          <td class="num">£32,066</td>
+          <td class="num">£41,306</td>
+          <td class="num"><span class="badge warn">-22.4%</span></td>
+          <td class="num">£45,988</td>
+          <td class="num">£52,825</td>
+          <td class="num">-12.9%</td>
+          <td class="num">75</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-03-16</td>
+          <td class="num">£31,406</td>
+          <td class="num">£40,810</td>
+          <td class="num"><span class="badge warn">-23.0%</span></td>
+          <td class="num">£47,189</td>
+          <td class="num">£50,743</td>
+          <td class="num">-7.0%</td>
+          <td class="num">73</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-03-23</td>
+          <td class="num">£30,744</td>
+          <td class="num">£38,722</td>
+          <td class="num"><span class="badge warn">-20.6%</span></td>
+          <td class="num">£44,631</td>
+          <td class="num">£52,377</td>
+          <td class="num">-14.8%</td>
+          <td class="num">74</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-03-30</td>
+          <td class="num">£29,271</td>
+          <td class="num">£33,177</td>
+          <td class="num"><span class="badge warn">-11.8%</span></td>
+          <td class="num">£42,924</td>
+          <td class="num">£41,976</td>
+          <td class="num">+2.3%</td>
+          <td class="num">73</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-04-06</td>
+          <td class="num">£29,757</td>
+          <td class="num">£30,230</td>
+          <td class="num"><span class="badge ok">-1.6%</span></td>
+          <td class="num">£44,302</td>
+          <td class="num">£42,961</td>
+          <td class="num">+3.1%</td>
+          <td class="num">76</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-04-13</td>
+          <td class="num">£31,989</td>
+          <td class="num">£31,827</td>
+          <td class="num"><span class="badge ok">+0.5%</span></td>
+          <td class="num">£44,227</td>
+          <td class="num">£46,259</td>
+          <td class="num">-4.4%</td>
+          <td class="num">78</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-04-20</td>
+          <td class="num">£30,212</td>
+          <td class="num">£30,519</td>
+          <td class="num"><span class="badge ok">-1.0%</span></td>
+          <td class="num">£47,627</td>
+          <td class="num">£41,796</td>
+          <td class="num">+14.0%</td>
+          <td class="num">78</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-04-27</td>
+          <td class="num">£29,822</td>
+          <td class="num">£29,008</td>
+          <td class="num"><span class="badge ok">+2.8%</span></td>
+          <td class="num">£45,702</td>
+          <td class="num">£41,326</td>
+          <td class="num">+10.6%</td>
+          <td class="num">81</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-05-04</td>
+          <td class="num">£30,103</td>
+          <td class="num">£29,017</td>
+          <td class="num"><span class="badge ok">+3.7%</span></td>
+          <td class="num">£43,905</td>
+          <td class="num">£42,008</td>
+          <td class="num">+4.5%</td>
+          <td class="num">82</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-05-11</td>
+          <td class="num">£31,909</td>
+          <td class="num">£31,356</td>
+          <td class="num"><span class="badge ok">+1.8%</span></td>
+          <td class="num">£45,748</td>
+          <td class="num">£41,616</td>
+          <td class="num">+9.9%</td>
+          <td class="num">89</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-05-18</td>
+          <td class="num">£1,866</td>
+          <td class="num">£9,223</td>
+          <td class="num"><span class="badge bad">-79.8%</span></td>
+          <td class="num">£2,205</td>
+          <td class="num">£11,243</td>
+          <td class="num">-80.4%</td>
+          <td class="num">67</td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Top 50 adsets with spend mismatch &gt; 5%</div>
+        <div class="panel-source"><span class="badge both">Meta + Tableau</span></div>
+      </div>
+      <p class="note">If Tableau spend &gt; Meta spend, the adset's destination URL may be miscategorised
+      (Tableau loses /in/{slug}/ → "Unassigned"). If Meta &gt; Tableau, attribution lag or naming change.</p>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Adset</th><th>Week</th>
+          <th class="num">Meta £</th><th class="num">Tableau £</th><th class="num">Δ</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>UK</td><td>1252_Landscaping_L2</td><td>2026-03-30</td><td class="num">£396</td><td class="num">£192</td><td class="num"><span class="badge bad">+106.6%</span></td></tr><tr><td>UK</td><td>1247_Artificial Grass Installation_UK_Static_Basic_3</td><td>2026-04-06</td><td class="num">£265</td><td class="num">£130</td><td class="num"><span class="badge bad">+103.5%</span></td></tr><tr><td>UK</td><td>42_Painting &amp; Decoration_UK_LPV6CONTROL_Static_3_Basic</td><td>2026-04-06</td><td class="num">£261</td><td class="num">£128</td><td class="num"><span class="badge bad">+103.4%</span></td></tr><tr><td>UK</td><td>1212_House Cleaning_UK_Static_AI_Stefano_WTB</td><td>2026-03-23</td><td class="num">£2</td><td class="num">£131</td><td class="num"><span class="badge bad">-98.8%</span></td></tr><tr><td>UK</td><td>1521_Immigration Lawyers_UK_Static_AdFactory_3Styles</td><td>2026-05-11</td><td class="num">£519</td><td class="num">£272</td><td class="num"><span class="badge bad">+91.1%</span></td></tr><tr><td>UK</td><td>1929_Block Paving_UK_Main</td><td>2026-05-18</td><td class="num">£11</td><td class="num">£116</td><td class="num"><span class="badge bad">-90.5%</span></td></tr><tr><td>UK</td><td>1056_Wedding Photography_UK_UGC_Katie_PITS</td><td>2026-05-18</td><td class="num">£14</td><td class="num">£132</td><td class="num"><span class="badge bad">-89.7%</span></td></tr><tr><td>UK</td><td>1247_Artificial Grass Installation_UK_UGC_AdFactory_Batch1</td><td>2026-04-06</td><td class="num">£218</td><td class="num">£115</td><td class="num"><span class="badge bad">+89.1%</span></td></tr><tr><td>US</td><td>1141_Commercial &amp; Office Cleaning_US_Static_AdFactory_Plain_Purchase</td><td>2026-05-18</td><td class="num">£16</td><td class="num">£133</td><td class="num"><span class="badge bad">-87.6%</span></td></tr><tr><td>US</td><td>1638_Limousine Hire_US_Static_BenAIbulk_Tap</td><td>2026-05-18</td><td class="num">£16</td><td class="num">£110</td><td class="num"><span class="badge bad">-85.7%</span></td></tr><tr><td>UK</td><td>42_Painting &amp; Decoration_UK_Static_BenAIBulk_Tap</td><td>2026-05-18</td><td class="num">£15</td><td class="num">£105</td><td class="num"><span class="badge bad">-85.4%</span></td></tr><tr><td>US</td><td>1212_House Cleaning_US_DCO_Video</td><td>2026-05-18</td><td class="num">£23</td><td class="num">£151</td><td class="num"><span class="badge bad">-85.0%</span></td></tr><tr><td>US</td><td>1638_Limousine Hire_US_Static_BenAIbulk_WTB</td><td>2026-05-18</td><td class="num">£35</td><td class="num">£231</td><td class="num"><span class="badge bad">-84.9%</span></td></tr><tr><td>US</td><td>1018_DJ_US_Static_BenAIbulk_WTB</td><td>2026-05-18</td><td class="num">£17</td><td class="num">£112</td><td class="num"><span class="badge bad">-84.6%</span></td></tr><tr><td>US</td><td>995_Photo Booth Hire_US_Static_1_CC – Copy</td><td>2026-05-18</td><td class="num">£38</td><td class="num">£248</td><td class="num"><span class="badge bad">-84.5%</span></td></tr><tr><td>UK</td><td>1148_Kitchen Installation &amp; Remodelling_UK_Static_Basic</td><td>2026-04-06</td><td class="num">£241</td><td class="num">£131</td><td class="num"><span class="badge bad">+84.1%</span></td></tr><tr><td>US</td><td>1521_Immigration Lawyers_LPV2CONTROL_US_Static_PriceList_4</td><td>2026-05-18</td><td class="num">£56</td><td class="num">£345</td><td class="num"><span class="badge bad">-83.9%</span></td></tr><tr><td>US</td><td>1018_DJ_US_Static_BenAIbulk_Tap</td><td>2026-05-18</td><td class="num">£29</td><td class="num">£178</td><td class="num"><span class="badge bad">-83.8%</span></td></tr><tr><td>US</td><td>1638_Limousine Hire_US_Static_Template5_BULK</td><td>2026-05-18</td><td class="num">£18</td><td class="num">£108</td><td class="num"><span class="badge bad">-83.8%</span></td></tr><tr><td>UK</td><td>1929_Block Paving_UK_Static_AdFactory_AllTemplates_1 – Copy</td><td>2026-05-18</td><td class="num">£22</td><td class="num">£136</td><td class="num"><span class="badge bad">-83.5%</span></td></tr><tr><td>US</td><td>171_Catering_US_Static_BenAIbulk_Matt_1</td><td>2026-05-18</td><td class="num">£19</td><td class="num">£114</td><td class="num"><span class="badge bad">-83.3%</span></td></tr><tr><td>US</td><td>1056_Wedding Photography_US_Static_CC_1</td><td>2026-05-18</td><td class="num">£33</td><td class="num">£196</td><td class="num"><span class="badge bad">-83.2%</span></td></tr><tr><td>UK</td><td>1252_Landscaping_UK_UGC_Katie_PITS</td><td>2026-05-18</td><td class="num">£20</td><td class="num">£120</td><td class="num"><span class="badge bad">-83.2%</span></td></tr><tr><td>US</td><td>1556_Dog Training_US_Static_BenAIbulk_Matt</td><td>2026-05-18</td><td class="num">£45</td><td class="num">£269</td><td class="num"><span class="badge bad">-83.1%</span></td></tr><tr><td>US</td><td>1018_DJ_US_Static_Basic_3 Weekend -80%</td><td>2026-05-18</td><td class="num">£21</td><td class="num">£124</td><td class="num"><span class="badge bad">-83.0%</span></td></tr><tr><td>US</td><td>1548_Private Investigators_US_Mixed_CLIP_1</td><td>2026-05-18</td><td class="num">£27</td><td class="num">£160</td><td class="num"><span class="badge bad">-83.0%</span></td></tr><tr><td>US</td><td>171_Catering_US_Static_BenAIbulk_WTB</td><td>2026-05-18</td><td class="num">£49</td><td class="num">£286</td><td class="num"><span class="badge bad">-82.9%</span></td></tr><tr><td>US</td><td>1556_Dog Training_US_InHouse_1</td><td>2026-05-18</td><td class="num">£24</td><td class="num">£141</td><td class="num"><span class="badge bad">-82.9%</span></td></tr><tr><td>UK</td><td>1252_Landscaping_UK_Static_BenAIbulk_Tap</td><td>2026-05-18</td><td class="num">£22</td><td class="num">£125</td><td class="num"><span class="badge bad">-82.6%</span></td></tr><tr><td>US</td><td>1556_Dog Training_US_BenAIBulk_WTB_1</td><td>2026-05-18</td><td class="num">£30</td><td class="num">£171</td><td class="num"><span class="badge bad">-82.6%</span></td></tr><tr><td>UK</td><td>1138_Bathroom Install_UK_Static_BenAIbulk_Tap</td><td>2026-05-18</td><td class="num">£27</td><td class="num">£152</td><td class="num"><span class="badge bad">-82.5%</span></td></tr><tr><td>US</td><td>37_Architect Services_US_UGC_3_Inhouse_spin</td><td>2026-05-18</td><td class="num">£56</td><td class="num">£316</td><td class="num"><span class="badge bad">-82.4%</span></td></tr><tr><td>US</td><td>1018_DJ_US_Static_Matt_1</td><td>2026-05-18</td><td class="num">£64</td><td class="num">£359</td><td class="num"><span class="badge bad">-82.3%</span></td></tr><tr><td>UK</td><td>1929_Block Paving_UK_Static_BenAIbulk_WTB Weekend -80%_HV</td><td>2026-05-18</td><td class="num">£24</td><td class="num">£135</td><td class="num"><span class="badge bad">-82.0%</span></td></tr><tr><td>UK</td><td>1670_Home &amp; Domiciliary Care_UK_Static_Claude_EmergencyDraft</td><td>2026-05-18</td><td class="num">£25</td><td class="num">£139</td><td class="num"><span class="badge bad">-81.9%</span></td></tr><tr><td>US</td><td>1521_Immigration Lawyers_US_UGC_Phase14</td><td>2026-05-18</td><td class="num">£20</td><td class="num">£111</td><td class="num"><span class="badge bad">-81.9%</span></td></tr><tr><td>US</td><td>0074_Personal Trainer_US_Static_BenAIbulk_Matt</td><td>2026-05-18</td><td class="num">£29</td><td class="num">£160</td><td class="num"><span class="badge bad">-81.9%</span></td></tr><tr><td>US</td><td>37_Architect Services_US_Static_BenAIbulk_Tap</td><td>2026-05-18</td><td class="num">£26</td><td class="num">£143</td><td class="num"><span class="badge bad">-81.8%</span></td></tr><tr><td>US</td><td>387_Residential Interior Designers_US_Static_AdFactory_AllTemplates_1</td><td>2026-05-18</td><td class="num">£19</td><td class="num">£105</td><td class="num"><span class="badge bad">-81.7%</span></td></tr><tr><td>US</td><td>1521_Immigration Lawyers_US_UGC_Spark_Batch2</td><td>2026-05-18</td><td class="num">£51</td><td class="num">£274</td><td class="num"><span class="badge bad">-81.6%</span></td></tr><tr><td>US</td><td>1556_Dog Training_US_Video_UGC_3</td><td>2026-05-18</td><td class="num">£25</td><td class="num">£134</td><td class="num"><span class="badge bad">-81.5%</span></td></tr><tr><td>UK</td><td>1056_Wedding Photography_UK_Static_Basic</td><td>2026-05-18</td><td class="num">£33</td><td class="num">£178</td><td class="num"><span class="badge bad">-81.3%</span></td></tr><tr><td>UK</td><td>132_Removal Companies_UK_Static_HV</td><td>2026-05-18</td><td class="num">£32</td><td class="num">£167</td><td class="num"><span class="badge bad">-81.0%</span></td></tr><tr><td>US</td><td>1018_DJ_US_Mixed_CC_1 Weekend -80%</td><td>2026-05-18</td><td class="num">£39</td><td class="num">£205</td><td class="num"><span class="badge bad">-80.9%</span></td></tr><tr><td>US</td><td>387_Residential Interior Designers_US_Static_BenAIBulk_Matt</td><td>2026-05-18</td><td class="num">£30</td><td class="num">£155</td><td class="num"><span class="badge bad">-80.6%</span></td></tr><tr><td>US</td><td>1212_House Cleaning_US_UGC_Louise_PITS</td><td>2026-05-18</td><td class="num">£46</td><td class="num">£240</td><td class="num"><span class="badge bad">-80.6%</span></td></tr><tr><td>UK</td><td>1212_House Cleaning_UK_Static_Matt_1</td><td>2026-05-18</td><td class="num">£25</td><td class="num">£128</td><td class="num"><span class="badge bad">-80.4%</span></td></tr><tr><td>US</td><td>1521_Immigration Lawyers_US_UGC_3</td><td>2026-05-18</td><td class="num">£39</td><td class="num">£198</td><td class="num"><span class="badge bad">-80.2%</span></td></tr><tr><td>UK</td><td>1670_Home &amp; Domiciliary Care_UK_Static_1</td><td>2026-05-18</td><td class="num">£24</td><td class="num">£118</td><td class="num"><span class="badge bad">-80.1%</span></td></tr><tr><td>US</td><td>0074_Personal Trainer_US_Mixed_UGC_CLIP_3</td><td>2026-05-18</td><td class="num">£32</td><td class="num">£158</td><td class="num"><span class="badge bad">-80.0%</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    </div><div id="tab-l1" class="tab">
+    <h2>Level 1 — Creative Operations</h2>
+    <p class="subhead">"Which ad units are working right now?"</p>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Creator / persona fatigue (12wk CTR trend by creator-bucket)</div>
+        <div class="panel-source"><span class="badge meta">Meta API · classifier</span></div>
+      </div>
+      <p class="note">Bucket = parsed from adset name (UGC + creator OR Static + style).
+      Decline = recent CTR vs peak in the same 12wk window. ≥25% drop flagged red.</p>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Bucket</th>
+          <th class="num">12wk spend</th>
+          <th class="num">CTR (12wk)</th>
+          <th>CTR trend (12wk)</th>
+          <th class="num">Peak→now</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>US</td>
+          <td>Static · BenAIbulk</td>
+          <td class="num">$118,583</td>
+          <td class="num">2.78%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,9.9 11.7,15.0 23.3,3.7 35.0,2.0 46.7,14.2 58.3,17.6 70.0,18.2 81.7,17.3 93.3,16.3 105.0,18.2 116.7,22.0 128.3,21.1 140.0,15.3"/></svg></td>
+          <td class="num"><span class="badge warn">-11%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · BenAIbulk</td>
+          <td class="num">£101,888</td>
+          <td class="num">2.22%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,9.1 11.7,22.0 23.3,16.2 35.0,7.8 46.7,2.0 58.3,15.2 70.0,12.6 81.7,13.6 93.3,15.0 105.0,15.1 116.7,13.6 128.3,17.5 140.0,22.0"/></svg></td>
+          <td class="num"><span class="badge warn">-22%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>UGC · other</td>
+          <td class="num">$67,577</td>
+          <td class="num">2.94%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,3.9 11.7,9.9 23.3,2.0 35.0,10.8 46.7,15.1 58.3,13.3 70.0,22.0 81.7,21.4 93.3,21.9 105.0,21.0 116.7,17.8 128.3,19.9 140.0,18.9"/></svg></td>
+          <td class="num"><span class="badge warn">-23%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Static · Matt</td>
+          <td class="num">$51,563</td>
+          <td class="num">2.42%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,10.9 11.7,13.1 23.3,5.1 35.0,14.2 46.7,10.6 58.3,12.8 70.0,19.4 81.7,19.4 93.3,22.0 105.0,21.9 116.7,19.2 128.3,8.8 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+6%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>UGC · Louise</td>
+          <td class="num">$50,000</td>
+          <td class="num">3.55%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,22.0 11.7,20.3 23.3,17.5 35.0,14.7 46.7,12.0 58.3,11.3 70.0,11.6 81.7,9.7 93.3,9.1 105.0,3.9 116.7,4.0 128.3,6.6 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+16%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · Basic</td>
+          <td class="num">£44,669</td>
+          <td class="num">1.89%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,12.2 11.7,22.0 23.3,19.0 35.0,18.7 46.7,19.5 58.3,20.8 70.0,13.8 81.7,11.5 93.3,17.9 105.0,8.0 116.7,6.2 128.3,13.9 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+23%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>UGC · Katie</td>
+          <td class="num">£42,543</td>
+          <td class="num">5.53%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,3.5 11.7,7.5 23.3,14.8 35.0,19.8 46.7,22.0 58.3,19.0 70.0,16.7 81.7,9.5 93.3,15.9 105.0,15.2 116.7,15.0 128.3,2.0 140.0,11.9"/></svg></td>
+          <td class="num"><span class="badge bad">-31%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Static · other</td>
+          <td class="num">$40,000</td>
+          <td class="num">2.99%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,21.9 11.7,22.0 23.3,21.3 35.0,20.9 46.7,20.0 58.3,19.8 70.0,18.1 81.7,14.4 93.3,14.3 105.0,8.9 116.7,11.9 128.3,13.0 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+19%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · other</td>
+          <td class="num">£39,851</td>
+          <td class="num">2.70%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,22.0 11.7,12.4 23.3,8.6 35.0,4.0 46.7,19.3 58.3,9.9 70.0,2.0 81.7,6.1 93.3,6.2 105.0,2.4 116.7,5.1 128.3,10.8 140.0,4.9"/></svg></td>
+          <td class="num"><span class="badge ok">-3%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>UGC · Phase14</td>
+          <td class="num">$33,356</td>
+          <td class="num">6.53%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,14.7 11.7,15.1 23.3,13.9 35.0,9.1 46.7,2.0 58.3,11.3 70.0,16.6 81.7,16.4 93.3,17.5 105.0,17.4 116.7,20.4 128.3,22.0 140.0,21.9"/></svg></td>
+          <td class="num"><span class="badge bad">-81%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · Matt</td>
+          <td class="num">£29,572</td>
+          <td class="num">3.75%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,22.0 11.7,18.9 23.3,10.8 35.0,9.1 46.7,2.0 58.3,8.3 70.0,9.3 81.7,9.8 93.3,20.3 105.0,20.2 116.7,21.6 128.3,19.5 140.0,10.8"/></svg></td>
+          <td class="num"><span class="badge warn">-22%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · AdFactory</td>
+          <td class="num">£23,972</td>
+          <td class="num">1.97%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="70.0,21.5 81.7,15.1 93.3,16.4 105.0,22.0 116.7,20.1 128.3,9.5 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+0%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>UGC · Spark</td>
+          <td class="num">$21,986</td>
+          <td class="num">2.26%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,17.4 11.7,22.0 23.3,14.1 35.0,20.3 46.7,17.8 58.3,19.7 70.0,15.9 81.7,19.7 93.3,15.7 105.0,17.1 116.7,12.3 128.3,11.2 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+34%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>UGC · other</td>
+          <td class="num">£21,512</td>
+          <td class="num">6.48%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,13.6 11.7,15.3 23.3,10.3 35.0,8.5 46.7,2.0 58.3,9.5 70.0,2.3 81.7,21.8 93.3,21.7 105.0,21.6 116.7,22.0 128.3,21.5 140.0,18.5"/></svg></td>
+          <td class="num"><span class="badge bad">-66%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Static · PriceList</td>
+          <td class="num">$20,801</td>
+          <td class="num">2.04%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,10.0 11.7,16.0 23.3,10.0 35.0,10.9 46.7,18.0 58.3,22.0 70.0,22.0 81.7,16.5 93.3,13.0 105.0,19.9 116.7,17.9 128.3,18.9 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+12%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · Stefano</td>
+          <td class="num">£17,774</td>
+          <td class="num">2.18%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,16.8 11.7,17.1 23.3,16.0 35.0,17.7 46.7,19.1 58.3,4.1 70.0,11.8 81.7,22.0 93.3,3.3 105.0,9.7 116.7,10.5 128.3,5.0 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+2%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>UGC · CLIP</td>
+          <td class="num">$16,928</td>
+          <td class="num">1.96%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,18.8 11.7,22.0 23.3,18.7 35.0,17.6 46.7,17.7 58.3,18.9 70.0,15.8 81.7,15.9 93.3,16.8 105.0,15.4 116.7,16.9 128.3,16.5 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+36%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>UGC · Ben</td>
+          <td class="num">£15,829</td>
+          <td class="num">1.37%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,21.8 11.7,22.0 23.3,21.4 35.0,21.0 46.7,19.1 58.3,18.2 70.0,19.8 81.7,19.4 93.3,19.7 105.0,19.8 116.7,18.4 128.3,16.3 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+302%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · Claude</td>
+          <td class="num">£15,361</td>
+          <td class="num">2.35%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="58.3,6.9 70.0,15.2 81.7,22.0 93.3,20.0 105.0,20.3 116.7,19.0 128.3,19.3 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+0%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>UGC · Sanchez</td>
+          <td class="num">$14,909</td>
+          <td class="num">2.34%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,9.5 11.7,11.7 23.3,2.0 35.0,14.6 46.7,14.7 58.3,17.3 70.0,22.0 81.7,21.5 93.3,20.8 105.0,19.2 116.7,20.4 128.3,19.9 140.0,14.2"/></svg></td>
+          <td class="num"><span class="badge bad">-31%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Static · AdFactory</td>
+          <td class="num">$13,331</td>
+          <td class="num">3.13%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="70.0,21.5 81.7,22.0 93.3,10.6 105.0,2.0 116.7,8.2 128.3,17.3 140.0,14.2"/></svg></td>
+          <td class="num"><span class="badge bad">-31%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Static · Basic</td>
+          <td class="num">$13,213</td>
+          <td class="num">2.47%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,7.6 11.7,16.4 23.3,13.0 35.0,16.3 46.7,18.8 58.3,17.5 70.0,6.7 81.7,10.1 93.3,11.6 105.0,2.0 116.7,6.0 128.3,22.0 140.0,10.3"/></svg></td>
+          <td class="num"><span class="badge ok">-5%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Mixed · other</td>
+          <td class="num">$12,986</td>
+          <td class="num">2.07%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,2.0 11.7,15.1 23.3,9.2 35.0,2.6 46.7,16.2 58.3,21.3 70.0,19.9 81.7,17.1 93.3,18.8 105.0,17.5 116.7,22.0 128.3,17.3 140.0,14.2"/></svg></td>
+          <td class="num"><span class="badge warn">-24%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>UGC · Spark</td>
+          <td class="num">£12,844</td>
+          <td class="num">2.60%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,16.5 11.7,19.0 23.3,20.6 35.0,19.6 46.7,22.0 58.3,20.8 70.0,21.0 81.7,19.5 93.3,10.8 105.0,4.5 116.7,5.3 128.3,2.0 140.0,7.7"/></svg></td>
+          <td class="num"><span class="badge ok">+41%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>UGC · Louise</td>
+          <td class="num">£12,516</td>
+          <td class="num">1.28%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,14.9 11.7,16.3 23.3,17.1 35.0,13.2 46.7,22.0 58.3,18.1 70.0,17.8 81.7,21.8 93.3,18.6 105.0,15.4 116.7,10.6 128.3,2.0 140.0,21.2"/></svg></td>
+          <td class="num"><span class="badge warn">-18%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · Template5_BULK</td>
+          <td class="num">£12,457</td>
+          <td class="num">2.04%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,20.4 11.7,12.5 23.3,12.5 35.0,11.3 46.7,16.0 58.3,17.7 70.0,19.9 81.7,22.0 93.3,20.9 105.0,12.6 116.7,19.4 128.3,13.1 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+24%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Static · Template5_BULK</td>
+          <td class="num">$8,935</td>
+          <td class="num">2.77%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,4.1 11.7,14.2 23.3,19.0 35.0,19.3 46.7,9.8 58.3,15.3 70.0,7.6 81.7,8.4 93.3,4.8 105.0,9.7 116.7,14.8 128.3,22.0 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+2%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>UGC · PITS</td>
+          <td class="num">£8,497</td>
+          <td class="num">1.34%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,13.3 11.7,22.0 23.3,12.4 35.0,7.9 46.7,13.9 58.3,18.3 70.0,12.2 81.7,14.0 93.3,18.8 105.0,12.0 116.7,2.0 128.3,2.8 140.0,6.9"/></svg></td>
+          <td class="num"><span class="badge ok">+2%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Mixed · CLIP</td>
+          <td class="num">$8,239</td>
+          <td class="num">3.99%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,7.0 11.7,9.6 23.3,9.8 35.0,10.2 46.7,22.0 58.3,17.6 70.0,7.2 81.7,12.4 93.3,2.0 105.0,9.0 116.7,19.6 128.3,19.5 140.0,15.8"/></svg></td>
+          <td class="num"><span class="badge warn">-18%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · Testing</td>
+          <td class="num">£7,532</td>
+          <td class="num">2.14%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,11.0 11.7,22.0 23.3,17.4 35.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+0%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Static · Control</td>
+          <td class="num">$7,452</td>
+          <td class="num">2.69%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,19.7 11.7,20.9 23.3,21.8 35.0,22.0 46.7,21.8 58.3,18.7 70.0,6.8 81.7,5.1 93.3,2.0 105.0,7.4 116.7,9.6 128.3,5.9 140.0,9.7"/></svg></td>
+          <td class="num"><span class="badge warn">-20%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>UGC · Rhys</td>
+          <td class="num">£6,259</td>
+          <td class="num">2.19%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,8.6 11.7,10.4 23.3,8.7 35.0,7.5 46.7,6.8 58.3,2.0 70.0,5.5 81.7,4.2 93.3,3.0 105.0,4.0 116.7,3.0 128.3,3.3 140.0,22.0"/></svg></td>
+          <td class="num"><span class="badge bad">-89%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>UGC · Phase14</td>
+          <td class="num">£6,130</td>
+          <td class="num">2.02%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,18.8 11.7,20.1 23.3,18.0 35.0,20.6 46.7,22.0 58.3,12.5 70.0,2.0 81.7,15.3 93.3,15.9 105.0,18.9 116.7,20.5 128.3,17.9 140.0,12.8"/></svg></td>
+          <td class="num"><span class="badge bad">-29%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Static · ReviewUpdated</td>
+          <td class="num">$5,437</td>
+          <td class="num">1.96%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,20.6 11.7,22.0 23.3,21.3 35.0,19.8 46.7,17.3 58.3,20.9 70.0,19.8 81.7,19.3 93.3,19.0 105.0,19.3 116.7,20.1 128.3,18.9 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+73%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Video · Control</td>
+          <td class="num">$5,116</td>
+          <td class="num">3.11%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,22.0 11.7,21.9 23.3,21.3 35.0,21.0 46.7,21.0 58.3,20.9 70.0,11.9 81.7,11.5 93.3,15.2 105.0,15.4 116.7,15.5 128.3,13.8 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+58%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · Control</td>
+          <td class="num">£4,505</td>
+          <td class="num">2.01%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,2.0 11.7,6.9 23.3,22.0 35.0,4.3 46.7,18.4"/></svg></td>
+          <td class="num"><span class="badge warn">-12%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Video · DCO</td>
+          <td class="num">$4,327</td>
+          <td class="num">3.75%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,20.2 11.7,22.0 23.3,18.4 35.0,18.3 46.7,16.6 58.3,12.6 70.0,3.5 81.7,2.0 93.3,7.4 105.0,3.0 116.7,6.1 128.3,5.2 140.0,8.4"/></svg></td>
+          <td class="num"><span class="badge warn">-18%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>Static · Testing</td>
+          <td class="num">$4,265</td>
+          <td class="num">3.79%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="0.0,10.6 11.7,16.1 23.3,13.3 35.0,7.1 46.7,2.0 58.3,5.1 70.0,4.9 81.7,9.3 93.3,9.0 105.0,13.3 116.7,12.7 128.3,14.9 140.0,22.0"/></svg></td>
+          <td class="num"><span class="badge bad">-49%</span></td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>Static · Tap</td>
+          <td class="num">£3,469</td>
+          <td class="num">3.39%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="81.7,8.1 93.3,2.7 105.0,2.0 116.7,5.3 128.3,19.3 140.0,22.0"/></svg></td>
+          <td class="num"><span class="badge bad">-27%</span></td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td>UGC · Marcus</td>
+          <td class="num">$3,380</td>
+          <td class="num">11.52%</td>
+          <td><svg width="140" height="24" style="vertical-align:middle"><polyline fill="none" stroke="#5b8def" stroke-width="1.5" points="58.3,22.0 70.0,12.1 81.7,15.9 93.3,15.6 105.0,12.5 116.7,11.4 128.3,5.4 140.0,2.0"/></svg></td>
+          <td class="num"><span class="badge ok">+0%</span></td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Format mix per market (UGC vs Static vs Video vs Mixed)</div>
+        <div class="panel-source"><span class="badge meta">Meta API · classifier</span></div>
+      </div>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Format</th>
+          <th class="num">Spend (local)</th>
+          <th class="num">CTR</th>
+          <th class="num">Purchases (pixel)</th>
+          <th class="num">CPA (pixel)</th>
+          <th class="num">ROAS (pixel)</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>UK</td><td>?</td>
+          <td class="num">£110,775</td>
+          <td class="num">2.93%</td>
+          <td class="num">14,253</td>
+          <td class="num">£8</td>
+          <td class="num">1.48</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Mixed</td>
+          <td class="num">£1,418</td>
+          <td class="num">31.80%</td>
+          <td class="num">213</td>
+          <td class="num">£7</td>
+          <td class="num">1.91</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Static</td>
+          <td class="num">£312,618</td>
+          <td class="num">2.27%</td>
+          <td class="num">41,318</td>
+          <td class="num">£8</td>
+          <td class="num">1.59</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>UGC</td>
+          <td class="num">£132,695</td>
+          <td class="num">3.32%</td>
+          <td class="num">16,670</td>
+          <td class="num">£8</td>
+          <td class="num">1.57</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Video</td>
+          <td class="num">£3,168</td>
+          <td class="num">1.80%</td>
+          <td class="num">385</td>
+          <td class="num">£8</td>
+          <td class="num">1.71</td>
+        </tr>
+        <tr>
+          <td>US</td><td>?</td>
+          <td class="num">$34,710</td>
+          <td class="num">2.52%</td>
+          <td class="num">4,417</td>
+          <td class="num">$8</td>
+          <td class="num">1.37</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Mixed</td>
+          <td class="num">$21,225</td>
+          <td class="num">2.80%</td>
+          <td class="num">2,313</td>
+          <td class="num">$9</td>
+          <td class="num">1.39</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Static</td>
+          <td class="num">$284,843</td>
+          <td class="num">2.71%</td>
+          <td class="num">30,736</td>
+          <td class="num">$9</td>
+          <td class="num">1.56</td>
+        </tr>
+        <tr>
+          <td>US</td><td>UGC</td>
+          <td class="num">$214,014</td>
+          <td class="num">3.63%</td>
+          <td class="num">19,521</td>
+          <td class="num">$11</td>
+          <td class="num">1.50</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Video</td>
+          <td class="num">$9,939</td>
+          <td class="num">3.31%</td>
+          <td class="num">1,153</td>
+          <td class="num">$9</td>
+          <td class="num">1.62</td>
+        </tr></tbody>
+      </table></div>
+      <p class="note">Pixel = Meta-attributed purchase event. For real revenue cross-ref see Overview tab.</p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Video retention curves (P25 / P50 / P75 / P95)</div>
+        <div class="panel-source"><span class="badge meta">Meta API video metrics</span></div>
+      </div>
+      <p class="note">Hook strength = P25%. Sustain = P50%. Completion = P95%.
+      Per-creator breakdown not yet wired — easy follow-up: same aggregation but grouped by creator_bucket.</p>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th>
+          <th class="num">Video plays</th>
+          <th class="num">P25 %</th>
+          <th class="num">P50 %</th>
+          <th class="num">P75 %</th>
+          <th class="num">P95 %</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>UK</td>
+          <td class="num">79,879</td>
+          <td class="num">3760.3%</td>
+          <td class="num">1921.6%</td>
+          <td class="num">1166.0%</td>
+          <td class="num">776.3%</td>
+        </tr>
+        <tr>
+          <td>US</td>
+          <td class="num">67,874</td>
+          <td class="num">2129.5%</td>
+          <td class="num">1161.3%</td>
+          <td class="num">708.7%</td>
+          <td class="num">495.6%</td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Awaiting source · First-frame analysis, hook-by-category matrix, CTA button A/B</div>
+        <div class="panel-source"><span class="badge awaiting">Needs creative pull</span></div>
+      </div>
+      <p class="note">Ad-level creative metadata (call_to_action_type, image_url, video_id) is pulled but not yet
+      visualised — requires a follow-up step to render thumbnails + correlate to CTR.</p>
+    </div>
+    </div><div id="tab-l2" class="tab">
+    <h2>Level 2 — Adset & Campaign Mechanics</h2>
+    <p class="subhead">"Are the structures and settings extracting maximum signal?"</p>
+
+    <div class="row">
+      <div class="panel" style="margin:0">
+        <div class="panel-head"><div class="panel-title">Bid strategy mix (active adsets)</div>
+          <div class="panel-source"><span class="badge meta">Meta API</span></div></div>
+        <div class="scroll-x"><table>
+          <thead><tr><th>Market</th><th>Bid strategy</th><th class="num">Adsets</th></tr></thead>
+          <tbody><tr><td>UK</td><td>LOWEST_COST_WITHOUT_CAP</td><td class='num'>78</td></tr><tr><td>UK</td><td>?</td><td class='num'>40</td></tr><tr><td>UK</td><td>COST_CAP</td><td class='num'>10</td></tr><tr><td>US</td><td>LOWEST_COST_WITHOUT_CAP</td><td class='num'>86</td></tr><tr><td>US</td><td>?</td><td class='num'>13</td></tr><tr><td>US</td><td>COST_CAP</td><td class='num'>10</td></tr></tbody>
+        </table></div>
+      </div>
+
+      <div class="panel" style="margin:0">
+        <div class="panel-head"><div class="panel-title">Optimisation event mix</div>
+          <div class="panel-source"><span class="badge meta">Meta API</span></div></div>
+        <div class="scroll-x"><table>
+          <thead><tr><th>Market</th><th>Goal</th><th class="num">Adsets</th></tr></thead>
+          <tbody><tr><td>UK</td><td>OFFSITE_CONVERSIONS</td><td class='num'>128</td></tr><tr><td>US</td><td>OFFSITE_CONVERSIONS</td><td class='num'>109</td></tr></tbody>
+        </table></div>
+      </div>
+
+      <div class="panel" style="margin:0">
+        <div class="panel-head"><div class="panel-title">CBO vs ABO (campaigns)</div>
+          <div class="panel-source"><span class="badge meta">Meta API</span></div></div>
+        <p class="note">CBO = campaign has daily/lifetime budget set. ABO = budget only at adset level.</p>
+        <div class="scroll-x"><table>
+          <thead><tr><th>Market</th><th class="num">CBO</th><th class="num">ABO</th><th class="num">CBO %</th></tr></thead>
+          <tbody><tr><td>UK</td><td class='num'>74</td><td class='num'>114</td><td class='num'>39%</td></tr><tr><td>US</td><td class='num'>23</td><td class='num'>103</td><td class='num'>18%</td></tr></tbody>
+        </table></div>
+      </div>
+
+      <div class="panel" style="margin:0">
+        <div class="panel-head"><div class="panel-title">Learning phase coverage</div>
+          <div class="panel-source"><span class="badge meta">Meta API</span></div></div>
+        <p class="note">High learning % = recent edit fatigue. Cross-ref with last_updated_time for root cause.</p>
+        <div class="scroll-x"><table>
+          <thead><tr><th>Market</th><th class="num">Active</th><th class="num">In learning</th><th class="num">%</th></tr></thead>
+          <tbody><tr><td>UK</td><td class='num'>125</td><td class='num'>70</td><td class='num'>56%</td></tr><tr><td>US</td><td class='num'>109</td><td class='num'>60</td><td class='num'>55%</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Attribution spec mix</div>
+        <div class="panel-source"><span class="badge meta">Meta API</span></div></div>
+      <div class="scroll-x"><table>
+        <thead><tr><th>Market</th><th>Spec</th><th class="num">Adsets</th></tr></thead>
+        <tbody><tr><td>UK</td><td>CLICK_THROUGH · 1d</td><td class='num'>128</td></tr><tr><td>US</td><td>CLICK_THROUGH · 1d</td><td class='num'>109</td></tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Awaiting source · Frequency caps, day-parting curves, budget pacing intraday</div>
+        <div class="panel-source"><span class="badge awaiting">Needs hourly pulls per adset</span></div></div>
+      <p class="note">Hourly day-parting is pulled at account level (see Placement tab). Per-adset hourly requires
+      a separate breakdown query per adset — easy follow-up but ~500 API calls.</p>
+    </div>
+    </div><div id="tab-l3" class="tab">
+    <h2>Level 3 — Placement, Audience & Funnel Geometry</h2>
+    <p class="subhead">"Where in the network and to whom should each pound go?"</p>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Placement economics (publisher × position)</div>
+        <div class="panel-source"><span class="badge meta">Meta API (Tableau has no placement dim)</span></div></div>
+      <p class="note">Spend/conversion not cross-checkable with Tableau at this dimension — Tableau has channel only.
+      Total Meta spend here = sum across placements; should equal account total.</p>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Publisher</th><th>Position</th>
+          <th class="num">Spend (local)</th><th class="num">CTR</th>
+          <th class="num">Purchases</th><th class="num">CPA</th><th class="num">ROAS (pixel)</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>UK</td><td>facebook</td><td>feed</td>
+          <td class="num">£252,849</td>
+          <td class="num">3.21%</td>
+          <td class="num">34,262</td>
+          <td class="num">£7</td>
+          <td class="num">1.60</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>feed</td>
+          <td class="num">$140,852</td>
+          <td class="num">3.40%</td>
+          <td class="num">15,082</td>
+          <td class="num">$9</td>
+          <td class="num">1.50</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>facebook_reels</td>
+          <td class="num">$128,395</td>
+          <td class="num">3.06%</td>
+          <td class="num">12,574</td>
+          <td class="num">$10</td>
+          <td class="num">1.47</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>facebook</td><td>facebook_reels</td>
+          <td class="num">£100,007</td>
+          <td class="num">1.97%</td>
+          <td class="num">11,914</td>
+          <td class="num">£8</td>
+          <td class="num">1.55</td>
+        </tr>
+        <tr>
+          <td>US</td><td>instagram</td><td>feed</td>
+          <td class="num">$85,638</td>
+          <td class="num">1.90%</td>
+          <td class="num">8,355</td>
+          <td class="num">$10</td>
+          <td class="num">1.50</td>
+        </tr>
+        <tr>
+          <td>US</td><td>instagram</td><td>instagram_reels</td>
+          <td class="num">$82,656</td>
+          <td class="num">1.90%</td>
+          <td class="num">7,949</td>
+          <td class="num">$10</td>
+          <td class="num">1.56</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>instagram</td><td>feed</td>
+          <td class="num">£63,896</td>
+          <td class="num">1.18%</td>
+          <td class="num">7,291</td>
+          <td class="num">£9</td>
+          <td class="num">1.36</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>instagram</td><td>instagram_reels</td>
+          <td class="num">£46,694</td>
+          <td class="num">1.14%</td>
+          <td class="num">4,721</td>
+          <td class="num">£10</td>
+          <td class="num">1.31</td>
+        </tr>
+        <tr>
+          <td>US</td><td>instagram</td><td>instagram_stories</td>
+          <td class="num">$42,407</td>
+          <td class="num">1.93%</td>
+          <td class="num">4,392</td>
+          <td class="num">$10</td>
+          <td class="num">1.48</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>facebook</td><td>marketplace</td>
+          <td class="num">£26,519</td>
+          <td class="num">0.94%</td>
+          <td class="num">3,640</td>
+          <td class="num">£7</td>
+          <td class="num">1.63</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>marketplace</td>
+          <td class="num">$23,638</td>
+          <td class="num">1.74%</td>
+          <td class="num">2,962</td>
+          <td class="num">$8</td>
+          <td class="num">1.75</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>instagram</td><td>instagram_stories</td>
+          <td class="num">£22,755</td>
+          <td class="num">1.46%</td>
+          <td class="num">2,408</td>
+          <td class="num">£9</td>
+          <td class="num">1.30</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>search</td>
+          <td class="num">$15,295</td>
+          <td class="num">1.46%</td>
+          <td class="num">2,299</td>
+          <td class="num">$7</td>
+          <td class="num">2.25</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>facebook</td><td>search</td>
+          <td class="num">£14,449</td>
+          <td class="num">0.80%</td>
+          <td class="num">2,734</td>
+          <td class="num">£5</td>
+          <td class="num">2.22</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>facebook_stories</td>
+          <td class="num">$13,574</td>
+          <td class="num">3.47%</td>
+          <td class="num">1,227</td>
+          <td class="num">$11</td>
+          <td class="num">1.26</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>instream_video</td>
+          <td class="num">$10,676</td>
+          <td class="num">4.96%</td>
+          <td class="num">1,029</td>
+          <td class="num">$10</td>
+          <td class="num">1.42</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>audience_network</td><td>rewarded_video</td>
+          <td class="num">£10,171</td>
+          <td class="num">48.26%</td>
+          <td class="num">2,191</td>
+          <td class="num">£5</td>
+          <td class="num">2.37</td>
+        </tr>
+        <tr>
+          <td>US</td><td>audience_network</td><td>an_classic</td>
+          <td class="num">$9,719</td>
+          <td class="num">17.16%</td>
+          <td class="num">1,216</td>
+          <td class="num">$8</td>
+          <td class="num">1.56</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>audience_network</td><td>an_classic</td>
+          <td class="num">£7,721</td>
+          <td class="num">20.58%</td>
+          <td class="num">2,062</td>
+          <td class="num">£4</td>
+          <td class="num">2.70</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>facebook</td><td>facebook_stories</td>
+          <td class="num">£7,293</td>
+          <td class="num">2.44%</td>
+          <td class="num">716</td>
+          <td class="num">£10</td>
+          <td class="num">1.22</td>
+        </tr>
+        <tr>
+          <td>US</td><td>audience_network</td><td>rewarded_video</td>
+          <td class="num">$6,195</td>
+          <td class="num">43.79%</td>
+          <td class="num">543</td>
+          <td class="num">$11</td>
+          <td class="num">1.11</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>facebook</td><td>instream_video</td>
+          <td class="num">£3,513</td>
+          <td class="num">2.25%</td>
+          <td class="num">430</td>
+          <td class="num">£8</td>
+          <td class="num">1.53</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>facebook</td><td>facebook_reels_overlay</td>
+          <td class="num">£2,490</td>
+          <td class="num">0.97%</td>
+          <td class="num">183</td>
+          <td class="num">£14</td>
+          <td class="num">0.79</td>
+        </tr>
+        <tr>
+          <td>US</td><td>threads</td><td>threads_feed</td>
+          <td class="num">$2,104</td>
+          <td class="num">1.42%</td>
+          <td class="num">161</td>
+          <td class="num">$13</td>
+          <td class="num">1.20</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>facebook_profile_feed</td>
+          <td class="num">$2,081</td>
+          <td class="num">1.96%</td>
+          <td class="num">155</td>
+          <td class="num">$13</td>
+          <td class="num">1.08</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>facebook</td><td>facebook_profile_feed</td>
+          <td class="num">£1,192</td>
+          <td class="num">1.37%</td>
+          <td class="num">145</td>
+          <td class="num">£8</td>
+          <td class="num">1.37</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>facebook_reels_overlay</td>
+          <td class="num">$669</td>
+          <td class="num">1.05%</td>
+          <td class="num">46</td>
+          <td class="num">$15</td>
+          <td class="num">0.81</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>facebook</td><td>facebook_notification</td>
+          <td class="num">£391</td>
+          <td class="num">5.55%</td>
+          <td class="num">24</td>
+          <td class="num">£16</td>
+          <td class="num">0.71</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>facebook</td><td>right_hand_column</td>
+          <td class="num">£302</td>
+          <td class="num">0.15%</td>
+          <td class="num">55</td>
+          <td class="num">£5</td>
+          <td class="num">2.77</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>facebook_notification</td>
+          <td class="num">$249</td>
+          <td class="num">7.05%</td>
+          <td class="num">35</td>
+          <td class="num">$7</td>
+          <td class="num">1.76</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>threads</td><td>threads_feed</td>
+          <td class="num">£228</td>
+          <td class="num">1.42%</td>
+          <td class="num">21</td>
+          <td class="num">£11</td>
+          <td class="num">1.04</td>
+        </tr>
+        <tr>
+          <td>US</td><td>facebook</td><td>right_hand_column</td>
+          <td class="num">$190</td>
+          <td class="num">0.23%</td>
+          <td class="num">37</td>
+          <td class="num">$5</td>
+          <td class="num">4.37</td>
+        </tr>
+        <tr>
+          <td>US</td><td>instagram</td><td>instagram_explore_grid_home</td>
+          <td class="num">$100</td>
+          <td class="num">0.44%</td>
+          <td class="num">4</td>
+          <td class="num">$25</td>
+          <td class="num">0.91</td>
+        </tr>
+        <tr>
+          <td>US</td><td>unknown</td><td>unknown</td>
+          <td class="num">$98</td>
+          <td class="num">1.84%</td>
+          <td class="num">48</td>
+          <td class="num">$2</td>
+          <td class="num">7.15</td>
+        </tr>
+        <tr>
+          <td>US</td><td>instagram</td><td>instagram_search</td>
+          <td class="num">$81</td>
+          <td class="num">1.10%</td>
+          <td class="num">14</td>
+          <td class="num">$6</td>
+          <td class="num">2.06</td>
+        </tr>
+        <tr>
+          <td>US</td><td>instagram</td><td>instagram_explore</td>
+          <td class="num">$66</td>
+          <td class="num">1.10%</td>
+          <td class="num">4</td>
+          <td class="num">$16</td>
+          <td class="num">1.45</td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Device split</div>
+        <div class="panel-source"><span class="badge meta">Meta API</span></div></div>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Device</th>
+          <th class="num">Spend</th><th class="num">CTR</th>
+          <th class="num">Purchases</th><th class="num">CPA</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>US</td><td>iphone</td>
+          <td class="num">$371,589</td>
+          <td class="num">2.40%</td>
+          <td class="num">39,539</td>
+          <td class="num">$9</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>iphone</td>
+          <td class="num">£288,563</td>
+          <td class="num">1.91%</td>
+          <td class="num">35,363</td>
+          <td class="num">£8</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>android_smartphone</td>
+          <td class="num">£226,297</td>
+          <td class="num">3.42%</td>
+          <td class="num">31,434</td>
+          <td class="num">£7</td>
+        </tr>
+        <tr>
+          <td>US</td><td>android_smartphone</td>
+          <td class="num">$168,275</td>
+          <td class="num">4.25%</td>
+          <td class="num">16,137</td>
+          <td class="num">$10</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>ipad</td>
+          <td class="num">£21,851</td>
+          <td class="num">3.20%</td>
+          <td class="num">2,503</td>
+          <td class="num">£9</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>desktop</td>
+          <td class="num">£15,188</td>
+          <td class="num">1.46%</td>
+          <td class="num">2,008</td>
+          <td class="num">£8</td>
+        </tr>
+        <tr>
+          <td>US</td><td>desktop</td>
+          <td class="num">$10,958</td>
+          <td class="num">1.88%</td>
+          <td class="num">1,193</td>
+          <td class="num">$9</td>
+        </tr>
+        <tr>
+          <td>US</td><td>ipad</td>
+          <td class="num">$10,265</td>
+          <td class="num">3.69%</td>
+          <td class="num">858</td>
+          <td class="num">$12</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>android_tablet</td>
+          <td class="num">£7,065</td>
+          <td class="num">9.06%</td>
+          <td class="num">1,227</td>
+          <td class="num">£6</td>
+        </tr>
+        <tr>
+          <td>US</td><td>android_tablet</td>
+          <td class="num">$2,654</td>
+          <td class="num">11.45%</td>
+          <td class="num">270</td>
+          <td class="num">$10</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>other</td>
+          <td class="num">£1,590</td>
+          <td class="num">3.99%</td>
+          <td class="num">285</td>
+          <td class="num">£6</td>
+        </tr>
+        <tr>
+          <td>US</td><td>other</td>
+          <td class="num">$951</td>
+          <td class="num">4.06%</td>
+          <td class="num">137</td>
+          <td class="num">$7</td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Demographic breakdown (age × gender)</div>
+        <div class="panel-source"><span class="badge meta">Meta API</span></div></div>
+      <p class="note">For Bark, the buyer demographic should match real customer mix. Massive gender skew = audience targeting drift.</p>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Age</th><th>Gender</th>
+          <th class="num">Spend</th><th class="num">CTR</th>
+          <th class="num">Purchases</th><th class="num">CPA</th><th class="num">ROAS</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>UK</td><td>18-24</td><td>female</td>
+          <td class="num">£6,122</td>
+          <td class="num">1.29%</td>
+          <td class="num">613</td>
+          <td class="num">£10</td>
+          <td class="num">1.06</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>18-24</td><td>male</td>
+          <td class="num">£3,970</td>
+          <td class="num">1.75%</td>
+          <td class="num">296</td>
+          <td class="num">£13</td>
+          <td class="num">1.01</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>18-24</td><td>unknown</td>
+          <td class="num">£105</td>
+          <td class="num">1.93%</td>
+          <td class="num">21</td>
+          <td class="num">£5</td>
+          <td class="num">2.91</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>25-34</td><td>female</td>
+          <td class="num">£40,521</td>
+          <td class="num">1.52%</td>
+          <td class="num">5,329</td>
+          <td class="num">£8</td>
+          <td class="num">1.48</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>25-34</td><td>male</td>
+          <td class="num">£27,766</td>
+          <td class="num">1.68%</td>
+          <td class="num">3,082</td>
+          <td class="num">£9</td>
+          <td class="num">1.34</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>25-34</td><td>unknown</td>
+          <td class="num">£404</td>
+          <td class="num">2.00%</td>
+          <td class="num">33</td>
+          <td class="num">£12</td>
+          <td class="num">1.09</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>35-44</td><td>female</td>
+          <td class="num">£67,091</td>
+          <td class="num">1.91%</td>
+          <td class="num">9,473</td>
+          <td class="num">£7</td>
+          <td class="num">1.58</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>35-44</td><td>male</td>
+          <td class="num">£49,480</td>
+          <td class="num">1.83%</td>
+          <td class="num">6,271</td>
+          <td class="num">£8</td>
+          <td class="num">1.59</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>35-44</td><td>unknown</td>
+          <td class="num">£931</td>
+          <td class="num">1.94%</td>
+          <td class="num">131</td>
+          <td class="num">£7</td>
+          <td class="num">1.59</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>45-54</td><td>female</td>
+          <td class="num">£68,074</td>
+          <td class="num">2.54%</td>
+          <td class="num">9,068</td>
+          <td class="num">£8</td>
+          <td class="num">1.55</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>45-54</td><td>male</td>
+          <td class="num">£43,976</td>
+          <td class="num">2.24%</td>
+          <td class="num">5,176</td>
+          <td class="num">£8</td>
+          <td class="num">1.53</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>45-54</td><td>unknown</td>
+          <td class="num">£1,707</td>
+          <td class="num">2.29%</td>
+          <td class="num">177</td>
+          <td class="num">£10</td>
+          <td class="num">1.48</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>55-64</td><td>female</td>
+          <td class="num">£74,269</td>
+          <td class="num">3.50%</td>
+          <td class="num">9,941</td>
+          <td class="num">£7</td>
+          <td class="num">1.64</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>55-64</td><td>male</td>
+          <td class="num">£42,107</td>
+          <td class="num">2.88%</td>
+          <td class="num">5,206</td>
+          <td class="num">£8</td>
+          <td class="num">1.69</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>55-64</td><td>unknown</td>
+          <td class="num">£1,736</td>
+          <td class="num">2.89%</td>
+          <td class="num">165</td>
+          <td class="num">£11</td>
+          <td class="num">1.18</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>65+</td><td>female</td>
+          <td class="num">£80,839</td>
+          <td class="num">5.24%</td>
+          <td class="num">11,477</td>
+          <td class="num">£7</td>
+          <td class="num">1.60</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>65+</td><td>male</td>
+          <td class="num">£49,250</td>
+          <td class="num">3.64%</td>
+          <td class="num">6,082</td>
+          <td class="num">£8</td>
+          <td class="num">1.62</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>65+</td><td>unknown</td>
+          <td class="num">£2,198</td>
+          <td class="num">3.95%</td>
+          <td class="num">265</td>
+          <td class="num">£8</td>
+          <td class="num">1.53</td>
+        </tr>
+        <tr>
+          <td>US</td><td>18-24</td><td>female</td>
+          <td class="num">$23,215</td>
+          <td class="num">1.50%</td>
+          <td class="num">2,307</td>
+          <td class="num">$10</td>
+          <td class="num">1.27</td>
+        </tr>
+        <tr>
+          <td>US</td><td>18-24</td><td>male</td>
+          <td class="num">$6,761</td>
+          <td class="num">1.63%</td>
+          <td class="num">558</td>
+          <td class="num">$12</td>
+          <td class="num">1.36</td>
+        </tr>
+        <tr>
+          <td>US</td><td>18-24</td><td>unknown</td>
+          <td class="num">$270</td>
+          <td class="num">2.06%</td>
+          <td class="num">19</td>
+          <td class="num">$14</td>
+          <td class="num">0.79</td>
+        </tr>
+        <tr>
+          <td>US</td><td>25-34</td><td>female</td>
+          <td class="num">$60,889</td>
+          <td class="num">2.04%</td>
+          <td class="num">6,544</td>
+          <td class="num">$9</td>
+          <td class="num">1.52</td>
+        </tr>
+        <tr>
+          <td>US</td><td>25-34</td><td>male</td>
+          <td class="num">$26,826</td>
+          <td class="num">1.92%</td>
+          <td class="num">2,372</td>
+          <td class="num">$11</td>
+          <td class="num">1.50</td>
+        </tr>
+        <tr>
+          <td>US</td><td>25-34</td><td>unknown</td>
+          <td class="num">$566</td>
+          <td class="num">2.31%</td>
+          <td class="num">28</td>
+          <td class="num">$20</td>
+          <td class="num">0.65</td>
+        </tr>
+        <tr>
+          <td>US</td><td>35-44</td><td>female</td>
+          <td class="num">$77,351</td>
+          <td class="num">2.38%</td>
+          <td class="num">8,739</td>
+          <td class="num">$9</td>
+          <td class="num">1.60</td>
+        </tr>
+        <tr>
+          <td>US</td><td>35-44</td><td>male</td>
+          <td class="num">$37,137</td>
+          <td class="num">2.16%</td>
+          <td class="num">3,414</td>
+          <td class="num">$11</td>
+          <td class="num">1.60</td>
+        </tr>
+        <tr>
+          <td>US</td><td>35-44</td><td>unknown</td>
+          <td class="num">$804</td>
+          <td class="num">2.26%</td>
+          <td class="num">50</td>
+          <td class="num">$16</td>
+          <td class="num">1.04</td>
+        </tr>
+        <tr>
+          <td>US</td><td>45-54</td><td>female</td>
+          <td class="num">$83,259</td>
+          <td class="num">3.15%</td>
+          <td class="num">9,272</td>
+          <td class="num">$9</td>
+          <td class="num">1.59</td>
+        </tr>
+        <tr>
+          <td>US</td><td>45-54</td><td>male</td>
+          <td class="num">$38,089</td>
+          <td class="num">2.64%</td>
+          <td class="num">3,321</td>
+          <td class="num">$11</td>
+          <td class="num">1.62</td>
+        </tr>
+        <tr>
+          <td>US</td><td>45-54</td><td>unknown</td>
+          <td class="num">$1,051</td>
+          <td class="num">3.00%</td>
+          <td class="num">92</td>
+          <td class="num">$11</td>
+          <td class="num">1.44</td>
+        </tr>
+        <tr>
+          <td>US</td><td>55-64</td><td>female</td>
+          <td class="num">$64,705</td>
+          <td class="num">4.16%</td>
+          <td class="num">6,806</td>
+          <td class="num">$10</td>
+          <td class="num">1.52</td>
+        </tr>
+        <tr>
+          <td>US</td><td>55-64</td><td>male</td>
+          <td class="num">$34,766</td>
+          <td class="num">3.10%</td>
+          <td class="num">2,723</td>
+          <td class="num">$13</td>
+          <td class="num">1.45</td>
+        </tr>
+        <tr>
+          <td>US</td><td>55-64</td><td>unknown</td>
+          <td class="num">$808</td>
+          <td class="num">3.35%</td>
+          <td class="num">48</td>
+          <td class="num">$17</td>
+          <td class="num">0.79</td>
+        </tr>
+        <tr>
+          <td>US</td><td>65+</td><td>female</td>
+          <td class="num">$71,960</td>
+          <td class="num">6.14%</td>
+          <td class="num">8,517</td>
+          <td class="num">$8</td>
+          <td class="num">1.40</td>
+        </tr>
+        <tr>
+          <td>US</td><td>65+</td><td>male</td>
+          <td class="num">$35,254</td>
+          <td class="num">4.04%</td>
+          <td class="num">3,205</td>
+          <td class="num">$11</td>
+          <td class="num">1.51</td>
+        </tr>
+        <tr>
+          <td>US</td><td>65+</td><td>unknown</td>
+          <td class="num">$948</td>
+          <td class="num">4.97%</td>
+          <td class="num">77</td>
+          <td class="num">$12</td>
+          <td class="num">1.15</td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Top 50 regions by spend</div>
+        <div class="panel-source"><span class="badge meta">Meta API</span></div></div>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Region</th>
+          <th class="num">Spend</th><th class="num">Purchases</th><th class="num">ROAS</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>UK</td><td>England</td>
+          <td class="num">£481,379</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>California</td>
+          <td class="num">$79,535</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Florida</td>
+          <td class="num">$64,254</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Texas</td>
+          <td class="num">$61,757</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>New York</td>
+          <td class="num">$48,297</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Scotland</td>
+          <td class="num">£42,854</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Georgia</td>
+          <td class="num">$27,449</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>New Jersey</td>
+          <td class="num">$26,287</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Wales</td>
+          <td class="num">£23,519</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>North Carolina</td>
+          <td class="num">$21,110</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Pennsylvania</td>
+          <td class="num">$20,165</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Maryland</td>
+          <td class="num">$18,984</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Illinois</td>
+          <td class="num">$18,111</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Ohio</td>
+          <td class="num">$16,838</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Virginia</td>
+          <td class="num">$14,492</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Massachusetts</td>
+          <td class="num">$13,041</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Northern Ireland</td>
+          <td class="num">£12,746</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Arizona</td>
+          <td class="num">$11,254</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>South Carolina</td>
+          <td class="num">$10,589</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Tennessee</td>
+          <td class="num">$10,116</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Michigan</td>
+          <td class="num">$8,052</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Washington</td>
+          <td class="num">$7,890</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Missouri</td>
+          <td class="num">$7,638</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Colorado</td>
+          <td class="num">$7,484</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Minnesota</td>
+          <td class="num">$6,981</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Connecticut</td>
+          <td class="num">$6,597</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Indiana</td>
+          <td class="num">$5,900</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Nevada</td>
+          <td class="num">$5,511</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Alabama</td>
+          <td class="num">$5,385</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Utah</td>
+          <td class="num">$4,864</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Louisiana</td>
+          <td class="num">$3,575</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Wisconsin</td>
+          <td class="num">$3,112</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Mississippi</td>
+          <td class="num">$2,807</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Kansas</td>
+          <td class="num">$2,414</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Oregon</td>
+          <td class="num">$2,399</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Delaware</td>
+          <td class="num">$2,143</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Kentucky</td>
+          <td class="num">$2,086</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Iowa</td>
+          <td class="num">$2,023</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Idaho</td>
+          <td class="num">$1,880</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Oklahoma</td>
+          <td class="num">$1,811</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Washington, District of Columbia</td>
+          <td class="num">$1,390</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>New Mexico</td>
+          <td class="num">$1,375</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Arkansas</td>
+          <td class="num">$1,156</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Rhode Island</td>
+          <td class="num">$1,126</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Nebraska</td>
+          <td class="num">$1,095</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>New Hampshire</td>
+          <td class="num">$1,087</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>West Virginia</td>
+          <td class="num">$809</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Hawaii</td>
+          <td class="num">$752</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Vermont</td>
+          <td class="num">$591</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>US</td><td>Maine</td>
+          <td class="num">$531</td>
+          <td class="num">0</td>
+          <td class="num">0.00</td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Awaiting source · Custom Audience health, Lookalike geometry, retargeting funnel</div>
+        <div class="panel-source"><span class="badge awaiting">Needs CA + LAL audit pull</span></div></div>
+      <p class="note">Custom audience IDs are pulled (in adsets_targeting). Audit on freshness/seed-size requires
+      a second pass through /customaudiences endpoint.</p>
+    </div>
+    </div><div id="tab-l4" class="tab">
+    <h2>Level 4 — Measurement, Attribution & Economic Truth</h2>
+    <p class="subhead">"Is the system measuring what actually matters?"</p>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Top-line attribution gap (Meta pixel vs Tableau PPR)</div>
+        <div class="panel-source"><span class="badge both">Meta + Tableau</span></div></div>
+      <p class="note">If Meta &lt; Tableau by &gt;20%, the pixel is under-counting. Memory says this is ~43% historically.</p>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th>
+          <th class="num">Meta rev (£)</th>
+          <th class="num">Tableau rev (£)</th>
+          <th class="num">Gap</th>
+          <th class="num">Implied pixel coverage</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>UK</td><td class="num">£537,841</td><td class="num">£648,868</td><td class="num">-17.1%</td><td class="num">83%</td></tr><tr><td>US</td><td class="num">£581,965</td><td class="num">£520,192</td><td class="num">+11.9%</td><td class="num">112%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Day-parting — Account level (last 7 days)</div>
+        <div class="panel-source"><span class="badge meta">Meta API · hourly_stats_aggregated_by_advertiser_time_zone</span></div></div>
+      <p class="note">Meta requires &lt;=7 day range for hourly breakdowns. This is the last 7 full days, advertiser timezone.</p>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Hour</th>
+          <th class="num">Spend</th><th class="num">Purchases</th>
+          <th class="num">CPA</th><th class="num">ROAS</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>UK</td><td>00:00</td>
+          <td class="num">£702</td>
+          <td class="num">37</td>
+          <td class="num">£19</td>
+          <td class="num">0.43</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>01:00</td>
+          <td class="num">£323</td>
+          <td class="num">14</td>
+          <td class="num">£23</td>
+          <td class="num">0.50</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>02:00</td>
+          <td class="num">£218</td>
+          <td class="num">11</td>
+          <td class="num">£20</td>
+          <td class="num">0.32</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>03:00</td>
+          <td class="num">£178</td>
+          <td class="num">8</td>
+          <td class="num">£22</td>
+          <td class="num">0.62</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>04:00</td>
+          <td class="num">£187</td>
+          <td class="num">6</td>
+          <td class="num">£31</td>
+          <td class="num">0.44</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>05:00</td>
+          <td class="num">£437</td>
+          <td class="num">31</td>
+          <td class="num">£14</td>
+          <td class="num">0.94</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>06:00</td>
+          <td class="num">£1,447</td>
+          <td class="num">68</td>
+          <td class="num">£21</td>
+          <td class="num">0.62</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>07:00</td>
+          <td class="num">£2,209</td>
+          <td class="num">144</td>
+          <td class="num">£15</td>
+          <td class="num">0.77</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>08:00</td>
+          <td class="num">£2,319</td>
+          <td class="num">297</td>
+          <td class="num">£8</td>
+          <td class="num">1.56</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>09:00</td>
+          <td class="num">£2,293</td>
+          <td class="num">406</td>
+          <td class="num">£6</td>
+          <td class="num">2.03</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>10:00</td>
+          <td class="num">£2,249</td>
+          <td class="num">499</td>
+          <td class="num">£5</td>
+          <td class="num">2.70</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>11:00</td>
+          <td class="num">£2,228</td>
+          <td class="num">496</td>
+          <td class="num">£4</td>
+          <td class="num">2.84</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>12:00</td>
+          <td class="num">£2,276</td>
+          <td class="num">388</td>
+          <td class="num">£6</td>
+          <td class="num">2.32</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>13:00</td>
+          <td class="num">£2,345</td>
+          <td class="num">307</td>
+          <td class="num">£8</td>
+          <td class="num">1.62</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>14:00</td>
+          <td class="num">£2,047</td>
+          <td class="num">293</td>
+          <td class="num">£7</td>
+          <td class="num">1.90</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>15:00</td>
+          <td class="num">£2,073</td>
+          <td class="num">314</td>
+          <td class="num">£7</td>
+          <td class="num">1.92</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>16:00</td>
+          <td class="num">£2,304</td>
+          <td class="num">274</td>
+          <td class="num">£8</td>
+          <td class="num">1.41</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>17:00</td>
+          <td class="num">£2,204</td>
+          <td class="num">247</td>
+          <td class="num">£9</td>
+          <td class="num">1.27</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>18:00</td>
+          <td class="num">£2,307</td>
+          <td class="num">274</td>
+          <td class="num">£8</td>
+          <td class="num">1.47</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>19:00</td>
+          <td class="num">£2,331</td>
+          <td class="num">230</td>
+          <td class="num">£10</td>
+          <td class="num">1.16</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>20:00</td>
+          <td class="num">£951</td>
+          <td class="num">180</td>
+          <td class="num">£5</td>
+          <td class="num">2.22</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>21:00</td>
+          <td class="num">£789</td>
+          <td class="num">149</td>
+          <td class="num">£5</td>
+          <td class="num">2.48</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>22:00</td>
+          <td class="num">£707</td>
+          <td class="num">94</td>
+          <td class="num">£8</td>
+          <td class="num">1.83</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>23:00</td>
+          <td class="num">£435</td>
+          <td class="num">63</td>
+          <td class="num">£7</td>
+          <td class="num">1.54</td>
+        </tr>
+        <tr>
+          <td>US</td><td>00:00</td>
+          <td class="num">$3,141</td>
+          <td class="num">262</td>
+          <td class="num">$12</td>
+          <td class="num">1.06</td>
+        </tr>
+        <tr>
+          <td>US</td><td>01:00</td>
+          <td class="num">$1,327</td>
+          <td class="num">161</td>
+          <td class="num">$8</td>
+          <td class="num">1.87</td>
+        </tr>
+        <tr>
+          <td>US</td><td>02:00</td>
+          <td class="num">$1,373</td>
+          <td class="num">139</td>
+          <td class="num">$10</td>
+          <td class="num">1.39</td>
+        </tr>
+        <tr>
+          <td>US</td><td>03:00</td>
+          <td class="num">$1,257</td>
+          <td class="num">97</td>
+          <td class="num">$13</td>
+          <td class="num">0.90</td>
+        </tr>
+        <tr>
+          <td>US</td><td>04:00</td>
+          <td class="num">$1,061</td>
+          <td class="num">103</td>
+          <td class="num">$10</td>
+          <td class="num">1.34</td>
+        </tr>
+        <tr>
+          <td>US</td><td>05:00</td>
+          <td class="num">$792</td>
+          <td class="num">58</td>
+          <td class="num">$14</td>
+          <td class="num">1.01</td>
+        </tr>
+        <tr>
+          <td>US</td><td>06:00</td>
+          <td class="num">$559</td>
+          <td class="num">36</td>
+          <td class="num">$16</td>
+          <td class="num">0.79</td>
+        </tr>
+        <tr>
+          <td>US</td><td>07:00</td>
+          <td class="num">$377</td>
+          <td class="num">30</td>
+          <td class="num">$13</td>
+          <td class="num">0.84</td>
+        </tr>
+        <tr>
+          <td>US</td><td>08:00</td>
+          <td class="num">$239</td>
+          <td class="num">15</td>
+          <td class="num">$16</td>
+          <td class="num">1.08</td>
+        </tr>
+        <tr>
+          <td>US</td><td>09:00</td>
+          <td class="num">$287</td>
+          <td class="num">19</td>
+          <td class="num">$15</td>
+          <td class="num">1.07</td>
+        </tr>
+        <tr>
+          <td>US</td><td>10:00</td>
+          <td class="num">$743</td>
+          <td class="num">26</td>
+          <td class="num">$29</td>
+          <td class="num">0.65</td>
+        </tr>
+        <tr>
+          <td>US</td><td>11:00</td>
+          <td class="num">$1,566</td>
+          <td class="num">101</td>
+          <td class="num">$16</td>
+          <td class="num">1.05</td>
+        </tr>
+        <tr>
+          <td>US</td><td>12:00</td>
+          <td class="num">$2,374</td>
+          <td class="num">181</td>
+          <td class="num">$13</td>
+          <td class="num">1.15</td>
+        </tr>
+        <tr>
+          <td>US</td><td>13:00</td>
+          <td class="num">$2,722</td>
+          <td class="num">238</td>
+          <td class="num">$11</td>
+          <td class="num">1.27</td>
+        </tr>
+        <tr>
+          <td>US</td><td>14:00</td>
+          <td class="num">$2,761</td>
+          <td class="num">289</td>
+          <td class="num">$10</td>
+          <td class="num">1.51</td>
+        </tr>
+        <tr>
+          <td>US</td><td>15:00</td>
+          <td class="num">$2,596</td>
+          <td class="num">299</td>
+          <td class="num">$9</td>
+          <td class="num">1.62</td>
+        </tr>
+        <tr>
+          <td>US</td><td>16:00</td>
+          <td class="num">$2,605</td>
+          <td class="num">326</td>
+          <td class="num">$8</td>
+          <td class="num">1.87</td>
+        </tr>
+        <tr>
+          <td>US</td><td>17:00</td>
+          <td class="num">$2,728</td>
+          <td class="num">305</td>
+          <td class="num">$9</td>
+          <td class="num">1.62</td>
+        </tr>
+        <tr>
+          <td>US</td><td>18:00</td>
+          <td class="num">$2,807</td>
+          <td class="num">298</td>
+          <td class="num">$9</td>
+          <td class="num">1.67</td>
+        </tr>
+        <tr>
+          <td>US</td><td>19:00</td>
+          <td class="num">$2,713</td>
+          <td class="num">258</td>
+          <td class="num">$11</td>
+          <td class="num">1.57</td>
+        </tr>
+        <tr>
+          <td>US</td><td>20:00</td>
+          <td class="num">$2,482</td>
+          <td class="num">264</td>
+          <td class="num">$9</td>
+          <td class="num">1.50</td>
+        </tr>
+        <tr>
+          <td>US</td><td>21:00</td>
+          <td class="num">$2,502</td>
+          <td class="num">261</td>
+          <td class="num">$10</td>
+          <td class="num">1.56</td>
+        </tr>
+        <tr>
+          <td>US</td><td>22:00</td>
+          <td class="num">$3,019</td>
+          <td class="num">262</td>
+          <td class="num">$12</td>
+          <td class="num">1.23</td>
+        </tr>
+        <tr>
+          <td>US</td><td>23:00</td>
+          <td class="num">$3,166</td>
+          <td class="num">267</td>
+          <td class="num">$12</td>
+          <td class="num">1.13</td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Day-parting × Category (last 7 days, top 15 by spend per market)</div>
+        <div class="panel-source"><span class="badge meta">Meta API · adset-level hourly + classifier</span></div></div>
+      <p class="note">
+        <strong>Recommendation:</strong> per-category day-parting is actionable for top spenders,
+        but only at 4-bucket granularity (overnight / morning / afternoon / evening). Hourly-per-category
+        cells average &lt;1 purchase/week → noise. Meta's automated rules also enforce a 12h cooldown
+        floor (memory), so per-category rules can only fire 2× per day anyway. Best implementation:
+        <em>scheduled budget shifts via cron</em>, not threshold-based rules.
+        <br><br>
+        Read: cell value is CPA; cell colour is heat (green = cheaper, red = more expensive within the market).
+        "thin" tag = &lt;5 purchases in the 7-day window for that bucket; treat those CPAs as noise.
+      </p>
+      
+        <h3>UK · Category × time-of-day (last 7 days, top 15 by spend)</h3>
+        <p class="note">Cell = CPA (heat: green = cheap, red = expensive within this market).
+        Per-bucket purchase count below CPA. "thin" = &lt;5 purchases — treat as noise.
+        Below 5 purchases per bucket per week means even 4-hour bucketing lacks signal — pull more time history if you want to rule on this category.</p>
+        <div class="scroll-x"><table>
+          <thead><tr>
+            <th>Category</th>
+            <th class="num">Overnight (00-06)</th><th class="num">Morning (06-12)</th><th class="num">Afternoon (12-18)</th><th class="num">Evening (18-24)</th>
+            <th class="num">Wk purchases</th>
+          </tr></thead>
+          <tbody><tr><td>Landscaping</td><td class="num" style="background:rgba(255,80,0,0.35);">£27<br><span style='font-size:10px;color:var(--muted);'>£411 · 15 purch · ROAS 0.47</span></td><td class="num" style="background:rgba(31,80,223,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£1,735 · 261 purch · ROAS 2.18</span></td><td class="num" style="background:rgba(49,80,205,0.35);">£8<br><span style='font-size:10px;color:var(--muted);'>£1,895 · 229 purch · ROAS 1.78</span></td><td class="num" style="background:rgba(100,80,154,0.35);">£13<br><span style='font-size:10px;color:var(--muted);'>£1,607 · 123 purch · ROAS 1.12</span></td><td class='num'>628</td></tr><tr><td>Bathroom Install</td><td class="num" style="background:rgba(124,80,130,0.35);">£15<br><span style='font-size:10px;color:var(--muted);'>£153 · 10 purch · ROAS 0.48</span></td><td class="num" style="background:rgba(28,80,226,0.35);">£6<br><span style='font-size:10px;color:var(--muted);'>£1,382 · 217 purch · ROAS 1.69</span></td><td class="num" style="background:rgba(50,80,204,0.35);">£8<br><span style='font-size:10px;color:var(--muted);'>£1,518 · 182 purch · ROAS 1.29</span></td><td class="num" style="background:rgba(35,80,219,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£701 · 101 purch · ROAS 1.46</span></td><td class='num'>510</td></tr><tr><td>Home &amp; Domiciliary Care</td><td class="num" style="background:rgba(1103,80,-848,0.35);">£106<br><span style='font-size:10px;color:var(--muted);'>£319 · 3 purch · ROAS 0.05</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(102,80,152,0.35);">£13<br><span style='font-size:10px;color:var(--muted);'>£1,282 · 97 purch · ROAS 1.82</span></td><td class="num" style="background:rgba(93,80,161,0.35);">£12<br><span style='font-size:10px;color:var(--muted);'>£1,291 · 104 purch · ROAS 1.87</span></td><td class="num" style="background:rgba(127,80,127,0.35);">£16<br><span style='font-size:10px;color:var(--muted);'>£652 · 42 purch · ROAS 1.53</span></td><td class='num'>246</td></tr><tr><td>Driveway Installation</td><td class="num" style="background:rgba(57,80,197,0.35);">£9<br><span style='font-size:10px;color:var(--muted);'>£81 · 9 purch · ROAS 0.89</span></td><td class="num" style="background:rgba(47,80,207,0.35);">£8<br><span style='font-size:10px;color:var(--muted);'>£991 · 122 purch · ROAS 1.89</span></td><td class="num" style="background:rgba(41,80,213,0.35);">£8<br><span style='font-size:10px;color:var(--muted);'>£1,067 · 141 purch · ROAS 2.00</span></td><td class="num" style="background:rgba(36,80,218,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£415 · 59 purch · ROAS 2.31</span></td><td class='num'>331</td></tr><tr><td>Painting &amp; Decoration</td><td class="num" style="background:rgba(264,80,-9,0.35);">£28<br><span style='font-size:10px;color:var(--muted);'>£142 · 5 purch · ROAS 0.34</span></td><td class="num" style="background:rgba(32,80,222,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£607 · 91 purch · ROAS 1.92</span></td><td class="num" style="background:rgba(30,80,224,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£730 · 112 purch · ROAS 1.56</span></td><td class="num" style="background:rgba(28,80,226,0.35);">£6<br><span style='font-size:10px;color:var(--muted);'>£446 · 71 purch · ROAS 1.95</span></td><td class='num'>279</td></tr><tr><td>Patio Services</td><td class="num" style="background:rgba(706,80,-451,0.35);">£69<br><span style='font-size:10px;color:var(--muted);'>£69 · 1 purch · ROAS 0.46</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(18,80,236,0.35);">£5<br><span style='font-size:10px;color:var(--muted);'>£648 · 120 purch · ROAS 1.93</span></td><td class="num" style="background:rgba(42,80,212,0.35);">£8<br><span style='font-size:10px;color:var(--muted);'>£783 · 102 purch · ROAS 1.60</span></td><td class="num" style="background:rgba(19,80,235,0.35);">£5<br><span style='font-size:10px;color:var(--muted);'>£371 · 68 purch · ROAS 2.32</span></td><td class='num'>291</td></tr><tr><td>Tree Surgery &amp; Removal</td><td class="num" style="background:rgba(166,80,88,0.35);">£19<br><span style='font-size:10px;color:var(--muted);'>£77 · 4 purch · ROAS 0.61</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(44,80,210,0.35);">£8<br><span style='font-size:10px;color:var(--muted);'>£650 · 83 purch · ROAS 1.76</span></td><td class="num" style="background:rgba(33,80,221,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£592 · 87 purch · ROAS 2.37</span></td><td class="num" style="background:rgba(56,80,198,0.35);">£9<br><span style='font-size:10px;color:var(--muted);'>£323 · 36 purch · ROAS 1.58</span></td><td class='num'>210</td></tr><tr><td>Fence &amp; Gate Installation</td><td class="num" style="background:rgba(269,80,-14,0.35);">£29<br><span style='font-size:10px;color:var(--muted);'>£115 · 4 purch · ROAS 0.56</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(45,80,209,0.35);">£8<br><span style='font-size:10px;color:var(--muted);'>£538 · 68 purch · ROAS 1.49</span></td><td class="num" style="background:rgba(43,80,211,0.35);">£8<br><span style='font-size:10px;color:var(--muted);'>£478 · 62 purch · ROAS 1.58</span></td><td class="num" style="background:rgba(30,80,224,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£319 · 49 purch · ROAS 1.76</span></td><td class='num'>183</td></tr><tr><td>House Cleaning</td><td class="num" style="background:rgba(156,80,98,0.35);">£18<br><span style='font-size:10px;color:var(--muted);'>£110 · 6 purch · ROAS 0.44</span></td><td class="num" style="background:rgba(2,80,252,0.35);">£4<br><span style='font-size:10px;color:var(--muted);'>£475 · 121 purch · ROAS 1.52</span></td><td class="num" style="background:rgba(0,80,255,0.35);">£4<br><span style='font-size:10px;color:var(--muted);'>£460 · 125 purch · ROAS 1.84</span></td><td class="num" style="background:rgba(14,80,240,0.35);">£5<br><span style='font-size:10px;color:var(--muted);'>£398 · 79 purch · ROAS 1.43</span></td><td class='num'>331</td></tr><tr><td>Block Paving</td><td class="num" style="background:rgba(791,80,-536,0.35);">£77<br><span style='font-size:10px;color:var(--muted);'>£77 · 1 purch · ROAS 0.30</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(67,80,187,0.35);">£10<br><span style='font-size:10px;color:var(--muted);'>£428 · 43 purch · ROAS 1.74</span></td><td class="num" style="background:rgba(62,80,192,0.35);">£9<br><span style='font-size:10px;color:var(--muted);'>£465 · 49 purch · ROAS 1.75</span></td><td class="num" style="background:rgba(106,80,148,0.35);">£14<br><span style='font-size:10px;color:var(--muted);'>£339 · 25 purch · ROAS 1.10</span></td><td class='num'>118</td></tr><tr><td>Wedding Photography</td><td class="num" style="background:rgba(49,80,205,0.35);">£8<br><span style='font-size:10px;color:var(--muted);'>£50 · 6 purch · ROAS 1.62</span></td><td class="num" style="background:rgba(22,80,232,0.35);">£6<br><span style='font-size:10px;color:var(--muted);'>£349 · 60 purch · ROAS 2.44</span></td><td class="num" style="background:rgba(40,80,214,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£507 · 68 purch · ROAS 1.84</span></td><td class="num" style="background:rgba(31,80,223,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£237 · 36 purch · ROAS 2.20</span></td><td class='num'>170</td></tr><tr><td>Artificial Grass Installation</td><td class="num" style="background:rgba(54,80,200,0.35);">£9<br><span style='font-size:10px;color:var(--muted);'>£26 · 3 purch · ROAS 1.92</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(10,80,244,0.35);">£5<br><span style='font-size:10px;color:var(--muted);'>£316 · 68 purch · ROAS 2.00</span></td><td class="num" style="background:rgba(24,80,230,0.35);">£6<br><span style='font-size:10px;color:var(--muted);'>£349 · 59 purch · ROAS 1.42</span></td><td class="num" style="background:rgba(22,80,232,0.35);">£6<br><span style='font-size:10px;color:var(--muted);'>£150 · 26 purch · ROAS 1.76</span></td><td class='num'>156</td></tr><tr><td>Immigration Lawyers</td><td class="num" style="background:rgba(197,80,57,0.35);">£22<br><span style='font-size:10px;color:var(--muted);'>£44 · 2 purch · ROAS 0.42</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(4,80,250,0.35);">£4<br><span style='font-size:10px;color:var(--muted);'>£292 · 71 purch · ROAS 2.87</span></td><td class="num" style="background:rgba(61,80,193,0.35);">£9<br><span style='font-size:10px;color:var(--muted);'>£339 · 36 purch · ROAS 1.23</span></td><td class="num" style="background:rgba(187,80,67,0.35);">£21<br><span style='font-size:10px;color:var(--muted);'>£148 · 7 purch · ROAS 0.50</span></td><td class='num'>116</td></tr><tr><td>Gardening</td><td class="num" style="background:rgba(116,80,138,0.35);">£15<br><span style='font-size:10px;color:var(--muted);'>£58 · 4 purch · ROAS 0.40</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(18,80,236,0.35);">£5<br><span style='font-size:10px;color:var(--muted);'>£340 · 63 purch · ROAS 1.53</span></td><td class="num" style="background:rgba(13,80,241,0.35);">£5<br><span style='font-size:10px;color:var(--muted);'>£241 · 49 purch · ROAS 1.72</span></td><td class="num" style="background:rgba(30,80,224,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£150 · 23 purch · ROAS 1.19</span></td><td class='num'>139</td></tr><tr><td>Air Conditioning Installation</td><td class="num" style="background:rgba(128,80,126,0.35);">£16<br><span style='font-size:10px;color:var(--muted);'>£31 · 2 purch · ROAS 1.33</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(71,80,183,0.35);">£10<br><span style='font-size:10px;color:var(--muted);'>£258 · 25 purch · ROAS 1.50</span></td><td class="num" style="background:rgba(100,80,154,0.35);">£13<br><span style='font-size:10px;color:var(--muted);'>£299 · 23 purch · ROAS 1.30</span></td><td class="num" style="background:rgba(36,80,218,0.35);">£7<br><span style='font-size:10px;color:var(--muted);'>£141 · 20 purch · ROAS 2.09</span></td><td class='num'>70</td></tr></tbody>
+        </table></div>
+        
+        <h3>US · Category × time-of-day (last 7 days, top 15 by spend)</h3>
+        <p class="note">Cell = CPA (heat: green = cheap, red = expensive within this market).
+        Per-bucket purchase count below CPA. "thin" = &lt;5 purchases — treat as noise.
+        Below 5 purchases per bucket per week means even 4-hour bucketing lacks signal — pull more time history if you want to rule on this category.</p>
+        <div class="scroll-x"><table>
+          <thead><tr>
+            <th>Category</th>
+            <th class="num">Overnight (00-06)</th><th class="num">Morning (06-12)</th><th class="num">Afternoon (12-18)</th><th class="num">Evening (18-24)</th>
+            <th class="num">Wk purchases</th>
+          </tr></thead>
+          <tbody><tr><td>DJ</td><td class="num" style="background:rgba(26,80,228,0.35);">$9<br><span style='font-size:10px;color:var(--muted);'>$954 · 112 purch · ROAS 1.68</span></td><td class="num" style="background:rgba(120,80,134,0.35);">$18<br><span style='font-size:10px;color:var(--muted);'>$330 · 18 purch · ROAS 0.63</span></td><td class="num" style="background:rgba(66,80,188,0.35);">$13<br><span style='font-size:10px;color:var(--muted);'>$2,014 · 159 purch · ROAS 1.15</span></td><td class="num" style="background:rgba(54,80,200,0.35);">$11<br><span style='font-size:10px;color:var(--muted);'>$2,030 · 177 purch · ROAS 1.38</span></td><td class='num'>466</td></tr><tr><td>House Cleaning</td><td class="num" style="background:rgba(65,80,189,0.35);">$13<br><span style='font-size:10px;color:var(--muted);'>$980 · 78 purch · ROAS 0.77</span></td><td class="num" style="background:rgba(267,80,-12,0.35);">$34<br><span style='font-size:10px;color:var(--muted);'>$474 · 14 purch · ROAS 0.33</span></td><td class="num" style="background:rgba(15,80,239,0.35);">$7<br><span style='font-size:10px;color:var(--muted);'>$2,110 · 286 purch · ROAS 1.27</span></td><td class="num" style="background:rgba(9,80,245,0.35);">$7<br><span style='font-size:10px;color:var(--muted);'>$1,737 · 261 purch · ROAS 1.52</span></td><td class='num'>639</td></tr><tr><td>Dog Training</td><td class="num" style="background:rgba(64,80,190,0.35);">$12<br><span style='font-size:10px;color:var(--muted);'>$1,037 · 83 purch · ROAS 0.80</span></td><td class="num" style="background:rgba(1,80,253,0.35);">$6<br><span style='font-size:10px;color:var(--muted);'>$397 · 68 purch · ROAS 1.82</span></td><td class="num" style="background:rgba(0,80,255,0.35);">$6<br><span style='font-size:10px;color:var(--muted);'>$1,722 · 302 purch · ROAS 1.81</span></td><td class="num" style="background:rgba(32,80,222,0.35);">$9<br><span style='font-size:10px;color:var(--muted);'>$1,843 · 202 purch · ROAS 1.19</span></td><td class='num'>655</td></tr><tr><td>Architect Services</td><td class="num" style="background:rgba(145,80,109,0.35);">$21<br><span style='font-size:10px;color:var(--muted);'>$632 · 30 purch · ROAS 1.08</span></td><td class="num" style="background:rgba(390,80,-135,0.35);">$47<br><span style='font-size:10px;color:var(--muted);'>$281 · 6 purch · ROAS 1.09</span></td><td class="num" style="background:rgba(161,80,93,0.35);">$23<br><span style='font-size:10px;color:var(--muted);'>$1,273 · 56 purch · ROAS 1.38</span></td><td class="num" style="background:rgba(112,80,142,0.35);">$18<br><span style='font-size:10px;color:var(--muted);'>$1,263 · 72 purch · ROAS 1.93</span></td><td class='num'>164</td></tr><tr><td>Catering</td><td class="num" style="background:rgba(40,80,214,0.35);">$10<br><span style='font-size:10px;color:var(--muted);'>$801 · 80 purch · ROAS 1.15</span></td><td class="num" style="background:rgba(89,80,165,0.35);">$15<br><span style='font-size:10px;color:var(--muted);'>$196 · 13 purch · ROAS 0.70</span></td><td class="num" style="background:rgba(22,80,232,0.35);">$8<br><span style='font-size:10px;color:var(--muted);'>$1,012 · 125 purch · ROAS 1.71</span></td><td class="num" style="background:rgba(48,80,206,0.35);">$11<br><span style='font-size:10px;color:var(--muted);'>$1,352 · 125 purch · ROAS 1.46</span></td><td class='num'>343</td></tr><tr><td>Immigration Lawyers</td><td class="num" style="background:rgba(85,80,169,0.35);">$15<br><span style='font-size:10px;color:var(--muted);'>$586 · 40 purch · ROAS 0.88</span></td><td class="num" style="background:rgba(211,80,43,0.35);">$28<br><span style='font-size:10px;color:var(--muted);'>$280 · 10 purch · ROAS 0.35</span></td><td class="num" style="background:rgba(49,80,205,0.35);">$11<br><span style='font-size:10px;color:var(--muted);'>$973 · 89 purch · ROAS 1.32</span></td><td class="num" style="background:rgba(36,80,218,0.35);">$10<br><span style='font-size:10px;color:var(--muted);'>$1,106 · 116 purch · ROAS 1.64</span></td><td class='num'>255</td></tr><tr><td>Wedding Photography</td><td class="num" style="background:rgba(38,80,216,0.35);">$10<br><span style='font-size:10px;color:var(--muted);'>$489 · 50 purch · ROAS 1.80</span></td><td class="num" style="background:rgba(173,80,81,0.35);">$24<br><span style='font-size:10px;color:var(--muted);'>$216 · 9 purch · ROAS 0.48</span></td><td class="num" style="background:rgba(40,80,214,0.35);">$10<br><span style='font-size:10px;color:var(--muted);'>$904 · 91 purch · ROAS 1.96</span></td><td class="num" style="background:rgba(58,80,196,0.35);">$12<br><span style='font-size:10px;color:var(--muted);'>$988 · 83 purch · ROAS 1.44</span></td><td class='num'>233</td></tr><tr><td>Photo Booth Hire</td><td class="num" style="background:rgba(11,80,243,0.35);">$7<br><span style='font-size:10px;color:var(--muted);'>$426 · 62 purch · ROAS 1.91</span></td><td class="num" style="background:rgba(82,80,172,0.35);">$14<br><span style='font-size:10px;color:var(--muted);'>$187 · 13 purch · ROAS 0.73</span></td><td class="num" style="background:rgba(37,80,217,0.35);">$10<br><span style='font-size:10px;color:var(--muted);'>$993 · 103 purch · ROAS 1.26</span></td><td class="num" style="background:rgba(31,80,223,0.35);">$9<br><span style='font-size:10px;color:var(--muted);'>$987 · 109 purch · ROAS 1.30</span></td><td class='num'>287</td></tr><tr><td>Web Design</td><td class="num" style="background:rgba(128,80,126,0.35);">$19<br><span style='font-size:10px;color:var(--muted);'>$461 · 24 purch · ROAS 1.20</span></td><td class="num" style="background:rgba(342,80,-87,0.35);">$42<br><span style='font-size:10px;color:var(--muted);'>$335 · 8 purch · ROAS 1.04</span></td><td class="num" style="background:rgba(86,80,168,0.35);">$15<br><span style='font-size:10px;color:var(--muted);'>$813 · 55 purch · ROAS 2.63</span></td><td class="num" style="background:rgba(155,80,99,0.35);">$22<br><span style='font-size:10px;color:var(--muted);'>$727 · 33 purch · ROAS 0.79</span></td><td class='num'>120</td></tr><tr><td>Limousine Hire</td><td class="num" style="background:rgba(5,80,249,0.35);">$6<br><span style='font-size:10px;color:var(--muted);'>$518 · 82 purch · ROAS 1.64</span></td><td class="num" style="background:rgba(6,80,248,0.35);">$6<br><span style='font-size:10px;color:var(--muted);'>$135 · 21 purch · ROAS 1.79</span></td><td class="num" style="background:rgba(17,80,237,0.35);">$8<br><span style='font-size:10px;color:var(--muted);'>$690 · 91 purch · ROAS 1.41</span></td><td class="num" style="background:rgba(24,80,230,0.35);">$8<br><span style='font-size:10px;color:var(--muted);'>$889 · 108 purch · ROAS 1.27</span></td><td class='num'>302</td></tr><tr><td>Personal Trainer</td><td class="num" style="background:rgba(19,80,235,0.35);">$8<br><span style='font-size:10px;color:var(--muted);'>$443 · 57 purch · ROAS 1.66</span></td><td class="num" style="background:rgba(136,80,118,0.35);">$20<br><span style='font-size:10px;color:var(--muted);'>$161 · 8 purch · ROAS 0.30</span></td><td class="num" style="background:rgba(18,80,236,0.35);">$8<br><span style='font-size:10px;color:var(--muted);'>$610 · 80 purch · ROAS 1.92</span></td><td class="num" style="background:rgba(42,80,212,0.35);">$10<br><span style='font-size:10px;color:var(--muted);'>$741 · 73 purch · ROAS 1.46</span></td><td class='num'>218</td></tr><tr><td>Immigration Lawyers_LPV2CONTROL</td><td class="num" style="background:rgba(23,80,231,0.35);">$8<br><span style='font-size:10px;color:var(--muted);'>$343 · 42 purch · ROAS 1.58</span></td><td class="num" style="background:rgba(58,80,196,0.35);">$12<br><span style='font-size:10px;color:var(--muted);'>$131 · 11 purch · ROAS 1.25</span></td><td class="num" style="background:rgba(13,80,241,0.35);">$7<br><span style='font-size:10px;color:var(--muted);'>$573 · 81 purch · ROAS 2.29</span></td><td class="num" style="background:rgba(34,80,220,0.35);">$9<br><span style='font-size:10px;color:var(--muted);'>$661 · 71 purch · ROAS 1.65</span></td><td class='num'>205</td></tr><tr><td>Residential Interior Designers</td><td class="num" style="background:rgba(68,80,186,0.35);">$13<br><span style='font-size:10px;color:var(--muted);'>$298 · 23 purch · ROAS 2.13</span></td><td class="num" style="background:rgba(1434,80,-1179,0.35);">$157<br><span style='font-size:10px;color:var(--muted);'>$157 · 1 purch · ROAS 0.42</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(86,80,168,0.35);">$15<br><span style='font-size:10px;color:var(--muted);'>$609 · 41 purch · ROAS 1.71</span></td><td class="num" style="background:rgba(77,80,177,0.35);">$14<br><span style='font-size:10px;color:var(--muted);'>$598 · 43 purch · ROAS 1.94</span></td><td class='num'>108</td></tr><tr><td>Private Investigators</td><td class="num" style="background:rgba(75,80,179,0.35);">$14<br><span style='font-size:10px;color:var(--muted);'>$260 · 19 purch · ROAS 0.75</span></td><td class="num" style="background:rgba(63,80,191,0.35);">$12<br><span style='font-size:10px;color:var(--muted);'>$136 · 11 purch · ROAS 0.50</span></td><td class="num" style="background:rgba(7,80,247,0.35);">$6<br><span style='font-size:10px;color:var(--muted);'>$329 · 51 purch · ROAS 1.81</span></td><td class="num" style="background:rgba(33,80,221,0.35);">$9<br><span style='font-size:10px;color:var(--muted);'>$472 · 51 purch · ROAS 1.40</span></td><td class='num'>132</td></tr><tr><td>Commercial &amp; Office Cleaning</td><td class="num" style="background:rgba(520,80,-265,0.35);">$61<br><span style='font-size:10px;color:var(--muted);'>$182 · 3 purch · ROAS 0.29</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(221,80,33,0.35);">$29<br><span style='font-size:10px;color:var(--muted);'>$116 · 4 purch · ROAS 2.18</span><span style='font-size:9px;color:var(--amber);'> thin</span></td><td class="num" style="background:rgba(255,80,0,0.35);">$33<br><span style='font-size:10px;color:var(--muted);'>$456 · 14 purch · ROAS 1.23</span></td><td class="num" style="background:rgba(186,80,68,0.35);">$25<br><span style='font-size:10px;color:var(--muted);'>$380 · 15 purch · ROAS 1.73</span></td><td class='num'>36</td></tr></tbody>
+        </table></div>
+        
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Region totals — Last 12 weeks</div>
+        <div class="panel-source"><span class="badge meta">Meta API · region breakdown</span></div></div>
+      <p class="note">
+        <strong>Why this isn't a region × hour heatmap:</strong> Meta Graph API rejects
+        <code>region + hourly_stats_aggregated_by_advertiser_time_zone</code> as an invalid breakdown
+        combination, and the <code>filtering</code> param on insights doesn't accept <code>region</code> as a field.
+        We could pull hourly per region by issuing one insights call per region with a targeting-geo filter,
+        but that filters by what the adset <em>targeted</em>, not where impressions actually landed —
+        misleading for accounts where UK adsets reach all of GB.
+        <br>For UK only 4 region buckets exist (England / Scotland / Wales / NI) plus tiny foreign-reach
+        artefacts (Western Cape etc) which can be ignored. For US, the 50-state breakdown below is the canonical view.
+      </p>
+      <div class="row">
+        <div>
+          <h3>UK</h3>
+          <div class="scroll-x"><table>
+            <thead><tr><th>Region</th><th class="num">Spend</th><th class="num">CTR</th>
+              <th class="num">Purchases</th><th class="num">CPA</th><th class="num">ROAS</th></tr></thead>
+            <tbody>
+        <tr>
+          <td>England</td>
+          <td class="num">£481,379</td>
+          <td class="num">2.58%</td>
+          <td class="num">0</td>
+          <td class="num">£0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Scotland</td>
+          <td class="num">£42,854</td>
+          <td class="num">2.96%</td>
+          <td class="num">0</td>
+          <td class="num">£0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Wales</td>
+          <td class="num">£23,519</td>
+          <td class="num">2.73%</td>
+          <td class="num">0</td>
+          <td class="num">£0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Northern Ireland</td>
+          <td class="num">£12,746</td>
+          <td class="num">2.91%</td>
+          <td class="num">0</td>
+          <td class="num">£0</td>
+          <td class="num">0.00</td>
+        </tr></tbody>
+          </table></div>
+        </div>
+        <div>
+          <h3>US</h3>
+          <div class="scroll-x"><table>
+            <thead><tr><th>Region</th><th class="num">Spend</th><th class="num">CTR</th>
+              <th class="num">Purchases</th><th class="num">CPA</th><th class="num">ROAS</th></tr></thead>
+            <tbody>
+        <tr>
+          <td>California</td>
+          <td class="num">$79,535</td>
+          <td class="num">3.00%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Florida</td>
+          <td class="num">$64,254</td>
+          <td class="num">3.22%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Texas</td>
+          <td class="num">$61,757</td>
+          <td class="num">2.81%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>New York</td>
+          <td class="num">$48,297</td>
+          <td class="num">2.99%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Georgia</td>
+          <td class="num">$27,449</td>
+          <td class="num">2.88%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>New Jersey</td>
+          <td class="num">$26,287</td>
+          <td class="num">2.94%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>North Carolina</td>
+          <td class="num">$21,110</td>
+          <td class="num">3.02%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Pennsylvania</td>
+          <td class="num">$20,165</td>
+          <td class="num">3.36%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Maryland</td>
+          <td class="num">$18,984</td>
+          <td class="num">2.85%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Illinois</td>
+          <td class="num">$18,111</td>
+          <td class="num">3.08%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Ohio</td>
+          <td class="num">$16,838</td>
+          <td class="num">3.17%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Virginia</td>
+          <td class="num">$14,492</td>
+          <td class="num">2.83%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Massachusetts</td>
+          <td class="num">$13,041</td>
+          <td class="num">2.76%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Arizona</td>
+          <td class="num">$11,254</td>
+          <td class="num">3.14%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>South Carolina</td>
+          <td class="num">$10,589</td>
+          <td class="num">3.15%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Tennessee</td>
+          <td class="num">$10,116</td>
+          <td class="num">2.87%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Michigan</td>
+          <td class="num">$8,052</td>
+          <td class="num">2.47%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Washington</td>
+          <td class="num">$7,890</td>
+          <td class="num">2.61%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Missouri</td>
+          <td class="num">$7,638</td>
+          <td class="num">3.24%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Colorado</td>
+          <td class="num">$7,484</td>
+          <td class="num">3.09%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Minnesota</td>
+          <td class="num">$6,981</td>
+          <td class="num">2.85%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Connecticut</td>
+          <td class="num">$6,597</td>
+          <td class="num">3.02%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Indiana</td>
+          <td class="num">$5,900</td>
+          <td class="num">2.43%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Nevada</td>
+          <td class="num">$5,511</td>
+          <td class="num">3.17%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Alabama</td>
+          <td class="num">$5,385</td>
+          <td class="num">3.25%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Utah</td>
+          <td class="num">$4,864</td>
+          <td class="num">2.63%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Louisiana</td>
+          <td class="num">$3,575</td>
+          <td class="num">2.37%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Wisconsin</td>
+          <td class="num">$3,112</td>
+          <td class="num">2.57%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Mississippi</td>
+          <td class="num">$2,807</td>
+          <td class="num">3.02%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr>
+        <tr>
+          <td>Kansas</td>
+          <td class="num">$2,414</td>
+          <td class="num">3.35%</td>
+          <td class="num">0</td>
+          <td class="num">$0</td>
+          <td class="num">0.00</td>
+        </tr></tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Awaiting source · Incrementality (geo holdout), CAPI match rate, SKAN reconciliation, CPSS, latency curves, cohort LTV</div>
+        <div class="panel-source"><span class="badge awaiting">External data + experimentation</span></div></div>
+      <p class="note">These require either (a) Meta Experiments / Conversion Lift API, (b) CAPI delivery diagnostics endpoint,
+      (c) joining Tableau PPR data with bark.db to derive CPSS, or (d) cohort tables not currently materialised.</p>
+    </div>
+    </div><div id="tab-l5" class="tab">
+    <h2>Level 5 — Strategic, Structural & Systemic</h2>
+    <p class="subhead">"Is the entire acquisition engine designed correctly?"</p>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Marginal CAC + marginal ROAS by week (pixel-attributed)</div>
+        <div class="panel-source"><span class="badge meta">Meta API</span></div></div>
+      <p class="note">Marginal CAC = Δspend / Δpurchases vs prior week. Compares the cost of the LAST pound,
+      not blended. Marginal ROAS = Δrev / Δspend. Both use Meta-attributed events, so they understate true rev by
+      the pixel gap shown in Level 4.</p>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Week</th>
+          <th class="num">Spend</th><th class="num">Purchases</th><th class="num">Blended CPA</th>
+          <th class="num">Marginal CAC</th><th class="num">Marginal ROAS</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>UK</td><td>2026-02-25</td>
+          <td class="num">£58,726</td>
+          <td class="num">7,305</td>
+          <td class="num">£8</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-03-04</td>
+          <td class="num">£52,766</td>
+          <td class="num">10,865</td>
+          <td class="num">£5</td>
+          <td class="num">£-2</td>
+          <td class="num">-7.22</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-03-11</td>
+          <td class="num">£51,304</td>
+          <td class="num">6,481</td>
+          <td class="num">£8</td>
+          <td class="num">£0</td>
+          <td class="num">36.84</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-03-18</td>
+          <td class="num">£51,923</td>
+          <td class="num">6,866</td>
+          <td class="num">£8</td>
+          <td class="num">£2</td>
+          <td class="num">7.66</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-03-25</td>
+          <td class="num">£61,536</td>
+          <td class="num">6,603</td>
+          <td class="num">£9</td>
+          <td class="num">£-37</td>
+          <td class="num">-0.37</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-04-01</td>
+          <td class="num">£35,623</td>
+          <td class="num">4,340</td>
+          <td class="num">£8</td>
+          <td class="num">£11</td>
+          <td class="num">1.16</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-04-08</td>
+          <td class="num">£45,145</td>
+          <td class="num">5,327</td>
+          <td class="num">£8</td>
+          <td class="num">£10</td>
+          <td class="num">1.37</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-04-15</td>
+          <td class="num">£52,217</td>
+          <td class="num">5,532</td>
+          <td class="num">£9</td>
+          <td class="num">£35</td>
+          <td class="num">0.38</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-04-22</td>
+          <td class="num">£41,525</td>
+          <td class="num">5,189</td>
+          <td class="num">£8</td>
+          <td class="num">£31</td>
+          <td class="num">0.49</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-04-29</td>
+          <td class="num">£37,364</td>
+          <td class="num">4,661</td>
+          <td class="num">£8</td>
+          <td class="num">£8</td>
+          <td class="num">1.14</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-05-06</td>
+          <td class="num">£36,866</td>
+          <td class="num">4,822</td>
+          <td class="num">£8</td>
+          <td class="num">£-3</td>
+          <td class="num">-3.49</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-05-13</td>
+          <td class="num">£32,809</td>
+          <td class="num">4,512</td>
+          <td class="num">£7</td>
+          <td class="num">£13</td>
+          <td class="num">0.57</td>
+        </tr>
+        <tr>
+          <td>UK</td><td>2026-05-20</td>
+          <td class="num">£2,870</td>
+          <td class="num">336</td>
+          <td class="num">£9</td>
+          <td class="num">£7</td>
+          <td class="num">1.70</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-02-25</td>
+          <td class="num">$57,574</td>
+          <td class="num">5,577</td>
+          <td class="num">$10</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-03-04</td>
+          <td class="num">$55,272</td>
+          <td class="num">8,130</td>
+          <td class="num">$7</td>
+          <td class="num">$-1</td>
+          <td class="num">-19.59</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-03-11</td>
+          <td class="num">$55,305</td>
+          <td class="num">5,013</td>
+          <td class="num">$11</td>
+          <td class="num">$-0</td>
+          <td class="num">-1531.49</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-03-18</td>
+          <td class="num">$53,949</td>
+          <td class="num">5,065</td>
+          <td class="num">$11</td>
+          <td class="num">$-26</td>
+          <td class="num">0.11</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-03-25</td>
+          <td class="num">$50,890</td>
+          <td class="num">4,747</td>
+          <td class="num">$11</td>
+          <td class="num">$10</td>
+          <td class="num">1.90</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-04-01</td>
+          <td class="num">$41,245</td>
+          <td class="num">4,147</td>
+          <td class="num">$10</td>
+          <td class="num">$16</td>
+          <td class="num">1.31</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-04-08</td>
+          <td class="num">$40,593</td>
+          <td class="num">4,259</td>
+          <td class="num">$10</td>
+          <td class="num">$-6</td>
+          <td class="num">0.50</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-04-15</td>
+          <td class="num">$45,014</td>
+          <td class="num">4,322</td>
+          <td class="num">$10</td>
+          <td class="num">$70</td>
+          <td class="num">0.45</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-04-22</td>
+          <td class="num">$40,282</td>
+          <td class="num">4,384</td>
+          <td class="num">$9</td>
+          <td class="num">$-76</td>
+          <td class="num">-0.19</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-04-29</td>
+          <td class="num">$39,648</td>
+          <td class="num">4,092</td>
+          <td class="num">$10</td>
+          <td class="num">$2</td>
+          <td class="num">4.11</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-05-06</td>
+          <td class="num">$39,700</td>
+          <td class="num">4,100</td>
+          <td class="num">$10</td>
+          <td class="num">$6</td>
+          <td class="num">-51.25</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-05-13</td>
+          <td class="num">$42,840</td>
+          <td class="num">4,102</td>
+          <td class="num">$10</td>
+          <td class="num">$1,570</td>
+          <td class="num">0.96</td>
+        </tr>
+        <tr>
+          <td>US</td><td>2026-05-20</td>
+          <td class="num">$2,420</td>
+          <td class="num">202</td>
+          <td class="num">$12</td>
+          <td class="num">$10</td>
+          <td class="num">1.40</td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Category profitability tiers — last 4 weeks (Tableau ground truth)</div>
+        <div class="panel-source"><span class="badge tableau">Tableau PPC Adgroup Stats</span></div></div>
+      <p class="note">Tier 1 ROAS ≥ 1.5x, Tier 2 ≥ 1.0x, Tier 3 &lt; 1.0x. ROAS = PPR revenue / marketing spend, all GBP.</p>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th>Market</th><th>Category</th>
+          <th class="num">4wk spend</th><th class="num">4wk rev</th><th class="num">ROAS</th><th>Tier</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td>UK</td><td>Landscaping</td>
+          <td class="num">£19,547</td>
+          <td class="num">£30,292</td>
+          <td class="num">1.55</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>House Cleaning</td>
+          <td class="num">£16,693</td>
+          <td class="num">£23,081</td>
+          <td class="num">1.38</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>DJ</td>
+          <td class="num">£16,174</td>
+          <td class="num">£20,233</td>
+          <td class="num">1.25</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Dog Training</td>
+          <td class="num">£15,547</td>
+          <td class="num">£20,392</td>
+          <td class="num">1.31</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Home & Domiciliary Care</td>
+          <td class="num">£15,205</td>
+          <td class="num">£19,231</td>
+          <td class="num">1.26</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Bathroom Installation & Remodel</td>
+          <td class="num">£14,156</td>
+          <td class="num">£20,297</td>
+          <td class="num">1.43</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Immigration Lawyers</td>
+          <td class="num">£12,967</td>
+          <td class="num">£19,464</td>
+          <td class="num">1.50</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Painting & Decoration - Interior</td>
+          <td class="num">£10,634</td>
+          <td class="num">£13,984</td>
+          <td class="num">1.32</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Fence & Gate Installation</td>
+          <td class="num">£10,579</td>
+          <td class="num">£11,351</td>
+          <td class="num">1.07</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Architectural Services</td>
+          <td class="num">£10,490</td>
+          <td class="num">£15,299</td>
+          <td class="num">1.46</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>House Cleaning</td>
+          <td class="num">£9,053</td>
+          <td class="num">£12,321</td>
+          <td class="num">1.36</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Catering</td>
+          <td class="num">£9,052</td>
+          <td class="num">£12,450</td>
+          <td class="num">1.38</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Patio Services</td>
+          <td class="num">£8,348</td>
+          <td class="num">£12,117</td>
+          <td class="num">1.45</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Tree Surgery & Removal</td>
+          <td class="num">£8,164</td>
+          <td class="num">£11,423</td>
+          <td class="num">1.40</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Driveway Installation</td>
+          <td class="num">£7,261</td>
+          <td class="num">£11,141</td>
+          <td class="num">1.53</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Artificial Grass Installation</td>
+          <td class="num">£7,245</td>
+          <td class="num">£9,004</td>
+          <td class="num">1.24</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Web Design</td>
+          <td class="num">£6,924</td>
+          <td class="num">£8,487</td>
+          <td class="num">1.23</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Photo Booth Hire</td>
+          <td class="num">£6,802</td>
+          <td class="num">£8,828</td>
+          <td class="num">1.30</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Wedding Photography</td>
+          <td class="num">£6,671</td>
+          <td class="num">£11,569</td>
+          <td class="num">1.73</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Limousine Hire</td>
+          <td class="num">£6,572</td>
+          <td class="num">£10,139</td>
+          <td class="num">1.54</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Personal Trainers</td>
+          <td class="num">£5,782</td>
+          <td class="num">£7,482</td>
+          <td class="num">1.29</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Gardening</td>
+          <td class="num">£4,760</td>
+          <td class="num">£5,908</td>
+          <td class="num">1.24</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Wedding Photography</td>
+          <td class="num">£4,643</td>
+          <td class="num">£7,116</td>
+          <td class="num">1.53</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Bookkeeping Services</td>
+          <td class="num">£4,398</td>
+          <td class="num">£4,483</td>
+          <td class="num">1.02</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Brick & Block Paving Services</td>
+          <td class="num">£4,257</td>
+          <td class="num">£6,695</td>
+          <td class="num">1.57</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Residential Interior Designers</td>
+          <td class="num">£3,747</td>
+          <td class="num">£6,256</td>
+          <td class="num">1.67</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Private Investigators</td>
+          <td class="num">£3,685</td>
+          <td class="num">£4,201</td>
+          <td class="num">1.14</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Garage Door Installation</td>
+          <td class="num">£3,551</td>
+          <td class="num">£4,616</td>
+          <td class="num">1.30</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Electric Charge Points Installation</td>
+          <td class="num">£3,535</td>
+          <td class="num">£4,892</td>
+          <td class="num">1.38</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Conservatory Installation</td>
+          <td class="num">£3,224</td>
+          <td class="num">£4,576</td>
+          <td class="num">1.42</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Kitchen Installation & Remodelling</td>
+          <td class="num">£3,093</td>
+          <td class="num">£4,085</td>
+          <td class="num">1.32</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>House Clearance</td>
+          <td class="num">£3,049</td>
+          <td class="num">£3,865</td>
+          <td class="num">1.27</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Boiler Installation or Replacement</td>
+          <td class="num">£2,967</td>
+          <td class="num">£3,283</td>
+          <td class="num">1.11</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Architectural Services</td>
+          <td class="num">£2,506</td>
+          <td class="num">£2,679</td>
+          <td class="num">1.07</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>End of Tenancy Cleaning</td>
+          <td class="num">£2,506</td>
+          <td class="num">£3,537</td>
+          <td class="num">1.41</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Tutoring</td>
+          <td class="num">£2,440</td>
+          <td class="num">£1,720</td>
+          <td class="num">0.71</td>
+          <td><span class="badge bad">Tier 3</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>TV Installation & Mounting</td>
+          <td class="num">£2,315</td>
+          <td class="num">£3,128</td>
+          <td class="num">1.35</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Removal Companies</td>
+          <td class="num">£1,814</td>
+          <td class="num">£3,135</td>
+          <td class="num">1.73</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Home Insulation</td>
+          <td class="num">£1,790</td>
+          <td class="num">£2,958</td>
+          <td class="num">1.65</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Marquee Hire</td>
+          <td class="num">£1,663</td>
+          <td class="num">£2,078</td>
+          <td class="num">1.25</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Air Conditioning Installation</td>
+          <td class="num">£1,412</td>
+          <td class="num">£2,564</td>
+          <td class="num">1.82</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Man & Van Services</td>
+          <td class="num">£1,224</td>
+          <td class="num">£1,301</td>
+          <td class="num">1.06</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Mould Inspection & Remediation</td>
+          <td class="num">£896</td>
+          <td class="num">£494</td>
+          <td class="num">0.55</td>
+          <td><span class="badge bad">Tier 3</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Commercial & Office Cleaning</td>
+          <td class="num">£858</td>
+          <td class="num">£1,003</td>
+          <td class="num">1.17</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>US</td><td>Security Guard Services</td>
+          <td class="num">£834</td>
+          <td class="num">£1,649</td>
+          <td class="num">1.98</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Gutter Cleaning</td>
+          <td class="num">£810</td>
+          <td class="num">£810</td>
+          <td class="num">1.00</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Immigration Lawyers</td>
+          <td class="num">£746</td>
+          <td class="num">£1,417</td>
+          <td class="num">1.90</td>
+          <td><span class="badge ok">Tier 1</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>General Plumbing</td>
+          <td class="num">£735</td>
+          <td class="num">£554</td>
+          <td class="num">0.75</td>
+          <td><span class="badge bad">Tier 3</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Asbestos Removal & Surveys</td>
+          <td class="num">£724</td>
+          <td class="num">£829</td>
+          <td class="num">1.15</td>
+          <td><span class="badge warn">Tier 2</span></td>
+        </tr>
+        <tr>
+          <td>UK</td><td>Roofing Installation or Replacement</td>
+          <td class="num">£650</td>
+          <td class="num">£303</td>
+          <td class="num">0.47</td>
+          <td><span class="badge bad">Tier 3</span></td>
+        </tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">Awaiting source · Creative half-life modelling, cross-channel arbitrage, bid landscape, macro signals, account architecture audit</div>
+        <div class="panel-source"><span class="badge awaiting">Needs longitudinal data + external</span></div></div>
+      <p class="note">Creative half-life needs ad-launch-date × CTR-decay regression — possible from
+      meta_ads + meta_insights, follow-up build. Cross-channel arbitrage needs Google Ads data not yet pulled.</p>
+    </div>
+    </div></main>
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.getElementById('btn-'+name).classList.add('active');
+}
+// table sort
+document.addEventListener('click', e => {
+  if (e.target.tagName !== 'TH') return;
+  const th = e.target;
+  const tbl = th.closest('table');
+  if (!tbl) return;
+  const idx = Array.from(th.parentNode.children).indexOf(th);
+  const numMode = th.classList.contains('num');
+  const dir = th.dataset.sort === 'asc' ? 'desc' : 'asc';
+  th.dataset.sort = dir;
+  const tbody = tbl.tBodies[0];
+  const rows = Array.from(tbody.rows);
+  rows.sort((a,b) => {
+    const av = a.cells[idx]?.innerText ?? '';
+    const bv = b.cells[idx]?.innerText ?? '';
+    if (numMode) {
+      const an = parseFloat(av.replace(/[^0-9.\-]/g,'')) || 0;
+      const bn = parseFloat(bv.replace(/[^0-9.\-]/g,'')) || 0;
+      return dir==='asc' ? an-bn : bn-an;
+    }
+    return dir==='asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
+  rows.forEach(r => tbody.appendChild(r));
+});
+</script>
+</body></html>
