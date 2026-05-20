@@ -14,8 +14,8 @@ from pathlib import Path
 
 RAW = json.loads(Path("/Users/ben.greenhouse/Downloads/meta-apr-raw.json").read_text())
 
-WINDOW_START = datetime(2026, 5, 5)
-WINDOW_END = datetime(2026, 5, 18)
+WINDOW_START = datetime(2026, 5, 6)
+WINDOW_END = datetime(2026, 5, 19)
 
 ALL_DATES = []
 d = WINDOW_START
@@ -172,7 +172,7 @@ gtot["pct"] = gtot["apr"] / gtot["ppr"] if gtot["ppr"] else None
 parts = ['<div id="tab-daily-apr" class="country-section">']
 parts.append('  <div class="section">')
 parts.append('    <div class="section-hd"><h2>📊 Daily APR — Meta (FB + IG + Other), all markets · last 14 days</h2></div>')
-parts.append(f'    <div class="section-sub">2026-05-05 → 2026-05-18 · Source: Tableau APR+ datasource · Bars colour-scaled per chart: greenest = highest, orange = lowest positive, red = negative</div>')
+parts.append(f'    <div class="section-sub">2026-05-06 → 2026-05-19 · Source: Tableau APR+ datasource · Bars colour-scaled per chart: greenest = highest, orange = lowest positive, red = negative</div>')
 
 # Global stat pills
 gcls = "pos" if gtot["apr"] >= 0 else "neg"
