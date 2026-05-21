@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth Categories — Action Plan · 21 May 2026</title>
+<style>
+  :root {
+    --bg: #0e0f13;
+    --panel: #161821;
+    --panel-2: #1c1f2b;
+    --border: #262a39;
+    --text: #e7eaf3;
+    --muted: #8a90a6;
+    --accent: #6ea8ff;
+    --green: #4ec98a;
+    --yellow: #e9c46a;
+    --orange: #f4a261;
+    --red: #ef6b6b;
+    --blue: #6ea8ff;
+    --grey: #8a90a6;
+    --black: #2a2d3a;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  .eyebrow {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .subtitle { color: var(--muted); font-size: 15px; margin: 0; }
+  h2 {
+    margin: 48px 0 14px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    margin: 24px 0 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); }
+  code, .mono {
+    font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+    font-size: 12.5px;
+  }
+
+  /* Top KPI strip */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 24px 0 8px;
+  }
+  .kpi {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .kpi .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .kpi .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .kpi .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Tier cards */
+  .tier {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .tier-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .tier-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .tier-1 { border-left: 3px solid var(--green); }
+  .tier-2 { border-left: 3px solid var(--red); }
+  .tier-3 { border-left: 3px solid var(--yellow); }
+  .tier-skip { border-left: 3px solid var(--grey); }
+  .tier-caveats { border-left: 3px solid var(--orange); }
+  .tier-desc { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 6px;
+    font-size: 13px;
+  }
+  th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  th {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: var(--panel-2);
+  }
+  tbody tr:hover { background: rgba(110,168,255,0.04); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  th.num { text-align: right; }
+  td.cat { font-weight: 500; }
+  td .market { color: var(--muted); font-size: 11px; margin-right: 6px; font-variant-numeric: tabular-nums; }
+
+  /* Action band pills */
+  .band {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .band-B { background: rgba(78,201,138,0.15); color: var(--green); }
+  .band-C { background: rgba(233,196,106,0.15); color: var(--yellow); }
+  .band-A1 { background: rgba(239,107,107,0.15); color: var(--red); }
+  .band-A2 { background: rgba(244,162,97,0.15); color: var(--orange); }
+  .band-D { background: rgba(138,144,166,0.15); color: var(--grey); }
+  .band-E { background: rgba(110,168,255,0.15); color: var(--blue); }
+  .band-F { background: rgba(42,45,58,0.6); color: var(--muted); }
+
+  .roas-good { color: var(--green); }
+  .roas-mid { color: var(--yellow); }
+  .roas-bad { color: var(--red); }
+  .roas-na { color: var(--muted); font-style: italic; }
+
+  /* Action list */
+  ul.actions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  ul.actions li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  ul.actions li:last-child { border-bottom: none; }
+  .star {
+    color: var(--yellow);
+    font-size: 13px;
+  }
+
+  /* Methodology box */
+  .meta-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 16px 0 24px;
+  }
+  .meta-box h3 { margin-top: 0; }
+  .meta-box .formula {
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .band-key {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 18px;
+    margin-top: 12px;
+    font-size: 12.5px;
+  }
+  .band-key .row { display: flex; align-items: baseline; gap: 8px; }
+
+  /* Footer */
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Anchor jump */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0 32px;
+  }
+  .toc a {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .toc a:hover { border-color: var(--accent); text-decoration: none; }
+
+  /* Caveat highlight */
+  .caveat {
+    background: rgba(244,162,97,0.06);
+    border-left: 2px solid var(--orange);
+    padding: 10px 14px;
+    margin: 8px 0;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  .caveat strong { color: var(--orange); }
+
+  @media (max-width: 720px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .band-key { grid-template-columns: 1fr; }
+    h1 { font-size: 22px; }
+    th, td { padding: 6px 8px; font-size: 12px; }
+    .container { padding: 20px 14px 60px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="eyebrow">PPC · Growth Plan · 21 May 2026</div>
+  <h1>Growth Categories — Action Plan</h1>
+  <p class="subtitle">Top-20 US + top-20 UK categories. Push more spend through tests and new tests, prioritised by Pot. Incr Rev × Action Confidence × Google ROAS Index.</p>
+</header>
+
+<div class="kpis">
+  <div class="kpi">
+    <div class="label">Categories tracked</div>
+    <div class="value">40</div>
+    <div class="sub">20 US · 20 UK</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Push-spend tier</div>
+    <div class="value" style="color: var(--green);">10</div>
+    <div class="sub">Proven Meta ROAS ≥ 0.9x</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Activate tier</div>
+    <div class="value" style="color: var(--red);">14</div>
+    <div class="sub">No Meta history yet</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Skip / pause</div>
+    <div class="value" style="color: var(--grey);">5</div>
+    <div class="sub">Meta-dead or seller-capped</div>
+  </div>
+</div>
+
+<div class="toc">
+  <a href="#methodology">Methodology</a>
+  <a href="#tier1">Tier 1 — Push spend</a>
+  <a href="#tier2">Tier 2 — Activate</a>
+  <a href="#tier3">Tier 3 — Re-test</a>
+  <a href="#skip">Skip</a>
+  <a href="#caveats">Recent-data caveats</a>
+  <a href="#us-full">US full ranking</a>
+  <a href="#uk-full">UK full ranking</a>
+</div>
+
+<section id="methodology">
+<h2>Methodology</h2>
+<div class="meta-box">
+  <div class="formula"><strong>Priority Score</strong> = Pot. Incr Rev (Mar–Dec 2026) × Action Confidence × Google ROAS Index</div>
+  <p class="muted" style="margin: 10px 0 4px;">Action Confidence weights how strongly we believe Meta can deliver. Google ROAS Index is a quality lens (capped 0.5–1.2×) — strong Google ROAS gives a +20% uplift, weak gives a discount.</p>
+  <div class="band-key">
+    <div class="row"><span class="band band-B">B SCALE</span><span class="muted">Not seller constrained · Meta ROAS ≥1.2x · weight 1.0</span></div>
+    <div class="row"><span class="band band-C">C GROW</span><span class="muted">Not seller constrained · Meta ROAS 0.9–1.2x · weight 0.85</span></div>
+    <div class="row"><span class="band band-A1">A1 ACTIVATE</span><span class="muted">No/minimal Meta · large opportunity · weight 0.40</span></div>
+    <div class="row"><span class="band band-A2">A2 ACTIVATE</span><span class="muted">No Meta spend yet · weight 0.40</span></div>
+    <div class="row"><span class="band band-D">D TEST</span><span class="muted">Meta ROAS &lt;0.9x · weight 0.30</span></div>
+    <div class="row"><span class="band band-E">E HOLD</span><span class="muted">Seller constrained · Meta ROAS ≥ break-even · weight 0.50</span></div>
+    <div class="row"><span class="band band-F">F PAUSE</span><span class="muted">Seller constrained · ROAS below break-even · weight 0.10</span></div>
+  </div>
+</div>
+</section>
+
+<!-- TIER 1 -->
+<section id="tier1">
+<div class="tier tier-1">
+  <div class="tier-head">
+    <div class="tier-title">Tier 1 — Push more spend (proven Meta winners)</div>
+    <div class="muted mono">10 categories · ~£3.0M Mar–Dec ceiling</div>
+  </div>
+  <div class="tier-desc">Already winning. The risk is being underspent, not the creative. Raise daily budgets and widen audiences on what's already firing.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Band</th>
+        <th class="num">Pot. Incr Rev</th>
+        <th class="num">Meta ROAS</th>
+        <th class="num">Google ROAS</th>
+        <th>Move</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="cat"><span class="market">US</span>Commercial &amp; Office Cleaning <span class="star">★</span></td><td><span class="band band-B">B SCALE</span></td><td class="num">£1,515,384</td><td class="num roas-good">1.47x</td><td class="num">1.68x</td><td>Biggest single ceiling — push hard</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Residential Interior Designers</td><td><span class="band band-B">B SCALE</span></td><td class="num">£282,015</td><td class="num roas-good">1.40x</td><td class="num">1.43x</td><td>Raise budget + widen</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Home &amp; Domiciliary Care</td><td><span class="band band-C">C GROW</span></td><td class="num">£303,787</td><td class="num roas-good">1.19x</td><td class="num">1.46x</td><td>Push within ROAS guardrails</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Tax Preparation</td><td><span class="band band-B">B SCALE</span></td><td class="num">£197,607</td><td class="num roas-good">1.27x</td><td class="num">1.37x</td><td>Push — seasonal, exploit window</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Immigration Lawyers</td><td><span class="band band-B">B SCALE</span></td><td class="num">£182,529</td><td class="num roas-good">1.44x</td><td class="num">1.32x</td><td>Raise budget</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Immigration Lawyers</td><td><span class="band band-C">C GROW</span></td><td class="num">£166,612</td><td class="num roas-mid">1.04x</td><td class="num">1.51x</td><td>Grow steadily</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Fence &amp; Gate Installation</td><td><span class="band band-C">C GROW</span></td><td class="num">£90,284</td><td class="num roas-mid">1.12x</td><td class="num">1.54x</td><td>Grow steadily</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Web Design</td><td><span class="band band-B">B SCALE</span></td><td class="num">£88,614</td><td class="num roas-good">1.39x</td><td class="num">1.64x</td><td>Raise budget</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Wedding Photography</td><td><span class="band band-C">C GROW</span></td><td class="num">£74,080</td><td class="num roas-mid">1.06x</td><td class="num">2.03x</td><td>Grow — strong Google signal</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Accounting</td><td><span class="band band-B">B SCALE</span></td><td class="num">£64,530</td><td class="num roas-good">1.29x</td><td class="num">1.17x</td><td>Raise budget</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- TIER 2 -->
+<section id="tier2">
+<div class="tier tier-2">
+  <div class="tier-head">
+    <div class="tier-title">Tier 2 — New activations (untested, high opportunity)</div>
+    <div class="muted mono">14 categories · ~£1.4M Mar–Dec ceiling</div>
+  </div>
+  <div class="tier-desc">A1/A2 categories with no Meta history. Each is a structured first-test: build creatives, launch a controlled ad set, learn fast.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Band</th>
+        <th class="num">Pot. Incr Rev</th>
+        <th class="num">Google ROAS</th>
+        <th>Why activate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="cat"><span class="market">US</span>Magician <span class="star">★</span></td><td><span class="band band-A1">A1</span></td><td class="num">£336,288</td><td class="num roas-good">2.41x</td><td>Top pick. Highest Google ROAS in list, big ceiling, zero Meta history</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Auditing Services</td><td><span class="band band-A1">A1</span></td><td class="num">£169,918</td><td class="num">1.62x</td><td>Strong B2B Google signal, no Meta tested</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Graphic Design</td><td><span class="band band-A1">A1</span></td><td class="num">£108,715</td><td class="num">1.41x</td><td>Untested B2B / SMB</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Business Consulting</td><td><span class="band band-A1">A1</span></td><td class="num">£105,139</td><td class="num">1.47x</td><td>Tiny historical Meta (0.30x £89) → effectively untested</td></tr>
+      <tr><td class="cat"><span class="market">US</span>HR Services</td><td><span class="band band-A1">A1</span></td><td class="num">£85,412</td><td class="num">1.52x</td><td>Untested B2B</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Wedding Celebrants</td><td><span class="band band-A1">A1</span></td><td class="num">£49,121</td><td class="num roas-good">1.76x</td><td>Strong Google, untested on Meta</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Business Consulting</td><td><span class="band band-A2">A2</span></td><td class="num">£47,055</td><td class="num">1.63x</td><td>No Meta spend yet</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Mould Inspection &amp; Remediation</td><td><span class="band band-A1">A1</span></td><td class="num">£43,087</td><td class="num">1.46x</td><td>Big in winter, untested</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Business Accounting Services</td><td><span class="band band-A2">A2</span></td><td class="num">£43,182</td><td class="num roas-good">9.87x</td><td>Low Google base inflates ratio — treat as exploratory</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Asbestos Removal &amp; Surveys</td><td><span class="band band-A2">A2</span></td><td class="num">£40,476</td><td class="num roas-good">2.30x</td><td>Compliance-driven demand, untested</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Video Design &amp; Production</td><td><span class="band band-A2">A2</span></td><td class="num">£38,017</td><td class="num">1.56x</td><td>Untested</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>HR Services</td><td><span class="band band-A2">A2</span></td><td class="num">£37,630</td><td class="num">1.72x</td><td>Untested B2B</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Aerial &amp; Drone Photography</td><td><span class="band band-A2">A2</span></td><td class="num">£34,091</td><td class="num">1.60x</td><td>Untested</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Commercial &amp; Corporate Photographers</td><td><span class="band band-A2">A2</span></td><td class="num">£30,815</td><td class="num">1.38x</td><td>Untested</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- TIER 3 -->
+<section id="tier3">
+<div class="tier tier-3">
+  <div class="tier-head">
+    <div class="tier-title">Tier 3 — Structured re-test (Meta-hard, big Google opp)</div>
+    <div class="muted mono">4 categories · ~£1.1M Mar–Dec ceiling</div>
+  </div>
+  <div class="tier-desc">Huge Google opportunity but Meta has repeatedly failed. One disciplined retry with a new angle, audience or placement — budget-capped and time-boxed. Not just more spend on the broken approach.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Band</th>
+        <th class="num">Pot. Incr Rev</th>
+        <th class="num">Meta ROAS</th>
+        <th>Retest angle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="cat"><span class="market">UK</span>Commercial &amp; Office Cleaning</td><td><span class="band band-D">D</span></td><td class="num">£451,049</td><td class="num roas-bad">0.49x</td><td>B2B intent: LinkedIn-style copy, results proof, decision-maker targeting</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Mobile Software Development</td><td><span class="band band-D">D</span></td><td class="num">£411,072</td><td class="num roas-bad">0.16x</td><td>Likely Meta-incompatible (long consideration). <strong>Defer.</strong></td></tr>
+      <tr><td class="cat"><span class="market">US</span>Motivational Speaking</td><td><span class="band band-D">D</span></td><td class="num">£192,057</td><td class="num roas-bad">0.82x</td><td>Entertainment angle — Magician proves Meta can do this if pitched right</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Marquee Hire</td><td><span class="band band-D">D</span></td><td class="num">£72,066</td><td class="num roas-bad">0.86x</td><td>Pre-summer urgency, "book early" angle</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- SKIP -->
+<section id="skip">
+<div class="tier tier-skip">
+  <div class="tier-head">
+    <div class="tier-title">Skip for now</div>
+    <div class="muted mono">5 categories</div>
+  </div>
+  <div class="tier-desc">Don't allocate budget. F PAUSE, E HOLD (seller capacity capped), or D with weak Meta history despite strong Google.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Band</th>
+        <th class="num">Pot. Incr Rev</th>
+        <th class="num">Meta ROAS</th>
+        <th>Why skip</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="cat"><span class="market">UK</span>Pressure Washing</td><td><span class="band band-F">F PAUSE</span></td><td class="num">£192,871</td><td class="num roas-bad">0.75x</td><td>Seller-constrained and sub-1x ROAS</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Security Guard Services</td><td><span class="band band-D">D</span></td><td class="num">£126,986</td><td class="num roas-bad">0.08x</td><td>Meta-dead despite Google opportunity</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Property Management</td><td><span class="band band-D">D</span></td><td class="num">£61,277</td><td class="num roas-bad">0.59x</td><td>Sustained weak Meta</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Accounting</td><td><span class="band band-D">D</span></td><td class="num">£79,028</td><td class="num roas-bad">0.51x</td><td>Sustained weak Meta despite strong Google</td></tr>
+      <tr><td class="cat"><span class="market">US</span>Security Guard Services</td><td><span class="band band-E">E HOLD</span></td><td class="num">£282,013</td><td class="num roas-mid">1.06x</td><td>Seller capacity capped — demand-side work needed</td></tr>
+      <tr><td class="cat"><span class="market">UK</span>Air Conditioning Installation</td><td><span class="band band-E">E HOLD</span></td><td class="num">£43,208</td><td class="num roas-mid">1.02x</td><td>Seller capacity capped</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- CAVEATS -->
+<section id="caveats">
+<div class="tier tier-caveats">
+  <div class="tier-head">
+    <div class="tier-title">Recent-data caveats (verify before acting)</div>
+  </div>
+  <div class="caveat">
+    <strong>US Bookkeeping</strong> sits C GROW historically (1.17x) but the 2026-05-19 14d analysis flagged it as the worst US category (−£1,106 APR on £2,012 spend). The band is stale by ~2 weeks. Don't push spend here until the decay is understood.
+  </div>
+  <div class="caveat">
+    <strong>US Wedding Photography</strong> isn't in the formal US growth top-20, but the 14d analysis flagged it as a 2× scale candidate (77% APR rate, underspent at £3k). Possible early signal that hasn't propagated into the rankings yet.
+  </div>
+  <div class="caveat">
+    <strong>Tax Preparation</strong> is seasonal. Push window matters — front-load before peak return season ends.
+  </div>
+</div>
+</section>
+
+<!-- US FULL -->
+<section id="us-full">
+<h2>US Growth — full ranking</h2>
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Category</th>
+      <th>Band</th>
+      <th class="num">Pot. Incr Rev</th>
+      <th class="num">Meta ROAS</th>
+      <th class="num">Google ROAS</th>
+      <th class="num">Google Mkt Spend</th>
+      <th class="num">Priority Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td class="cat">Commercial &amp; Office Cleaning</td><td><span class="band band-B">B SCALE</span></td><td class="num">£1,515,384</td><td class="num roas-good">1.47x</td><td class="num">1.68x</td><td class="num">£194,821</td><td class="num">1,701,699</td></tr>
+    <tr><td>2</td><td class="cat">Wedding DJ</td><td><span class="band band-C">C GROW</span></td><td class="num">£323,722</td><td class="num roas-mid">1.07x</td><td class="num">1.69x</td><td class="num">£59,584</td><td class="num">310,092</td></tr>
+    <tr><td>3</td><td class="cat">Residential Interior Designers</td><td><span class="band band-B">B SCALE</span></td><td class="num">£282,015</td><td class="num roas-good">1.40x</td><td class="num">1.43x</td><td class="num">£144,046</td><td class="num">268,131</td></tr>
+    <tr><td>4</td><td class="cat">Tax Preparation</td><td><span class="band band-B">B SCALE</span></td><td class="num">£197,607</td><td class="num roas-good">1.27x</td><td class="num">1.37x</td><td class="num">£58,175</td><td class="num">181,118</td></tr>
+    <tr><td>5</td><td class="cat">Magician</td><td><span class="band band-A1">A1</span></td><td class="num">£336,288</td><td class="num roas-na">—</td><td class="num roas-good">2.41x</td><td class="num">£95,160</td><td class="num">161,418</td></tr>
+    <tr><td>6</td><td class="cat">Immigration Lawyers</td><td><span class="band band-B">B SCALE</span></td><td class="num">£182,529</td><td class="num roas-good">1.44x</td><td class="num">1.32x</td><td class="num">£131,558</td><td class="num">160,241</td></tr>
+    <tr><td>7</td><td class="cat">Security Guard Services</td><td><span class="band band-E">E HOLD</span></td><td class="num">£282,013</td><td class="num roas-mid">1.06x</td><td class="num">1.57x</td><td class="num">£696,341</td><td class="num">147,759</td></tr>
+    <tr><td>8</td><td class="cat">Mobile Software Development</td><td><span class="band band-D">D</span></td><td class="num">£411,072</td><td class="num roas-bad">0.16x</td><td class="num">1.61x</td><td class="num">£388,977</td><td class="num">132,314</td></tr>
+    <tr><td>9</td><td class="cat">Web Design</td><td><span class="band band-B">B SCALE</span></td><td class="num">£88,614</td><td class="num roas-good">1.39x</td><td class="num">1.64x</td><td class="num">£723,351</td><td class="num">96,668</td></tr>
+    <tr><td>10</td><td class="cat">Bookkeeping Services</td><td><span class="band band-C">C GROW</span></td><td class="num">£79,316</td><td class="num roas-mid">1.17x</td><td class="num">1.75x</td><td class="num">£364,245</td><td class="num">78,462</td></tr>
+    <tr><td>11</td><td class="cat">Auditing Services</td><td><span class="band band-A1">A1</span></td><td class="num">£169,918</td><td class="num roas-na">—</td><td class="num">1.62x</td><td class="num">£36,876</td><td class="num">73,533</td></tr>
+    <tr><td>12</td><td class="cat">Motivational Speaking</td><td><span class="band band-D">D</span></td><td class="num">£192,057</td><td class="num roas-bad">0.82x</td><td class="num">2.17x</td><td class="num">£185,099</td><td class="num">69,141</td></tr>
+    <tr><td>13</td><td class="cat">Accounting</td><td><span class="band band-B">B SCALE</span></td><td class="num">£64,530</td><td class="num roas-good">1.29x</td><td class="num">1.17x</td><td class="num">£89,597</td><td class="num">50,207</td></tr>
+    <tr><td>14</td><td class="cat">Business Consulting</td><td><span class="band band-A1">A1</span></td><td class="num">£105,139</td><td class="num roas-bad">0.30x</td><td class="num">1.47x</td><td class="num">£103,365</td><td class="num">41,296</td></tr>
+    <tr><td>15</td><td class="cat">Graphic Design</td><td><span class="band band-A1">A1</span></td><td class="num">£108,715</td><td class="num roas-na">—</td><td class="num">1.41x</td><td class="num">£44,941</td><td class="num">40,737</td></tr>
+    <tr><td>16</td><td class="cat">HR Services</td><td><span class="band band-A1">A1</span></td><td class="num">£85,412</td><td class="num roas-na">—</td><td class="num">1.52x</td><td class="num">£48,357</td><td class="num">34,517</td></tr>
+    <tr><td>17</td><td class="cat">Wedding Planning</td><td><span class="band band-D">D</span></td><td class="num">£63,780</td><td class="num roas-bad">0.27x</td><td class="num">1.41x</td><td class="num">£34,564</td><td class="num">17,962</td></tr>
+    <tr><td>18</td><td class="cat">Video Design &amp; Production</td><td><span class="band band-A2">A2</span></td><td class="num">£38,017</td><td class="num roas-na">—</td><td class="num">1.56x</td><td class="num">£105,426</td><td class="num">15,784</td></tr>
+    <tr><td>19</td><td class="cat">Aerial &amp; Drone Photography</td><td><span class="band band-A2">A2</span></td><td class="num">£34,091</td><td class="num roas-na">—</td><td class="num">1.60x</td><td class="num">£34,625</td><td class="num">14,537</td></tr>
+    <tr><td>20</td><td class="cat">Commercial &amp; Corporate Photographers</td><td><span class="band band-A2">A2</span></td><td class="num">£30,815</td><td class="num roas-na">—</td><td class="num">1.38x</td><td class="num">£89,495</td><td class="num">11,360</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- UK FULL -->
+<section id="uk-full">
+<h2>UK Growth — full ranking</h2>
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Category</th>
+      <th>Band</th>
+      <th class="num">Pot. Incr Rev</th>
+      <th class="num">Meta ROAS</th>
+      <th class="num">Google ROAS</th>
+      <th class="num">Google Mkt Spend</th>
+      <th class="num">Priority Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td class="cat">Home &amp; Domiciliary Care</td><td><span class="band band-C">C GROW</span></td><td class="num">£303,787</td><td class="num roas-good">1.19x</td><td class="num">1.46x</td><td class="num">£550,806</td><td class="num">251,725</td></tr>
+    <tr><td>2</td><td class="cat">Commercial &amp; Office Cleaning</td><td><span class="band band-D">D</span></td><td class="num">£451,049</td><td class="num roas-bad">0.49x</td><td class="num">1.63x</td><td class="num">£241,807</td><td class="num">147,247</td></tr>
+    <tr><td>3</td><td class="cat">Immigration Lawyers</td><td><span class="band band-C">C GROW</span></td><td class="num">£166,612</td><td class="num roas-mid">1.04x</td><td class="num">1.51x</td><td class="num">£193,141</td><td class="num">142,947</td></tr>
+    <tr><td>4</td><td class="cat">Fence &amp; Gate Installation</td><td><span class="band band-C">C GROW</span></td><td class="num">£90,284</td><td class="num roas-mid">1.12x</td><td class="num">1.54x</td><td class="num">£210,185</td><td class="num">78,898</td></tr>
+    <tr><td>5</td><td class="cat">Wedding Photography</td><td><span class="band band-C">C GROW</span></td><td class="num">£74,080</td><td class="num roas-mid">1.06x</td><td class="num">2.03x</td><td class="num">£80,809</td><td class="num">75,561</td></tr>
+    <tr><td>6</td><td class="cat">End of Tenancy Cleaning</td><td><span class="band band-C">C GROW</span></td><td class="num">£53,012</td><td class="num roas-mid">0.93x</td><td class="num">1.62x</td><td class="num">£112,900</td><td class="num">48,803</td></tr>
+    <tr><td>7</td><td class="cat">Security Guard Services</td><td><span class="band band-D">D</span></td><td class="num">£126,986</td><td class="num roas-bad">0.08x</td><td class="num">1.71x</td><td class="num">£89,538</td><td class="num">43,305</td></tr>
+    <tr><td>8</td><td class="cat">Home Insulation</td><td><span class="band band-C">C GROW</span></td><td class="num">£44,412</td><td class="num roas-mid">0.99x</td><td class="num">1.66x</td><td class="num">£151,796</td><td class="num">41,687</td></tr>
+    <tr><td>9</td><td class="cat">Marquee Hire</td><td><span class="band band-D">D</span></td><td class="num">£72,066</td><td class="num roas-bad">0.86x</td><td class="num">1.66x</td><td class="num">£31,368</td><td class="num">23,924</td></tr>
+    <tr><td>10</td><td class="cat">Pressure Washing</td><td><span class="band band-F">F PAUSE</span></td><td class="num">£192,871</td><td class="num roas-bad">0.75x</td><td class="num">1.92x</td><td class="num">£117,435</td><td class="num">23,145</td></tr>
+    <tr><td>11</td><td class="cat">Wedding Celebrants</td><td><span class="band band-A1">A1</span></td><td class="num">£49,121</td><td class="num roas-na">—</td><td class="num roas-good">1.76x</td><td class="num">£33,016</td><td class="num">23,034</td></tr>
+    <tr><td>12</td><td class="cat">Accounting</td><td><span class="band band-D">D</span></td><td class="num">£79,028</td><td class="num roas-bad">0.51x</td><td class="num">1.45x</td><td class="num">£370,473</td><td class="num">22,863</td></tr>
+    <tr><td>13</td><td class="cat">Business Accounting Services</td><td><span class="band band-A2">A2</span></td><td class="num">£43,182</td><td class="num roas-na">—</td><td class="num roas-good">9.87x</td><td class="num">£928</td><td class="num">20,727</td></tr>
+    <tr><td>14</td><td class="cat">Business Consulting</td><td><span class="band band-A2">A2</span></td><td class="num">£47,055</td><td class="num roas-na">—</td><td class="num">1.63x</td><td class="num">£35,834</td><td class="num">20,401</td></tr>
+    <tr><td>15</td><td class="cat">Air Conditioning Installation</td><td><span class="band band-E">E HOLD</span></td><td class="num">£43,208</td><td class="num roas-mid">1.02x</td><td class="num">1.41x</td><td class="num">£108,241</td><td class="num">20,261</td></tr>
+    <tr><td>16</td><td class="cat">Asbestos Removal &amp; Surveys</td><td><span class="band band-A2">A2</span></td><td class="num">£40,476</td><td class="num roas-na">—</td><td class="num roas-good">2.30x</td><td class="num">£12,807</td><td class="num">19,428</td></tr>
+    <tr><td>17</td><td class="cat">Solar Panel Installation</td><td><span class="band band-C">C GROW</span></td><td class="num">£29,291</td><td class="num roas-mid">0.95x</td><td class="num">1.14x</td><td class="num">£81,019</td><td class="num">18,843</td></tr>
+    <tr><td>18</td><td class="cat">Property Management</td><td><span class="band band-D">D</span></td><td class="num">£61,277</td><td class="num roas-bad">0.59x</td><td class="num">1.49x</td><td class="num">£92,972</td><td class="num">18,310</td></tr>
+    <tr><td>19</td><td class="cat">HR Services</td><td><span class="band band-A2">A2</span></td><td class="num">£37,630</td><td class="num roas-na">—</td><td class="num">1.72x</td><td class="num">£42,535</td><td class="num">17,300</td></tr>
+    <tr><td>20</td><td class="cat">Mould Inspection &amp; Remediation</td><td><span class="band band-A1">A1</span></td><td class="num">£43,087</td><td class="num roas-na">—</td><td class="num">1.46x</td><td class="num">£67,318</td><td class="num">16,780</td></tr>
+  </tbody>
+</table>
+</section>
+
+<h2>Suggested order of operations this week</h2>
+<ul class="actions">
+  <li><span class="band band-B">1</span>Raise budgets on the 6 US B SCALE winners. Start with <strong>US Commercial &amp; Office Cleaning</strong> (£1.5M ceiling).</li>
+  <li><span class="band band-A1">2</span>Launch <strong>US Magician</strong> activation (A1, £336k, Google ROAS 2.41x). Top untested pick.</li>
+  <li><span class="band band-A1">3</span>Launch <strong>US Auditing</strong> and <strong>UK Wedding Celebrants</strong> in parallel.</li>
+  <li><span class="band band-D">4</span>Brief the <strong>UK Commercial &amp; Office Cleaning</strong> retest separately — new angle, capped budget, time-boxed.</li>
+  <li><span class="band band-F">5</span>Park everything in Skip. Don't allocate budget to UK Pressure Washing, UK Security Guard, UK Accounting, UK Property Management.</li>
+</ul>
+
+<footer>
+  Snapshot 2026-05-21 · Pot. Incr Rev window Mar–Dec 2026 · Meta ROAS window H2 2025 + Jan–Feb 2026 · Generated alongside <a href="https://bengreenhouse-collab.github.io/meta-reporting/18may2026/">latest weekly dashboard</a>
+</footer>
+
+</div>
+</body>
+</html>
