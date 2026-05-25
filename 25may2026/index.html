@@ -1840,11 +1840,11 @@ function ovBigBar(vals, isApr, colorFn, fmtFn){
 
 function buildOverviewTab(){
   // Aggregate 8-week totals across all categories/markets
-  // KPI pills aggregate Core markets only (UK+US+CA) to match top-level dashboard
+  // KPI pills aggregate ALL markets to match Tableau headline
   const wkS=[0,0,0,0,0,0,0,0], wkR=[0,0,0,0,0,0,0,0];
   const CORE_KEYS=['Kingdom','States','Canada'];
   CAT_DATA.forEach(d=>{
-    if(!CORE_KEYS.some(k=>d.cty.includes(k))) return;
+    // (all markets included)
     arr8(d.spends8).forEach((v,i)=>wkS[i]+=v);
     arr8(d.revs8).forEach((v,i)=>wkR[i]+=v);
   });
@@ -1891,7 +1891,7 @@ function buildOverviewTab(){
     return {lbl:m.lbl, spend:ws, rev:wr, roas:ws>0?wr/ws:0, apr:wr-ws,
             prevSpend:prevS, prevRev:prevR, prevApr:prevA, prevRoas:prevRo, order:i};
   }).filter(Boolean);
-  // Combined totals = Core markets only (UK+US+CA) to match top-level dashboard
+  // Combined totals = ALL markets to match Tableau headline
   const _CORE=['Kingdom','States','Canada'];
   const _coreWTD=WTD_DATA.filter(d=>_CORE.some(k=>d.cty.includes(k)));
   const wTS=_coreWTD.reduce((a,d)=>a+d.spend,0), wTR=_coreWTD.reduce((a,d)=>a+d.rev,0);
