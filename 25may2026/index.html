@@ -1848,6 +1848,10 @@ function buildOverviewTab(){
     arr8(d.spends8).forEach((v,i)=>wkS[i]+=v);
     arr8(d.revs8).forEach((v,i)=>wkR[i]+=v);
   });
+  // Override latest-week totals with WTD_DATA (no spend>=10 filter — matches Tableau exactly)
+  let _wtdS=0, _wtdR=0;
+  WTD_DATA.forEach(d=>{ _wtdS+=d.spend||0; _wtdR+=d.rev||0; });
+  wkS[7]=_wtdS; wkR[7]=_wtdR;
   const wkApr=wkS.map((s,i)=>wkR[i]-s);
   const wkRoas=wkS.map((s,i)=>s>0?wkR[i]/s:0);
 
