@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meta Ads Tick-List — Rest of World — w/e 25 May 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0c1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;min-height:100vh;padding-bottom:140px}
+.top-bar{height:4px;background:linear-gradient(90deg,#E85555,#FA9750,#F7BF53,#47BF9C,#2D7AF1)}
+.header{padding:18px 24px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.header h1{font-size:20px;font-weight:700;color:#fff}
+.header .meta{color:#64748b;font-size:12px;margin-top:4px}
+.header .meta span{margin-right:16px}
+.content{padding:18px 24px}
+.section{margin-bottom:28px;border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:auto}
+.section-hd{padding:12px 16px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.02)}
+.section-hd h2{font-size:14px;font-weight:700;color:#fff;flex:1}
+.section-hd .sub{font-size:11px;color:#64748b;font-weight:400;margin-left:8px}
+.section-hd .count{font-size:11px;color:#94a3b8;font-weight:500}
+.section-hd .toggle-all{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#e2e8f0;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:500}
+.section-hd .toggle-all:hover{background:rgba(255,255,255,.1)}
+table{width:100%;border-collapse:collapse}
+thead th{background:rgba(255,255,255,.03);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.035)}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+tbody tr.checked{background:rgba(16,185,129,.04)}
+td{padding:10px;vertical-align:top;font-size:12px}
+td.mkt{font-weight:600;color:#94a3b8;width:42px;vertical-align:middle}
+td.idx{color:#64748b;width:30px;text-align:center;vertical-align:middle}
+td.check{width:42px;text-align:center;vertical-align:middle}
+input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:#10b981}
+td.name{font-size:11px;color:#e2e8f0;line-height:1.4;max-width:260px;vertical-align:middle}
+td.name .cat{font-size:10px;color:#475569;margin-top:1px}
+.flag-pill{display:inline-block;font-size:9px;color:#f97316;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.25);padding:1px 5px;border-radius:3px;margin-left:6px}
+
+.sp-cell{min-width:280px}
+.sp-wrap{display:flex;align-items:flex-start;gap:10px}
+.sp-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;flex:1;min-width:240px}
+.sp-col{display:flex;flex-direction:column;align-items:stretch;gap:2px;min-width:0}
+.sp-col .wk{font-size:8px;color:#334155;text-align:center;text-transform:uppercase;letter-spacing:.2px;line-height:1.1}
+.sp-col .bar-wrap{height:22px;display:flex;align-items:flex-end}
+.sp-col .bar{width:100%;border-radius:1px 1px 0 0;opacity:.55;min-height:2px}
+.sp-col.latest .bar{opacity:1}
+.sp-col .num{font-size:9px;color:#94a3b8;text-align:center;font-variant-numeric:tabular-nums;line-height:1.2;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-col.zero .num{color:#334155}
+.sp-col.latest .num{color:#fff;font-weight:700}
+
+.sp-col .bar-apr-wrap{height:28px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.sp-col .bar-apr-wrap::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(255,255,255,.08)}
+.sp-col .bar-apr-up{width:100%;border-radius:1px 1px 0 0;opacity:.55;min-height:1px;margin-top:auto;background:#10b981}
+.sp-col .bar-apr-down{width:100%;border-radius:0 0 1px 1px;opacity:.55;min-height:1px;margin-bottom:auto;background:#ef4444}
+.sp-col.latest .bar-apr-up,.sp-col.latest .bar-apr-down{opacity:1}
+
+.sp-summary{font-size:11px;color:#e2e8f0;font-variant-numeric:tabular-nums;font-weight:600;min-width:56px;text-align:right;white-space:nowrap;padding-top:14px}
+.sp-summary.neg{color:#ef4444}
+.sp-summary.pos{color:#10b981}
+.sp-trend{font-size:10px;margin-left:2px}
+
+.footer{position:fixed;bottom:0;left:0;right:0;background:rgba(10,12,26,.95);backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.08);padding:14px 24px;display:flex;gap:14px;align-items:center;z-index:100}
+.footer .summary{flex:1;color:#94a3b8;font-size:12px}
+.footer .summary strong{color:#fff;font-size:14px}
+.footer button{background:#3b82f6;color:#fff;border:none;padding:11px 22px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600}
+.footer button:hover{background:#2563eb}
+.footer button.secondary{background:rgba(255,255,255,.06);color:#e2e8f0}
+.footer button.secondary:hover{background:rgba(255,255,255,.1)}
+#output-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
+#output-modal.open{display:flex}
+#output-modal .box{background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:24px;max-width:680px;width:90%;max-height:80vh;overflow:auto}
+#output-modal h3{color:#fff;margin-bottom:12px;font-size:16px}
+#output-modal p{color:#94a3b8;font-size:13px;margin-bottom:14px;line-height:1.5}
+#output-modal pre{background:#0a0c1a;border:1px solid rgba(255,255,255,.08);padding:14px;border-radius:6px;color:#10b981;font-size:12px;line-height:1.5;white-space:pre-wrap;word-break:break-all;font-family:'SF Mono',Menlo,monospace}
+#output-modal .actions{margin-top:14px;display:flex;gap:10px;justify-content:flex-end}
+#output-modal button{padding:9px 16px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;border:none}
+#output-modal .primary{background:#10b981;color:#fff}
+#output-modal .secondary{background:rgba(255,255,255,.08);color:#e2e8f0}
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="header">
+  <h1>Meta Ads Action Tick-List — 🇬🇧 REST OF WORLD (US · CA · ZA · AU · NZ · IE · DE · FR)</h1>
+  <div class="meta">
+    <span>w/e 25 May 2026</span>
+    <span>175 active ad sets analysed (across 8 markets)</span>
+    <span style="color:#10b981" id="hdr-action-ct">— proposed actions</span>
+    <span style="color:#64748b">Each metric shows 8 weeks (oldest left → latest right)</span>
+  </div>
+</div>
+
+<div class="content" id="content"></div>
+
+<div class="footer">
+  <div class="summary"><strong id="approved-count">0</strong> approved · <span id="approved-breakdown">none</span></div>
+  <button class="secondary" onclick="selectAll()">Tick all</button>
+  <button class="secondary" onclick="clearAll()">Clear all</button>
+  <button onclick="generateOutput()">Copy approved actions</button>
+</div>
+
+<div id="output-modal" onclick="if(event.target.id==='output-modal')this.classList.remove('open')">
+  <div class="box">
+    <h3>Approved actions</h3>
+    <p>Copy this string and paste it back into Claude. It will execute exactly these actions and skip the rest.</p>
+    <pre id="output-text"></pre>
+    <div class="actions">
+      <button class="secondary" onclick="document.getElementById('output-modal').classList.remove('open')">Close</button>
+      <button class="primary" id="modal-copy-btn" onclick="copyOutput()">Copy to clipboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SECTIONS = [{"key": "pause", "label": "\ud83d\udd34 PAUSE", "sub": "New launch APR<0 \u00b7 ROAS=0 \u00b7 never profitable \u00b7 APR<\u2212100 \u00b7 or ROAS<0.7 2wk (with R1/R2 guards)", "color": "#ef4444", "rows": [{"idx": 1, "mkt": "US", "name": "1556_Dog Training_US_UGC_Katie_AI_RingCamera", "cat": "Dog Training", "apr": -295.62, "roas_last": 0.3, "roas_prev": 0.0, "spend_last": 420.26, "spend_prev": 0.0, "sym": "$", "roas0_flag": false, "reason": "APR<-100", "adset": {"roas8": "0,0,0,0,0,0,0,0.3", "spends8": "0,0,0,0,0,0,0,420.26", "aprs8": "0,0,0,0,0,0,0,-295.62"}}, {"idx": 2, "mkt": "ZA", "name": "1056_Wedding Photography_ZA_Static_AdFactory_3Styles \u2013 Copy", "cat": "Wedding Photography", "apr": -182.02, "roas_last": 0.42, "roas_prev": 1.33, "spend_last": 311.94, "spend_prev": 143.13, "sym": "R", "roas0_flag": false, "reason": "APR<-100", "adset": {"roas8": "0,0,0,0,0,0,1.33,0.42", "spends8": "0,0,0,0,0,0,143.13,311.94", "aprs8": "0,0,0,0,0,0,47.89,-182.02"}}, {"idx": 3, "mkt": "CA", "name": "152_Security Guard Services_CA_Static_AdFactory_3Styles", "cat": "Security Guard Services", "apr": -170.52, "roas_last": 0.62, "roas_prev": 0.0, "spend_last": 449.15, "spend_prev": 0.0, "sym": "\u00a3", "roas0_flag": false, "reason": "APR<-100", "adset": {"roas8": "0,0,0,0,0,0,0,0.62", "spends8": "0,0,0,0,0,0,0,449.15", "aprs8": "0,0,0,0,0,0,0,-170.52"}}, {"idx": 4, "mkt": "AU", "name": "171_Catering_AU_Static_AdFactory_3Styles", "cat": "Catering", "apr": -152.39, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 152.39, "spend_prev": 0.0, "sym": "A$", "roas0_flag": true, "reason": "APR<-100", "adset": {"roas8": "0,0,0,0,0,0,0,0.0", "spends8": "0,0,0,0,0,0,0,152.39", "aprs8": "0,0,0,0,0,0,0,-152.39"}}, {"idx": 5, "mkt": "AU", "name": "1505_Web_Design_AU_Static_AdFactory_3Styles", "cat": "Web Design", "apr": -150.22, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 150.22, "spend_prev": 0.0, "sym": "A$", "roas0_flag": true, "reason": "APR<-100", "adset": {"roas8": "0,0,0,0,0,0,0,0.0", "spends8": "0,0,0,0,0,0,0,150.22", "aprs8": "0,0,0,0,0,0,0,-150.22"}}, {"idx": 6, "mkt": "AU", "name": "1785_CCTV_Installation_AU_Static_AdFactory_3Styles", "cat": "CCTV Installation", "apr": -131.44, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 131.44, "spend_prev": 0.0, "sym": "A$", "roas0_flag": true, "reason": "APR<-100", "adset": {"roas8": "0,0,0,0,0,0,0,0.0", "spends8": "0,0,0,0,0,0,0,131.44", "aprs8": "0,0,0,0,0,0,0,-131.44"}}, {"idx": 7, "mkt": "AU", "name": "1056_Wedding_Photography_AU_Static_AdFactory_3Styles", "cat": "Wedding Photography", "apr": -85.9, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 85.9, "spend_prev": 0.0, "sym": "A$", "roas0_flag": true, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.0", "spends8": "0,0,0,0,0,0,0,85.9", "aprs8": "0,0,0,0,0,0,0,-85.9"}}, {"idx": 8, "mkt": "US", "name": "1820_Bookkeeping_US_Static_BenAIbulk_Tap", "cat": "Bookkeeping Services", "apr": -83.8, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 83.8, "spend_prev": 92.47, "sym": "$", "roas0_flag": true, "reason": "ROAS 0.00->0.00", "adset": {"roas8": "1.99,0.35,0.77,0.0,0.93,1.11,0.0,0.0", "spends8": "193.35,188.4,109.64,76.24,74.64,93.64,92.47,83.8", "aprs8": "191.21,-123.27,-25.25,-76.24,-5.41,10.49,-92.47,-83.8"}}, {"idx": 9, "mkt": "AU", "name": "37_Architectural_Services_AU_Static_AdFactory_3Styles", "cat": "Architectural Services", "apr": -56.93, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 56.93, "spend_prev": 0.0, "sym": "A$", "roas0_flag": true, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.0", "spends8": "0,0,0,0,0,0,0,56.93", "aprs8": "0,0,0,0,0,0,0,-56.93"}}, {"idx": 10, "mkt": "CA", "name": "1056_Wedding Photography_CA_Static_AdFactory_AllTemplates_1 \u2013 Copy", "cat": "Wedding Photography", "apr": -54.58, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 54.58, "spend_prev": 14.39, "sym": "\u00a3", "roas0_flag": true, "reason": "never profitable 5wks", "adset": {"roas8": "0,0,0,0.0,0.0,0.0,0.0,0.0", "spends8": "0,0,0,6.67,4.28,6.06,14.39,54.58", "aprs8": "0,0,0,-6.67,-4.28,-6.06,-14.39,-54.58"}}, {"idx": 11, "mkt": "AU", "name": "2067_Motivational_Speaking_AU_Static_AdFactory_3Styles", "cat": "Motivational Speaking", "apr": -52.64, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 52.64, "spend_prev": 0.0, "sym": "A$", "roas0_flag": true, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.0", "spends8": "0,0,0,0,0,0,0,52.64", "aprs8": "0,0,0,0,0,0,0,-52.64"}}, {"idx": 12, "mkt": "AU", "name": "1670_Home_Domiciliary_Care_AU_Static_AdFactory_3Styles", "cat": "Home & Domiciliary Care", "apr": -52.31, "roas_last": 0.26, "roas_prev": 0.0, "spend_last": 71.07, "spend_prev": 0.0, "sym": "A$", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.26", "spends8": "0,0,0,0,0,0,0,71.07", "aprs8": "0,0,0,0,0,0,0,-52.31"}}, {"idx": 13, "mkt": "CA", "name": "171_Catering_CA_Static_AdFactory_3Styles", "cat": "Catering", "apr": -39.74, "roas_last": 0.79, "roas_prev": 0.0, "spend_last": 191.49, "spend_prev": 0.0, "sym": "\u00a3", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.79", "spends8": "0,0,0,0,0,0,0,191.49", "aprs8": "0,0,0,0,0,0,0,-39.74"}}, {"idx": 14, "mkt": "CA", "name": "1670_Home & Dom_CA_Static_AdFactory_AllTemplates_2", "cat": "Home & Domiciliary Care", "apr": -39.68, "roas_last": 0.88, "roas_prev": 0.0, "spend_last": 322.69, "spend_prev": 0.0, "sym": "\u00a3", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.88", "spends8": "0,0,0,0,0,0,0,322.69", "aprs8": "0,0,0,0,0,0,0,-39.68"}}, {"idx": 15, "mkt": "US", "name": "989_Magician_US_Static_AdFactory_3Styles", "cat": "Magician", "apr": -38.58, "roas_last": 0.72, "roas_prev": 0.0, "spend_last": 135.63, "spend_prev": 0.0, "sym": "$", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.72", "spends8": "0,0,0,0,0,0,0,135.63", "aprs8": "0,0,0,0,0,0,0,-38.58"}}, {"idx": 16, "mkt": "AU", "name": "1141_Commercial_Office_Cleaning_AU_Static_AdFactory_3Styles", "cat": "Commercial & Office Cleaning", "apr": -30.5, "roas_last": 0.62, "roas_prev": 0.0, "spend_last": 79.97, "spend_prev": 0.0, "sym": "A$", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.62", "spends8": "0,0,0,0,0,0,0,79.97", "aprs8": "0,0,0,0,0,0,0,-30.5"}}, {"idx": 17, "mkt": "NZ", "name": "136_Property_Management_NZ_Static_AdFactory_3Styles", "cat": "Property Management", "apr": -26.39, "roas_last": 0.65, "roas_prev": 0.0, "spend_last": 75.26, "spend_prev": 0.0, "sym": "NZ$", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.65", "spends8": "0,0,0,0,0,0,0,75.26", "aprs8": "0,0,0,0,0,0,0,-26.39"}}, {"idx": 18, "mkt": "CA", "name": "136_Property Management_CA_Static_AdFactory_3Styles", "cat": "Property Management", "apr": -23.97, "roas_last": 0.95, "roas_prev": 0.0, "spend_last": 456.34, "spend_prev": 0.0, "sym": "\u00a3", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.95", "spends8": "0,0,0,0,0,0,0,456.34", "aprs8": "0,0,0,0,0,0,0,-23.97"}}, {"idx": 19, "mkt": "AU", "name": "1820_Bookkeeping_Services_AU_Static_AdFactory_3Styles", "cat": "Bookkeeping Services", "apr": -21.93, "roas_last": 0.85, "roas_prev": 0.0, "spend_last": 147.64, "spend_prev": 0.0, "sym": "A$", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.85", "spends8": "0,0,0,0,0,0,0,147.64", "aprs8": "0,0,0,0,0,0,0,-21.93"}}, {"idx": 20, "mkt": "AU", "name": "35_General_Builders_AU_Static_AdFactory_3Styles", "cat": "General Builders", "apr": -21.31, "roas_last": 0.62, "roas_prev": 0.0, "spend_last": 56.09, "spend_prev": 0.0, "sym": "A$", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.62", "spends8": "0,0,0,0,0,0,0,56.09", "aprs8": "0,0,0,0,0,0,0,-21.31"}}, {"idx": 21, "mkt": "NZ", "name": "1069_Driveway_Installation_NZ_Static_AdFactory_3Styles", "cat": "Driveway Installation", "apr": -20.54, "roas_last": 0.76, "roas_prev": 0.0, "spend_last": 87.0, "spend_prev": 0.0, "sym": "NZ$", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.76", "spends8": "0,0,0,0,0,0,0,87.0", "aprs8": "0,0,0,0,0,0,0,-20.54"}}, {"idx": 22, "mkt": "CA", "name": "983_Magician_CA_Static_AdFactory_3Styles", "cat": "Face Painting", "apr": -18.14, "roas_last": 0.96, "roas_prev": 0.0, "spend_last": 454.18, "spend_prev": 0.0, "sym": "\u00a3", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.96", "spends8": "0,0,0,0,0,0,0,454.18", "aprs8": "0,0,0,0,0,0,0,-18.14"}}, {"idx": 23, "mkt": "CA", "name": "1102_Patio Services_CA_Static_AdFactory_AllTemplates_2", "cat": "Patio Services", "apr": -10.04, "roas_last": 0.97, "roas_prev": 0.0, "spend_last": 319.24, "spend_prev": 0.0, "sym": "\u00a3", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.97", "spends8": "0,0,0,0,0,0,0,319.24", "aprs8": "0,0,0,0,0,0,0,-10.04"}}, {"idx": 24, "mkt": "NZ", "name": "1505_Web_Design_NZ_Static_AdFactory_3Styles", "cat": "Web Design", "apr": -3.31, "roas_last": 0.94, "roas_prev": 0.0, "spend_last": 58.79, "spend_prev": 0.0, "sym": "NZ$", "roas0_flag": false, "reason": "Rule A1 new launch APR<0", "adset": {"roas8": "0,0,0,0,0,0,0,0.94", "spends8": "0,0,0,0,0,0,0,58.79", "aprs8": "0,0,0,0,0,0,0,-3.31"}}]}, {"key": "d50", "label": "\ud83d\udfe0 \u221250% BUDGET", "sub": "Recoverable bleeder \u00b7 scaled-too-fast \u00b7 R1 recoverable \u00b7 or ROAS 0.7-0.9 2wk", "color": "#f97316", "rows": [{"idx": 1, "mkt": "CA", "name": "1069_Driveway Installation_CA_Static_AdFactory_AllTemplates_1", "cat": "Driveway Installation", "apr": -198.41, "roas_last": 0.53, "roas_prev": 1.16, "spend_last": 424.16, "spend_prev": 369.77, "sym": "\u00a3", "roas0_flag": false, "reason": "SF1 scaled too fast: latest 1.54x, was profitable 5 of 5 prior wks", "adset": {"roas8": "0,0,2.38,1.43,1.91,1.19,1.16,0.53", "spends8": "0,0,164.65,279.1,281.01,278.71,369.77,424.16", "aprs8": "0,0,226.63,120.08,256.21,53.22,59.34,-198.41"}}, {"idx": 2, "mkt": "US", "name": "1556_Dog Training_US_Static_2", "cat": "Dog Training", "apr": -142.76, "roas_last": 0.48, "roas_prev": 1.0, "spend_last": 273.61, "spend_prev": 274.5, "sym": "$", "roas0_flag": false, "reason": "R1 recoverable (71% profitable) \u2014 was APR<-100", "adset": {"roas8": "1.33,1.11,1.28,0.74,0.92,1.22,1.0,0.48", "spends8": "272.81,260.8,270.22,251.53,258.29,259.96,274.5,273.61", "aprs8": "90.02,28.83,76.77,-66.11,-20.75,56.73,0.51,-142.76"}}, {"idx": 3, "mkt": "US", "name": "995_Photo Booth Hire_US_Static_BenAIbulk_WTB", "cat": "Photo Booth Hire", "apr": -29.63, "roas_last": 0.88, "roas_prev": 0.98, "spend_last": 254.16, "spend_prev": 256.26, "sym": "$", "roas0_flag": false, "reason": "ROAS 0.98->0.88", "adset": {"roas8": "1.07,1.33,1.34,1.6,0.82,1.28,0.98,0.88", "spends8": "337.32,332.07,335.9,325.89,257.02,249.19,256.26,254.16", "aprs8": "25.18,109.88,112.65,194.76,-46.57,70.76,-4.98,-29.63"}}, {"idx": 4, "mkt": "US", "name": "152_Security Guard Services_US_UGC_Phase14 Weekend -80%", "cat": "Security Guard Services", "apr": -178.47, "roas_last": 0.28, "roas_prev": 2.07, "spend_last": 248.86, "spend_prev": 208.2, "sym": "$", "roas0_flag": false, "reason": "SF1 scaled too fast: latest 1.34x, was profitable 5 of 7 prior wks", "adset": {"roas8": "0.63,0.4,2.53,1.93,1.74,3.23,2.07,0.28", "spends8": "411.98,137.08,139.13,131.92,138.15,132.33,208.2,248.86", "aprs8": "-152.68,-82.63,213.09,122.05,101.58,295.19,223.58,-178.47"}}, {"idx": 5, "mkt": "US", "name": "1212_House Cleaning_US_Static_Template5_BULK", "cat": "House Cleaning", "apr": -51.51, "roas_last": 0.76, "roas_prev": 0.68, "spend_last": 215.49, "spend_prev": 211.06, "sym": "$", "roas0_flag": false, "reason": "ROAS 0.68->0.76", "adset": {"roas8": "0.65,0.67,1.23,0.72,1.39,1.53,0.68,0.76", "spends8": "202.6,189.19,192.12,181.47,178.26,204.07,211.06,215.49", "aprs8": "-71.19,-62.3,44.14,-50.83,68.7,107.37,-67.88,-51.51"}}, {"idx": 6, "mkt": "US", "name": "1548_Private Investigators_US_BenAIbulk_WTB", "cat": "Private Investigators", "apr": -111.11, "roas_last": 0.38, "roas_prev": 0.86, "spend_last": 179.52, "spend_prev": 186.64, "sym": "$", "roas0_flag": false, "reason": "R1 recoverable (57% profitable) \u2014 was APR<-100", "adset": {"roas8": "0.74,1.16,0.84,1.32,1.0,1.05,0.86,0.38", "spends8": "171.86,169.42,169.13,161.47,163.01,170.82,186.64,179.52", "aprs8": "-45.53,27.02,-26.92,51.77,0.08,8.97,-25.44,-111.11"}}, {"idx": 7, "mkt": "CA", "name": "77_Therapists_CA_Static_AdFactory_3CoreTemplates_HV", "cat": "Therapist", "apr": -18.78, "roas_last": 0.89, "roas_prev": 0.77, "spend_last": 176.24, "spend_prev": 198.71, "sym": "\u00a3", "roas0_flag": false, "reason": "ROAS 0.77->0.89", "adset": {"roas8": "0,0,0,0,0,1.74,0.77,0.89", "spends8": "0,0,0,0,0,24.95,198.71,176.24", "aprs8": "0,0,0,0,0,18.49,-46.04,-18.78"}}, {"idx": 8, "mkt": "CA", "name": "1138_Bathroom Install_CA_Mixed_1_CC_Test_ACTIVE", "cat": "Bathroom Installation & Remodel", "apr": -70.78, "roas_last": 0.5, "roas_prev": 0.53, "spend_last": 140.28, "spend_prev": 139.58, "sym": "\u00a3", "roas0_flag": false, "reason": "R1 recoverable (71% profitable) \u2014 was ROAS 0.53->0.50", "adset": {"roas8": "1.25,0.29,1.98,1.68,1.67,1.84,0.53,0.5", "spends8": "79.16,79.53,129.87,174.45,139.32,138.92,139.58,140.28", "aprs8": "19.53,-56.46,126.88,119.43,93.7,116.75,-65.53,-70.78"}}]}, {"key": "d30", "label": "\ud83d\udfe1 \u221230% BUDGET", "sub": "ROAS 0.9-1.0 2wk", "color": "#ca8a04", "rows": [{"idx": 1, "mkt": "US", "name": "1234_TV Installation & Mounting_US_Static_CC_1", "cat": "TV Installation & Mounting", "apr": -26.74, "roas_last": 0.93, "roas_prev": 0.87, "spend_last": 373.05, "spend_prev": 371.1, "sym": "$", "roas0_flag": false, "reason": "ROAS 0.87->0.93", "adset": {"roas8": "1.13,1.65,0.88,2.03,2.21,1.27,0.87,0.93", "spends8": "265.98,260.72,254.0,274.34,331.55,375.65,371.1,373.05", "aprs8": "34.05,169.29,-30.67,283.38,402.79,99.72,-47.24,-26.74"}}, {"idx": 2, "mkt": "US", "name": "1212_House Cleaning_US_Control_Static", "cat": "House Cleaning", "apr": -2.24, "roas_last": 0.98, "roas_prev": 0.58, "spend_last": 101.25, "spend_prev": 93.51, "sym": "$", "roas0_flag": false, "reason": "ROAS 0.58->0.98", "adset": {"roas8": "2.15,1.57,1.22,0.69,1.99,1.08,0.58,0.98", "spends8": "70.27,102.17,70.34,41.25,60.13,154.2,93.51,101.25", "aprs8": "80.49,58.38,15.48,-12.84,59.64,12.89,-39.12,-2.24"}}]}, {"key": "u20", "label": "\ud83d\udfe2 +20% BUDGET", "sub": "ROAS 1.5-2.0 sustained 2wk", "color": "#3b82f6", "rows": [{"idx": 1, "mkt": "CA", "name": "1212_House Cleaning_CA_Static_AdFactory_AllTemplates_1", "cat": "House Cleaning", "apr": 942.5, "roas_last": 1.68, "roas_prev": 2.5, "spend_last": 1387.78, "spend_prev": 653.39, "sym": "\u00a3", "roas0_flag": false, "reason": "ROAS 2.50->1.68", "adset": {"roas8": "0,0,3.08,3.15,2.55,2.42,2.5,1.68", "spends8": "0,0,305.79,523.73,524.68,525.05,653.39,1387.78", "aprs8": "0,0,636.72,1126.9,811.62,745.91,982.97,942.5"}}, {"idx": 2, "mkt": "CA", "name": "1138_Bathroom Install_CA_Static_AdFactory_AllTemplates_1", "cat": "Bathroom Installation & Remodel", "apr": 1136.82, "roas_last": 1.84, "roas_prev": 2.8, "spend_last": 1356.25, "spend_prev": 636.3, "sym": "\u00a3", "roas0_flag": false, "reason": "ROAS 2.80->1.84", "adset": {"roas8": "0,0,3.83,3.35,3.23,3.06,2.8,1.84", "spends8": "0,0,204.91,452.22,523.7,526.75,636.3,1356.25", "aprs8": "0,0,579.63,1064.91,1165.65,1084.65,1146.98,1136.82"}}, {"idx": 3, "mkt": "US", "name": "1521_Immigration Lawyers_LPV2CONTROL_US_Static_PriceList_4", "cat": "Immigration Lawyers", "apr": 1161.34, "roas_last": 2.07, "roas_prev": 1.62, "spend_last": 1081.22, "spend_prev": 1157.67, "sym": "$", "roas0_flag": false, "reason": "ROAS 1.62->2.07", "adset": {"roas8": "1.31,1.36,1.77,1.51,1.79,1.66,1.62,2.07", "spends8": "1098.96,1036.3,1055.59,1016.17,1022.14,1048.51,1157.67,1081.22", "aprs8": "337.9,371.67,809.29,519.65,808.54,688.79,722.37,1161.34"}}, {"idx": 4, "mkt": "CA", "name": "42_Painting & Decoration_CA_Static_AdFactory_AllTemplates_1", "cat": "Painting & Decoration - Interior", "apr": 623.94, "roas_last": 1.6, "roas_prev": 2.17, "spend_last": 1031.36, "spend_prev": 598.45, "sym": "\u00a3", "roas0_flag": false, "reason": "ROAS 2.17->1.60", "adset": {"roas8": "0,0,0,2.13,1.39,2.06,2.17,1.6", "spends8": "0,0,0,179.5,412.53,430.09,598.45,1031.36", "aprs8": "0,0,0,203.44,161.69,455.71,698.4,623.94"}}, {"idx": 5, "mkt": "US", "name": "1056_Wedding Photography_US_Static_CC_1", "cat": "Wedding Photography", "apr": 490.83, "roas_last": 1.73, "roas_prev": 2.4, "spend_last": 676.01, "spend_prev": 282.21, "sym": "$", "roas0_flag": false, "reason": "ROAS 2.40->1.73", "adset": {"roas8": "2.72,1.84,3.28,3.04,4.03,3.31,2.4,1.73", "spends8": "176.59,173.95,169.91,166.37,166.27,167.77,282.21,676.01", "aprs8": "304.35,145.61,387.1,340.19,503.27,388.23,396.29,490.83"}}, {"idx": 6, "mkt": "US", "name": "1521_Immigration Lawyers_US_UGC_3", "cat": "Immigration Lawyers", "apr": 501.91, "roas_last": 1.75, "roas_prev": 1.79, "spend_last": 669.89, "spend_prev": 440.52, "sym": "$", "roas0_flag": false, "reason": "ROAS 1.79->1.75", "adset": {"roas8": "1.09,1.51,1.36,2.0,1.82,2.06,1.79,1.75", "spends8": "574.67,337.25,328.08,319.59,320.11,334.64,440.52,669.89", "aprs8": "52.76,172.26,119.43,320.18,261.48,354.51,349.38,501.91"}}, {"idx": 7, "mkt": "US", "name": "1056_Wedding Photography_US_Video_UGC_Lousie_Shoot1_Interview", "cat": "Wedding Photography", "apr": 599.66, "roas_last": 1.91, "roas_prev": 1.91, "spend_last": 656.5, "spend_prev": 592.09, "sym": "$", "roas0_flag": false, "reason": "ROAS 1.91->1.91", "adset": {"roas8": "1.63,1.72,1.47,1.61,1.76,2.15,1.91,1.91", "spends8": "507.76,493.7,489.89,478.26,512.07,487.03,592.09,656.5", "aprs8": "321.04,356.04,228.49,289.41,389.09,561.38,540.37,599.66"}}, {"idx": 8, "mkt": "CA", "name": "1077_Fence & Gate Installation_CA_Static_AdFactory_AllTemplates_1_HV", "cat": "Fence & Gate Installation", "apr": 300.02, "roas_last": 1.73, "roas_prev": 1.68, "spend_last": 408.93, "spend_prev": 212.82, "sym": "\u00a3", "roas0_flag": false, "reason": "ROAS 1.68->1.73", "adset": {"roas8": "0,0,0,2.84,2.25,1.72,1.68,1.73", "spends8": "0,0,0,105.75,214.26,205.58,212.82,408.93", "aprs8": "0,0,0,195.09,267.13,147.08,144.36,300.02"}}, {"idx": 9, "mkt": "US", "name": "1018_DJ_US_Static_BenAIbulk_WTB", "cat": "DJ", "apr": 237.28, "roas_last": 1.68, "roas_prev": 1.73, "spend_last": 351.27, "spend_prev": 349.84, "sym": "$", "roas0_flag": false, "reason": "ROAS 1.73->1.68", "adset": {"roas8": "1.64,2.0,1.58,2.04,1.68,2.03,1.73,1.68", "spends8": "368.16,372.36,361.79,344.07,346.39,352.14,349.84,351.27", "aprs8": "237.03,371.64,208.2,358.41,234.1,362.83,256.78,237.28"}}, {"idx": 10, "mkt": "US", "name": "1521_Immigration Lawyers_US_UGC_Phase14", "cat": "Immigration Lawyers", "apr": 401.42, "roas_last": 2.15, "roas_prev": 1.8, "spend_last": 349.44, "spend_prev": 347.87, "sym": "$", "roas0_flag": false, "reason": "ROAS 1.80->2.15", "adset": {"roas8": "1.1,1.1,1.44,1.79,1.09,1.45,1.8,2.15", "spends8": "338.62,327.14,329.37,321.92,329.75,338.78,347.87,349.44", "aprs8": "35.08,32.76,143.86,253.46,29.37,154.14,277.3,401.42"}}, {"idx": 11, "mkt": "US", "name": "995_Photo Booth Hire_US_Video_UGC_CC_1", "cat": "Photo Booth Hire", "apr": 151.58, "roas_last": 2.12, "roas_prev": 1.71, "spend_last": 135.18, "spend_prev": 136.22, "sym": "$", "roas0_flag": false, "reason": "ROAS 1.71->2.12", "adset": {"roas8": "0.69,1.06,1.28,1.42,1.95,1.6,1.71,2.12", "spends8": "171.35,168.38,167.3,164.8,138.36,130.35,136.22,135.18", "aprs8": "-53.9,9.39,47.14,70.03,131.67,77.71,96.59,151.58"}}]}, {"key": "double", "label": "\u26a1 DOUBLE BUDGET (+100%)", "sub": "First-week winner: ROAS \u22651.5 with \u2265\u00a350 spent", "color": "#a855f7", "rows": [{"idx": 1, "mkt": "NZ", "name": "42_Painting_Decoration_Interior_NZ_Static_AdFactory_3Styles", "cat": "Painting & Decoration - Interior", "apr": 232.78, "roas_last": 3.99, "roas_prev": 0.0, "spend_last": 77.98, "spend_prev": 0.0, "sym": "NZ$", "roas0_flag": false, "reason": "first-wk winner ROAS 3.99", "adset": {"roas8": "0,0,0,0,0,0,0,3.99", "spends8": "0,0,0,0,0,0,0,77.98", "aprs8": "0,0,0,0,0,0,0,232.78"}}, {"idx": 2, "mkt": "NZ", "name": "1976_Property_Extensions_NZ_Static_AdFactory_3Styles", "cat": "Property Extensions", "apr": 327.39, "roas_last": 3.63, "roas_prev": 0.0, "spend_last": 124.29, "spend_prev": 0.0, "sym": "NZ$", "roas0_flag": false, "reason": "first-wk winner ROAS 3.63", "adset": {"roas8": "0,0,0,0,0,0,0,3.63", "spends8": "0,0,0,0,0,0,0,124.29", "aprs8": "0,0,0,0,0,0,0,327.39"}}, {"idx": 3, "mkt": "NZ", "name": "1252_Landscaping_NZ_Static_AdFactory_3Styles", "cat": "Landscaping", "apr": 229.12, "roas_last": 3.62, "roas_prev": 0.0, "spend_last": 87.48, "spend_prev": 0.0, "sym": "NZ$", "roas0_flag": false, "reason": "first-wk winner ROAS 3.62", "adset": {"roas8": "0,0,0,0,0,0,0,3.62", "spends8": "0,0,0,0,0,0,0,87.48", "aprs8": "0,0,0,0,0,0,0,229.12"}}, {"idx": 4, "mkt": "NZ", "name": "35_General_Builders_NZ_Static_AdFactory_3Styles", "cat": "General Builders", "apr": 150.42, "roas_last": 3.46, "roas_prev": 0.0, "spend_last": 61.12, "spend_prev": 0.0, "sym": "NZ$", "roas0_flag": false, "reason": "first-wk winner ROAS 3.46", "adset": {"roas8": "0,0,0,0,0,0,0,3.46", "spends8": "0,0,0,0,0,0,0,61.12", "aprs8": "0,0,0,0,0,0,0,150.42"}}, {"idx": 5, "mkt": "AU", "name": "1138_Bathroom_Installation_Remodel_AU_Static_AdFactory\n  _3Styles", "cat": "Bathroom Installation & Remodel", "apr": 276.78, "roas_last": 3.24, "roas_prev": 0.0, "spend_last": 123.42, "spend_prev": 0.0, "sym": "A$", "roas0_flag": false, "reason": "first-wk winner ROAS 3.24", "adset": {"roas8": "0,0,0,0,0,0,0,3.24", "spends8": "0,0,0,0,0,0,0,123.42", "aprs8": "0,0,0,0,0,0,0,276.78"}}, {"idx": 6, "mkt": "NZ", "name": "1077_Fence_Gate_Installation_NZ_Static_AdFactory_3Styles", "cat": "Fence & Gate Installation", "apr": 187.09, "roas_last": 3.14, "roas_prev": 0.0, "spend_last": 87.43, "spend_prev": 0.0, "sym": "NZ$", "roas0_flag": false, "reason": "first-wk winner ROAS 3.14", "adset": {"roas8": "0,0,0,0,0,0,0,3.14", "spends8": "0,0,0,0,0,0,0,87.43", "aprs8": "0,0,0,0,0,0,0,187.09"}}, {"idx": 7, "mkt": "AU", "name": "1976_Property_Extensions_AU_Static_AdFactory_3Styles", "cat": "Property Extensions", "apr": 213.72, "roas_last": 2.3, "roas_prev": 0.0, "spend_last": 164.0, "spend_prev": 0.0, "sym": "A$", "roas0_flag": false, "reason": "first-wk winner ROAS 2.30", "adset": {"roas8": "0,0,0,0,0,0,0,2.3", "spends8": "0,0,0,0,0,0,0,164.0", "aprs8": "0,0,0,0,0,0,0,213.72"}}, {"idx": 8, "mkt": "AU", "name": "2051_Roof_Cleaning_AU_Static_AdFactory_3Styles", "cat": "Roof Cleaning", "apr": 50.14, "roas_last": 1.75, "roas_prev": 0.0, "spend_last": 67.07, "spend_prev": 0.0, "sym": "A$", "roas0_flag": false, "reason": "first-wk winner ROAS 1.75", "adset": {"roas8": "0,0,0,0,0,0,0,1.75", "spends8": "0,0,0,0,0,0,0,67.07", "aprs8": "0,0,0,0,0,0,0,50.14"}}]}, {"key": "u30", "label": "\ud83d\ude80 +30% BUDGET", "sub": "ROAS \u2265 2.0 sustained 2wk", "color": "#10b981", "rows": [{"idx": 1, "mkt": "ZA", "name": "1119_Solar Panel Installation_ZA_Static_AdFactory_3Styles", "cat": "Solar Panel Installation", "apr": 340.82, "roas_last": 2.11, "roas_prev": 2.54, "spend_last": 308.35, "spend_prev": 150.38, "sym": "R", "roas0_flag": false, "reason": "ROAS 2.54->2.11", "adset": {"roas8": "0,0,0,0,0,0,2.54,2.11", "spends8": "0,0,0,0,0,0,150.38,308.35", "aprs8": "0,0,0,0,0,0,231.91,340.82"}}, {"idx": 2, "mkt": "US", "name": "37_Architect Services_US_UGC_3_Inhouse_spin_CC", "cat": "Architectural Services", "apr": 151.73, "roas_last": 2.22, "roas_prev": 2.67, "spend_last": 123.99, "spend_prev": 77.76, "sym": "$", "roas0_flag": false, "reason": "ROAS 2.67->2.22", "adset": {"roas8": "1.43,1.36,1.8,2.24,1.44,1.1,2.67,2.22", "spends8": "272.11,432.62,175.45,129.31,186.2,103.8,77.76,123.99", "aprs8": "117.59,156.33,140.72,160.28,81.49,10.03,130.08,151.73"}}]}];
+const WEEK_LABELS = ['8w','7w','6w','5w','4w','3w','2w','last'];
+function parse8(s){ return (s||'').split(',').map(p => parseFloat(p)||0); }
+function fmtRoas(v){ return v === 0 ? '—' : v.toFixed(2); }
+function fmtMoney(v, sym){
+  if(v === 0) return '—';
+  if(Math.abs(v) >= 1000) return sym + (v/1000).toFixed(1) + 'k';
+  return sym + Math.round(v).toLocaleString();
+}
+
+function roasGrid(roas8){
+  const arr = parse8(roas8);
+  const SCALE = 3.0;
+  return '<div class="sp-grid">' + arr.map((v,i) => {
+    const isLatest = i === 7;
+    const isZero = v === 0;
+    const h = isZero ? 4 : Math.max(8, Math.min(SCALE, v) / SCALE * 100);
+    const color = isZero ? '#1e293b' : v >= 1.5 ? '#10b981' : v >= 1.0 ? '#3b82f6' : v >= 0.7 ? '#ca8a04' : '#ef4444';
+    const cls = ['sp-col', isLatest ? 'latest' : '', isZero ? 'zero' : ''].join(' ');
+    return `<div class="${cls}">
+      <div class="wk">${WEEK_LABELS[i]}</div>
+      <div class="bar-wrap"><div class="bar" style="height:${h}%;background:${color}"></div></div>
+      <div class="num">${fmtRoas(v)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function spendGrid(spends8, sym){
+  const arr = parse8(spends8);
+  const max = Math.max(...arr, 1);
+  return '<div class="sp-grid">' + arr.map((v,i) => {
+    const isLatest = i === 7;
+    const isZero = v === 0;
+    const h = isZero ? 4 : Math.max(8, v / max * 100);
+    const color = isZero ? '#1e293b' : '#64748b';
+    const cls = ['sp-col', isLatest ? 'latest' : '', isZero ? 'zero' : ''].join(' ');
+    return `<div class="${cls}">
+      <div class="wk">${WEEK_LABELS[i]}</div>
+      <div class="bar-wrap"><div class="bar" style="height:${h}%;background:${color}"></div></div>
+      <div class="num">${fmtMoney(v, sym)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function aprGrid(aprs8, sym){
+  const arr = parse8(aprs8);
+  const max = Math.max(1, ...arr.map(Math.abs));
+  return '<div class="sp-grid">' + arr.map((v,i) => {
+    const isLatest = i === 7;
+    const isZero = v === 0;
+    const h = isZero ? 0 : Math.abs(v) / max * 50;
+    const cls = ['sp-col', isLatest ? 'latest' : '', isZero ? 'zero' : ''].join(' ');
+    const bar = isZero ? '' : (v >= 0
+      ? `<div class="bar-apr-up" style="height:${h}%"></div>`
+      : `<div class="bar-apr-down" style="height:${h}%"></div>`);
+    return `<div class="${cls}">
+      <div class="wk">${WEEK_LABELS[i]}</div>
+      <div class="bar-apr-wrap">${bar}</div>
+      <div class="num">${isZero?'—':fmtMoney(v, sym)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function trendArrow(prev, last){
+  if(prev === 0) return '';
+  if(last > prev * 1.1) return '<span class="sp-trend" style="color:#10b981">↑</span>';
+  if(last < prev * 0.9) return '<span class="sp-trend" style="color:#ef4444">↓</span>';
+  return '<span class="sp-trend" style="color:#64748b">→</span>';
+}
+
+function renderSection(s){
+  const isPause = s.key === 'pause';
+  const headerCols = isPause
+    ? '<th style="min-width:280px">ROAS · 8wk</th><th style="min-width:280px">APR · 8wk</th><th style="min-width:280px">Spend · 8wk</th>'
+    : '<th style="min-width:280px">ROAS · 8wk</th><th style="min-width:280px">Spend · 8wk</th>';
+
+  const rows = s.rows.map(r => {
+    const a = r.adset;
+    const roas0 = r.roas0_flag ? '<span class="flag-pill">ROAS=0</span>' : '';
+    const roasCell = `<td class="sp-cell"><div class="sp-wrap">${roasGrid(a.roas8)}<span class="sp-summary ${r.roas_last<1?'neg':r.roas_last>=1.5?'pos':''}">${r.roas_last.toFixed(2)}${trendArrow(r.roas_prev, r.roas_last)}</span></div></td>`;
+    const aprCell = isPause
+      ? `<td class="sp-cell"><div class="sp-wrap">${aprGrid(a.aprs8, r.sym)}<span class="sp-summary ${r.apr<0?'neg':'pos'}">${fmtMoney(r.apr, r.sym)}</span></div></td>`
+      : '';
+    const spendCell = `<td class="sp-cell"><div class="sp-wrap">${spendGrid(a.spends8, r.sym)}<span class="sp-summary">${fmtMoney(r.spend_last, r.sym)}</span></div></td>`;
+    return `<tr data-section="${s.key}" data-idx="${r.idx}">
+      <td class="check"><input type="checkbox" data-section="${s.key}" data-idx="${r.idx}" onchange="updateRow(this)"></td>
+      <td class="idx">${r.idx}</td>
+      <td class="mkt">${r.mkt}</td>
+      <td class="name">${r.name}${roas0}<div class="cat">${r.cat}</div></td>
+      ${roasCell}${aprCell}${spendCell}
+    </tr>`;
+  }).join('');
+
+  return `<div class="section">
+    <div class="section-hd" style="border-left:3px solid ${s.color}">
+      <h2>${s.label} <span class="sub">${s.sub}</span></h2>
+      <span class="count">${s.rows.length} ad sets</span>
+      <button class="toggle-all" onclick="toggleSection('${s.key}', this)">Tick all in this section</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th></th><th>#</th><th>Mkt</th><th>Ad set</th>${headerCols}</tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+
+document.getElementById('content').innerHTML = SECTIONS.map(renderSection).join('');
+document.getElementById('hdr-action-ct').textContent = SECTIONS.reduce((a,s)=>a+s.rows.length,0) + ' proposed UK actions';
+
+function updateRow(cb){ cb.closest('tr').classList.toggle('checked', cb.checked); updateSummary(); }
+function toggleSection(key, btn){
+  const checks = document.querySelectorAll(`input[type=checkbox][data-section="${key}"]`);
+  const allChecked = [...checks].every(c => c.checked);
+  checks.forEach(c => { c.checked = !allChecked; updateRow(c); });
+  btn.textContent = allChecked ? 'Tick all in this section' : 'Untick all';
+}
+function selectAll(){ document.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = true; updateRow(c); }); }
+function clearAll(){ document.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = false; updateRow(c); }); }
+function updateSummary(){
+  const groups = {};
+  document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
+    const k = c.dataset.section;
+    (groups[k] = groups[k] || []).push(parseInt(c.dataset.idx,10));
+  });
+  const total = Object.values(groups).reduce((a,b)=>a+b.length,0);
+  document.getElementById('approved-count').textContent = total;
+  const parts = SECTIONS.filter(s => groups[s.key]).map(s => `${s.label.split(' ')[0]} ${groups[s.key].length}`);
+  document.getElementById('approved-breakdown').textContent = parts.length ? parts.join(' · ') : 'none';
+}
+function generateOutput(){
+  const groups = {};
+  document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
+    const k = c.dataset.section;
+    (groups[k] = groups[k] || []).push(parseInt(c.dataset.idx,10));
+  });
+  if(!Object.keys(groups).length){ alert('Tick at least one action first.'); return; }
+  const lines = ['# Approved Meta actions — Rest of World — w/e 25 May 2026'];
+  SECTIONS.forEach(s => {
+    if(!groups[s.key]) return;
+    const idxs = groups[s.key].sort((a,b)=>a-b);
+    const names = idxs.map(i => s.rows.find(r => r.idx===i)).map(r => `  - ${r.mkt} | ${r.name}`).join('\n');
+    lines.push(`\n## ${s.label} (${idxs.length} of ${s.rows.length})`);
+    lines.push(`Sequence: ${s.key}: ${idxs.join(',')}`);
+    lines.push(names);
+  });
+  document.getElementById('output-text').textContent = lines.join('\n');
+  document.getElementById('output-modal').classList.add('open');
+}
+function copyOutput(){
+  const txt = document.getElementById('output-text').textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('modal-copy-btn');
+    btn.textContent = '✓ Copied';
+    setTimeout(() => { btn.textContent = 'Copy to clipboard'; }, 2000);
+  });
+}
+updateSummary();
+</script>
+</body>
+</html>
