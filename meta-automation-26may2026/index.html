@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meta Weekly Optimisation — Automation Run Report · 26 May 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0c1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+.top-bar{height:4px;background:linear-gradient(90deg,#E85555,#FA9750,#F7BF53,#47BF9C,#2D7AF1)}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px}
+.header{padding:40px 24px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
+.header .wrap{padding:0}
+.eyebrow{font-size:11px;font-weight:700;color:#3b82f6;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.header h1{font-size:30px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.5px}
+.header .sub{color:#94a3b8;font-size:15px;margin-top:10px}
+.header .meta{color:#64748b;font-size:12px;margin-top:14px}
+.header .meta span{margin-right:16px}
+
+.stat-row{display:flex;gap:12px;padding:28px 0;flex-wrap:wrap}
+.stat{flex:1;min-width:130px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px 20px}
+.stat .num{font-size:32px;font-weight:800;line-height:1}
+.stat .lbl{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-top:8px}
+.stat.green .num{color:#10b981}
+.stat.amber .num{color:#f97316}
+.stat.blue .num{color:#3b82f6}
+
+section{padding:18px 0 8px}
+h2{font-size:20px;font-weight:700;color:#fff;margin:24px 0 12px;display:flex;align-items:center;gap:10px}
+h2 .dot{width:10px;height:10px;border-radius:50%}
+h3{font-size:15px;font-weight:700;color:#e2e8f0;margin:18px 0 8px}
+p{color:#cbd5e1;margin-bottom:14px}
+.lead{font-size:16px;color:#e2e8f0}
+ul{margin:0 0 16px 22px;color:#cbd5e1}
+li{margin-bottom:7px}
+strong{color:#fff;font-weight:600}
+
+.callout{border-radius:12px;padding:18px 20px;margin:18px 0;border:1px solid}
+.callout.info{background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.25)}
+.callout.warn{background:rgba(249,115,22,.06);border-color:rgba(249,115,22,.25)}
+.callout.good{background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.25)}
+.callout .ct{font-weight:700;font-size:14px;margin-bottom:6px}
+.callout.info .ct{color:#3b82f6}
+.callout.warn .ct{color:#f97316}
+.callout.good .ct{color:#10b981}
+.callout p{margin-bottom:0;color:#cbd5e1;font-size:13.5px}
+
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:13px}
+thead th{background:rgba(255,255,255,.04);color:#94a3b8;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08)}
+thead th.right{text-align:right}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.04)}
+td{padding:10px 12px;color:#cbd5e1}
+td.right{text-align:right;font-variant-numeric:tabular-nums}
+td .flag{margin-right:6px}
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;letter-spacing:.3px}
+.b-exec{background:rgba(16,185,129,.15);color:#10b981}
+.b-manual{background:rgba(249,115,22,.15);color:#f97316}
+
+.timeline{border-left:2px solid rgba(255,255,255,.1);margin:16px 0 16px 8px;padding-left:22px}
+.timeline .step{position:relative;margin-bottom:18px}
+.timeline .step::before{content:"";position:absolute;left:-29px;top:4px;width:12px;height:12px;border-radius:50%;background:#3b82f6;border:2px solid #0a0c1a}
+.timeline .step.ok::before{background:#10b981}
+.timeline .step.issue::before{background:#f97316}
+.timeline .step .t{font-weight:700;color:#fff;font-size:14px}
+.timeline .step .d{color:#94a3b8;font-size:13px;margin-top:2px}
+
+.footer{border-top:1px solid rgba(255,255,255,.06);margin-top:40px;padding:24px;color:#64748b;font-size:12px;text-align:center}
+code{background:rgba(255,255,255,.07);padding:2px 6px;border-radius:4px;font-size:12px;color:#a5b4fc;font-family:'SF Mono',Menlo,monospace}
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+
+<div class="header">
+  <div class="wrap">
+    <div class="eyebrow">Meta Weekly Optimisation · Automation Run</div>
+    <h1>Weekly ad set optimisation — run report &amp; service note</h1>
+    <div class="sub">First full automated <code>/meta-monday</code> run across all live markets. 100 of 118 actions deployed automatically; 18 US actions completed manually due to a Meta API rate limit. No performance impact.</div>
+    <div class="meta">
+      <span>Report basis: week ending 25 May 2026</span>
+      <span>Run date: 26 May 2026</span>
+      <span>Prepared for: Stefano Scoponi</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="stat-row">
+    <div class="stat"><div class="num">118</div><div class="lbl">Total actions</div></div>
+    <div class="stat green"><div class="num">100</div><div class="lbl">Auto-deployed</div></div>
+    <div class="stat amber"><div class="num">18</div><div class="lbl">Manual (US)</div></div>
+    <div class="stat blue"><div class="num">6</div><div class="lbl">Markets</div></div>
+  </div>
+
+  <section>
+    <p class="lead">This week we ran the new rule-based optimisation system end-to-end for the first time. It reads the weekly PPC handover dashboard, classifies every active ad set against an agreed rule set (pause / reduce / scale), produces an approval list for sign-off, and then executes the approved changes through the Meta CLI with full preview, confirmation and audit logging at every step.</p>
+
+    <div class="callout good">
+      <div class="ct">✅ Headline</div>
+      <p>Every approved change was deployed. UK and CA / ZA / AU / NZ ran fully automatically (100 actions, 0 failures, all verified live against Meta). The 18 US changes hit a Meta platform rate limit mid-run, so they were completed by hand in Ads Manager — same decisions, same rules, just a different deployment route. Nothing was dropped or mis-applied.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="dot" style="background:#10b981"></span>What was deployed</h2>
+    <table>
+      <thead><tr><th>Market</th><th class="right">Actions</th><th>Deployment</th></tr></thead>
+      <tbody>
+        <tr><td><span class="flag">🇬🇧</span>United Kingdom</td><td class="right">50</td><td><span class="badge b-exec">AUTOMATED ✓</span></td></tr>
+        <tr><td><span class="flag">🇦🇺</span>Australia</td><td class="right">26</td><td><span class="badge b-exec">AUTOMATED ✓</span></td></tr>
+        <tr><td><span class="flag">🇨🇦</span>Canada</td><td class="right">14</td><td><span class="badge b-exec">AUTOMATED ✓</span></td></tr>
+        <tr><td><span class="flag">🇳🇿</span>New Zealand</td><td class="right">8</td><td><span class="badge b-exec">AUTOMATED ✓</span></td></tr>
+        <tr><td><span class="flag">🇿🇦</span>South Africa</td><td class="right">2</td><td><span class="badge b-exec">AUTOMATED ✓</span></td></tr>
+        <tr><td><span class="flag">🇺🇸</span>United States</td><td class="right">18</td><td><span class="badge b-manual">MANUAL (Ads Manager)</span></td></tr>
+      </tbody>
+    </table>
+    <p>Action mix across all markets: <strong>58 pauses</strong> (losing or never-profitable ad sets), <strong>17 budget reductions</strong> (−30% / −50% on under-performers), and <strong>43 budget increases</strong> (+20% / +30% / doubling first-week winners). The net effect on the automated markets was a <strong>reduction</strong> in daily spend — we cut more from losers than we added to winners.</p>
+  </section>
+
+  <section>
+    <h2><span class="dot" style="background:#f97316"></span>The issue — US automation hit a Meta rate limit</h2>
+    <p>Meta's Marketing API enforces a <strong>per-user request limit</strong> shared across every ad account on a single access token. After running ~150 API operations earlier in the session (the UK batch of changes plus their verification reads, then the four other markets), the token reached that limit at the point we tried to load the US account.</p>
+
+    <h3>Why the US account specifically</h3>
+    <ul>
+      <li><strong>It's the largest account.</strong> Loading its ad set list returns the heaviest data payload of any market — so it's the first request Meta refuses when the limit is close, and the last it allows back.</li>
+      <li><strong>The limit is token-wide, not account-specific.</strong> The earlier markets had already "spent" the token's request budget for the window; the US load was simply the request that tipped it over.</li>
+      <li><strong>Recovery is gradual.</strong> Meta's limit refills over time only if the token goes quiet. Because we were actively completing the other markets, the counter kept topping up.</li>
+    </ul>
+
+    <div class="callout info">
+      <div class="ct">ℹ️ Important context</div>
+      <p>This is a <strong>platform throttle, not an error or a failure in our system</strong>. It's Meta protecting its own infrastructure. It affects how fast we can push automated changes in a single session — it does not affect ad performance, billing, or the correctness of any decision.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="dot" style="background:#3b82f6"></span>How it was handled</h2>
+    <div class="timeline">
+      <div class="step ok"><div class="t">UK + 4 markets deployed automatically</div><div class="d">100 actions executed via CLI, each previewed, confirmed, executed one-at-a-time, then re-read from Meta to verify the change landed. 0 failures.</div></div>
+      <div class="step issue"><div class="t">US load refused by rate limit</div><div class="d">Two timed retries (25 min apart) plus a clean cooldown attempt — limit persisted because the token stayed active completing other markets.</div></div>
+      <div class="step ok"><div class="t">Switched US to manual deployment</div><div class="d">Generated a full checklist of all 18 US ad sets — each with the rule that triggered it, last-week performance, and the exact budget action. Deployed by hand in Ads Manager.</div></div>
+      <div class="step ok"><div class="t">Outcome: 100% of approved changes live</div><div class="d">Same decisions, same rule set, fully deployed. The only difference for the US set is the deployment route.</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="dot" style="background:#a855f7"></span>Preventing it next time</h2>
+    <p>The fix is operational, not structural — we slow down and lighten the API footprint so a single session never trips the limit:</p>
+    <ul>
+      <li><strong>Throttle &amp; sequence markets.</strong> Run accounts one at a time with deliberate pauses between, rather than in parallel, so the token's request budget never spikes.</li>
+      <li><strong>Lighter data requests.</strong> Request only the fields we need (status, budget) instead of the full ad set record, dramatically reducing payload weight on large accounts like the US.</li>
+      <li><strong>Largest account first.</strong> Load the US while the token's request budget is full, before the smaller markets consume it.</li>
+      <li><strong>Pace the heavy verification reads</strong> so the post-change checks don't compete with the next market's load.</li>
+    </ul>
+    <div class="callout good">
+      <div class="ct">Net</div>
+      <p>With these adjustments, next week's run should complete all markets — US included — automatically end-to-end. The manual fallback remains available and proved reliable.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="dot" style="background:#64748b"></span>Governance &amp; safety</h2>
+    <p>Every automated change this session passed the agreed write-safety controls: no deletions (pause only, fully reversible), a full preview and typed confirmation before execution, a bulk-operation gate for any batch touching more than 20% of a market's live ad sets, a single low-risk pilot change verified before each bulk run, and an audit-log entry recording the before/after state of every change.</p>
+  </section>
+
+</div>
+
+<div class="footer">
+  Bark — Meta Ads Operational Cockpit · <code>/meta-monday</code> automated weekly optimisation<br>
+  Run 26 May 2026 · basis week ending 25 May 2026 · prepared for Stefano Scoponi
+</div>
+
+</body>
+</html>
