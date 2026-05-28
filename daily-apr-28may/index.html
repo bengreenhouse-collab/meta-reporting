@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meta Daily APR · Last 15 Days · 2026-05-13 → 2026-05-27</title>
+<style>
+  :root { --bg:#f7f7f4; --surface:#ffffff; --border:#e5e4e1; --ink:#1c1c1a;
+          --ink-soft:#4a4a47; --ink-faint:#7a7a76; --pos:#15803d; --neg:#b91c1c; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",system-ui,sans-serif;
+         background:var(--bg); color:var(--ink); font-size:14px; line-height:1.45; }
+  main { max-width:1200px; margin:0 auto; padding:32px 24px 96px; }
+  header.title { border-bottom:1px solid var(--border); padding-bottom:18px; margin-bottom:24px; }
+  header.title h1 { margin:0 0 4px; font-size:24px; }
+  header.title .sub { color:var(--ink-faint); font-size:13px; }
+  .global { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:28px; }
+  .stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 16px; }
+  .stat .label { color:var(--ink-faint); font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
+  .stat .value { font-size:22px; font-weight:600; margin-top:2px; }
+  .stat .value.pos { color:var(--pos); }
+  .stat .value.neg { color:var(--neg); }
+
+  .hero { background:var(--surface); border:1px solid var(--border); border-radius:12px;
+          padding:20px 24px; margin-bottom:32px; }
+  .hero h2 { margin:0 0 4px; font-size:16px; }
+  .hero .desc { color:var(--ink-faint); font-size:12px; margin-bottom:14px; }
+
+  .market-grid { display:grid; gap:18px; }
+  .market { background:var(--surface); border:1px solid var(--border); border-radius:12px;
+            padding:16px 20px 8px; }
+  .market .head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .market .head .flag { font-size:22px; }
+  .market .head .name { font-weight:600; font-size:15px; flex:1; }
+  .market .head .stats { font-size:12px; color:var(--ink-soft); }
+  .market .head .stats strong { color:var(--ink); }
+  .market .head .stats .pos { color:var(--pos); }
+  .market .head .stats .neg { color:var(--neg); }
+</style>
+</head>
+<body>
+<main>
+<header class="title">
+  <h1>Meta Daily APR · All Markets</h1>
+  <div class="sub">Source: Tableau APR+ datasource · Channel = PPC - Meta - Facebook + Instagram + Other · Window: <strong>last 15 days</strong> (2026-05-13 → 2026-05-27)</div>
+</header>
+
+<div class="global">
+<div class="stat"><div class="label">15d Total Spend</div><div class="value">£179,879</div></div>
+<div class="stat"><div class="label">15d PPR Revenue</div><div class="value">£245,635</div></div>
+<div class="stat"><div class="label">15d APR</div><div class="value pos">£65,754</div></div>
+<div class="stat"><div class="label">Avg APR Rate</div><div class="value pos">27%</div></div>
+</div>
+<div class="hero">
+<h2>📊 Daily APR · all markets combined</h2>
+<div class="desc">Color scaled within chart: highest APR day = green, lowest positive = orange, negative = red.</div>
+<svg viewBox="0 0 1100 280" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="232.0" x2="1086" y2="232.0" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="236.0" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="129.9" x2="1086" y2="129.9" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="133.9" font-size="10" text-anchor="end" fill="#7a7a76">£3.7k</text>
+<line x1="60" y1="28.1" x2="1086" y2="28.1" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="32.1" font-size="10" text-anchor="end" fill="#7a7a76">£7.4k</text>
+<rect x="66.2" y="83.8" width="56.1" height="148.2" fill="#577c31" rx="2" ry="2"/>
+<text x="94.2" y="79.8" font-size="9.5" text-anchor="middle" fill="#577c31" font-weight="600">£5.4k</text>
+<text x="94.2" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="76.2" width="56.1" height="155.8" fill="#4e7c33" rx="2" ry="2"/>
+<text x="162.6" y="72.2" font-size="9.5" text-anchor="middle" fill="#4e7c33" font-weight="600">£5.6k</text>
+<text x="162.6" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="170.5" width="56.1" height="61.5" fill="#bf761f" rx="2" ry="2"/>
+<text x="231.0" y="166.5" font-size="9.5" text-anchor="middle" fill="#bf761f" font-weight="600">£2.2k</text>
+<text x="231.0" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="124.4" width="56.1" height="107.6" fill="#887929" rx="2" ry="2"/>
+<text x="299.4" y="120.4" font-size="9.5" text-anchor="middle" fill="#887929" font-weight="600">£3.9k</text>
+<text x="299.4" y="246" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="186.8" width="56.1" height="45.2" fill="#d2751c" rx="2" ry="2"/>
+<text x="367.8" y="182.8" font-size="9.5" text-anchor="middle" fill="#d2751c" font-weight="600">£1.6k</text>
+<text x="367.8" y="246" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="28.0" width="56.1" height="204.0" fill="#15803d" rx="2" ry="2"/>
+<text x="436.2" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£7.4k</text>
+<text x="436.2" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="28.9" width="56.1" height="203.1" fill="#167f3c" rx="2" ry="2"/>
+<text x="504.6" y="24.9" font-size="9.5" text-anchor="middle" fill="#167f3c" font-weight="600">£7.3k</text>
+<text x="504.6" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="52.5" width="56.1" height="179.5" fill="#327e38" rx="2" ry="2"/>
+<text x="573.0" y="48.5" font-size="9.5" text-anchor="middle" fill="#327e38" font-weight="600">£6.5k</text>
+<text x="573.0" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="85.0" width="56.1" height="147.0" fill="#597c31" rx="2" ry="2"/>
+<text x="641.4" y="81.0" font-size="9.5" text-anchor="middle" fill="#597c31" font-weight="600">£5.3k</text>
+<text x="641.4" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="155.0" width="56.1" height="77.0" fill="#ac7723" rx="2" ry="2"/>
+<text x="709.8" y="151.0" font-size="9.5" text-anchor="middle" fill="#ac7723" font-weight="600">£2.8k</text>
+<text x="709.8" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="173.6" width="56.1" height="58.4" fill="#c2761f" rx="2" ry="2"/>
+<text x="778.2" y="169.6" font-size="9.5" text-anchor="middle" fill="#c2761f" font-weight="600">£2.1k</text>
+<text x="778.2" y="246" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="218.9" width="56.1" height="13.1" fill="#f97316" rx="2" ry="2"/>
+<text x="846.6" y="214.9" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£473</text>
+<text x="846.6" y="246" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="123.6" width="56.1" height="108.4" fill="#877929" rx="2" ry="2"/>
+<text x="915.0" y="119.6" font-size="9.5" text-anchor="middle" fill="#877929" font-weight="600">£3.9k</text>
+<text x="915.0" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="59.9" width="56.1" height="172.1" fill="#3b7d36" rx="2" ry="2"/>
+<text x="983.4" y="55.9" font-size="9.5" text-anchor="middle" fill="#3b7d36" font-weight="600">£6.2k</text>
+<text x="983.4" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="93.5" width="56.1" height="138.5" fill="#637b2f" rx="2" ry="2"/>
+<text x="1051.8" y="89.5" font-size="9.5" text-anchor="middle" fill="#637b2f" font-weight="600">£5.0k</text>
+<text x="1051.8" y="246" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="260" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+<div class="market-grid">
+<div class="market">
+<div class="head"><span class="flag">🇬🇧</span><span class="name">United Kingdom</span><span class="stats">Spend <strong>£68,655</strong> · APR <strong class="pos">£31,284 (31%)</strong> · 15/15 days with spend</span></div>
+<svg viewBox="0 0 1100 200" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="152.0" x2="1086" y2="152.0" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="156.0" font-size="10" text-anchor="end" fill="#7a7a76">-£350</text>
+<line x1="60" y1="147.4" x2="1086" y2="147.4" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="151.4" font-size="10" text-anchor="end" fill="#7a7a76">-£180</text>
+<line x1="60" y1="142.5" x2="1086" y2="142.5" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="146.5" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="85.3" x2="1086" y2="85.3" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="89.3" font-size="10" text-anchor="end" fill="#7a7a76">£2.1k</text>
+<line x1="60" y1="28.0" x2="1086" y2="28.0" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="32.0" font-size="10" text-anchor="end" fill="#7a7a76">£4.2k</text>
+<rect x="66.2" y="69.6" width="56.1" height="72.9" fill="#797a2b" rx="2" ry="2"/>
+<text x="94.2" y="65.6" font-size="9.5" text-anchor="middle" fill="#797a2b" font-weight="600">£2.7k</text>
+<text x="94.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="72.7" width="56.1" height="69.9" fill="#81792a" rx="2" ry="2"/>
+<text x="162.6" y="68.7" font-size="9.5" text-anchor="middle" fill="#81792a" font-weight="600">£2.6k</text>
+<text x="162.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="113.9" width="56.1" height="28.7" fill="#e57419" rx="2" ry="2"/>
+<text x="231.0" y="109.9" font-size="9.5" text-anchor="middle" fill="#e57419" font-weight="600">£1.1k</text>
+<text x="231.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="83.4" width="56.1" height="59.1" fill="#9b7826" rx="2" ry="2"/>
+<text x="299.4" y="79.4" font-size="9.5" text-anchor="middle" fill="#9b7826" font-weight="600">£2.2k</text>
+<text x="299.4" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="105.9" width="56.1" height="36.7" fill="#d1751c" rx="2" ry="2"/>
+<text x="367.8" y="101.9" font-size="9.5" text-anchor="middle" fill="#d1751c" font-weight="600">£1.4k</text>
+<text x="367.8" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="28.0" width="56.1" height="114.5" fill="#15803d" rx="2" ry="2"/>
+<text x="436.2" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£4.2k</text>
+<text x="436.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="36.4" width="56.1" height="106.1" fill="#297e39" rx="2" ry="2"/>
+<text x="504.6" y="32.4" font-size="9.5" text-anchor="middle" fill="#297e39" font-weight="600">£3.9k</text>
+<text x="504.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="61.0" width="56.1" height="81.5" fill="#647b2f" rx="2" ry="2"/>
+<text x="573.0" y="57.0" font-size="9.5" text-anchor="middle" fill="#647b2f" font-weight="600">£3.0k</text>
+<text x="573.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="67.8" width="56.1" height="74.7" fill="#757a2c" rx="2" ry="2"/>
+<text x="641.4" y="63.8" font-size="9.5" text-anchor="middle" fill="#757a2c" font-weight="600">£2.8k</text>
+<text x="641.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="122.1" width="56.1" height="20.5" fill="#f97316" rx="2" ry="2"/>
+<text x="709.8" y="118.1" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£758</text>
+<text x="709.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="116.5" width="56.1" height="26.1" fill="#eb7318" rx="2" ry="2"/>
+<text x="778.2" y="112.5" font-size="9.5" text-anchor="middle" fill="#eb7318" font-weight="600">£965</text>
+<text x="778.2" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="142.5" width="56.1" height="9.5" fill="#b91c1c" rx="2" ry="2"/>
+<text x="846.6" y="163.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£350</text>
+<text x="846.6" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="105.2" width="56.1" height="37.3" fill="#d0751c" rx="2" ry="2"/>
+<text x="915.0" y="101.2" font-size="9.5" text-anchor="middle" fill="#d0751c" font-weight="600">£1.4k</text>
+<text x="915.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="80.8" width="56.1" height="61.7" fill="#957827" rx="2" ry="2"/>
+<text x="983.4" y="76.8" font-size="9.5" text-anchor="middle" fill="#957827" font-weight="600">£2.3k</text>
+<text x="983.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="77.9" width="56.1" height="64.7" fill="#8d7928" rx="2" ry="2"/>
+<text x="1051.8" y="73.9" font-size="9.5" text-anchor="middle" fill="#8d7928" font-weight="600">£2.4k</text>
+<text x="1051.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+<div class="market">
+<div class="head"><span class="flag">🇺🇸</span><span class="name">United States</span><span class="stats">Spend <strong>£71,323</strong> · APR <strong class="pos">£21,163 (23%)</strong> · 15/15 days with spend</span></div>
+<svg viewBox="0 0 1100 200" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="152.2" x2="1086" y2="152.2" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="156.2" font-size="10" text-anchor="end" fill="#7a7a76">-£90</text>
+<line x1="60" y1="150.1" x2="1086" y2="150.1" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="154.1" font-size="10" text-anchor="end" fill="#7a7a76">-£40</text>
+<line x1="60" y1="148.5" x2="1086" y2="148.5" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="152.5" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="88.4" x2="1086" y2="88.4" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="92.4" font-size="10" text-anchor="end" fill="#7a7a76">£1.5k</text>
+<line x1="60" y1="27.9" x2="1086" y2="27.9" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="31.9" font-size="10" text-anchor="end" fill="#7a7a76">£3.0k</text>
+<rect x="66.2" y="69.9" width="56.1" height="78.6" fill="#697b2e" rx="2" ry="2"/>
+<text x="94.2" y="65.9" font-size="9.5" text-anchor="middle" fill="#697b2e" font-weight="600">£1.9k</text>
+<text x="94.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="59.5" width="56.1" height="89.0" fill="#547c32" rx="2" ry="2"/>
+<text x="162.6" y="55.5" font-size="9.5" text-anchor="middle" fill="#547c32" font-weight="600">£2.2k</text>
+<text x="162.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="140.8" width="56.1" height="7.8" fill="#f97316" rx="2" ry="2"/>
+<text x="231.0" y="136.8" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£191</text>
+<text x="231.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="108.9" width="56.1" height="39.6" fill="#b87621" rx="2" ry="2"/>
+<text x="299.4" y="104.9" font-size="9.5" text-anchor="middle" fill="#b87621" font-weight="600">£975</text>
+<text x="299.4" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="148.5" width="56.1" height="3.5" fill="#b91c1c" rx="2" ry="2"/>
+<text x="367.8" y="163.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£86</text>
+<text x="367.8" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="74.2" width="56.1" height="74.3" fill="#727a2d" rx="2" ry="2"/>
+<text x="436.2" y="70.2" font-size="9.5" text-anchor="middle" fill="#727a2d" font-weight="600">£1.8k</text>
+<text x="436.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="63.5" width="56.1" height="85.0" fill="#5c7b30" rx="2" ry="2"/>
+<text x="504.6" y="59.5" font-size="9.5" text-anchor="middle" fill="#5c7b30" font-weight="600">£2.1k</text>
+<text x="504.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="53.1" width="56.1" height="95.4" fill="#477d34" rx="2" ry="2"/>
+<text x="573.0" y="49.1" font-size="9.5" text-anchor="middle" fill="#477d34" font-weight="600">£2.3k</text>
+<text x="573.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="93.6" width="56.1" height="54.9" fill="#997826" rx="2" ry="2"/>
+<text x="641.4" y="89.6" font-size="9.5" text-anchor="middle" fill="#997826" font-weight="600">£1.4k</text>
+<text x="641.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="98.5" width="56.1" height="50.0" fill="#a37724" rx="2" ry="2"/>
+<text x="709.8" y="94.5" font-size="9.5" text-anchor="middle" fill="#a37724" font-weight="600">£1.2k</text>
+<text x="709.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="100.6" width="56.1" height="48.0" fill="#a77723" rx="2" ry="2"/>
+<text x="778.2" y="96.6" font-size="9.5" text-anchor="middle" fill="#a77723" font-weight="600">£1.2k</text>
+<text x="778.2" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="127.7" width="56.1" height="20.8" fill="#de741a" rx="2" ry="2"/>
+<text x="846.6" y="123.7" font-size="9.5" text-anchor="middle" fill="#de741a" font-weight="600">£512</text>
+<text x="846.6" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="102.0" width="56.1" height="46.5" fill="#aa7723" rx="2" ry="2"/>
+<text x="915.0" y="98.0" font-size="9.5" text-anchor="middle" fill="#aa7723" font-weight="600">£1.1k</text>
+<text x="915.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="28.0" width="56.1" height="120.5" fill="#15803d" rx="2" ry="2"/>
+<text x="983.4" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£3.0k</text>
+<text x="983.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="96.1" width="56.1" height="52.4" fill="#9e7825" rx="2" ry="2"/>
+<text x="1051.8" y="92.1" font-size="9.5" text-anchor="middle" fill="#9e7825" font-weight="600">£1.3k</text>
+<text x="1051.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+<div class="market">
+<div class="head"><span class="flag">🇨🇦</span><span class="name">Canada</span><span class="stats">Spend <strong>£21,969</strong> · APR <strong class="pos">£8,452 (28%)</strong> · 15/15 days with spend</span></div>
+<svg viewBox="0 0 1100 200" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="152.0" x2="1086" y2="152.0" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="156.0" font-size="10" text-anchor="end" fill="#7a7a76">-£260</text>
+<line x1="60" y1="140.7" x2="1086" y2="140.7" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="144.7" font-size="10" text-anchor="end" fill="#7a7a76">-£130</text>
+<line x1="60" y1="129.4" x2="1086" y2="129.4" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="133.4" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="79.1" x2="1086" y2="79.1" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="83.1" font-size="10" text-anchor="end" fill="#7a7a76">£580</text>
+<line x1="60" y1="27.8" x2="1086" y2="27.8" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="31.8" font-size="10" text-anchor="end" fill="#7a7a76">£1.2k</text>
+<rect x="66.2" y="28.0" width="56.1" height="101.4" fill="#15803d" rx="2" ry="2"/>
+<text x="94.2" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£1.2k</text>
+<text x="94.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="68.1" width="56.1" height="61.3" fill="#6f7a2d" rx="2" ry="2"/>
+<text x="162.6" y="64.1" font-size="9.5" text-anchor="middle" fill="#6f7a2d" font-weight="600">£706</text>
+<text x="162.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="70.7" width="56.1" height="58.7" fill="#757a2c" rx="2" ry="2"/>
+<text x="231.0" y="66.7" font-size="9.5" text-anchor="middle" fill="#757a2c" font-weight="600">£676</text>
+<text x="231.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="93.3" width="56.1" height="36.1" fill="#a87723" rx="2" ry="2"/>
+<text x="299.4" y="89.3" font-size="9.5" text-anchor="middle" fill="#a87723" font-weight="600">£416</text>
+<text x="299.4" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="107.1" width="56.1" height="22.3" fill="#c7751e" rx="2" ry="2"/>
+<text x="367.8" y="103.1" font-size="9.5" text-anchor="middle" fill="#c7751e" font-weight="600">£257</text>
+<text x="367.8" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="53.1" width="56.1" height="76.3" fill="#4d7c33" rx="2" ry="2"/>
+<text x="436.2" y="49.1" font-size="9.5" text-anchor="middle" fill="#4d7c33" font-weight="600">£879</text>
+<text x="436.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="44.7" width="56.1" height="84.8" fill="#3a7d36" rx="2" ry="2"/>
+<text x="504.6" y="40.7" font-size="9.5" text-anchor="middle" fill="#3a7d36" font-weight="600">£976</text>
+<text x="504.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="66.9" width="56.1" height="62.5" fill="#6c7b2e" rx="2" ry="2"/>
+<text x="573.0" y="62.9" font-size="9.5" text-anchor="middle" fill="#6c7b2e" font-weight="600">£720</text>
+<text x="573.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="51.4" width="56.1" height="78.1" fill="#497c33" rx="2" ry="2"/>
+<text x="641.4" y="47.4" font-size="9.5" text-anchor="middle" fill="#497c33" font-weight="600">£899</text>
+<text x="641.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="81.2" width="56.1" height="48.2" fill="#8c7928" rx="2" ry="2"/>
+<text x="709.8" y="77.2" font-size="9.5" text-anchor="middle" fill="#8c7928" font-weight="600">£555</text>
+<text x="709.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="129.4" width="56.1" height="22.6" fill="#b91c1c" rx="2" ry="2"/>
+<text x="778.2" y="163.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£260</text>
+<text x="778.2" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="129.2" width="56.1" height="0.0" fill="#f97316" rx="2" ry="2"/>
+<text x="846.6" y="125.2" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£3</text>
+<text x="846.6" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="70.1" width="56.1" height="59.3" fill="#737a2c" rx="2" ry="2"/>
+<text x="915.0" y="66.1" font-size="9.5" text-anchor="middle" fill="#737a2c" font-weight="600">£683</text>
+<text x="915.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="96.1" width="56.1" height="33.3" fill="#ae7722" rx="2" ry="2"/>
+<text x="983.4" y="92.1" font-size="9.5" text-anchor="middle" fill="#ae7722" font-weight="600">£384</text>
+<text x="983.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="95.6" width="56.1" height="33.9" fill="#ad7722" rx="2" ry="2"/>
+<text x="1051.8" y="91.6" font-size="9.5" text-anchor="middle" fill="#ad7722" font-weight="600">£390</text>
+<text x="1051.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+<div class="market">
+<div class="head"><span class="flag">🇿🇦</span><span class="name">South Africa</span><span class="stats">Spend <strong>£8,081</strong> · APR <strong class="pos">£1,830 (18%)</strong> · 15/15 days with spend</span></div>
+<svg viewBox="0 0 1100 200" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="152.4" x2="1086" y2="152.4" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="156.4" font-size="10" text-anchor="end" fill="#7a7a76">-£250</text>
+<line x1="60" y1="123.9" x2="1086" y2="123.9" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="127.9" font-size="10" text-anchor="end" fill="#7a7a76">-£120</text>
+<line x1="60" y1="97.6" x2="1086" y2="97.6" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="101.6" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="62.5" x2="1086" y2="62.5" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="66.5" font-size="10" text-anchor="end" fill="#7a7a76">£160</text>
+<line x1="60" y1="27.3" x2="1086" y2="27.3" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="31.3" font-size="10" text-anchor="end" fill="#7a7a76">£320</text>
+<rect x="66.2" y="87.0" width="56.1" height="10.5" fill="#f97316" rx="2" ry="2"/>
+<text x="94.2" y="83.0" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£48</text>
+<text x="94.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="33.0" width="56.1" height="64.5" fill="#287e39" rx="2" ry="2"/>
+<text x="162.6" y="29.0" font-size="9.5" text-anchor="middle" fill="#287e39" font-weight="600">£294</text>
+<text x="162.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="28.0" width="56.1" height="69.6" fill="#15803d" rx="2" ry="2"/>
+<text x="231.0" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£317</text>
+<text x="231.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="63.6" width="56.1" height="34.0" fill="#9e7825" rx="2" ry="2"/>
+<text x="299.4" y="59.6" font-size="9.5" text-anchor="middle" fill="#9e7825" font-weight="600">£155</text>
+<text x="299.4" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="97.6" width="56.1" height="7.5" fill="#b91c1c" rx="2" ry="2"/>
+<text x="367.8" y="116.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£34</text>
+<text x="367.8" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="31.1" width="56.1" height="66.5" fill="#207f3a" rx="2" ry="2"/>
+<text x="436.2" y="27.1" font-size="9.5" text-anchor="middle" fill="#207f3a" font-weight="600">£303</text>
+<text x="436.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="71.2" width="56.1" height="26.3" fill="#bb7620" rx="2" ry="2"/>
+<text x="504.6" y="67.2" font-size="9.5" text-anchor="middle" fill="#bb7620" font-weight="600">£120</text>
+<text x="504.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="42.0" width="56.1" height="55.5" fill="#4b7c33" rx="2" ry="2"/>
+<text x="573.0" y="38.0" font-size="9.5" text-anchor="middle" fill="#4b7c33" font-weight="600">£253</text>
+<text x="573.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="28.0" width="56.1" height="69.6" fill="#15803d" rx="2" ry="2"/>
+<text x="641.4" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£317</text>
+<text x="641.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="97.6" width="56.1" height="12.3" fill="#b91c1c" rx="2" ry="2"/>
+<text x="709.8" y="120.9" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£56</text>
+<text x="709.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="97.6" width="56.1" height="54.4" fill="#b91c1c" rx="2" ry="2"/>
+<text x="778.2" y="163.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£248</text>
+<text x="778.2" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="97.6" width="56.1" height="3.5" fill="#b91c1c" rx="2" ry="2"/>
+<text x="846.6" y="112.1" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£16</text>
+<text x="846.6" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="73.9" width="56.1" height="23.7" fill="#c6751e" rx="2" ry="2"/>
+<text x="915.0" y="69.9" font-size="9.5" text-anchor="middle" fill="#c6751e" font-weight="600">£108</text>
+<text x="915.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="66.6" width="56.1" height="30.9" fill="#aa7723" rx="2" ry="2"/>
+<text x="983.4" y="62.6" font-size="9.5" text-anchor="middle" fill="#aa7723" font-weight="600">£141</text>
+<text x="983.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="69.5" width="56.1" height="28.1" fill="#b57621" rx="2" ry="2"/>
+<text x="1051.8" y="65.5" font-size="9.5" text-anchor="middle" fill="#b57621" font-weight="600">£128</text>
+<text x="1051.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+<div class="market">
+<div class="head"><span class="flag">🇮🇪</span><span class="name">Ireland</span><span class="stats">Spend <strong>£2,358</strong> · APR <strong class="pos">£76 (3%)</strong> · 15/15 days with spend</span></div>
+<svg viewBox="0 0 1100 200" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="151.2" x2="1086" y2="151.2" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="155.2" font-size="10" text-anchor="end" fill="#7a7a76">-£480</text>
+<line x1="60" y1="104.3" x2="1086" y2="104.3" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="108.3" font-size="10" text-anchor="end" fill="#7a7a76">-£240</text>
+<line x1="60" y1="57.3" x2="1086" y2="57.3" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="61.3" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="41.7" x2="1086" y2="41.7" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="45.7" font-size="10" text-anchor="end" fill="#7a7a76">£80</text>
+<line x1="60" y1="28.0" x2="1086" y2="28.0" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="32.0" font-size="10" text-anchor="end" fill="#7a7a76">£150</text>
+<rect x="66.2" y="57.3" width="56.1" height="94.7" fill="#b91c1c" rx="2" ry="2"/>
+<text x="94.2" y="163.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£484</text>
+<text x="94.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="57.3" width="56.1" height="20.5" fill="#b91c1c" rx="2" ry="2"/>
+<text x="162.6" y="88.9" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£105</text>
+<text x="162.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="57.3" width="56.1" height="1.4" fill="#b91c1c" rx="2" ry="2"/>
+<text x="231.0" y="69.7" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£7</text>
+<text x="231.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="37.6" width="56.1" height="19.8" fill="#677b2e" rx="2" ry="2"/>
+<text x="299.4" y="33.6" font-size="9.5" text-anchor="middle" fill="#677b2e" font-weight="600">£101</text>
+<text x="299.4" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="49.1" width="56.1" height="8.2" fill="#cb751d" rx="2" ry="2"/>
+<text x="367.8" y="45.1" font-size="9.5" text-anchor="middle" fill="#cb751d" font-weight="600">£42</text>
+<text x="367.8" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="28.8" width="56.1" height="28.6" fill="#1b7f3b" rx="2" ry="2"/>
+<text x="436.2" y="24.8" font-size="9.5" text-anchor="middle" fill="#1b7f3b" font-weight="600">£146</text>
+<text x="436.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="28.0" width="56.1" height="29.3" fill="#15803d" rx="2" ry="2"/>
+<text x="504.6" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£150</text>
+<text x="504.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="38.6" width="56.1" height="18.8" fill="#707a2d" rx="2" ry="2"/>
+<text x="573.0" y="34.6" font-size="9.5" text-anchor="middle" fill="#707a2d" font-weight="600">£96</text>
+<text x="573.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="49.5" width="56.1" height="7.8" fill="#ce751d" rx="2" ry="2"/>
+<text x="641.4" y="45.5" font-size="9.5" text-anchor="middle" fill="#ce751d" font-weight="600">£40</text>
+<text x="641.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="46.4" width="56.1" height="11.0" fill="#b37621" rx="2" ry="2"/>
+<text x="709.8" y="42.4" font-size="9.5" text-anchor="middle" fill="#b37621" font-weight="600">£56</text>
+<text x="709.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="57.3" width="56.1" height="6.1" fill="#b91c1c" rx="2" ry="2"/>
+<text x="778.2" y="74.4" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£31</text>
+<text x="778.2" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="57.3" width="56.1" height="9.6" fill="#b91c1c" rx="2" ry="2"/>
+<text x="846.6" y="77.9" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£49</text>
+<text x="846.6" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="54.4" width="56.1" height="2.9" fill="#f97316" rx="2" ry="2"/>
+<text x="915.0" y="50.4" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£15</text>
+<text x="915.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="41.1" width="56.1" height="16.2" fill="#867929" rx="2" ry="2"/>
+<text x="983.4" y="37.1" font-size="9.5" text-anchor="middle" fill="#867929" font-weight="600">£83</text>
+<text x="983.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="52.8" width="56.1" height="4.5" fill="#eb7318" rx="2" ry="2"/>
+<text x="1051.8" y="48.8" font-size="9.5" text-anchor="middle" fill="#eb7318" font-weight="600">£23</text>
+<text x="1051.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+<div class="market">
+<div class="head"><span class="flag">🇫🇷</span><span class="name">France</span><span class="stats">Spend <strong>£1,432</strong> · APR <strong class="pos">£412 (22%)</strong> · 15/15 days with spend</span></div>
+<svg viewBox="0 0 1100 200" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="154.1" x2="1086" y2="154.1" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="158.1" font-size="10" text-anchor="end" fill="#7a7a76">-£60</text>
+<line x1="60" y1="132.9" x2="1086" y2="132.9" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="136.9" font-size="10" text-anchor="end" fill="#7a7a76">-£30</text>
+<line x1="60" y1="111.6" x2="1086" y2="111.6" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="115.6" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="69.1" x2="1086" y2="69.1" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="73.1" font-size="10" text-anchor="end" fill="#7a7a76">£60</text>
+<line x1="60" y1="26.6" x2="1086" y2="26.6" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="30.6" font-size="10" text-anchor="end" fill="#7a7a76">£120</text>
+<rect x="66.2" y="111.6" width="56.1" height="30.5" fill="#b91c1c" rx="2" ry="2"/>
+<text x="94.2" y="153.1" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£43</text>
+<text x="94.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="111.6" width="56.1" height="40.4" fill="#b91c1c" rx="2" ry="2"/>
+<text x="162.6" y="163.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£57</text>
+<text x="162.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="109.5" width="56.1" height="2.1" fill="#f97316" rx="2" ry="2"/>
+<text x="231.0" y="105.5" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£3</text>
+<text x="231.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="87.5" width="56.1" height="24.1" fill="#bb7620" rx="2" ry="2"/>
+<text x="299.4" y="83.5" font-size="9.5" text-anchor="middle" fill="#bb7620" font-weight="600">£34</text>
+<text x="299.4" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="96.0" width="56.1" height="15.6" fill="#d3751c" rx="2" ry="2"/>
+<text x="367.8" y="92.0" font-size="9.5" text-anchor="middle" fill="#d3751c" font-weight="600">£22</text>
+<text x="367.8" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="111.6" width="56.1" height="15.6" fill="#b91c1c" rx="2" ry="2"/>
+<text x="436.2" y="138.2" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£22</text>
+<text x="436.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="77.6" width="56.1" height="34.0" fill="#9f7825" rx="2" ry="2"/>
+<text x="504.6" y="73.6" font-size="9.5" text-anchor="middle" fill="#9f7825" font-weight="600">£48</text>
+<text x="504.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="62.7" width="56.1" height="48.9" fill="#767a2c" rx="2" ry="2"/>
+<text x="573.0" y="58.7" font-size="9.5" text-anchor="middle" fill="#767a2c" font-weight="600">£69</text>
+<text x="573.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="28.0" width="56.1" height="83.6" fill="#15803d" rx="2" ry="2"/>
+<text x="641.4" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£118</text>
+<text x="641.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="111.6" width="56.1" height="1.4" fill="#b91c1c" rx="2" ry="2"/>
+<text x="709.8" y="124.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£2</text>
+<text x="709.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="81.9" width="56.1" height="29.8" fill="#ab7723" rx="2" ry="2"/>
+<text x="778.2" y="77.9" font-size="9.5" text-anchor="middle" fill="#ab7723" font-weight="600">£42</text>
+<text x="778.2" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="62.7" width="56.1" height="48.9" fill="#767a2c" rx="2" ry="2"/>
+<text x="846.6" y="58.7" font-size="9.5" text-anchor="middle" fill="#767a2c" font-weight="600">£69</text>
+<text x="846.6" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="96.7" width="56.1" height="14.9" fill="#d5751c" rx="2" ry="2"/>
+<text x="915.0" y="92.7" font-size="9.5" text-anchor="middle" fill="#d5751c" font-weight="600">£21</text>
+<text x="915.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="38.6" width="56.1" height="73.0" fill="#327e37" rx="2" ry="2"/>
+<text x="983.4" y="34.6" font-size="9.5" text-anchor="middle" fill="#327e37" font-weight="600">£103</text>
+<text x="983.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="106.7" width="56.1" height="5.0" fill="#f17317" rx="2" ry="2"/>
+<text x="1051.8" y="102.7" font-size="9.5" text-anchor="middle" fill="#f17317" font-weight="600">£7</text>
+<text x="1051.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+<div class="market">
+<div class="head"><span class="flag">🇩🇪</span><span class="name">Deutschland</span><span class="stats">Spend <strong>£657</strong> · APR <strong class="pos">£52 (7%)</strong> · 15/15 days with spend</span></div>
+<svg viewBox="0 0 1100 200" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="153.2" x2="1086" y2="153.2" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="157.2" font-size="10" text-anchor="end" fill="#7a7a76">-£30</text>
+<line x1="60" y1="129.8" x2="1086" y2="129.8" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="133.8" font-size="10" text-anchor="end" fill="#7a7a76">-£10</text>
+<line x1="60" y1="118.1" x2="1086" y2="118.1" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="122.1" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="71.3" x2="1086" y2="71.3" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="75.3" font-size="10" text-anchor="end" fill="#7a7a76">£40</text>
+<line x1="60" y1="24.5" x2="1086" y2="24.5" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="28.5" font-size="10" text-anchor="end" fill="#7a7a76">£80</text>
+<rect x="66.2" y="81.8" width="56.1" height="36.3" fill="#b87620" rx="2" ry="2"/>
+<text x="94.2" y="77.8" font-size="9.5" text-anchor="middle" fill="#b87620" font-weight="600">£31</text>
+<text x="94.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="102.9" width="56.1" height="15.2" fill="#f97316" rx="2" ry="2"/>
+<text x="162.6" y="98.9" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£13</text>
+<text x="162.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="118.1" width="56.1" height="24.6" fill="#b91c1c" rx="2" ry="2"/>
+<text x="231.0" y="153.6" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£21</text>
+<text x="231.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="95.8" width="56.1" height="22.2" fill="#e37419" rx="2" ry="2"/>
+<text x="299.4" y="91.8" font-size="9.5" text-anchor="middle" fill="#e37419" font-weight="600">£19</text>
+<text x="299.4" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="28.0" width="56.1" height="90.1" fill="#15803d" rx="2" ry="2"/>
+<text x="367.8" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£77</text>
+<text x="367.8" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="118.1" width="56.1" height="5.8" fill="#b91c1c" rx="2" ry="2"/>
+<text x="436.2" y="134.9" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£5</text>
+<text x="436.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="92.3" width="56.1" height="25.7" fill="#d8741b" rx="2" ry="2"/>
+<text x="504.6" y="88.3" font-size="9.5" text-anchor="middle" fill="#d8741b" font-weight="600">£22</text>
+<text x="504.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="118.1" width="56.1" height="19.9" fill="#b91c1c" rx="2" ry="2"/>
+<text x="573.0" y="149.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£17</text>
+<text x="573.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="118.1" width="56.1" height="33.9" fill="#b91c1c" rx="2" ry="2"/>
+<text x="641.4" y="163.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£29</text>
+<text x="641.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="68.9" width="56.1" height="49.1" fill="#917827" rx="2" ry="2"/>
+<text x="709.8" y="64.9" font-size="9.5" text-anchor="middle" fill="#917827" font-weight="600">£42</text>
+<text x="709.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="118.1" width="56.1" height="9.4" fill="#b91c1c" rx="2" ry="2"/>
+<text x="778.2" y="138.4" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£8</text>
+<text x="778.2" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="118.1" width="56.1" height="32.8" fill="#b91c1c" rx="2" ry="2"/>
+<text x="846.6" y="161.8" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£28</text>
+<text x="846.6" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="118.1" width="56.1" height="25.7" fill="#b91c1c" rx="2" ry="2"/>
+<text x="915.0" y="154.8" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£22</text>
+<text x="915.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="118.1" width="56.1" height="1.2" fill="#b91c1c" rx="2" ry="2"/>
+<text x="983.4" y="130.2" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£1</text>
+<text x="983.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="118.1" width="56.1" height="24.6" fill="#b91c1c" rx="2" ry="2"/>
+<text x="1051.8" y="153.6" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£21</text>
+<text x="1051.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+<div class="market">
+<div class="head"><span class="flag">🇦🇺</span><span class="name">Australia</span><span class="stats">Spend <strong>£3,382</strong> · APR <strong class="pos">£668 (16%)</strong> · 15/15 days with spend</span></div>
+<svg viewBox="0 0 1100 200" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="152.0" x2="1086" y2="152.0" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="156.0" font-size="10" text-anchor="end" fill="#7a7a76">-£120</text>
+<line x1="60" y1="137.5" x2="1086" y2="137.5" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="141.5" font-size="10" text-anchor="end" fill="#7a7a76">-£60</text>
+<line x1="60" y1="122.9" x2="1086" y2="122.9" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="126.9" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="74.5" x2="1086" y2="74.5" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="78.5" font-size="10" text-anchor="end" fill="#7a7a76">£200</text>
+<line x1="60" y1="28.5" x2="1086" y2="28.5" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="32.5" font-size="10" text-anchor="end" fill="#7a7a76">£390</text>
+<rect x="66.2" y="122.9" width="56.1" height="0.0" fill="#13d6f0a" rx="2" ry="2"/>
+<text x="94.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="122.9" width="56.1" height="0.0" fill="#13d6f0a" rx="2" ry="2"/>
+<text x="162.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="122.9" width="56.1" height="0.0" fill="#13d6f0a" rx="2" ry="2"/>
+<text x="231.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="122.9" width="56.1" height="0.0" fill="#13d6f0a" rx="2" ry="2"/>
+<text x="299.4" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="122.9" width="56.1" height="0.0" fill="#13d6f0a" rx="2" ry="2"/>
+<text x="367.8" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="122.9" width="56.1" height="0.0" fill="#13d6f0a" rx="2" ry="2"/>
+<text x="436.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="122.9" width="56.1" height="0.0" fill="#13d6f0a" rx="2" ry="2"/>
+<text x="504.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="122.9" width="56.1" height="0.0" fill="#13d6f0a" rx="2" ry="2"/>
+<text x="573.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="122.9" width="56.1" height="29.1" fill="#b91c1c" rx="2" ry="2"/>
+<text x="641.4" y="163.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£120</text>
+<text x="641.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="122.9" width="56.1" height="16.5" fill="#b91c1c" rx="2" ry="2"/>
+<text x="709.8" y="150.4" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£68</text>
+<text x="709.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="100.9" width="56.1" height="22.0" fill="#f97316" rx="2" ry="2"/>
+<text x="778.2" y="96.9" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£91</text>
+<text x="778.2" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="122.9" width="56.1" height="12.6" fill="#b91c1c" rx="2" ry="2"/>
+<text x="846.6" y="146.5" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£52</text>
+<text x="846.6" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="43.7" width="56.1" height="79.2" fill="#467d34" rx="2" ry="2"/>
+<text x="915.0" y="39.7" font-size="9.5" text-anchor="middle" fill="#467d34" font-weight="600">£327</text>
+<text x="915.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="99.2" width="56.1" height="23.7" fill="#f37316" rx="2" ry="2"/>
+<text x="983.4" y="95.2" font-size="9.5" text-anchor="middle" fill="#f37316" font-weight="600">£98</text>
+<text x="983.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="28.0" width="56.1" height="94.9" fill="#15803d" rx="2" ry="2"/>
+<text x="1051.8" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£392</text>
+<text x="1051.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+<div class="market">
+<div class="head"><span class="flag">🇳🇿</span><span class="name">New Zealand</span><span class="stats">Spend <strong>£2,022</strong> · APR <strong class="pos">£1,817 (47%)</strong> · 8/15 days with spend</span></div>
+<svg viewBox="0 0 1100 200" width="100%" style="display:block;font-family:inherit;">
+<line x1="60" y1="151.4" x2="1086" y2="151.4" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="155.4" font-size="10" text-anchor="end" fill="#7a7a76">-£30</text>
+<line x1="60" y1="148.6" x2="1086" y2="148.6" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="152.6" font-size="10" text-anchor="end" fill="#7a7a76">-£20</text>
+<line x1="60" y1="142.9" x2="1086" y2="142.9" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray=""/>
+<text x="54" y="146.9" font-size="10" text-anchor="end" fill="#7a7a76">£0</text>
+<line x1="60" y1="85.7" x2="1086" y2="85.7" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="89.7" font-size="10" text-anchor="end" fill="#7a7a76">£200</text>
+<line x1="60" y1="28.6" x2="1086" y2="28.6" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="54" y="32.6" font-size="10" text-anchor="end" fill="#7a7a76">£400</text>
+<rect x="66.2" y="142.9" width="56.1" height="0.0" fill="#18e6a-3" rx="2" ry="2"/>
+<text x="94.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="94.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">13 May</text>
+<rect x="134.6" y="142.9" width="56.1" height="0.0" fill="#18e6a-3" rx="2" ry="2"/>
+<text x="162.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="162.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">14 May</text>
+<rect x="203.0" y="142.9" width="56.1" height="0.0" fill="#18e6a-3" rx="2" ry="2"/>
+<text x="231.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="231.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">15 May</text>
+<rect x="271.4" y="142.9" width="56.1" height="0.0" fill="#18e6a-3" rx="2" ry="2"/>
+<text x="299.4" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="299.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">16 May</text>
+<rect x="339.8" y="142.9" width="56.1" height="0.0" fill="#18e6a-3" rx="2" ry="2"/>
+<text x="367.8" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="367.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">17 May</text>
+<rect x="408.2" y="142.9" width="56.1" height="0.0" fill="#18e6a-3" rx="2" ry="2"/>
+<text x="436.2" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="436.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">18 May</text>
+<rect x="476.6" y="142.9" width="56.1" height="0.0" fill="#18e6a-3" rx="2" ry="2"/>
+<text x="504.6" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="504.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">19 May</text>
+<rect x="545.0" y="142.9" width="56.1" height="0.0" fill="#18e6a-3" rx="2" ry="2"/>
+<text x="573.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="573.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">20 May</text>
+<rect x="613.4" y="142.9" width="56.1" height="9.1" fill="#b91c1c" rx="2" ry="2"/>
+<text x="641.4" y="163.0" font-size="9.5" text-anchor="middle" fill="#b91c1c" font-weight="600">-£32</text>
+<text x="641.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Thu</text>
+<text x="641.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">21 May</text>
+<rect x="681.8" y="66.9" width="56.1" height="76.0" fill="#947827" rx="2" ry="2"/>
+<text x="709.8" y="62.9" font-size="9.5" text-anchor="middle" fill="#947827" font-weight="600">£266</text>
+<text x="709.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Fri</text>
+<text x="709.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">22 May</text>
+<rect x="750.2" y="34.6" width="56.1" height="108.3" fill="#2a7e39" rx="2" ry="2"/>
+<text x="778.2" y="30.6" font-size="9.5" text-anchor="middle" fill="#2a7e39" font-weight="600">£379</text>
+<text x="778.2" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sat</text>
+<text x="778.2" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">23 May</text>
+<rect x="818.6" y="33.1" width="56.1" height="109.7" fill="#257f3a" rx="2" ry="2"/>
+<text x="846.6" y="29.1" font-size="9.5" text-anchor="middle" fill="#257f3a" font-weight="600">£384</text>
+<text x="846.6" y="166" font-size="10" text-anchor="middle" fill="#9ca3af">Sun</text>
+<text x="846.6" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">24 May</text>
+<rect x="887.0" y="68.9" width="56.1" height="74.0" fill="#9b7826" rx="2" ry="2"/>
+<text x="915.0" y="64.9" font-size="9.5" text-anchor="middle" fill="#9b7826" font-weight="600">£259</text>
+<text x="915.0" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Mon</text>
+<text x="915.0" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">25 May</text>
+<rect x="955.4" y="97.4" width="56.1" height="45.4" fill="#f97316" rx="2" ry="2"/>
+<text x="983.4" y="93.4" font-size="9.5" text-anchor="middle" fill="#f97316" font-weight="600">£159</text>
+<text x="983.4" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Tue</text>
+<text x="983.4" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">26 May</text>
+<rect x="1023.8" y="28.0" width="56.1" height="114.9" fill="#15803d" rx="2" ry="2"/>
+<text x="1051.8" y="24.0" font-size="9.5" text-anchor="middle" fill="#15803d" font-weight="600">£402</text>
+<text x="1051.8" y="166" font-size="10" text-anchor="middle" fill="#4a4a47">Wed</text>
+<text x="1051.8" y="180" font-size="9.5" text-anchor="middle" fill="#7a7a76">27 May</text>
+</svg>
+</div>
+</div>
+
+<div style="margin-top:24px; padding:14px 18px; background:#fef9e7; border-left:3px solid #d97706; border-radius:4px; font-size:13px; color:#5a3d00;">
+<strong>Note on attribution:</strong> APR values are Meta-pixel attributed. Per the existing reconciliation memo, Meta pixel undercounts barks by ~43%. Multiply APR by ~1.75 for a true-revenue estimate. Some loss days are real; others are pixel undercount.
+</div>
+</main>
+</body>
+</html>
