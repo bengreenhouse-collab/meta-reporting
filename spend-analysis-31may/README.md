@@ -87,9 +87,11 @@ Every one of these is spending materially more than its peak-margin week. Full r
 - `~/Downloads/meta-elasticity-report.html` — review-friendly HTML report
 - `~/Downloads/SPEND-ANALYSIS-README.md` — this file
 
-## Live URL
+## Live URLs
 
-(updated when pushed)
+- **HTML report:** https://bengreenhouse-collab.github.io/meta-reporting/spend-analysis-31may/
+- **This README (raw):** https://bengreenhouse-collab.github.io/meta-reporting/spend-analysis-31may/README.md
+- **CSV data:** https://bengreenhouse-collab.github.io/meta-reporting/spend-analysis-31may/data.csv
 
 ## Status / open questions
 
