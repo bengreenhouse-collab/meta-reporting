@@ -1,0 +1,1485 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>Top Google cats vs Meta presence (v2 — daily granularity)</title>
+<style>
+:root { --bg:#f7f7f4; --surface:#fff; --border:#e5e4e1; --ink:#1c1c1a;
+        --ink-soft:#4a4a47; --ink-faint:#7a7a76; --pos:#15803d; --neg:#b91c1c; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,"Inter","Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--ink); font-size:13px; line-height:1.4; }
+main { max-width:1500px; margin:0 auto; padding:32px 24px 96px; }
+h1 { margin:0 0 6px; font-size:22px; }
+.sub-title { color:var(--ink-faint); font-size:13px; margin-bottom:24px; }
+.section { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px 22px; margin-bottom:20px; }
+.section h2 { margin:0 0 8px; font-size:17px; }
+.counts { margin:0 0 12px; display:flex; gap:6px; flex-wrap:wrap; }
+.chip { padding:3px 9px; border-radius:11px; font-size:11px; font-weight:500; }
+.chip.good { background:#dcfce7; color:#14532d; }
+.chip.warn { background:#fef3c7; color:#78350f; }
+.chip.bad { background:#fee2e2; color:#7f1d1d; }
+.chip.paused-good { background:#e0e7ff; color:#3730a3; }
+.chip.paused-bad { background:#fde2e2; color:#991b1b; }
+.chip.none { background:#dbeafe; color:#1e3a8a; }
+table { width:100%; border-collapse:collapse; font-size:11.5px; }
+th, td { padding:5px 8px; text-align:left; border-bottom:1px solid var(--border); }
+th { background:#fafaf7; font-weight:600; color:var(--ink-soft); font-size:11px; }
+th.grp { text-align:center; border-left:1px solid var(--border); border-right:1px solid var(--border); }
+tr.sub th { border-bottom:2px solid var(--border); font-size:10px; }
+td.num { text-align:right; font-variant-numeric:tabular-nums; }
+td.cat { font-weight:500; }
+td.tag { font-size:10px; color:var(--ink-faint); font-weight:600; text-align:center; }
+td.status { font-size:10.5px; font-weight:500; }
+td.status.good { background:#dcfce7; color:#14532d; }
+td.status.warn { background:#fef3c7; color:#78350f; }
+td.status.bad { background:#fee2e2; color:#7f1d1d; }
+td.status.paused-good { background:#e0e7ff; color:#3730a3; }
+td.status.paused-bad { background:#fde2e2; color:#991b1b; }
+td.status.none { background:#dbeafe; color:#1e3a8a; }
+.legend { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 16px; margin-bottom:24px; font-size:12px; color:var(--ink-soft); }
+.legend strong { color:var(--ink); }
+</style></head><body><main>
+<h1>Top Google categories by market — Meta presence cross-check (v2)</h1>
+<div class="sub-title">Window: 2026-05-03 → 2026-06-01 (30 days). Meta daily activity tracked.</div>
+<div class="legend">
+<strong>Top:</strong> R = in Google top-10 by revenue, A = top-10 by APR. <strong>Active days:</strong> days with non-zero Meta spend in 30-day window. <strong>Status</strong>: <em>live</em> = had Meta spend in last 7 days · <em>paused</em> = had spend earlier in 30d but none in last 7 · <em>never tested</em> = £0 Meta spend in the entire 30 days.
+</div>
+
+<div class="section">
+<h2>🇬🇧 United Kingdom</h2>
+<div class="counts"><span class="chip good">7 live profitable</span><span class="chip bad">1 live losing</span><span class="chip none">4 never tested</span></div>
+<table>
+<thead>
+<tr><th rowspan="2">Category</th><th rowspan="2">Top</th>
+    <th colspan="3" class="grp">Google 30d</th>
+    <th colspan="3" class="grp">Meta 30d</th>
+    <th rowspan="2">Active days</th><th rowspan="2">Last day</th>
+    <th rowspan="2">Status</th></tr>
+<tr class="sub"><th>Spend</th><th>APR</th><th>Margin</th>
+    <th>Spend</th><th>APR</th><th>Margin</th></tr>
+</thead>
+<tbody><tr>
+  <td class="cat">Gardening</td>
+  <td class="tag">R/A</td>
+  <td class="num">£3,955</td>
+  <td class="num">£39,014</td>
+  <td class="num">986%</td>
+  <td class="num">£3,883</td>
+  <td class="num">£1,238</td>
+  <td class="num">32%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Air Conditioning Installation</td>
+  <td class="tag">R/A</td>
+  <td class="num">£48,397</td>
+  <td class="num">£26,334</td>
+  <td class="num">54%</td>
+  <td class="num">£3,275</td>
+  <td class="num">£3,011</td>
+  <td class="num">92%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Accounting</td>
+  <td class="tag">R/A</td>
+  <td class="num">£31,486</td>
+  <td class="num">£16,217</td>
+  <td class="num">52%</td>
+  <td class="num">£115</td>
+  <td class="num">−£115</td>
+  <td class="num">-100%</td>
+  <td class="num">4/30</td>
+  <td class="num">05-27</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Pressure Washing</td>
+  <td class="tag">R/A</td>
+  <td class="num">£13,236</td>
+  <td class="num">£16,172</td>
+  <td class="num">122%</td>
+  <td class="num">£410</td>
+  <td class="num">£963</td>
+  <td class="num">235%</td>
+  <td class="num">12/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Property Extensions</td>
+  <td class="tag">R/A</td>
+  <td class="num">£11,856</td>
+  <td class="num">£14,817</td>
+  <td class="num">125%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Home & Domiciliary Care</td>
+  <td class="tag">R/A</td>
+  <td class="num">£21,446</td>
+  <td class="num">£14,394</td>
+  <td class="num">67%</td>
+  <td class="num">£13,108</td>
+  <td class="num">£4,401</td>
+  <td class="num">34%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Landscaping</td>
+  <td class="tag">A</td>
+  <td class="num">£3,883</td>
+  <td class="num">£14,297</td>
+  <td class="num">368%</td>
+  <td class="num">£19,733</td>
+  <td class="num">£12,021</td>
+  <td class="num">61%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Tree Surgery & Removal</td>
+  <td class="tag">R/A</td>
+  <td class="num">£12,338</td>
+  <td class="num">£13,912</td>
+  <td class="num">113%</td>
+  <td class="num">£7,930</td>
+  <td class="num">£2,966</td>
+  <td class="num">37%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Man & Van Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£21,584</td>
+  <td class="num">£11,548</td>
+  <td class="num">54%</td>
+  <td class="num">£498</td>
+  <td class="num">£230</td>
+  <td class="num">46%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">General Builders</td>
+  <td class="tag">A</td>
+  <td class="num">£6,412</td>
+  <td class="num">£11,513</td>
+  <td class="num">180%</td>
+  <td class="num">£0</td>
+  <td class="num">£31</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Commercial & Office Cleaning</td>
+  <td class="tag">R</td>
+  <td class="num">£12,365</td>
+  <td class="num">£11,222</td>
+  <td class="num">91%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Web Design</td>
+  <td class="tag">R</td>
+  <td class="num">£15,816</td>
+  <td class="num">£10,029</td>
+  <td class="num">63%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr></tbody>
+</table>
+</div>
+<div class="section">
+<h2>🇺🇸 United States</h2>
+<div class="counts"><span class="chip good">8 live profitable</span><span class="chip bad">1 live losing</span><span class="chip none">2 never tested</span></div>
+<table>
+<thead>
+<tr><th rowspan="2">Category</th><th rowspan="2">Top</th>
+    <th colspan="3" class="grp">Google 30d</th>
+    <th colspan="3" class="grp">Meta 30d</th>
+    <th rowspan="2">Active days</th><th rowspan="2">Last day</th>
+    <th rowspan="2">Status</th></tr>
+<tr class="sub"><th>Spend</th><th>APR</th><th>Margin</th>
+    <th>Spend</th><th>APR</th><th>Margin</th></tr>
+</thead>
+<tbody><tr>
+  <td class="cat">Security Guard Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£44,199</td>
+  <td class="num">£42,033</td>
+  <td class="num">95%</td>
+  <td class="num">£1,242</td>
+  <td class="num">£825</td>
+  <td class="num">66%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Motivational Speaking</td>
+  <td class="tag">R/A</td>
+  <td class="num">£8,534</td>
+  <td class="num">£25,652</td>
+  <td class="num">301%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Bookkeeping Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£19,391</td>
+  <td class="num">£21,611</td>
+  <td class="num">111%</td>
+  <td class="num">£3,383</td>
+  <td class="num">−£1,265</td>
+  <td class="num">-37%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Personal Trainers</td>
+  <td class="tag">R/A</td>
+  <td class="num">£21,662</td>
+  <td class="num">£19,172</td>
+  <td class="num">89%</td>
+  <td class="num">£5,907</td>
+  <td class="num">£1,806</td>
+  <td class="num">31%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Dog Training</td>
+  <td class="tag">R/A</td>
+  <td class="num">£26,967</td>
+  <td class="num">£18,427</td>
+  <td class="num">68%</td>
+  <td class="num">£16,096</td>
+  <td class="num">£3,148</td>
+  <td class="num">20%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">DJ</td>
+  <td class="tag">R/A</td>
+  <td class="num">£10,646</td>
+  <td class="num">£16,252</td>
+  <td class="num">153%</td>
+  <td class="num">£15,652</td>
+  <td class="num">£5,043</td>
+  <td class="num">32%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Mobile Software Development</td>
+  <td class="tag">R/A</td>
+  <td class="num">£14,788</td>
+  <td class="num">£13,623</td>
+  <td class="num">92%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Web Design</td>
+  <td class="tag">R/A</td>
+  <td class="num">£40,954</td>
+  <td class="num">£13,152</td>
+  <td class="num">32%</td>
+  <td class="num">£7,045</td>
+  <td class="num">£2,497</td>
+  <td class="num">35%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Catering</td>
+  <td class="tag">R/A</td>
+  <td class="num">£15,022</td>
+  <td class="num">£11,222</td>
+  <td class="num">75%</td>
+  <td class="num">£9,165</td>
+  <td class="num">£3,529</td>
+  <td class="num">39%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Magician</td>
+  <td class="tag">A</td>
+  <td class="num">£2,316</td>
+  <td class="num">£10,155</td>
+  <td class="num">438%</td>
+  <td class="num">£188</td>
+  <td class="num">£403</td>
+  <td class="num">214%</td>
+  <td class="num">8/30</td>
+  <td class="num">05-27</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Commercial & Office Cleaning</td>
+  <td class="tag">R</td>
+  <td class="num">£23,880</td>
+  <td class="num">£4,825</td>
+  <td class="num">20%</td>
+  <td class="num">£1,687</td>
+  <td class="num">£993</td>
+  <td class="num">59%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr></tbody>
+</table>
+</div>
+<div class="section">
+<h2>🇨🇦 Canada</h2>
+<div class="counts"><span class="chip good">5 live profitable</span><span class="chip bad">3 live losing</span><span class="chip paused-bad">1 paused (was losing)</span><span class="chip none">3 never tested</span></div>
+<table>
+<thead>
+<tr><th rowspan="2">Category</th><th rowspan="2">Top</th>
+    <th colspan="3" class="grp">Google 30d</th>
+    <th colspan="3" class="grp">Meta 30d</th>
+    <th rowspan="2">Active days</th><th rowspan="2">Last day</th>
+    <th rowspan="2">Status</th></tr>
+<tr class="sub"><th>Spend</th><th>APR</th><th>Margin</th>
+    <th>Spend</th><th>APR</th><th>Margin</th></tr>
+</thead>
+<tbody><tr>
+  <td class="cat">Web Design</td>
+  <td class="tag">R/A</td>
+  <td class="num">£5,644</td>
+  <td class="num">£5,904</td>
+  <td class="num">105%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">General Builders</td>
+  <td class="tag">R/A</td>
+  <td class="num">£6,052</td>
+  <td class="num">£4,118</td>
+  <td class="num">68%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Roofing Installation or Replacement</td>
+  <td class="tag">R/A</td>
+  <td class="num">£4,227</td>
+  <td class="num">£3,523</td>
+  <td class="num">83%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Personal Trainers</td>
+  <td class="tag">R/A</td>
+  <td class="num">£3,917</td>
+  <td class="num">£3,444</td>
+  <td class="num">88%</td>
+  <td class="num">£973</td>
+  <td class="num">£395</td>
+  <td class="num">41%</td>
+  <td class="num">22/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Home & Domiciliary Care</td>
+  <td class="tag">A</td>
+  <td class="num">£3,156</td>
+  <td class="num">£2,750</td>
+  <td class="num">87%</td>
+  <td class="num">£2,128</td>
+  <td class="num">£389</td>
+  <td class="num">18%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Security Guard Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£5,038</td>
+  <td class="num">£2,597</td>
+  <td class="num">52%</td>
+  <td class="num">£530</td>
+  <td class="num">−£251</td>
+  <td class="num">-47%</td>
+  <td class="num">9/30</td>
+  <td class="num">05-26</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Catering</td>
+  <td class="tag">R/A</td>
+  <td class="num">£3,557</td>
+  <td class="num">£2,425</td>
+  <td class="num">68%</td>
+  <td class="num">£243</td>
+  <td class="num">−£61</td>
+  <td class="num">-25%</td>
+  <td class="num">9/30</td>
+  <td class="num">05-26</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Bathroom Installation & Remodel</td>
+  <td class="tag">A</td>
+  <td class="num">£3,070</td>
+  <td class="num">£2,405</td>
+  <td class="num">78%</td>
+  <td class="num">£4,721</td>
+  <td class="num">£4,348</td>
+  <td class="num">92%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Counselling</td>
+  <td class="tag">R/A</td>
+  <td class="num">£4,307</td>
+  <td class="num">£2,275</td>
+  <td class="num">53%</td>
+  <td class="num">£83</td>
+  <td class="num">−£39</td>
+  <td class="num">-47%</td>
+  <td class="num">4/30</td>
+  <td class="num">05-21</td>
+  <td class="status paused-bad">paused (had been losing)</td>
+</tr><tr>
+  <td class="cat">House Cleaning</td>
+  <td class="tag">R/A</td>
+  <td class="num">£8,744</td>
+  <td class="num">£2,219</td>
+  <td class="num">25%</td>
+  <td class="num">£3,583</td>
+  <td class="num">£3,816</td>
+  <td class="num">107%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Bookkeeping Services</td>
+  <td class="tag">R</td>
+  <td class="num">£4,144</td>
+  <td class="num">£2,104</td>
+  <td class="num">51%</td>
+  <td class="num">£476</td>
+  <td class="num">−£170</td>
+  <td class="num">-36%</td>
+  <td class="num">19/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Painting & Decoration - Interior</td>
+  <td class="tag">R</td>
+  <td class="num">£5,001</td>
+  <td class="num">£1,088</td>
+  <td class="num">22%</td>
+  <td class="num">£2,855</td>
+  <td class="num">£2,422</td>
+  <td class="num">85%</td>
+  <td class="num">30/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr></tbody>
+</table>
+</div>
+<div class="section">
+<h2>🇿🇦 South Africa</h2>
+<div class="counts"><span class="chip good">2 live profitable</span><span class="chip warn">1 live marginal</span><span class="chip bad">2 live losing</span><span class="chip paused-bad">1 paused (was losing)</span><span class="chip none">6 never tested</span></div>
+<table>
+<thead>
+<tr><th rowspan="2">Category</th><th rowspan="2">Top</th>
+    <th colspan="3" class="grp">Google 30d</th>
+    <th colspan="3" class="grp">Meta 30d</th>
+    <th rowspan="2">Active days</th><th rowspan="2">Last day</th>
+    <th rowspan="2">Status</th></tr>
+<tr class="sub"><th>Spend</th><th>APR</th><th>Margin</th>
+    <th>Spend</th><th>APR</th><th>Margin</th></tr>
+</thead>
+<tbody><tr>
+  <td class="cat">Property Extensions</td>
+  <td class="tag">R/A</td>
+  <td class="num">£435</td>
+  <td class="num">£942</td>
+  <td class="num">217%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Business Accounting Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,276</td>
+  <td class="num">£689</td>
+  <td class="num">54%</td>
+  <td class="num">£17</td>
+  <td class="num">£28</td>
+  <td class="num">165%</td>
+  <td class="num">3/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Counselling</td>
+  <td class="tag">R/A</td>
+  <td class="num">£97</td>
+  <td class="num">£626</td>
+  <td class="num">645%</td>
+  <td class="num">£30</td>
+  <td class="num">£2</td>
+  <td class="num">7%</td>
+  <td class="num">3/30</td>
+  <td class="num">06-01</td>
+  <td class="status warn">live, marginal</td>
+</tr><tr>
+  <td class="cat">Man & Van Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,174</td>
+  <td class="num">£613</td>
+  <td class="num">52%</td>
+  <td class="num">£16</td>
+  <td class="num">£32</td>
+  <td class="num">200%</td>
+  <td class="num">3/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Handyman</td>
+  <td class="tag">A</td>
+  <td class="num">£65</td>
+  <td class="num">£591</td>
+  <td class="num">909%</td>
+  <td class="num">£61</td>
+  <td class="num">−£34</td>
+  <td class="num">-56%</td>
+  <td class="num">3/30</td>
+  <td class="num">05-15</td>
+  <td class="status paused-bad">paused (had been losing)</td>
+</tr><tr>
+  <td class="cat">Electricians</td>
+  <td class="tag">R/A</td>
+  <td class="num">£749</td>
+  <td class="num">£582</td>
+  <td class="num">78%</td>
+  <td class="num">£17</td>
+  <td class="num">−£13</td>
+  <td class="num">-76%</td>
+  <td class="num">3/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Deep Cleaning Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,351</td>
+  <td class="num">£554</td>
+  <td class="num">41%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Catering</td>
+  <td class="tag">A</td>
+  <td class="num">£129</td>
+  <td class="num">£538</td>
+  <td class="num">417%</td>
+  <td class="num">£502</td>
+  <td class="num">−£135</td>
+  <td class="num">-27%</td>
+  <td class="num">20/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">HR and Payroll Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£559</td>
+  <td class="num">£462</td>
+  <td class="num">83%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Web Development</td>
+  <td class="tag">R/A</td>
+  <td class="num">£570</td>
+  <td class="num">£399</td>
+  <td class="num">70%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Bookkeeping Services</td>
+  <td class="tag">R</td>
+  <td class="num">£719</td>
+  <td class="num">£290</td>
+  <td class="num">40%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Business Consulting</td>
+  <td class="tag">R</td>
+  <td class="num">£1,648</td>
+  <td class="num">−£845</td>
+  <td class="num">-51%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr></tbody>
+</table>
+</div>
+<div class="section">
+<h2>🇮🇪 Ireland</h2>
+<div class="counts"><span class="chip good">4 live profitable</span><span class="chip warn">1 live marginal</span><span class="chip paused-good">2 paused (was profitable)</span><span class="chip paused-bad">2 paused (was losing)</span><span class="chip none">3 never tested</span></div>
+<table>
+<thead>
+<tr><th rowspan="2">Category</th><th rowspan="2">Top</th>
+    <th colspan="3" class="grp">Google 30d</th>
+    <th colspan="3" class="grp">Meta 30d</th>
+    <th rowspan="2">Active days</th><th rowspan="2">Last day</th>
+    <th rowspan="2">Status</th></tr>
+<tr class="sub"><th>Spend</th><th>APR</th><th>Margin</th>
+    <th>Spend</th><th>APR</th><th>Margin</th></tr>
+</thead>
+<tbody><tr>
+  <td class="cat">Web Design</td>
+  <td class="tag">R/A</td>
+  <td class="num">£2,786</td>
+  <td class="num">£2,704</td>
+  <td class="num">97%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Bathroom Installation & Remodel</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,737</td>
+  <td class="num">£1,978</td>
+  <td class="num">114%</td>
+  <td class="num">£561</td>
+  <td class="num">£310</td>
+  <td class="num">55%</td>
+  <td class="num">24/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">General Builders</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,429</td>
+  <td class="num">£1,863</td>
+  <td class="num">130%</td>
+  <td class="num">£601</td>
+  <td class="num">£292</td>
+  <td class="num">49%</td>
+  <td class="num">24/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Gardening</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,569</td>
+  <td class="num">£1,628</td>
+  <td class="num">104%</td>
+  <td class="num">£644</td>
+  <td class="num">£66</td>
+  <td class="num">10%</td>
+  <td class="num">24/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Painting & Decoration - Interior</td>
+  <td class="tag">R/A</td>
+  <td class="num">£2,911</td>
+  <td class="num">£1,492</td>
+  <td class="num">51%</td>
+  <td class="num">£677</td>
+  <td class="num">£398</td>
+  <td class="num">59%</td>
+  <td class="num">24/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Landscaping</td>
+  <td class="tag">A</td>
+  <td class="num">£592</td>
+  <td class="num">£1,485</td>
+  <td class="num">251%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">General Plumbing</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,558</td>
+  <td class="num">£1,265</td>
+  <td class="num">81%</td>
+  <td class="num">£526</td>
+  <td class="num">£31</td>
+  <td class="num">6%</td>
+  <td class="num">24/30</td>
+  <td class="num">06-01</td>
+  <td class="status warn">live, marginal</td>
+</tr><tr>
+  <td class="cat">Property Extensions</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,610</td>
+  <td class="num">£1,189</td>
+  <td class="num">74%</td>
+  <td class="num">£299</td>
+  <td class="num">£207</td>
+  <td class="num">69%</td>
+  <td class="num">9/30</td>
+  <td class="num">05-15</td>
+  <td class="status paused-good">paused (had been profitable)</td>
+</tr><tr>
+  <td class="cat">Tree Surgery & Removal</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,224</td>
+  <td class="num">£951</td>
+  <td class="num">78%</td>
+  <td class="num">£324</td>
+  <td class="num">−£142</td>
+  <td class="num">-44%</td>
+  <td class="num">9/30</td>
+  <td class="num">05-15</td>
+  <td class="status paused-bad">paused (had been losing)</td>
+</tr><tr>
+  <td class="cat">Roof Repair</td>
+  <td class="tag">A</td>
+  <td class="num">£161</td>
+  <td class="num">£888</td>
+  <td class="num">552%</td>
+  <td class="num">£222</td>
+  <td class="num">£67</td>
+  <td class="num">30%</td>
+  <td class="num">9/30</td>
+  <td class="num">05-15</td>
+  <td class="status paused-good">paused (had been profitable)</td>
+</tr><tr>
+  <td class="cat">Electricians</td>
+  <td class="tag">R</td>
+  <td class="num">£1,910</td>
+  <td class="num">£670</td>
+  <td class="num">35%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Commercial & Office Cleaning</td>
+  <td class="tag">R</td>
+  <td class="num">£1,644</td>
+  <td class="num">£600</td>
+  <td class="num">36%</td>
+  <td class="num">£201</td>
+  <td class="num">−£201</td>
+  <td class="num">-100%</td>
+  <td class="num">8/30</td>
+  <td class="num">05-14</td>
+  <td class="status paused-bad">paused (had been losing)</td>
+</tr></tbody>
+</table>
+</div>
+<div class="section">
+<h2>🇫🇷 France</h2>
+<div class="counts"><span class="chip paused-bad">1 paused (was losing)</span><span class="chip none">11 never tested</span></div>
+<table>
+<thead>
+<tr><th rowspan="2">Category</th><th rowspan="2">Top</th>
+    <th colspan="3" class="grp">Google 30d</th>
+    <th colspan="3" class="grp">Meta 30d</th>
+    <th rowspan="2">Active days</th><th rowspan="2">Last day</th>
+    <th rowspan="2">Status</th></tr>
+<tr class="sub"><th>Spend</th><th>APR</th><th>Margin</th>
+    <th>Spend</th><th>APR</th><th>Margin</th></tr>
+</thead>
+<tbody><tr>
+  <td class="cat">DJ</td>
+  <td class="tag">R/A</td>
+  <td class="num">£894</td>
+  <td class="num">£5,650</td>
+  <td class="num">632%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Web Design</td>
+  <td class="tag">R/A</td>
+  <td class="num">£4,795</td>
+  <td class="num">£4,727</td>
+  <td class="num">99%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Burglar, Security & Intruder Alarm Installation</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,432</td>
+  <td class="num">£2,990</td>
+  <td class="num">209%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Accounting</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,363</td>
+  <td class="num">£2,331</td>
+  <td class="num">171%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Security Guard Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£2,401</td>
+  <td class="num">£2,025</td>
+  <td class="num">84%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">CCTV Installation</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,115</td>
+  <td class="num">£1,576</td>
+  <td class="num">141%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Co-ownership Trustee</td>
+  <td class="tag">A</td>
+  <td class="num">£1,132</td>
+  <td class="num">£1,524</td>
+  <td class="num">135%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Stairlift Installation & Repair</td>
+  <td class="tag">R/A</td>
+  <td class="num">£3,438</td>
+  <td class="num">£1,486</td>
+  <td class="num">43%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Residential Interior Designers</td>
+  <td class="tag">A</td>
+  <td class="num">£1,280</td>
+  <td class="num">£1,343</td>
+  <td class="num">105%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Tax Preparation</td>
+  <td class="tag">R/A</td>
+  <td class="num">£2,204</td>
+  <td class="num">£1,143</td>
+  <td class="num">52%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">EPOS</td>
+  <td class="tag">R</td>
+  <td class="num">£5,993</td>
+  <td class="num">£761</td>
+  <td class="num">13%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Counselling</td>
+  <td class="tag">R</td>
+  <td class="num">£2,625</td>
+  <td class="num">£721</td>
+  <td class="num">27%</td>
+  <td class="num">£91</td>
+  <td class="num">−£57</td>
+  <td class="num">-63%</td>
+  <td class="num">4/30</td>
+  <td class="num">05-16</td>
+  <td class="status paused-bad">paused (had been losing)</td>
+</tr></tbody>
+</table>
+</div>
+<div class="section">
+<h2>🇩🇪 Deutschland</h2>
+<div class="counts"><span class="chip good">1 live profitable</span><span class="chip warn">1 live marginal</span><span class="chip bad">2 live losing</span><span class="chip paused-good">1 paused (was profitable)</span><span class="chip paused-bad">2 paused (was losing)</span><span class="chip none">5 never tested</span></div>
+<table>
+<thead>
+<tr><th rowspan="2">Category</th><th rowspan="2">Top</th>
+    <th colspan="3" class="grp">Google 30d</th>
+    <th colspan="3" class="grp">Meta 30d</th>
+    <th rowspan="2">Active days</th><th rowspan="2">Last day</th>
+    <th rowspan="2">Status</th></tr>
+<tr class="sub"><th>Spend</th><th>APR</th><th>Margin</th>
+    <th>Spend</th><th>APR</th><th>Margin</th></tr>
+</thead>
+<tbody><tr>
+  <td class="cat">Property Management</td>
+  <td class="tag">R/A</td>
+  <td class="num">£7,202</td>
+  <td class="num">£9,293</td>
+  <td class="num">129%</td>
+  <td class="num">£12</td>
+  <td class="num">−£12</td>
+  <td class="num">-100%</td>
+  <td class="num">2/30</td>
+  <td class="num">05-16</td>
+  <td class="status paused-bad">paused (had been losing)</td>
+</tr><tr>
+  <td class="cat">Tutoring</td>
+  <td class="tag">R/A</td>
+  <td class="num">£12,806</td>
+  <td class="num">£7,079</td>
+  <td class="num">55%</td>
+  <td class="num">£795</td>
+  <td class="num">£159</td>
+  <td class="num">20%</td>
+  <td class="num">27/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">DJ</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,899</td>
+  <td class="num">£4,721</td>
+  <td class="num">249%</td>
+  <td class="num">£513</td>
+  <td class="num">£3</td>
+  <td class="num">1%</td>
+  <td class="num">24/30</td>
+  <td class="num">05-27</td>
+  <td class="status warn">live, marginal</td>
+</tr><tr>
+  <td class="cat">Counselling</td>
+  <td class="tag">R/A</td>
+  <td class="num">£4,305</td>
+  <td class="num">£2,591</td>
+  <td class="num">60%</td>
+  <td class="num">£233</td>
+  <td class="num">−£174</td>
+  <td class="num">-75%</td>
+  <td class="num">8/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Web Design</td>
+  <td class="tag">R/A</td>
+  <td class="num">£2,288</td>
+  <td class="num">£2,453</td>
+  <td class="num">107%</td>
+  <td class="num">£22</td>
+  <td class="num">£190</td>
+  <td class="num">864%</td>
+  <td class="num">2/30</td>
+  <td class="num">05-16</td>
+  <td class="status paused-good">paused (had been profitable)</td>
+</tr><tr>
+  <td class="cat">Security Guard Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,078</td>
+  <td class="num">£1,033</td>
+  <td class="num">96%</td>
+  <td class="num">£31</td>
+  <td class="num">−£31</td>
+  <td class="num">-100%</td>
+  <td class="num">2/30</td>
+  <td class="num">05-16</td>
+  <td class="status paused-bad">paused (had been losing)</td>
+</tr><tr>
+  <td class="cat">General Photography</td>
+  <td class="tag">A</td>
+  <td class="num">£267</td>
+  <td class="num">£942</td>
+  <td class="num">353%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Graphic Design</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,308</td>
+  <td class="num">£825</td>
+  <td class="num">63%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Business Accounting Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,530</td>
+  <td class="num">£772</td>
+  <td class="num">50%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Personal Trainers</td>
+  <td class="tag">A</td>
+  <td class="num">£735</td>
+  <td class="num">£558</td>
+  <td class="num">76%</td>
+  <td class="num">£349</td>
+  <td class="num">−£214</td>
+  <td class="num">-61%</td>
+  <td class="num">23/30</td>
+  <td class="num">05-26</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Social Media Marketing</td>
+  <td class="tag">R</td>
+  <td class="num">£1,110</td>
+  <td class="num">£488</td>
+  <td class="num">44%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr><tr>
+  <td class="cat">Couples Counselling</td>
+  <td class="tag">R</td>
+  <td class="num">£1,584</td>
+  <td class="num">£241</td>
+  <td class="num">15%</td>
+  <td class="num">£0</td>
+  <td class="num">£0</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="num">—</td>
+  <td class="status none">never tested</td>
+</tr></tbody>
+</table>
+</div>
+<div class="section">
+<h2>🇳🇿 New Zealand</h2>
+<div class="counts"><span class="chip good">7 live profitable</span><span class="chip bad">4 live losing</span></div>
+<table>
+<thead>
+<tr><th rowspan="2">Category</th><th rowspan="2">Top</th>
+    <th colspan="3" class="grp">Google 30d</th>
+    <th colspan="3" class="grp">Meta 30d</th>
+    <th rowspan="2">Active days</th><th rowspan="2">Last day</th>
+    <th rowspan="2">Status</th></tr>
+<tr class="sub"><th>Spend</th><th>APR</th><th>Margin</th>
+    <th>Spend</th><th>APR</th><th>Margin</th></tr>
+</thead>
+<tbody><tr>
+  <td class="cat">Painting & Decoration - Interior</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,885</td>
+  <td class="num">£2,081</td>
+  <td class="num">110%</td>
+  <td class="num">£572</td>
+  <td class="num">£597</td>
+  <td class="num">104%</td>
+  <td class="num">12/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Web Design</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,469</td>
+  <td class="num">£1,606</td>
+  <td class="num">109%</td>
+  <td class="num">£156</td>
+  <td class="num">£240</td>
+  <td class="num">154%</td>
+  <td class="num">12/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Property Management</td>
+  <td class="tag">R/A</td>
+  <td class="num">£3,780</td>
+  <td class="num">£1,556</td>
+  <td class="num">41%</td>
+  <td class="num">£170</td>
+  <td class="num">£45</td>
+  <td class="num">26%</td>
+  <td class="num">12/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Architectural Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£958</td>
+  <td class="num">£694</td>
+  <td class="num">72%</td>
+  <td class="num">£22</td>
+  <td class="num">−£22</td>
+  <td class="num">-100%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Business Consulting</td>
+  <td class="tag">R/A</td>
+  <td class="num">£485</td>
+  <td class="num">£624</td>
+  <td class="num">129%</td>
+  <td class="num">£28</td>
+  <td class="num">−£10</td>
+  <td class="num">-36%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Tree Surgery & Removal</td>
+  <td class="tag">R/A</td>
+  <td class="num">£497</td>
+  <td class="num">£619</td>
+  <td class="num">125%</td>
+  <td class="num">£45</td>
+  <td class="num">£89</td>
+  <td class="num">198%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Fence & Gate Installation</td>
+  <td class="tag">R/A</td>
+  <td class="num">£624</td>
+  <td class="num">£605</td>
+  <td class="num">97%</td>
+  <td class="num">£444</td>
+  <td class="num">£371</td>
+  <td class="num">84%</td>
+  <td class="num">12/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">General Builders</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,406</td>
+  <td class="num">£590</td>
+  <td class="num">42%</td>
+  <td class="num">£301</td>
+  <td class="num">£322</td>
+  <td class="num">107%</td>
+  <td class="num">12/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Property Extensions</td>
+  <td class="tag">R/A</td>
+  <td class="num">£1,178</td>
+  <td class="num">£497</td>
+  <td class="num">42%</td>
+  <td class="num">£505</td>
+  <td class="num">£711</td>
+  <td class="num">141%</td>
+  <td class="num">12/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Driveway Installation</td>
+  <td class="tag">A</td>
+  <td class="num">£496</td>
+  <td class="num">£485</td>
+  <td class="num">98%</td>
+  <td class="num">£111</td>
+  <td class="num">−£52</td>
+  <td class="num">-47%</td>
+  <td class="num">6/30</td>
+  <td class="num">05-26</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Business Accounting Services</td>
+  <td class="tag">R</td>
+  <td class="num">£723</td>
+  <td class="num">£338</td>
+  <td class="num">47%</td>
+  <td class="num">£23</td>
+  <td class="num">−£23</td>
+  <td class="num">-100%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr></tbody>
+</table>
+</div>
+<div class="section">
+<h2>🇦🇺 Australia</h2>
+<div class="counts"><span class="chip good">6 live profitable</span><span class="chip bad">8 live losing</span></div>
+<table>
+<thead>
+<tr><th rowspan="2">Category</th><th rowspan="2">Top</th>
+    <th colspan="3" class="grp">Google 30d</th>
+    <th colspan="3" class="grp">Meta 30d</th>
+    <th rowspan="2">Active days</th><th rowspan="2">Last day</th>
+    <th rowspan="2">Status</th></tr>
+<tr class="sub"><th>Spend</th><th>APR</th><th>Margin</th>
+    <th>Spend</th><th>APR</th><th>Margin</th></tr>
+</thead>
+<tbody><tr>
+  <td class="cat">Tutoring</td>
+  <td class="tag">R/A</td>
+  <td class="num">£25,380</td>
+  <td class="num">£9,234</td>
+  <td class="num">36%</td>
+  <td class="num">£274</td>
+  <td class="num">£200</td>
+  <td class="num">73%</td>
+  <td class="num">12/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Financial Advisors</td>
+  <td class="tag">R/A</td>
+  <td class="num">£23,293</td>
+  <td class="num">£7,579</td>
+  <td class="num">33%</td>
+  <td class="num">£35</td>
+  <td class="num">£69</td>
+  <td class="num">197%</td>
+  <td class="num">6/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Business Accounting Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£11,340</td>
+  <td class="num">£6,739</td>
+  <td class="num">59%</td>
+  <td class="num">£18</td>
+  <td class="num">£132</td>
+  <td class="num">733%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Funeral Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£8,445</td>
+  <td class="num">£6,029</td>
+  <td class="num">71%</td>
+  <td class="num">£24</td>
+  <td class="num">−£7</td>
+  <td class="num">-29%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Accounting</td>
+  <td class="tag">R/A</td>
+  <td class="num">£11,982</td>
+  <td class="num">£5,548</td>
+  <td class="num">46%</td>
+  <td class="num">£21</td>
+  <td class="num">−£21</td>
+  <td class="num">-100%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Web Design</td>
+  <td class="tag">A</td>
+  <td class="num">£3,947</td>
+  <td class="num">£5,241</td>
+  <td class="num">133%</td>
+  <td class="num">£226</td>
+  <td class="num">−£226</td>
+  <td class="num">-100%</td>
+  <td class="num">6/30</td>
+  <td class="num">05-26</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Bookkeeping Services</td>
+  <td class="tag">R/A</td>
+  <td class="num">£9,682</td>
+  <td class="num">£5,203</td>
+  <td class="num">54%</td>
+  <td class="num">£224</td>
+  <td class="num">−£7</td>
+  <td class="num">-3%</td>
+  <td class="num">6/30</td>
+  <td class="num">05-26</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Security Guard Services</td>
+  <td class="tag">A</td>
+  <td class="num">£5,722</td>
+  <td class="num">£4,557</td>
+  <td class="num">80%</td>
+  <td class="num">£236</td>
+  <td class="num">£106</td>
+  <td class="num">45%</td>
+  <td class="num">12/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Wedding Celebrants</td>
+  <td class="tag">A</td>
+  <td class="num">£4,380</td>
+  <td class="num">£4,356</td>
+  <td class="num">99%</td>
+  <td class="num">£23</td>
+  <td class="num">−£5</td>
+  <td class="num">-22%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Buyer's Agent</td>
+  <td class="tag">A</td>
+  <td class="num">£5,534</td>
+  <td class="num">£4,344</td>
+  <td class="num">78%</td>
+  <td class="num">£20</td>
+  <td class="num">£84</td>
+  <td class="num">420%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Business Consulting</td>
+  <td class="tag">R</td>
+  <td class="num">£7,920</td>
+  <td class="num">£3,979</td>
+  <td class="num">50%</td>
+  <td class="num">£15</td>
+  <td class="num">−£15</td>
+  <td class="num">-100%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Commercial & Office Cleaning</td>
+  <td class="tag">R</td>
+  <td class="num">£13,248</td>
+  <td class="num">£3,978</td>
+  <td class="num">30%</td>
+  <td class="num">£113</td>
+  <td class="num">−£44</td>
+  <td class="num">-39%</td>
+  <td class="num">6/30</td>
+  <td class="num">05-26</td>
+  <td class="status bad">live, losing</td>
+</tr><tr>
+  <td class="cat">Social Media Marketing</td>
+  <td class="tag">R</td>
+  <td class="num">£7,995</td>
+  <td class="num">£3,461</td>
+  <td class="num">43%</td>
+  <td class="num">£19</td>
+  <td class="num">£56</td>
+  <td class="num">295%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status good">live, profitable</td>
+</tr><tr>
+  <td class="cat">Maths Tutoring</td>
+  <td class="tag">R</td>
+  <td class="num">£9,560</td>
+  <td class="num">£3,403</td>
+  <td class="num">36%</td>
+  <td class="num">£22</td>
+  <td class="num">−£12</td>
+  <td class="num">-55%</td>
+  <td class="num">4/30</td>
+  <td class="num">06-01</td>
+  <td class="status bad">live, losing</td>
+</tr></tbody>
+</table>
+</div>
+</main></body></html>
