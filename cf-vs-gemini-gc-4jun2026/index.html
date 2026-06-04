@@ -36,26 +36,20 @@ footer{padding:14px 22px;color:var(--mute);font-size:11.5px;border-top:1px solid
 <footer>Generated 4 Jun 2026 · 29 scene-paired comparisons across WB (10) / TAP (9) / BS (10) · images downscaled to ~1080w JPEG q85 for web</footer>
 <script>
 const SECTIONS = [
-  ["WB · Whiteboard (10 pairs)", "wb", [
-    "wb01.png","wb02.png","wb03.png","wb04.png","wb05_pov.png","wb06.png","wb07.png","wb08.png","wb09.png","wb10_pov.png"
-  ]],
-  ["TAP · Q&A buttons (9 pairs)", "tap", [
-    "tap1_1.png","tap1_2.png","tap1_3.png","tap2_1.png","tap2_2.png","tap2_3.png","tap3_1.png","tap3_2.png","tap3_3.png"
-  ]],
-  ["BS · Basic Statics (10 pairs)", "bs", [
-    "basic_01.png","basic_02.png","basic_03.png","basic_04.png","basic_05.png","basic_06.png","basic_07.png","basic_08.png","basic_09.png","basic_10.png"
-  ]]
+  ["WB · Whiteboard (10 pairs)", "wb", ['wb01.jpg', 'wb02.jpg', 'wb03.jpg', 'wb04.jpg', 'wb05_pov.jpg', 'wb06.jpg', 'wb07.jpg', 'wb08_pov.jpg', 'wb09.jpg', 'wb10.jpg']],
+  ["TAP · Q&A buttons (9 pairs)", "tap", ['tap1_1.jpg', 'tap1_2.jpg', 'tap1_3.jpg', 'tap2_1.jpg', 'tap2_2.jpg', 'tap2_3.jpg', 'tap3_1.jpg', 'tap3_2.jpg', 'tap3_3.jpg']],
+  ["BS · Basic Statics (10 pairs)", "bs", ['basic_01.jpg', 'basic_02.jpg', 'basic_03.jpg', 'basic_04.jpg', 'basic_05.jpg', 'basic_06.jpg', 'basic_07.jpg', 'basic_08.jpg', 'basic_09.jpg', 'basic_10.jpg']]
 ];
 const root = document.getElementById('content');
 SECTIONS.forEach(([label, folder, files]) => {
   const sec = document.createElement('section');
   sec.innerHTML = `<h2>${label}</h2>`;
   files.forEach(f => {
-    const jpg = f.replace('.png', '.jpg');
+    const jpg = f;
     const row = document.createElement('div'); row.className = 'row';
     row.innerHTML = `
-      <div class="cell"><div class="tag cf">CF · Higgsfield + HTML</div><img src="cf/${folder}/${jpg}" alt="${jpg}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'miss',textContent:'— missing —'}))"><div class="cap">cf/${folder}/${jpg}</div></div>
-      <div class="cell"><div class="tag gm">GM · Gemini /3style</div><img src="gm/${folder}/${jpg}" alt="${jpg}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'miss',textContent:'— missing —'}))"><div class="cap">gm/${folder}/${jpg}</div></div>
+      <div class="cell"><div class="tag cf">CF · Higgsfield + HTML</div><img src="cf/${folder}/${f}" alt="${f}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'miss',textContent:'— missing —'}))"><div class="cap">cf/${folder}/${f}</div></div>
+      <div class="cell"><div class="tag gm">GM · Gemini /3style</div><img src="gm/${folder}/${f}" alt="${f}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'miss',textContent:'— missing —'}))"><div class="cap">gm/${folder}/${f}</div></div>
     `;
     sec.appendChild(row);
   });
