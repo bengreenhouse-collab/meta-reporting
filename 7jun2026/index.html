@@ -99,8 +99,9 @@ td{padding:7px 8px;vertical-align:middle}
 <div id="week-switcher-bar">
   <label for="week-switcher">Week</label>
   <select id="week-switcher">
+      <option value="wip-10jun2026">Mid-week · 8–10 Jun (in progress)</option>
       <option value="7jun2026" selected>w/e 7 Jun 2026</option>
-      <option value="wip-3jun2026">Mid-week · 1–3 Jun (in progress)</option>
+      <option value="wip-3jun2026">Mid-week · 1–3 Jun (archived)</option>
       <option value="31may2026">w/e 31 May 2026</option>
   </select>
   <a href="./index-original.html" class="revert" title="Open the original w/e 31 May report without the week-switcher">⤺ original</a>
@@ -145,7 +146,6 @@ td{padding:7px 8px;vertical-align:middle}
   }
 })();
 </script>
-
 <div class="top-bar"></div>
 <div class="header">
   <h1>PPC Handover Action Report — 8-week Trends</h1>
@@ -2069,7 +2069,8 @@ init();
   }
 
   function copyList() {
-    const lines = checkedKeys().map(agkeyToLine).sort().join('\n');
+    const lines = checkedKeys().map(agkeyToLine).sort().join('
+');
     navigator.clipboard.writeText(lines).then(() => {
       const btn = bar.querySelector('.copy');
       const orig = btn.textContent;
@@ -2078,7 +2079,8 @@ init();
     });
   }
   function showPreview() {
-    textarea.value = checkedKeys().map(agkeyToLine).sort().join('\n') || '(none selected)';
+    textarea.value = checkedKeys().map(agkeyToLine).sort().join('
+') || '(none selected)';
     if (typeof dlg.showModal === 'function') dlg.showModal();
     else dlg.style.display = 'block';
   }
@@ -2191,6 +2193,5 @@ init();
   else start();
 })();
 </script>
-
 </body>
 </html>

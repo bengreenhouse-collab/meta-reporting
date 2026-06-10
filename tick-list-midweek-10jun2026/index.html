@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meta Ads Tick-List (ELASTIC) — All Markets — w/e 14 Jun 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0c1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;min-height:100vh;padding-bottom:140px}
+.top-bar{height:4px;background:linear-gradient(90deg,#E85555,#FA9750,#F7BF53,#47BF9C,#2D7AF1)}
+.header{padding:18px 24px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.header h1{font-size:20px;font-weight:700;color:#fff}
+.header .meta{color:#64748b;font-size:12px;margin-top:4px}
+.header .meta span{margin-right:16px}
+.content{padding:18px 24px}
+.section{margin-bottom:28px;border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:auto}
+.section-hd{padding:12px 16px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.02)}
+.section-hd h2{font-size:14px;font-weight:700;color:#fff;flex:1}
+.section-hd .sub{font-size:11px;color:#64748b;font-weight:400;margin-left:8px}
+.section-hd .count{font-size:11px;color:#94a3b8;font-weight:500}
+.section-hd .toggle-all{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#e2e8f0;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:500}
+.section-hd .toggle-all:hover{background:rgba(255,255,255,.1)}
+table{width:100%;border-collapse:collapse}
+thead th{background:rgba(255,255,255,.03);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.035)}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+tbody tr.checked{background:rgba(16,185,129,.04)}
+td{padding:10px;vertical-align:top;font-size:12px}
+td.mkt{font-weight:600;color:#94a3b8;width:42px;vertical-align:middle}
+td.idx{color:#64748b;width:30px;text-align:center;vertical-align:middle}
+td.check{width:42px;text-align:center;vertical-align:middle}
+input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:#10b981}
+td.name{font-size:11px;color:#e2e8f0;line-height:1.4;max-width:260px;vertical-align:middle}
+td.name .cat{font-size:10px;color:#475569;margin-top:1px}
+.flag-pill{display:inline-block;font-size:9px;color:#f97316;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.25);padding:1px 5px;border-radius:3px;margin-left:6px}
+.cap-pill{display:inline-block;font-size:9px;color:#ef4444;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;margin-left:6px}
+.cap-pill .x{font-weight:700}
+
+
+.sp-cell{min-width:280px}
+.sp-wrap{display:flex;align-items:flex-start;gap:10px}
+.sp-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;flex:1;min-width:240px}
+.sp-col{display:flex;flex-direction:column;align-items:stretch;gap:2px;min-width:0}
+.sp-col .wk{font-size:8px;color:#334155;text-align:center;text-transform:uppercase;letter-spacing:.2px;line-height:1.1}
+.sp-col .bar-wrap{height:22px;display:flex;align-items:flex-end}
+.sp-col .bar{width:100%;border-radius:1px 1px 0 0;opacity:.55;min-height:2px}
+.sp-col.latest .bar{opacity:1}
+.sp-col .num{font-size:9px;color:#94a3b8;text-align:center;font-variant-numeric:tabular-nums;line-height:1.2;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-col.zero .num{color:#334155}
+.sp-col.latest .num{color:#fff;font-weight:700}
+
+.sp-col .bar-apr-wrap{height:28px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.sp-col .bar-apr-wrap::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(255,255,255,.08)}
+.sp-col .bar-apr-up{width:100%;border-radius:1px 1px 0 0;opacity:.55;min-height:1px;margin-top:auto;background:#10b981}
+.sp-col .bar-apr-down{width:100%;border-radius:0 0 1px 1px;opacity:.55;min-height:1px;margin-bottom:auto;background:#ef4444}
+.sp-col.latest .bar-apr-up,.sp-col.latest .bar-apr-down{opacity:1}
+
+.sp-summary{font-size:11px;color:#e2e8f0;font-variant-numeric:tabular-nums;font-weight:600;min-width:56px;text-align:right;white-space:nowrap;padding-top:14px}
+.sp-summary.neg{color:#ef4444}
+.sp-summary.pos{color:#10b981}
+.sp-trend{font-size:10px;margin-left:2px}
+
+.footer{position:fixed;bottom:0;left:0;right:0;background:rgba(10,12,26,.95);backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.08);padding:14px 24px;display:flex;gap:14px;align-items:center;z-index:100}
+.footer .summary{flex:1;color:#94a3b8;font-size:12px}
+.footer .summary strong{color:#fff;font-size:14px}
+.footer button{background:#3b82f6;color:#fff;border:none;padding:11px 22px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600}
+.footer button:hover{background:#2563eb}
+.footer button.secondary{background:rgba(255,255,255,.06);color:#e2e8f0}
+.footer button.secondary:hover{background:rgba(255,255,255,.1)}
+#output-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
+#output-modal.open{display:flex}
+#output-modal .box{background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:24px;max-width:680px;width:90%;max-height:80vh;overflow:auto}
+#output-modal h3{color:#fff;margin-bottom:12px;font-size:16px}
+#output-modal p{color:#94a3b8;font-size:13px;margin-bottom:14px;line-height:1.5}
+#output-modal pre{background:#0a0c1a;border:1px solid rgba(255,255,255,.08);padding:14px;border-radius:6px;color:#10b981;font-size:12px;line-height:1.5;white-space:pre-wrap;word-break:break-all;font-family:'SF Mono',Menlo,monospace}
+#output-modal .actions{margin-top:14px;display:flex;gap:10px;justify-content:flex-end}
+#output-modal button{padding:9px 16px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;border:none}
+#output-modal .primary{background:#10b981;color:#fff}
+#output-modal .secondary{background:rgba(255,255,255,.08);color:#e2e8f0}
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="header">
+  <h1>Meta Ads Action Tick-List — 🌍 ALL MARKETS · ⚡ ELASTIC RULES (UK · US · CA · ZA · AU · NZ · IE · DE · FR)</h1>
+  <div class="meta">
+    <span>w/e 14 Jun 2026 (Mon 25 May – Sat 30 May)</span>
+    <span>353 active ad sets analysed (across 9 markets)</span>
+    <span style="color:#10b981" id="hdr-action-ct">— proposed actions</span>
+    <span style="color:#64748b">Each metric shows 8 weeks (oldest left → latest right)</span>
+  </div>
+</div>
+
+<div class="content" id="content"></div>
+
+<div class="footer">
+  <div class="summary"><strong id="approved-count">0</strong> approved · <span id="approved-breakdown">none</span></div>
+  <button class="secondary" onclick="selectAll()">Tick all</button>
+  <button class="secondary" onclick="clearAll()">Clear all</button>
+  <button onclick="generateOutput()">Copy approved actions</button>
+</div>
+
+<div id="output-modal" onclick="if(event.target.id==='output-modal')this.classList.remove('open')">
+  <div class="box">
+    <h3>Approved actions</h3>
+    <p>Copy this string and paste it back into Claude. It will execute exactly these actions and skip the rest.</p>
+    <pre id="output-text"></pre>
+    <div class="actions">
+      <button class="secondary" onclick="document.getElementById('output-modal').classList.remove('open')">Close</button>
+      <button class="primary" id="modal-copy-btn" onclick="copyOutput()">Copy to clipboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SECTIONS = [{"key": "pause", "label": "🔴 PAUSE", "sub": "A1 new launch APR<0 · A2 broken creative · B2 never profitable · sustained ROAS<0.7 2wk · bleeding hard (with R1/R2 guards)", "color": "#ef4444", "rows": [{"mkt": "CA", "name": "1638_Limousine Hire_CA_Static_AdFactory_AllTemplates_2_Flexible_ROAS12_ATC", "cat": "Limousine Hire", "apr": -67.71, "roas_last": 0.42, "roas_prev": 0.0, "spend_last": 115.76, "spend_prev": 0.0, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.41, "cap_value": 328.0, "reason": "Rule A1 new launch APR<0 (≥10k impr)", "adset": {"roas8": "0,0,0,0,0,0,0,0.42", "spends8": "0,0,0,0,0,0,0,115.76", "aprs8": "0,0,0,0,0,0,0,-67.71"}, "idx": 1}, {"mkt": "CA", "name": "1212_House Cleaning_CA_Static_AdFactory_AllTemplates_1_Flexible_ROAS12_ATC", "cat": "House Cleaning", "apr": -30.78, "roas_last": 0.83, "roas_prev": 0.0, "spend_last": 185.04, "spend_prev": 0.0, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.33, "cap_value": 681.0, "reason": "Rule A1 new launch APR<0 (≥10k impr)", "adset": {"roas8": "0,0,0,0,0,0,0,0.83", "spends8": "0,0,0,0,0,0,0,185.04", "aprs8": "0,0,0,0,0,0,0,-30.78"}, "idx": 2}]}, {"key": "cut30", "label": "🟠 −30% BUDGET", "sub": "SF1/SF2/B1/R1 guards · ROAS 0.7-0.9 2wk · ROAS 0.9-1.0 2wk (per elasticity finding; cut conservatively)", "color": "#f97316", "rows": [{"mkt": "US", "name": "1556_Dog Training_US_Static_2", "cat": "Dog Training", "apr": -80.44, "roas_last": 0.39, "roas_prev": 0.96, "spend_last": 132.68, "spend_prev": 627.46, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.21, "cap_value": 4325.0, "reason": "B1 recoverable bleeder (6/8 wks APR<0)", "adset": {"roas8": "0.74,0.92,1.22,1.00,0.79,0.69,0.96,0.39", "spends8": "251.53,258.29,259.96,274.50,273.91,451.65,627.46,132.68", "aprs8": "-66.11,-20.75,56.73,0.51,-57.09,-140.62,-27.55,-80.44"}, "idx": 1}, {"mkt": "CA", "name": "89_Accounting_CA_Static_AdFactory_3Styles", "cat": "Accounting", "apr": -51.27, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 51.27, "spend_prev": 54.78, "sym": "£", "roas0_flag": true, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "B1 recoverable bleeder (3/4 wks APR<0)", "adset": {"roas8": "0,0,0,0,1.23,0.72,0,0", "spends8": "0,0,0,0,330.85,251.89,54.78,51.27", "aprs8": "0,0,0,0,77.53,-71.18,-54.78,-51.27"}, "idx": 2}, {"mkt": "CA", "name": "77_Therapists_CA_Static_AdFactory_3CoreTemplates_HV", "cat": "Therapist", "apr": -11.23, "roas_last": 0.53, "roas_prev": 0.35, "spend_last": 23.86, "spend_prev": 117.26, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.2, "cap_value": 231.0, "reason": "B1 recoverable bleeder (5/6 wks APR<0)", "adset": {"roas8": "0,0,1.74,0.77,0.97,0.47,0.35,0.53", "spends8": "0,0,24.95,198.71,176.36,97.30,117.26,23.86", "aprs8": "0,0,18.49,-46.04,-5.39,-52.01,-75.94,-11.23"}, "idx": 3}, {"mkt": "UK", "name": "0045_Tutoring_UK_Static_BenAIbulk_WTB", "cat": "Tutoring", "apr": -8.81, "roas_last": 0.82, "roas_prev": 0.87, "spend_last": 49.63, "spend_prev": 134.14, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.04, "cap_value": 1182.0, "reason": "B1 recoverable bleeder (6/8 wks APR<0)", "adset": {"roas8": "0.71,0.95,0.64,0.74,1.92,1.59,0.87,0.82", "spends8": "359.82,366.84,338.42,248.02,232.93,195.94,134.14,49.63", "aprs8": "-104.13,-17.16,-120.88,-65.27,213.76,115.61,-16.88,-8.81"}, "idx": 4}, {"mkt": "UK", "name": "1670_Home & Domiciliary Care_L1", "cat": "Home & Domiciliary Care", "apr": -8.14, "roas_last": 0.0, "roas_prev": 0.56, "spend_last": 8.14, "spend_prev": 63.97, "sym": "£", "roas0_flag": true, "cap_breach": false, "cap_ratio": 0.15, "cap_value": 4274.0, "reason": "B1 recoverable bleeder (3/4 wks APR<0)", "adset": {"roas8": "0,0,0,0,0.76,1.14,0.56,0", "spends8": "0,0,0,0,48.23,205.46,63.97,8.14", "aprs8": "0,0,0,0,-11.57,27.91,-28.33,-8.14"}, "idx": 5}, {"mkt": "UK", "name": "1949_End of Tenancy Cleaning_UK_UGC_Katie_PITS", "cat": "End of Tenancy Cleaning", "apr": -7.84, "roas_last": 0.84, "roas_prev": 0.67, "spend_last": 50.38, "spend_prev": 128.85, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.31, "cap_value": 867.0, "reason": "B1 recoverable bleeder (6/8 wks APR<0)", "adset": {"roas8": "0.25,0.67,1.44,0.79,1.33,0.54,0.67,0.84", "spends8": "100.96,120.27,130.41,144.85,169.32,196.98,128.85,50.38", "aprs8": "-75.76,-39.34,57.87,-30.92,55.77,-89.88,-42.89,-7.84"}, "idx": 6}, {"mkt": "UK", "name": "1670_Home & Domiciliary Care_UK_UGC_Katie_PITS_AutomationTest – Copy", "cat": "Home & Domiciliary Care", "apr": -2.24, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 2.24, "spend_prev": 8.35, "sym": "£", "roas0_flag": true, "cap_breach": false, "cap_ratio": 0.15, "cap_value": 4274.0, "reason": "B1 recoverable bleeder (6/8 wks APR<0)", "adset": {"roas8": "0,2.17,0,3.29,0,0,0,0", "spends8": "30.96,23.23,8.16,10.07,8.65,11.62,8.35,2.24", "aprs8": "-30.96,27.26,-8.16,23.05,-8.65,-11.62,-8.35,-2.24"}, "idx": 7}]}, {"key": "scale10", "label": "🔵 +10% BUDGET", "sub": "ROAS ≥ 1.5 sustained 2wk · capped at +10% per spend-elasticity analysis (was +20%/+30%)", "color": "#3b82f6", "rows": [{"mkt": "UK", "name": "42_Painting & Decoration_UK_LPV4CONTROL_LPV5CONTROL_Video_UGC_Louise_5", "cat": "Painting & Decoration - Interior", "apr": 238.73, "roas_last": 3.23, "roas_prev": 2.58, "spend_last": 107.26, "spend_prev": 261.88, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.16, "cap_value": 3142.0, "reason": "ROAS 2.58->3.23 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "1.44,1.35,1.93,1.35,2.44,2.50,2.58,3.23", "spends8": "515.01,482.28,730.14,346.95,117.00,139.58,261.88,107.26", "aprs8": "227.30,167.07,681.93,120.30,168.55,209.10,414.57,238.73"}, "idx": 1}, {"mkt": "UK", "name": "1102_Patio Services_UK_Static_4_Basic", "cat": "Patio Services", "apr": 234.28, "roas_last": 2.68, "roas_prev": 2.03, "spend_last": 139.65, "spend_prev": 317.83, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.19, "cap_value": 1927.0, "reason": "ROAS 2.03->2.68 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "1.27,1.44,1.63,2.08,2.23,2.16,2.03,2.68", "spends8": "1233.81,1097.05,1334.97,665.36,504.90,388.04,317.83,139.65", "aprs8": "334.22,477.66,845.02,717.60,620.00,449.64,328.67,234.28"}, "idx": 2}, {"mkt": "UK", "name": "1138_Bathroom Install_UK_Static_AI_Stefano_WTB", "cat": "Bathroom Installation & Remodel", "apr": 144.89, "roas_last": 2.13, "roas_prev": 2.05, "spend_last": 128.43, "spend_prev": 369.37, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.2, "cap_value": 3024.0, "reason": "ROAS 2.05->2.13 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "1.95,1.62,1.76,2.44,2.27,1.16,2.05,2.13", "spends8": "227.98,245.52,465.97,321.77,413.13,484.52,369.37,128.43", "aprs8": "215.69,153.29,353.89,462.97,523.02,79.19,388.34,144.89"}, "idx": 3}, {"mkt": "UK", "name": "1956_Garden Clearance_UK_Sunday pulls_Static_AdFactory_3Styles", "cat": "Garden Clearance", "apr": 144.87, "roas_last": 1.83, "roas_prev": 2.82, "spend_last": 174.61, "spend_prev": 264.95, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 2.82->1.83 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,0,2.75,2.41,2.82,1.83", "spends8": "0,0,0,0,77.20,276.50,264.95,174.61", "aprs8": "0,0,0,0,135.13,388.64,482.19,144.87"}, "idx": 4}, {"mkt": "US", "name": "171_Catering_US_Static_BenAIbulk_Matt_1", "cat": "Catering", "apr": 133.08, "roas_last": 1.88, "roas_prev": 1.92, "spend_last": 150.54, "spend_prev": 318.91, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.22, "cap_value": 2600.0, "reason": "ROAS 1.92->1.88 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "1.33,1.79,1.62,1.93,1.42,1.68,1.92,1.88", "spends8": "403.88,341.45,340.27,350.01,352.55,359.95,318.91,150.54", "aprs8": "131.46,270.39,211.66,324.04,147.20,244.91,294.19,133.08"}, "idx": 5}, {"mkt": "UK", "name": "1261_Tree Surgery & Removal_UK_Sunday pulls_Static_Matt_1", "cat": "Tree Surgery & Removal", "apr": 117.58, "roas_last": 1.76, "roas_prev": 2.06, "spend_last": 154.41, "spend_prev": 407.08, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.27, "cap_value": 2077.0, "reason": "ROAS 2.06->1.76 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "1.93,2.85,1.73,1.47,2.72,1.87,2.06,1.76", "spends8": "257.23,253.90,425.84,190.83,155.66,214.21,407.08,154.41", "aprs8": "240.34,470.57,311.94,89.33,267.29,186.15,431.01,117.58"}, "idx": 6}, {"mkt": "UK", "name": "1252_Landscaping_L3", "cat": "Landscaping", "apr": 100.65, "roas_last": 1.79, "roas_prev": 1.61, "spend_last": 126.95, "spend_prev": 635.2, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.12, "cap_value": 5942.0, "reason": "ROAS 1.61->1.79 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "1.65,1.37,2.00,1.72,1.46,1.96,1.61,1.79", "spends8": "135.24,298.67,307.44,453.13,867.90,804.50,635.20,126.95", "aprs8": "87.67,111.35,306.53,324.46,397.98,769.13,385.91,100.65"}, "idx": 7}, {"mkt": "US", "name": "171_Catering_US_Static_BenAIbulk_WTB", "cat": "Catering", "apr": 99.74, "roas_last": 1.7, "roas_prev": 1.81, "spend_last": 142.52, "spend_prev": 631.03, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.22, "cap_value": 2600.0, "reason": "ROAS 1.81->1.70 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "1.30,1.88,1.74,1.50,1.49,1.49,1.81,1.70", "spends8": "803.36,690.20,712.81,820.45,882.11,895.13,631.03,142.52", "aprs8": "238.66,608.43,524.74,410.35,433.05,438.34,509.10,99.74"}, "idx": 8}, {"mkt": "US", "name": "1638_Limousine Hire_US_Static_BenAIbulk_WTB", "cat": "Limousine Hire", "apr": 92.42, "roas_last": 1.72, "roas_prev": 1.97, "spend_last": 128.56, "spend_prev": 503.67, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.21, "cap_value": 1903.0, "reason": "ROAS 1.97->1.72 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "1.46,1.85,1.96,1.58,1.55,1.19,1.97,1.72", "spends8": "479.55,488.34,526.84,639.97,694.49,704.28,503.67,128.56", "aprs8": "219.55,414.00,507.53,368.92,385.43,130.53,488.10,92.42"}, "idx": 9}, {"mkt": "UK", "name": "1929_Block Paving_UK_Static_BenAIbulk_WTB Weekend -80%_HV", "cat": "Brick & Block Paving Services", "apr": 64.91, "roas_last": 1.76, "roas_prev": 2.71, "spend_last": 84.95, "spend_prev": 234.44, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.16, "cap_value": 1127.0, "reason": "ROAS 2.71->1.76 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "1.98,1.00,1.42,1.45,1.55,2.21,2.71,1.76", "spends8": "354.93,379.49,343.83,416.23,265.34,91.82,234.44,84.95", "aprs8": "349.42,-0.01,144.41,186.75,145.21,111.15,401.78,64.91"}, "idx": 10}, {"mkt": "ZA", "name": "1785_CCTV_Installation_ZA_Static_AdFactory_3Styles", "cat": "CCTV Installation", "apr": 48.68, "roas_last": 3.07, "roas_prev": 5.76, "spend_last": 23.52, "spend_prev": 33.11, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 5.76->3.07 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,0,0,0,5.76,3.07", "spends8": "0,0,0,0,0,0,33.11,23.52", "aprs8": "0,0,0,0,0,0,157.76,48.68"}, "idx": 11}, {"mkt": "ZA", "name": "1119_Solar Panel Installation_ZA_Static_AdFactory_3Styles", "cat": "Solar Panel Installation", "apr": 43.58, "roas_last": 2.67, "roas_prev": 4.99, "spend_last": 26.15, "spend_prev": 51.8, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.15, "cap_value": 332.0, "reason": "ROAS 4.99->2.67 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,2.54,2.35,2.45,4.99,2.67", "spends8": "0,0,0,150.38,308.50,276.69,51.80,26.15", "aprs8": "0,0,0,231.91,415.86,400.95,206.80,43.58"}, "idx": 12}, {"mkt": "ZA", "name": "1138_Bathroom Install_ZA_Static_AdFactory_3Styles", "cat": "Bathroom Installation & Remodel", "apr": 39.1, "roas_last": 2.43, "roas_prev": 1.89, "spend_last": 27.43, "spend_prev": 48.95, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 1.89->2.43 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,1.33,1.39,1.44,1.89,2.43", "spends8": "0,0,0,106.55,90.64,62.74,48.95,27.43", "aprs8": "0,0,0,35.46,35.21,27.38,43.81,39.10"}, "idx": 13}, {"mkt": "UK", "name": "1102_Patio Services_L5", "cat": "Patio Services", "apr": 35.52, "roas_last": 1.67, "roas_prev": 1.79, "spend_last": 53.4, "spend_prev": 176.32, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.19, "cap_value": 1927.0, "reason": "ROAS 1.79->1.67 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,0,2.65,0.72,1.79,1.67", "spends8": "0,0,0,0,5.26,138.01,176.32,53.40", "aprs8": "0,0,0,0,8.70,-39.07,139.79,35.52"}, "idx": 14}, {"mkt": "UK", "name": "42_Painting & Decoration_UK_LPV6CONTROL_Static_3_Basic", "cat": "Painting & Decoration - Interior", "apr": 27.42, "roas_last": 1.63, "roas_prev": 1.68, "spend_last": 43.68, "spend_prev": 119.23, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.16, "cap_value": 3142.0, "reason": "ROAS 1.68->1.63 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0.49,2.19,1.13,1.59,2.82,1.22,1.68,1.63", "spends8": "280.98,88.09,143.22,70.87,42.89,62.18,119.23,43.68", "aprs8": "-143.06,104.60,18.60,41.57,78.27,13.42,81.62,27.42"}, "idx": 15}, {"mkt": "ZA", "name": "1929_Block Paving_ZA_Static_AdFactory_3Styles", "cat": "Brick & Block Paving Services", "apr": 18.99, "roas_last": 1.78, "roas_prev": 1.97, "spend_last": 24.24, "spend_prev": 45.32, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 1.97->1.78 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,2.18,1.06,1.26,1.97,1.78", "spends8": "0,0,0,63.38,138.33,109.11,45.32,24.24", "aprs8": "0,0,0,75.01,7.74,28.39,43.96,18.99"}, "idx": 16}, {"mkt": "ZA", "name": "1969_Man_&_Van_Services_ZA_Static_AdFactory_3Styles", "cat": "Man & Van Services", "apr": 18.89, "roas_last": 1.68, "roas_prev": 2.45, "spend_last": 27.71, "spend_prev": 41.81, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 2.45->1.68 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,0,0,2.14,2.45,1.68", "spends8": "0,0,0,0,0,11.88,41.81,27.71", "aprs8": "0,0,0,0,0,13.51,60.51,18.89"}, "idx": 17}, {"mkt": "ZA", "name": "1261_Tree Surgery & Removal_ZA_Static_AdFactory_3Styles", "cat": "Tree Surgery & Removal", "apr": 18.66, "roas_last": 1.84, "roas_prev": 1.88, "spend_last": 22.3, "spend_prev": 45.33, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 1.88->1.84 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,1.68,1.38,2.41,1.88,1.84", "spends8": "0,0,0,236.53,240.69,108.10,45.33,22.30", "aprs8": "0,0,0,160.26,91.94,152.74,39.81,18.66"}, "idx": 18}, {"mkt": "ZA", "name": "1261_Tree Surgery & Removal_ZA_Static_AdFactory_3Styles – Copy", "cat": "Tree Surgery & Removal", "apr": 17.76, "roas_last": 1.71, "roas_prev": 3.69, "spend_last": 25.04, "spend_prev": 41.58, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 3.69->1.71 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,0.95,1.16,1.60,3.69,1.71", "spends8": "0,0,0,100.23,224.88,165.07,41.58,25.04", "aprs8": "0,0,0,-5.05,35.27,98.63,111.98,17.76"}, "idx": 19}, {"mkt": "ZA", "name": "137_Pest Control_ZA_Static_AdFactory_3Styles – Copy", "cat": "Pest Control", "apr": 17.42, "roas_last": 1.73, "roas_prev": 1.73, "spend_last": 23.82, "spend_prev": 43.09, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 1.73->1.73 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,0.99,1.22,1.88,1.73,1.73", "spends8": "0,0,0,46.92,59.44,40.99,43.09,23.82", "aprs8": "0,0,0,-0.64,12.80,36.03,31.43,17.42"}, "idx": 20}, {"mkt": "ZA", "name": "1548_Private Investigators_ZA_Static_AdFactory_3Styles – Copy", "cat": "Private Investigators", "apr": 15.8, "roas_last": 1.76, "roas_prev": 2.79, "spend_last": 20.82, "spend_prev": 47.18, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 2.79->1.76 (sustained ≥1.5, capped at +10%)", "adset": {"roas8": "0,0,0,1.65,1.04,0.93,2.79,1.76", "spends8": "0,0,0,79.21,171.45,126.62,47.18,20.82", "aprs8": "0,0,0,51.42,6.92,-8.90,84.61,15.80"}, "idx": 21}]}, {"key": "firstwk25", "label": "⚡ +25% FIRST-WEEK WINNER", "sub": "Only-latest week, ROAS ≥ 1.5, ≥10k impressions · capped at +25% (was +100%)", "color": "#a855f7", "rows": [{"mkt": "UK", "name": "1956_Garden Clearance_UK_Sunday pulls_Static_AdFactory_3Styles_Flexible_ROAS12_ATC", "cat": "Garden Clearance", "apr": 115.74, "roas_last": 2.06, "roas_prev": 0.0, "spend_last": 109.34, "spend_prev": 0.0, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "first-wk winner ROAS 2.06", "adset": {"roas8": "0,0,0,0,0,0,0,2.06", "spends8": "0,0,0,0,0,0,0,109.34", "aprs8": "0,0,0,0,0,0,0,115.74"}, "idx": 1}]}];
+const WEEK_LABELS = ['8w','7w','6w','5w','4w','3w','2w','last'];
+function parse8(s){ return (s||'').split(',').map(p => parseFloat(p)||0); }
+function fmtRoas(v){ return v === 0 ? '—' : v.toFixed(2); }
+function fmtMoney(v, sym){
+  if(v === 0) return '—';
+  if(Math.abs(v) >= 1000) return sym + (v/1000).toFixed(1) + 'k';
+  return sym + Math.round(v).toLocaleString();
+}
+
+function roasGrid(roas8){
+  const arr = parse8(roas8);
+  const SCALE = 3.0;
+  return '<div class="sp-grid">' + arr.map((v,i) => {
+    const isLatest = i === 7;
+    const isZero = v === 0;
+    const h = isZero ? 4 : Math.max(8, Math.min(SCALE, v) / SCALE * 100);
+    const color = isZero ? '#1e293b' : v >= 1.5 ? '#10b981' : v >= 1.0 ? '#3b82f6' : v >= 0.7 ? '#ca8a04' : '#ef4444';
+    const cls = ['sp-col', isLatest ? 'latest' : '', isZero ? 'zero' : ''].join(' ');
+    return `<div class="${cls}">
+      <div class="wk">${WEEK_LABELS[i]}</div>
+      <div class="bar-wrap"><div class="bar" style="height:${h}%;background:${color}"></div></div>
+      <div class="num">${fmtRoas(v)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function spendGrid(spends8, sym){
+  const arr = parse8(spends8);
+  const max = Math.max(...arr, 1);
+  return '<div class="sp-grid">' + arr.map((v,i) => {
+    const isLatest = i === 7;
+    const isZero = v === 0;
+    const h = isZero ? 4 : Math.max(8, v / max * 100);
+    const color = isZero ? '#1e293b' : '#64748b';
+    const cls = ['sp-col', isLatest ? 'latest' : '', isZero ? 'zero' : ''].join(' ');
+    return `<div class="${cls}">
+      <div class="wk">${WEEK_LABELS[i]}</div>
+      <div class="bar-wrap"><div class="bar" style="height:${h}%;background:${color}"></div></div>
+      <div class="num">${fmtMoney(v, sym)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function aprGrid(aprs8, sym){
+  const arr = parse8(aprs8);
+  const max = Math.max(1, ...arr.map(Math.abs));
+  return '<div class="sp-grid">' + arr.map((v,i) => {
+    const isLatest = i === 7;
+    const isZero = v === 0;
+    const h = isZero ? 0 : Math.abs(v) / max * 50;
+    const cls = ['sp-col', isLatest ? 'latest' : '', isZero ? 'zero' : ''].join(' ');
+    const bar = isZero ? '' : (v >= 0
+      ? `<div class="bar-apr-up" style="height:${h}%"></div>`
+      : `<div class="bar-apr-down" style="height:${h}%"></div>`);
+    return `<div class="${cls}">
+      <div class="wk">${WEEK_LABELS[i]}</div>
+      <div class="bar-apr-wrap">${bar}</div>
+      <div class="num">${isZero?'—':fmtMoney(v, sym)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function trendArrow(prev, last){
+  if(prev === 0) return '';
+  if(last > prev * 1.1) return '<span class="sp-trend" style="color:#10b981">↑</span>';
+  if(last < prev * 0.9) return '<span class="sp-trend" style="color:#ef4444">↓</span>';
+  return '<span class="sp-trend" style="color:#64748b">→</span>';
+}
+
+function renderSection(s){
+  const isPause = s.key === 'pause';
+  const headerCols = '<th style="min-width:280px">ROAS · 8wk</th><th style="min-width:280px">APR · 8wk</th><th style="min-width:280px">Spend · 8wk</th>';
+
+  const rows = s.rows.map(r => {
+    const a = r.adset;
+    const roas0 = r.roas0_flag ? '<span class="flag-pill">ROAS=0</span>' : '';
+    const capPill = r.cap_breach
+      ? `<span class="cap-pill" title="Category running at ${r.cap_ratio}× its 1.3× best-margin-week cap (£${r.cap_value})"><span class="x">⚠</span> cap ${r.cap_ratio}×</span>`
+      : '';
+    const roasCell = `<td class="sp-cell"><div class="sp-wrap">${roasGrid(a.roas8)}<span class="sp-summary ${r.roas_last<1?'neg':r.roas_last>=1.5?'pos':''}">${r.roas_last.toFixed(2)}${trendArrow(r.roas_prev, r.roas_last)}</span></div></td>`;
+    const aprCell = `<td class="sp-cell"><div class="sp-wrap">${aprGrid(a.aprs8, r.sym)}<span class="sp-summary ${r.apr<0?'neg':'pos'}">${fmtMoney(r.apr, r.sym)}</span></div></td>`;
+    const spendCell = `<td class="sp-cell"><div class="sp-wrap">${spendGrid(a.spends8, r.sym)}<span class="sp-summary">${fmtMoney(r.spend_last, r.sym)}</span></div></td>`;
+    return `<tr data-section="${s.key}" data-idx="${r.idx}">
+      <td class="check"><input type="checkbox" data-section="${s.key}" data-idx="${r.idx}" onchange="updateRow(this)"></td>
+      <td class="idx">${r.idx}</td>
+      <td class="mkt">${r.mkt}</td>
+      <td class="name">${r.name}${roas0}${capPill}<div class="cat">${r.cat}</div></td>
+      ${roasCell}${aprCell}${spendCell}
+    </tr>`;
+  }).join('');
+
+  return `<div class="section">
+    <div class="section-hd" style="border-left:3px solid ${s.color}">
+      <h2>${s.label} <span class="sub">${s.sub}</span></h2>
+      <span class="count">${s.rows.length} ad sets</span>
+      <button class="toggle-all" onclick="toggleSection('${s.key}', this)">Tick all in this section</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th></th><th>#</th><th>Mkt</th><th>Ad set</th>${headerCols}</tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+
+document.getElementById('content').innerHTML = SECTIONS.map(renderSection).join('');
+document.getElementById('hdr-action-ct').textContent = SECTIONS.reduce((a,s)=>a+s.rows.length,0) + ' proposed UK actions';
+
+function updateRow(cb){ cb.closest('tr').classList.toggle('checked', cb.checked); updateSummary(); }
+function toggleSection(key, btn){
+  const checks = document.querySelectorAll(`input[type=checkbox][data-section="${key}"]`);
+  const allChecked = [...checks].every(c => c.checked);
+  checks.forEach(c => { c.checked = !allChecked; updateRow(c); });
+  btn.textContent = allChecked ? 'Tick all in this section' : 'Untick all';
+}
+function selectAll(){ document.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = true; updateRow(c); }); }
+function clearAll(){ document.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = false; updateRow(c); }); }
+function updateSummary(){
+  const groups = {};
+  document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
+    const k = c.dataset.section;
+    (groups[k] = groups[k] || []).push(parseInt(c.dataset.idx,10));
+  });
+  const total = Object.values(groups).reduce((a,b)=>a+b.length,0);
+  document.getElementById('approved-count').textContent = total;
+  const parts = SECTIONS.filter(s => groups[s.key]).map(s => `${s.label.split(' ')[0]} ${groups[s.key].length}`);
+  document.getElementById('approved-breakdown').textContent = parts.length ? parts.join(' · ') : 'none';
+}
+function generateOutput(){
+  const groups = {};
+  document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
+    const k = c.dataset.section;
+    (groups[k] = groups[k] || []).push(parseInt(c.dataset.idx,10));
+  });
+  if(!Object.keys(groups).length){ alert('Tick at least one action first.'); return; }
+  const lines = ['# Approved Meta actions — All Markets — w/e 14 Jun 2026 (ELASTIC rules)'];
+  SECTIONS.forEach(s => {
+    if(!groups[s.key]) return;
+    const idxs = groups[s.key].sort((a,b)=>a-b);
+    const names = idxs.map(i => s.rows.find(r => r.idx===i)).map(r => `  - ${r.mkt} | ${r.name}`).join('\n');
+    lines.push(`\n## ${s.label} (${idxs.length} of ${s.rows.length})`);
+    lines.push(`Sequence: ${s.key}: ${idxs.join(',')}`);
+    lines.push(names);
+  });
+  document.getElementById('output-text').textContent = lines.join('\n');
+  document.getElementById('output-modal').classList.add('open');
+}
+function copyOutput(){
+  const txt = document.getElementById('output-text').textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('modal-copy-btn');
+    btn.textContent = '✓ Copied';
+    setTimeout(() => { btn.textContent = 'Copy to clipboard'; }, 2000);
+  });
+}
+updateSummary();
+</script>
+</body>
+</html>
