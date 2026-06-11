@@ -80,77 +80,6 @@ td{padding:7px 8px;vertical-align:middle}
 </style>
 </head>
 <body>
-<!-- WEEK-SWITCHER:v2 -->
-<style>
-  #week-switcher-bar { position: fixed; top: 12px; right: 18px; z-index: 9999;
-                        background: rgba(15,18,30,.92); border: 1px solid rgba(255,255,255,.12);
-                        border-radius: 8px; padding: 8px 12px; backdrop-filter: blur(6px);
-                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-                        font-size: 12px; color: #e2e8f0; display:flex; align-items:center; gap:8px; }
-  #week-switcher-bar label { color: #94a3b8; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; font-size: 10px; }
-  #week-switcher-bar select { background: rgba(255,255,255,.04); color: #fff; border: 1px solid rgba(255,255,255,.15);
-                                border-radius: 5px; padding: 5px 8px; font-size: 12px; font-family: inherit;
-                                font-variant-numeric: tabular-nums; cursor: pointer; min-width: 260px; }
-  #week-switcher-bar select:hover { border-color: rgba(255,255,255,.3); }
-  #week-switcher-bar .revert { color: #64748b; font-size: 11px; text-decoration: none; padding: 3px 6px;
-                                  border-radius: 4px; border: 1px solid transparent; }
-  #week-switcher-bar .revert:hover { border-color: rgba(255,255,255,.12); color: #e2e8f0; }
-</style>
-<div id="week-switcher-bar">
-  <label for="week-switcher">Week</label>
-  <select id="week-switcher">
-      <option value="wip-10jun2026">Mid-week · 10 Jun 2026 (so far)</option>
-      <option value="7jun2026">w/e 7 Jun 2026</option>
-      <option value="31may2026">w/e 31 May 2026</option>
-      <option value="25may2026">w/e 25 May 2026</option>
-      <option value="18may2026">w/e 18 May 2026</option>
-      <option value="12may2026">w/e 12 May 2026</option>
-      <option value="11may2026">w/e 11 May 2026</option>
-      <option value="7may2026" selected>w/e 7 May 2026</option>
-      <option value="5may2026">w/e 5 May 2026</option>
-  </select>
-  <a href="./index-original.html" class="revert" title="Open the original report without the week-switcher">⤺ original</a>
-</div>
-<script>
-(function() {
-  const sel = document.getElementById('week-switcher');
-  if (!sel) return;
-  sel.addEventListener('change', (e) => {
-    const target = e.target.value;
-    const hash = window.location.hash || '';
-    // Always include /index.html so file:// URLs land on the report,
-    // not a directory listing. (http(s):// servers redirect themselves.)
-    window.location.href = `../${target}/index.html${hash}`;
-  });
-
-  // Tab-hash persistence: on load, jump to the tab from the URL hash.
-  function applyHashTab() {
-    const hash = window.location.hash;
-    if (!hash || !hash.startsWith('#tab-')) return;
-    const key = hash.slice(5);
-    const tabBtn = Array.from(document.querySelectorAll('.tab')).find(t =>
-      (t.getAttribute('onclick') || '').includes(`'${key}'`));
-    if (tabBtn) tabBtn.click();
-  }
-  function wireHashUpdates() {
-    document.querySelectorAll('.tab').forEach(t => {
-      const handler = t.getAttribute('onclick') || '';
-      const m = handler.match(/switchTab\('([^']+)'/);
-      if (!m) return;
-      const key = m[1];
-      t.addEventListener('click', () => {
-        try { history.replaceState(null, '', '#tab-' + key); } catch (e) {}
-      });
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { wireHashUpdates(); applyHashTab(); });
-  } else {
-    wireHashUpdates(); applyHashTab();
-  }
-})();
-</script>
-
 <div class="top-bar"></div>
 <div class="header">
   <h1>PPC Handover Action Report — 8-week Trends</h1>
@@ -161,43 +90,21 @@ td{padding:7px 8px;vertical-align:middle}
     <span style="color:#f97316">Cover: w/e 5 May 2026 · <strong style="color:#10b981">220 active adsets</strong></span>
   </div>
 </div>
-
+<div class="summary-bar">
+  <div class="stat-pill"><span class="num" id="t-neg" style="color:#ef4444">—</span><span class="lbl">APR Neg</span></div>
+  <div class="stat-pill"><span class="num" id="t-pos" style="color:#10b981">—</span><span class="lbl">ROAS ≥1.2</span></div>
+<div style="margin-left:auto;font-size:11px;color:#334155;align-self:center">Facebook only · active this week · sorted by worst APR</div>
+</div>
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('overview',this)">📊 Overview</div>
-  <div class="tab" onclick="switchTab('uk',this)">🇬🇧 UK</div>
+  <div class="tab active" onclick="switchTab('uk',this)">🇬🇧 UK</div>
   <div class="tab" onclick="switchTab('us',this)">🇺🇸 US</div>
   <div class="tab" onclick="switchTab('ca',this)">🇨🇦 CA</div>
-  <div class="tab" onclick="switchTab('growth',this)">🌱 Growth Cats</div>
   <div class="tab" onclick="switchTab('styles',this)">🎨 Ad Styles</div>
   <div class="tab" onclick="switchTab('flags',this)">⚑ Flags</div>
 </div>
 <div class="content">
 
-<div id="tab-overview" class="country-section active">
-  <div class="section">
-    <div class="section-hd"><h2>Combined Overview</h2><span class="badge" style="background:rgba(59,130,246,.15);color:#3b82f6">UK + US + CA</span></div>
-    <div class="section-sub">All markets · latest complete week w/e 3 May 2026 · 8-week trends: 09 Mar – 27 Apr</div>
-    <div id="ov-kpis" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px"></div>
-    <div id="ov-wtd" style="margin-top:12px"></div>
-  </div>
-  <div class="divider"></div>
-  <div class="section">
-    <div class="section-hd"><h2>8-Week Metric Trends — Combined</h2></div>
-    <div id="ov-trend-tbl"></div>
-  </div>
-  <div class="divider"></div>
-  <div class="section">
-    <div class="section-hd"><h2>Market Breakdown</h2></div>
-    <div id="ov-mkt-tbl"></div>
-  </div>
-  <div class="divider"></div>
-  <div class="section">
-    <div class="section-hd"><h2>All Categories</h2><span class="badge" style="background:rgba(59,130,246,.15);color:#3b82f6" id="ov-cat-ct">—</span></div>
-    <div class="section-sub">All spending categories across UK, US and CA · sorted by latest-week APR</div>
-    <div id="ov-cat-tbl"></div>
-  </div>
-</div>
-<div id="tab-uk" class="country-section">
+<div id="tab-uk" class="country-section active">
   <div class="section">
     <div class="section-hd"><h2>Category Overview</h2><span class="badge" style="background:rgba(59,130,246,.15);color:#3b82f6" id="uk-cat-ct">—</span></div>
     <div class="section-sub">All spending categories this week · sorted by APR · colour = APR performance gradient</div>
@@ -254,8 +161,6 @@ td{padding:7px 8px;vertical-align:middle}
     <div id="ca-pos-tbl"></div>
   </div>
 </div>
-
-<div id="tab-growth" class="country-section"></div>
 
 <div id="tab-styles" class="country-section">
   <div class="section-hd" style="margin-bottom:4px"><h2>Ad Style Performance</h2></div>
@@ -315,70 +220,6 @@ td{padding:7px 8px;vertical-align:middle}
 <script>
 const CAT_DATA=[{"cat":"House Cleaning","cty":"United States","apr":2601.24,"roas":1.69,"spend":3779.48,"rev":6380.72,"spends8":"4088.59,3627.08,3087.24,3023.52,2943.08,3336.61,3662.87,3779.48","revs8":"4658.08,4635.59,4253.96,3856.33,4853.32,6285.76,5522.98,6380.72","roas8":"1.14,1.28,1.38,1.28,1.65,1.88,1.51,1.69","aprs8":"569.49,1008.51,1166.72,832.81,1910.24,2949.15,1860.11,2601.24"},{"cat":"Landscaping","cty":"United Kingdom","apr":1967.4,"roas":1.49,"spend":4029.44,"rev":5996.84,"spends8":"4571.03,4537.33,6259,6627.88,7062.34,6603.62,5210.04,4029.44","revs8":"8595.69,7798.54,9416.33,8588,9087.37,8354.57,7104.64,5996.84","roas8":"1.88,1.72,1.5,1.3,1.29,1.27,1.36,1.49","aprs8":"4024.66,3261.21,3157.33,1960.12,2025.03,1750.95,1894.6,1967.4"},{"cat":"Dog Training","cty":"United States","apr":1590.79,"roas":1.43,"spend":3660.71,"rev":5251.5,"spends8":"3598.93,3537.3,3328.77,3327.12,3353.34,3998.47,3639.47,3660.71","revs8":"4363.44,4105.78,4701.08,5498.55,5138.91,5659.86,4808.13,5251.5","roas8":"1.21,1.16,1.41,1.65,1.53,1.42,1.32,1.43","aprs8":"764.51,568.48,1372.31,2171.43,1785.57,1661.39,1168.66,1590.79"},{"cat":"Architectural Services","cty":"United States","apr":1581.66,"roas":1.67,"spend":2362.29,"rev":3943.95,"spends8":"3315.81,3637.3,2914.89,2653.28,2759.73,2846.84,2418.25,2362.29","revs8":"4744.53,4188.92,4329.79,4892.38,4741.65,4254.93,3695,3943.95","roas8":"1.43,1.15,1.49,1.84,1.72,1.49,1.53,1.67","aprs8":"1428.72,551.62,1414.9,2239.1,1981.92,1408.09,1276.75,1581.66"},{"cat":"Immigration Lawyers","cty":"United States","apr":1561.8,"roas":1.54,"spend":2900.73,"rev":4462.53,"spends8":"3881.68,4351.26,4558.68,4084.03,3844.89,3135.29,2895.67,2900.73","revs8":"5209.13,6247.73,6285,4473.72,4452.84,4362.39,4163.33,4462.53","roas8":"1.34,1.44,1.38,1.1,1.16,1.39,1.44,1.54","aprs8":"1327.45,1896.47,1726.32,389.69,607.95,1227.1,1267.66,1561.8"},{"cat":"Bathroom Installation & Remodel","cty":"United Kingdom","apr":1438.79,"roas":1.46,"spend":3152.88,"rev":4591.67,"spends8":"2325.85,3209.84,3984.77,3552.7,4010.18,4379.14,3137.31,3152.88","revs8":"4592.87,4894.56,5491.18,4211.55,4951.36,5512.1,4382.03,4591.67","roas8":"1.97,1.52,1.38,1.19,1.23,1.26,1.4,1.46","aprs8":"2267.02,1684.72,1506.41,658.85,941.18,1132.96,1244.72,1438.79"},{"cat":"Tree Surgery & Removal","cty":"United Kingdom","apr":1251.62,"roas":1.78,"spend":1597.83,"rev":2849.45,"spends8":"3229.58,2977.53,2662.66,2558.57,2385.97,2892.25,2620.16,1597.83","revs8":"3715.6,3703.37,3476.36,3074.33,3975.66,3389.4,3082.07,2849.45","roas8":"1.15,1.24,1.31,1.2,1.67,1.17,1.18,1.78","aprs8":"486.02,725.84,813.7,515.76,1589.69,497.15,461.91,1251.62"},{"cat":"Bathroom Installation & Remodel","cty":"Canada","apr":1248.81,"roas":2.54,"spend":809.72,"rev":2058.53,"spends8":"478.82,525.03,508.1,410.15,401.46,641.67,767.32,809.72","revs8":"504.24,348.68,617.74,525.42,526.01,1282.29,1899.05,2058.53","roas8":"1.05,0.66,1.22,1.28,1.31,2.0,2.47,2.54","aprs8":"25.42,-176.35,109.64,115.27,124.55,640.62,1131.73,1248.81"},{"cat":"Driveway Installation","cty":"United Kingdom","apr":1216.79,"roas":1.97,"spend":1253.38,"rev":2470.17,"spends8":"7580.58,5576.3,4500.2,1862.99,846.14,1315.03,1420.05,1253.38","revs8":"6972.05,5457.12,4519.74,2399.07,1604.86,1800.71,2319.17,2470.17","roas8":"0.92,0.98,1.0,1.29,1.9,1.37,1.63,1.97","aprs8":"-608.53,-119.18,19.54,536.08,758.72,485.68,899.12,1216.79"},{"cat":"Home & Domiciliary Care","cty":"United Kingdom","apr":1016.68,"roas":1.27,"spend":3807.55,"rev":4824.23,"spends8":"3287.78,2895.12,5208.86,3555.42,2709.97,3614.44,3997.67,3807.55","revs8":"5569.53,3753,7737.04,3908,2681.69,5542.02,4624.57,4824.23","roas8":"1.69,1.3,1.49,1.1,0.99,1.53,1.16,1.27","aprs8":"2281.75,857.88,2528.18,352.58,-28.28,1927.58,626.9,1016.68"},{"cat":"Wedding Photography","cty":"United States","apr":1004.42,"roas":1.77,"spend":1304.86,"rev":2309.28,"spends8":"4143.98,4125.64,3407.58,2558.49,1917.25,1934.26,1783.54,1304.86","revs8":"5584.1,5511.55,5176.65,3907.47,3480.22,2963.19,2873.43,2309.28","roas8":"1.35,1.34,1.52,1.53,1.82,1.53,1.61,1.77","aprs8":"1440.12,1385.91,1769.07,1348.98,1562.97,1028.93,1089.89,1004.42"},{"cat":"Catering","cty":"United States","apr":993.08,"roas":1.51,"spend":1965.75,"rev":2958.83,"spends8":"3189.85,3106.52,2731.1,2316.54,2304.55,2299.45,2134.33,1965.75","revs8":"4036.11,3762.46,3002.88,2519.48,3242.92,3560.18,2674.24,2958.83","roas8":"1.27,1.21,1.1,1.09,1.41,1.55,1.25,1.51","aprs8":"846.26,655.94,271.78,202.94,938.37,1260.73,539.91,993.08"},{"cat":"Patio Services","cty":"United Kingdom","apr":909.92,"roas":1.51,"spend":1767.13,"rev":2677.05,"spends8":"1742.37,1722.55,1979.25,2315.96,2372.02,3237.72,2522.65,1767.13","revs8":"2220.13,2316.5,2388.07,2470.11,3203.3,2970.97,3079.07,2677.05","roas8":"1.27,1.34,1.21,1.07,1.35,0.92,1.22,1.51","aprs8":"477.76,593.95,408.82,154.15,831.28,-266.75,556.42,909.92"},{"cat":"House Cleaning","cty":"Canada","apr":858.63,"roas":2.64,"spend":524.68,"rev":1383.31,"spends8":"0,0,0,0,0,305.79,523.73,524.68","revs8":"0,0,11.75,0,11.31,844.4,1581.23,1383.31","roas8":"0,0,0,0,0,2.76,3.02,2.64","aprs8":"0,0,11.75,0,11.31,538.61,1057.5,858.63"},{"cat":"Fence & Gate Installation","cty":"Canada","apr":812.4,"roas":1.89,"spend":913.05,"rev":1725.45,"spends8":"0,0,0,0,0,181.12,687.26,913.05","revs8":"0,0,0,0,0,489.11,1693.5,1725.45","roas8":"0,0,0,0,0,2.7,2.46,1.89","aprs8":"0,0,0,0,0,307.99,1006.24,812.4"},{"cat":"DJ","cty":"United States","apr":803.14,"roas":1.22,"spend":3633.55,"rev":4436.69,"spends8":"4111.96,4316.6,4146.25,4027.9,3885.42,3999.49,3883.45,3633.55","revs8":"5701.33,5967.08,5802.63,4789.6,5742.09,5107.16,4337.19,4436.69","roas8":"1.39,1.38,1.4,1.19,1.48,1.28,1.12,1.22","aprs8":"1589.37,1650.48,1656.38,761.7,1856.67,1107.67,453.74,803.14"},{"cat":"Limousine Hire","cty":"United States","apr":736.87,"roas":1.48,"spend":1535.3,"rev":2272.17,"spends8":"1516.22,1497.65,1526.63,1193.57,1304.59,1510.05,1564.12,1535.3","revs8":"2002.7,1698.03,2053.65,1724.58,2090.15,2297.25,2141.89,2272.17","roas8":"1.32,1.13,1.35,1.44,1.6,1.52,1.37,1.48","aprs8":"486.48,200.38,527.02,531.01,785.56,787.2,577.77,736.87"},{"cat":"Electric Charge Points Installation","cty":"United Kingdom","apr":705.97,"roas":1.65,"spend":1083.8,"rev":1789.77,"spends8":"748.31,971.14,1863.24,851.42,389.14,1050.61,1166.85,1083.8","revs8":"1717.14,1210.28,2040.77,1150.88,1311.73,1440.25,1427.25,1789.77","roas8":"2.29,1.25,1.1,1.35,3.37,1.37,1.22,1.65","aprs8":"968.83,239.14,177.53,299.46,922.59,389.64,260.4,705.97"},{"cat":"Painting & Decoration - Interior","cty":"United Kingdom","apr":682.54,"roas":1.26,"spend":2638.08,"rev":3320.62,"spends8":"5013.42,4915.8,6575.97,2839.11,1926.89,3459.88,3235.32,2638.08","revs8":"6362.74,6695.46,6874.43,3493.68,2676.31,3564.95,3850.29,3320.62","roas8":"1.27,1.36,1.05,1.23,1.39,1.03,1.19,1.26","aprs8":"1349.32,1779.66,298.46,654.57,749.42,105.07,614.97,682.54"},{"cat":"Conservatory Installation","cty":"United Kingdom","apr":675.72,"roas":1.99,"spend":682.23,"rev":1357.95,"spends8":"0,0,0,0,976.19,1477.97,1243.03,682.23","revs8":"0,0,0,0,1363.55,1546.74,1425.46,1357.95","roas8":"0,0,0,0,1.4,1.05,1.15,1.99","aprs8":"0,0,0,0,387.36,68.77,182.43,675.72"},{"cat":"House Cleaning","cty":"United Kingdom","apr":606.67,"roas":1.25,"spend":2405.22,"rev":3011.89,"spends8":"1313.32,2193.72,2503,2031.76,2325.28,2847.16,2650.14,2405.22","revs8":"2408.59,2696.71,3067.75,2740.21,3267.79,3966.8,3791.62,3011.89","roas8":"1.83,1.23,1.23,1.35,1.41,1.39,1.43,1.25","aprs8":"1095.27,502.99,564.75,708.45,942.51,1119.64,1141.48,606.67"},{"cat":"Wedding Photography","cty":"United Kingdom","apr":598.48,"roas":1.57,"spend":1055.93,"rev":1654.41,"spends8":"1228.68,1345.18,1731.15,1066.28,384.59,577.28,680.15,1055.93","revs8":"1776.9,2063.91,1728.22,1141.81,574.13,1385,1322.22,1654.41","roas8":"1.45,1.53,1.0,1.07,1.49,2.4,1.94,1.57","aprs8":"548.22,718.73,-2.93,75.53,189.54,807.72,642.07,598.48"},{"cat":"Residential Interior Designers","cty":"United States","apr":546.0,"roas":1.74,"spend":741.09,"rev":1287.09,"spends8":"1035.55,1158.14,744.27,639.25,646.62,746.31,840.15,741.09","revs8":"1320.45,1566.86,2114.72,1366.93,1051.28,1317.54,1034.48,1287.09","roas8":"1.28,1.35,2.84,2.14,1.63,1.77,1.23,1.74","aprs8":"284.9,408.72,1370.45,727.68,404.66,571.23,194.33,546.0"},{"cat":"TV Installation & Mounting","cty":"United States","apr":511.18,"roas":1.97,"spend":525.46,"rev":1036.64,"spends8":"710.42,574.44,527.6,441.42,358.38,481.77,406.62,525.46","revs8":"606.58,623.46,586.46,465.82,503.79,312.55,829.37,1036.64","roas8":"0.85,1.09,1.11,1.06,1.41,0.65,2.04,1.97","aprs8":"-103.84,49.02,58.86,24.4,145.41,-169.22,422.75,511.18"},{"cat":"Brick & Block Paving Services","cty":"United Kingdom","apr":506.81,"roas":1.55,"spend":927.32,"rev":1434.13,"spends8":"941.36,1068.57,1301.53,1013.11,481.7,730.78,835.03,927.32","revs8":"1329.03,968.41,1124.4,1105.86,723.03,1124.83,1259.58,1434.13","roas8":"1.41,0.91,0.86,1.09,1.5,1.54,1.51,1.55","aprs8":"387.67,-100.16,-177.13,92.75,241.33,394.05,424.55,506.81"},{"cat":"Artificial Grass Installation","cty":"United Kingdom","apr":469.41,"roas":1.24,"spend":1983.87,"rev":2453.28,"spends8":"2121.22,2423,3587.95,1956.95,1872.8,2307.42,2040.39,1983.87","revs8":"2252.61,3261.93,3573.06,1902.07,2242.27,2795.17,2685.01,2453.28","roas8":"1.06,1.35,1.0,0.97,1.2,1.21,1.32,1.24","aprs8":"131.39,838.93,-14.89,-54.88,369.47,487.75,644.62,469.41"},{"cat":"Kitchen Installation & Remodelling","cty":"United Kingdom","apr":411.9,"roas":1.55,"spend":748.25,"rev":1160.15,"spends8":"707.92,981.18,1066.07,741.3,1020.51,1354.53,875.38,748.25","revs8":"943.31,1260.34,1296.62,842.95,1299.22,1516.77,1037.33,1160.15","roas8":"1.33,1.28,1.22,1.14,1.27,1.12,1.19,1.55","aprs8":"235.39,279.16,230.55,101.65,278.71,162.24,161.95,411.9"},{"cat":"Web Design","cty":"United States","apr":374.24,"roas":1.24,"spend":1529.12,"rev":1903.36,"spends8":"4049.72,3623.07,3137.16,2106.78,1546.37,2087.51,2007.11,1529.12","revs8":"5115.6,3227.18,3772.19,1648.84,2283.42,2926.15,2285.3,1903.36","roas8":"1.26,0.89,1.2,0.78,1.48,1.4,1.14,1.24","aprs8":"1065.88,-395.89,635.03,-457.94,737.05,838.64,278.19,374.24"},{"cat":"Photo Booth Hire","cty":"United States","apr":358.61,"roas":1.27,"spend":1323.67,"rev":1682.28,"spends8":"1721.56,1520.6,1732.64,1704.23,1837.96,1701.35,1550.63,1323.67","revs8":"2301.06,2285.84,2308.39,1819.63,2567.94,2373.71,1888.39,1682.28","roas8":"1.34,1.5,1.33,1.07,1.4,1.4,1.22,1.27","aprs8":"579.5,765.24,575.75,115.4,729.98,672.36,337.76,358.61"},{"cat":"Driveway Installation","cty":"Canada","apr":349.2,"roas":2.23,"spend":284.89,"rev":634.09,"spends8":"334.01,336.52,333.99,343.2,331.71,307.11,281.69,284.89","revs8":"1247.02,675.43,795.04,665.32,966.3,594.83,390.41,634.09","roas8":"3.73,2.01,2.38,1.94,2.91,1.94,1.39,2.23","aprs8":"913.01,338.91,461.05,322.12,634.59,287.72,108.72,349.2"},{"cat":"End of Tenancy Cleaning","cty":"United Kingdom","apr":328.65,"roas":1.7,"spend":470.09,"rev":798.74,"spends8":"652.7,739.45,781.48,588.05,291.78,490.42,478.24,470.09","revs8":"938.9,1048.77,855.49,678.22,498.58,709.03,654.91,798.74","roas8":"1.44,1.42,1.09,1.15,1.71,1.45,1.37,1.7","aprs8":"286.2,309.32,74.01,90.17,206.8,218.61,176.67,328.65"},{"cat":"Property Extensions","cty":"Canada","apr":271.28,"roas":1.46,"spend":589.96,"rev":861.24,"spends8":"537.37,574.51,575.41,524.34,563.23,283.81,417.98,589.96","revs8":"950.41,607.5,1320.04,460.72,1151.9,812.09,922.74,861.24","roas8":"1.77,1.06,2.29,0.88,2.05,2.86,2.21,1.46","aprs8":"413.04,32.99,744.63,-63.62,588.67,528.28,504.76,271.28"},{"cat":"Garage Door Installation","cty":"United Kingdom","apr":253.72,"roas":1.3,"spend":836.56,"rev":1090.28,"spends8":"1170.2,1001.96,1162.4,1112.33,1162.74,1882.45,1137.18,836.56","revs8":"1116.61,1344.4,1409.35,1202.31,1958.44,1634.53,1261.79,1090.28","roas8":"0.95,1.34,1.21,1.08,1.68,0.87,1.11,1.3","aprs8":"-53.59,342.44,246.95,89.98,795.7,-247.92,124.61,253.72"},{"cat":"Removal Companies","cty":"United Kingdom","apr":211.16,"roas":1.82,"spend":255.98,"rev":467.14,"spends8":"390.95,567.27,582.11,412.91,207.01,364.38,258.03,255.98","revs8":"576.19,570.09,761.71,421.94,423.42,414.84,559.6,467.14","roas8":"1.47,1.0,1.31,1.02,2.05,1.14,2.17,1.82","aprs8":"185.24,2.82,179.6,9.03,216.41,50.46,301.57,211.16"},{"cat":"Home & Domiciliary Care","cty":"Canada","apr":208.94,"roas":1.41,"spend":512.95,"rev":721.89,"spends8":"153.03,154.5,154.51,131.18,150.34,284.07,719.35,512.95","revs8":"314.89,216.17,137.94,150.82,230.29,435.63,812.84,721.89","roas8":"2.06,1.4,0.89,1.15,1.53,1.53,1.13,1.41","aprs8":"161.86,61.67,-16.57,19.64,79.95,151.56,93.49,208.94"},{"cat":"Gardening","cty":"United Kingdom","apr":185.97,"roas":1.15,"spend":1242.77,"rev":1428.74,"spends8":"381.21,522.09,1153.96,667.92,798.5,1449.41,1253.74,1242.77","revs8":"599.64,729.02,1281.95,906.59,1244.31,1730.9,1518.17,1428.74","roas8":"1.57,1.4,1.11,1.36,1.56,1.19,1.21,1.15","aprs8":"218.43,206.93,127.99,238.67,445.81,281.49,264.43,185.97"},{"cat":"Fence & Gate Installation","cty":"United Kingdom","apr":181.11,"roas":1.07,"spend":2648.41,"rev":2829.52,"spends8":"1248.95,1782.44,1480.57,1715.69,2597.71,3111.61,2665.55,2648.41","revs8":"2038.31,1866.48,1919.95,2247.07,2714.94,3379.69,3193.69,2829.52","roas8":"1.63,1.05,1.3,1.31,1.05,1.09,1.2,1.07","aprs8":"789.36,84.04,439.38,531.38,117.23,268.08,528.14,181.11"},{"cat":"Air Conditioning Installation","cty":"United Kingdom","apr":169.86,"roas":1.73,"spend":231.46,"rev":401.32,"spends8":"0,0,0,0,0,109.04,227.38,231.46","revs8":"0,0,0,0,0,396.35,420.87,401.32","roas8":"0,0,0,0,0,3.63,1.85,1.73","aprs8":"0,0,0,0,0,287.31,193.49,169.86"},{"cat":"Painting & Decoration - Interior","cty":"Canada","apr":162.18,"roas":1.39,"spend":412.53,"rev":574.71,"spends8":"0,0,0,0,0,0,179.5,412.53","revs8":"0,0,0,0,0,0,369.49,574.71","roas8":"0,0,0,0,0,0,2.06,1.39","aprs8":"0,0,0,0,0,0,189.99,162.18"},{"cat":"Security Guard Services","cty":"United States","apr":158.57,"roas":2.15,"spend":138.15,"rev":296.72,"spends8":"303.44,266.78,730.2,455.47,137.08,139.13,131.92,138.15","revs8":"652.56,535.05,1348.5,296.21,128.41,311.85,231.79,296.72","roas8":"2.15,2.01,1.85,0.65,0.94,2.24,1.76,2.15","aprs8":"349.12,268.27,618.3,-159.26,-8.67,172.72,99.87,158.57"},{"cat":"Personal Trainers","cty":"United States","apr":109.24,"roas":1.08,"spend":1300.7,"rev":1409.94,"spends8":"2070.12,1966.83,1568.25,1510.18,1485.04,1415.96,1307.58,1300.7","revs8":"2554.4,2303.54,1852.26,1732.34,1823.91,1340.95,1625.61,1409.94","roas8":"1.23,1.17,1.18,1.15,1.23,0.95,1.24,1.08","aprs8":"484.28,336.71,284.01,222.16,338.87,-75.01,318.03,109.24"},{"cat":"Home Insulation","cty":"United Kingdom","apr":108.92,"roas":1.31,"spend":353.99,"rev":462.91,"spends8":"723.5,326.86,441.67,325.2,384.47,482.22,313.32,353.99","revs8":"629.38,548.16,348.97,394.18,457.21,551.49,410.18,462.91","roas8":"0.87,1.68,0.79,1.21,1.19,1.14,1.31,1.31","aprs8":"-94.12,221.3,-92.7,68.98,72.74,69.27,96.86,108.92"},{"cat":"Landscaping","cty":"Canada","apr":80.8,"roas":1.21,"spend":385.13,"rev":465.93,"spends8":"0,0,0,0,0,192.06,447.44,385.13","revs8":"0,0,0,0,0,338.57,779.37,465.93","roas8":"0,0,0,0,0,1.76,1.74,1.21","aprs8":"0,0,0,0,0,146.51,331.93,80.8"},{"cat":"House Clearance","cty":"United Kingdom","apr":76.39,"roas":1.12,"spend":635.52,"rev":711.91,"spends8":"365.49,356.68,671,684.04,647.87,1036.02,933.3,635.52","revs8":"534.15,658.03,856.44,563.71,778.93,1127.59,1008.35,711.91","roas8":"1.46,1.84,1.28,0.82,1.2,1.09,1.08,1.12","aprs8":"168.66,301.35,185.44,-120.33,131.06,91.57,75.05,76.39"},{"cat":"Commercial & Office Cleaning","cty":"United States","apr":46.63,"roas":1.22,"spend":216.5,"rev":263.13,"spends8":"260.29,272.04,767.71,596.03,603.29,484.58,412.78,216.5","revs8":"490.34,700.29,1124,985.3,436.86,372.38,0,263.13","roas8":"1.88,2.57,1.46,1.65,0.72,0.77,0.0,1.22","aprs8":"230.05,428.25,356.29,389.27,-166.43,-112.2,-412.78,46.63"},{"cat":"Architectural Services","cty":"United Kingdom","apr":38.39,"roas":1.05,"spend":710.91,"rev":749.3,"spends8":"438.73,609.94,657.77,666.59,608.22,826.45,700.47,710.91","revs8":"681.07,692.21,1095.2,499.93,538.73,771.98,1036.2,749.3","roas8":"1.55,1.13,1.67,0.75,0.89,0.93,1.48,1.05","aprs8":"242.34,82.27,437.43,-166.66,-69.49,-54.47,335.73,38.39"},{"cat":"Wedding Photography","cty":"Canada","apr":25.62,"roas":1.12,"spend":217.12,"rev":242.74,"spends8":"0,0,0,0,0,65.47,218.62,217.12","revs8":"0,0,0,0,0,0,385.15,242.74","roas8":"0,0,0,0,0,0.0,1.76,1.12","aprs8":"0,0,0,0,0,-65.47,166.53,25.62"},{"cat":"Marquee Hire","cty":"United Kingdom","apr":12.92,"roas":1.03,"spend":372.91,"rev":385.83,"spends8":"399.19,115.14,394.49,567.76,304.91,502.08,469.46,372.91","revs8":"292.61,212.76,519.41,492.3,283.52,540.73,483.62,385.83","roas8":"0.73,1.85,1.32,0.87,0.93,1.08,1.03,1.03","aprs8":"-106.58,97.62,124.92,-75.46,-21.39,38.65,14.16,12.92"},{"cat":"Therapist","cty":"Canada","apr":8.05,"roas":2.46,"spend":5.51,"rev":13.56,"spends8":"0,0,0,0,0,0,22.45,5.51","revs8":"0,0,0,0,0,0,37.83,13.56","roas8":"0,0,0,0,0,0,1.69,2.46","aprs8":"0,0,0,0,0,0,15.38,8.05"},{"cat":"Asbestos Removal & Surveys","cty":"United Kingdom","apr":5.66,"roas":1.03,"spend":185.61,"rev":191.27,"spends8":"0,0,0,0,0,123.14,186.85,185.61","revs8":"0,0,0,0,0,130.17,138.46,191.27","roas8":"0,0,0,0,0,1.06,0.74,1.03","aprs8":"0,0,0,0,0,7.03,-48.39,5.66"},{"cat":"Bookkeeping Services","cty":"Canada","apr":1.54,"roas":1.01,"spend":203.55,"rev":205.09,"spends8":"0,0,0,0,0,0,133.38,203.55","revs8":"0,0,0,0,0,0,417.62,205.09","roas8":"0,0,0,0,0,0,3.13,1.01","aprs8":"0,0,0,0,0,0,284.24,1.54"},{"cat":"Gutter Cleaning","cty":"United Kingdom","apr":-12.81,"roas":0.94,"spend":208.5,"rev":195.69,"spends8":"242.83,49.37,107.08,46.37,0,194.55,216.65,208.5","revs8":"100.11,51.84,91.01,95.05,0,170.94,306,195.69","roas8":"0.41,1.05,0.85,2.05,0,0.88,1.41,0.94","aprs8":"-142.72,2.47,-16.07,48.68,0,-23.61,89.35,-12.81"},{"cat":"Man & Van Services","cty":"United Kingdom","apr":-13.11,"roas":0.97,"spend":463.86,"rev":450.75,"spends8":"537.83,497.03,699.99,587.45,358.03,591.87,532.01,463.86","revs8":"525.05,436.74,552.37,659,591.21,456.33,557.35,450.75","roas8":"0.98,0.88,0.79,1.12,1.65,0.77,1.05,0.97","aprs8":"-12.78,-60.29,-147.62,71.55,233.18,-135.54,25.34,-13.11"},{"cat":"General Plumbing","cty":"United Kingdom","apr":-55.41,"roas":0.85,"spend":363.38,"rev":307.97,"spends8":"356.12,365.32,491.34,565.64,327.61,509.76,371.79,363.38","revs8":"299.7,391.62,307.7,402.9,279.19,482.59,213.6,307.97","roas8":"0.84,1.07,0.63,0.71,0.85,0.95,0.57,0.85","aprs8":"-56.42,26.3,-183.64,-162.74,-48.42,-27.17,-158.19,-55.41"},{"cat":"Private Investigators","cty":"United States","apr":-86.24,"roas":0.89,"spend":816.53,"rev":730.29,"spends8":"946.81,945.57,1679.45,1253.65,845.11,1067.23,912.52,816.53","revs8":"1119.34,1040.49,1746.76,1156.15,1200.94,991.61,1196.22,730.29","roas8":"1.18,1.1,1.04,0.92,1.42,0.93,1.31,0.89","aprs8":"172.53,94.92,67.31,-97.5,355.83,-75.62,283.7,-86.24"},{"cat":"Roofing Installation or Replacement","cty":"United Kingdom","apr":-123.73,"roas":0.49,"spend":241.09,"rev":117.36,"spends8":"0,0,0,0,0,0,177.85,241.09","revs8":"52.38,42.31,0,34.2,45.36,1091.17,129.78,117.36","roas8":"0,0,0,0,0,0,0.73,0.49","aprs8":"52.38,42.31,0,34.2,45.36,1091.17,-48.07,-123.73"},{"cat":"Social Media Marketing","cty":"United States","apr":-151.4,"roas":0.25,"spend":202.48,"rev":51.08,"spends8":"0,0,0,0,0,0,0,202.48","revs8":"0,0,0,0,0,0,0,51.08","roas8":"0,0,0,0,0,0,0,0.25","aprs8":"0,0,0,0,0,0,0,-151.4"},{"cat":"Tutoring","cty":"United Kingdom","apr":-176.87,"roas":0.79,"spend":846.9,"rev":670.03,"spends8":"909.5,1488.97,2048.99,1112.31,786.31,764.79,735.23,846.9","revs8":"1646.51,2065.44,2317.18,1173.98,592.29,605.43,533.85,670.03","roas8":"1.81,1.39,1.13,1.06,0.75,0.79,0.73,0.79","aprs8":"737.01,576.47,268.19,61.67,-194.02,-159.36,-201.38,-176.87"},{"cat":"Mould Inspection & Remediation","cty":"United Kingdom","apr":-228.56,"roas":0.36,"spend":354.45,"rev":125.89,"spends8":"0,0,0,0,0,246.21,342.55,354.45","revs8":"0,0,0,0,0,238.33,405.23,125.89","roas8":"0,0,0,0,0,0.97,1.18,0.36","aprs8":"0,0,0,0,0,-7.88,62.68,-228.56"},{"cat":"Boiler Installation or Replacement","cty":"United Kingdom","apr":-350.05,"roas":0.67,"spend":1052.21,"rev":702.16,"spends8":"1550.41,574.77,733.19,435.34,371.23,971,1013.13,1052.21","revs8":"1216.96,1012.97,907.97,291.84,817.05,1036.1,1416.38,702.16","roas8":"0.78,1.76,1.24,0.67,2.2,1.07,1.4,0.67","aprs8":"-333.45,438.2,174.78,-143.5,445.82,65.1,403.25,-350.05"},{"cat":"Bookkeeping Services","cty":"United States","apr":-395.29,"roas":0.69,"spend":1274.38,"rev":879.09,"spends8":"1825.04,2353.22,2374.92,1576.2,869.46,1199.34,1600.48,1274.38","revs8":"2563.32,2577.36,2411.93,946.8,947.86,2086.44,2618.69,879.09","roas8":"1.4,1.1,1.02,0.6,1.09,1.74,1.64,0.69","aprs8":"738.28,224.14,37.01,-629.4,78.4,887.1,1018.21,-395.29"},{"cat":"Unassigned","cty":"United States","apr":-1119.7,"roas":0.0,"spend":1119.7,"rev":0,"spends8":"0,0,0,0,28.41,615.18,1235.73,1119.7","revs8":"0,0,0,0,0,0,0,0","roas8":"0,0,0,0,0.0,0.0,0.0,0.0","aprs8":"0,0,0,0,-28.41,-615.18,-1235.73,-1119.7"}];
 const WEEKS_SHORT=["9Ma", "16Ma", "23Ma", "30Ma", "6Ap", "13Ap", "20Ap", "27Ap"];
-const WTD_LABEL="WTD: 4–7 May";
-const WTD_DATA=[
-{cat:"House Clearance",cty:"United Kingdom",spend:258.69,rev:352.66,apr:93.97,roas:1.3633},
-{cat:"Removal Companies",cty:"United Kingdom",spend:116.99,rev:220.77,apr:103.78,roas:1.8871},
-{cat:"Bathroom Installation & Remodel",cty:"Canada",spend:361.18,rev:1061.48,apr:700.3,roas:2.9389},
-{cat:"Tree Surgery & Removal",cty:"United Kingdom",spend:688.43,rev:1584.92,apr:896.49,roas:2.3022},
-{cat:"Fence & Gate Installation",cty:"United Kingdom",spend:1306.09,rev:1508.43,apr:202.34,roas:1.1549},
-{cat:"Driveway Installation",cty:"Canada",spend:132.21,rev:183.71,apr:51.5,roas:1.3895},
-{cat:"Wedding Photography",cty:"United Kingdom",spend:528.01,rev:899.63,apr:371.62,roas:1.7038},
-{cat:"General Plumbing",cty:"United Kingdom",spend:95.88,rev:117.94,apr:22.06,roas:1.2301},
-{cat:"Mould Inspection & Remediation",cty:"United Kingdom",spend:174.73,rev:27.36,apr:-147.37,roas:0.1566},
-{cat:"Electric Charge Points Installation",cty:"United Kingdom",spend:502.76,rev:644.29,apr:141.53,roas:1.2815},
-{cat:"Bookkeeping Services",cty:"United States",spend:617.26,rev:312.22,apr:-305.04,roas:0.5058},
-{cat:"Web Design",cty:"United States",spend:676.11,rev:1365.64,apr:689.53,roas:2.0199},
-{cat:"Landscaping",cty:"United Kingdom",spend:1882.38,rev:3545.55,apr:1663.17,roas:1.8835},
-{cat:"Painting & Decoration - Interior",cty:"Canada",spend:195.0,rev:429.93,apr:234.94,roas:2.2049},
-{cat:"House Cleaning",cty:"United States",spend:2000.15,rev:2929.51,apr:929.36,roas:1.4646},
-{cat:"Boiler Installation or Replacement",cty:"United Kingdom",spend:408.39,rev:290.73,apr:-117.66,roas:0.7119},
-{cat:"Home Insulation",cty:"United Kingdom",spend:186.21,rev:395.77,apr:209.56,roas:2.1254},
-{cat:"End of Tenancy Cleaning",cty:"United Kingdom",spend:251.36,rev:398.95,apr:147.59,roas:1.5872},
-{cat:"TV Installation & Mounting",cty:"United States",spend:282.08,rev:354.27,apr:72.19,roas:1.2559},
-{cat:"Personal Trainers",cty:"United States",spend:664.47,rev:1184.36,apr:519.89,roas:1.7824},
-{cat:"Dog Training",cty:"United States",spend:1715.05,rev:2456.13,apr:741.08,roas:1.4321},
-{cat:"Home & Domiciliary Care",cty:"Canada",spend:234.81,rev:316.96,apr:82.15,roas:1.3499},
-{cat:"Commercial & Office Cleaning",cty:"United States",spend:47.38,rev:45.68,apr:-1.7,roas:0.9641},
-{cat:"Landscaping",cty:"Canada",spend:197.61,rev:242.53,apr:44.92,roas:1.2273},
-{cat:"Gardening",cty:"United Kingdom",spend:619.08,rev:941.07,apr:321.99,roas:1.5201},
-{cat:"Brick & Block Paving Services",cty:"United Kingdom",spend:462.55,rev:1100.84,apr:638.29,roas:2.3799},
-{cat:"Architectural Services",cty:"United Kingdom",spend:326.49,rev:175.38,apr:-151.11,roas:0.5372},
-{cat:"Asbestos Removal & Surveys",cty:"United Kingdom",spend:86.94,rev:84.42,apr:-2.52,roas:0.971},
-{cat:"Wedding Photography",cty:"Canada",spend:98.12,rev:81.12,apr:-17.0,roas:0.8267},
-{cat:"Patio Services",cty:"United Kingdom",spend:844.2,rev:1520.47,apr:676.27,roas:1.8011},
-{cat:"Artificial Grass Installation",cty:"United Kingdom",spend:923.38,rev:1010.06,apr:86.68,roas:1.0939},
-{cat:"Limousine Hire",cty:"United States",spend:686.59,rev:1717.12,apr:1030.53,roas:2.501},
-{cat:"Architectural Services",cty:"United States",spend:1221.37,rev:1953.0,apr:731.63,roas:1.599},
-{cat:"Bathroom Installation & Remodel",cty:"United Kingdom",spend:1501.69,rev:2569.56,apr:1067.87,roas:1.7111},
-{cat:"Kitchen Installation & Remodelling",cty:"United Kingdom",spend:349.55,rev:488.66,apr:139.11,roas:1.398},
-{cat:"Property Extensions",cty:"Canada",spend:263.05,rev:263.85,apr:0.8,roas:1.003},
-{cat:"Residential Interior Designers",cty:"United States",spend:357.84,rev:566.04,apr:208.2,roas:1.5818},
-{cat:"Photo Booth Hire",cty:"United States",spend:755.47,rev:1162.43,apr:406.96,roas:1.5387},
-{cat:"Roofing Installation or Replacement",cty:"United Kingdom",spend:114.65,rev:82.44,apr:-32.21,roas:0.7191},
-{cat:"Therapist",cty:"Canada",spend:2.8,rev:12.29,apr:9.49,roas:4.3893},
-{cat:"Bookkeeping Services",cty:"Canada",spend:98.48,rev:121.43,apr:22.95,roas:1.233},
-{cat:"Immigration Lawyers",cty:"United States",spend:1366.57,rev:2532.66,apr:1166.09,roas:1.8533},
-{cat:"Wedding Photography",cty:"United States",spend:583.96,rev:1292.5,apr:708.54,roas:2.1133},
-{cat:"Painting & Decoration - Interior",cty:"United Kingdom",spend:1151.48,rev:1388.78,apr:237.3,roas:1.2061},
-{cat:"Catering",cty:"United States",spend:960.15,rev:1787.65,apr:827.5,roas:1.8618},
-{cat:"Tutoring",cty:"United Kingdom",spend:394.6,rev:298.22,apr:-96.38,roas:0.7558},
-{cat:"Garage Door Installation",cty:"United Kingdom",spend:355.35,rev:510.51,apr:155.16,roas:1.4366},
-{cat:"Air Conditioning Installation",cty:"United Kingdom",spend:113.08,rev:256.11,apr:143.03,roas:2.2649},
-{cat:"Private Investigators",cty:"United States",spend:399.58,rev:580.8,apr:181.22,roas:1.4535},
-{cat:"House Cleaning",cty:"United Kingdom",spend:1002.57,rev:1694.24,apr:691.67,roas:1.6899},
-{cat:"Driveway Installation",cty:"United Kingdom",spend:649.66,rev:1286.38,apr:636.72,roas:1.9801},
-{cat:"Gutter Cleaning",cty:"United Kingdom",spend:95.72,rev:89.89,apr:-5.83,roas:0.9391},
-{cat:"House Cleaning",cty:"Canada",spend:237.87,rev:558.51,apr:320.64,roas:2.348},
-{cat:"Marquee Hire",cty:"United Kingdom",spend:223.43,rev:297.12,apr:73.69,roas:1.3298},
-{cat:"Security Guard Services",cty:"United States",spend:81.26,rev:186.04,apr:104.78,roas:2.2894},
-{cat:"Conservatory Installation",cty:"United Kingdom",spend:296.08,rev:207.36,apr:-88.72,roas:0.7004},
-{cat:"Social Media Marketing",cty:"United States",spend:101.31,rev:15.62,apr:-85.69,roas:0.1542},
-{cat:"Man & Van Services",cty:"United Kingdom",spend:152.21,rev:198.78,apr:46.57,roas:1.306},
-{cat:"Home & Domiciliary Care",cty:"United Kingdom",spend:1526.37,rev:2208.61,apr:682.24,roas:1.447},
-{cat:"DJ",cty:"United States",spend:1918.67,rev:2801.72,apr:883.05,roas:1.4602},
-{cat:"Fence & Gate Installation",cty:"Canada",spend:420.57,rev:839.2,apr:418.63,roas:1.9954}
-];
 const CAT_UPLIFT={"Conservatory Installation|United Kingdom":{"pct":22,"ep_apr":675.72},"Gutter Cleaning|United Kingdom":{"pct":20,"ep_apr":-12.81},"Mould Inspection & Remediation|United Kingdom":{"pct":30,"ep_apr":-228.56},"Property Extensions|Canada":{"pct":25,"ep_apr":271.28},"Bookkeeping Services|Canada":{"pct":55,"ep_apr":1.54},"Kitchen Installation & Remodelling|United Kingdom":{"pct":24,"ep_apr":411.9},"Air Conditioning Installation|United Kingdom":{"pct":21,"ep_apr":169.86},"Security Guard Services|United States":{"pct":24,"ep_apr":158.57}};
 const APR_NEG=[{"ag":"1820_Bookkeeping_US_UGC_Phase14","cat":"Bookkeeping Services","cty":"United States","apr":-320.48,"roas":"0.08","spend":348.36,"spends8":"1068.57,1427.52,1471.54,851.38,340.46,335.52,329.83,348.36","roas8":"1.6,1.03,0.52,0.21,0.88,0.58,0.61,0.08","cpls8":"46.5,102.0,105.1,121.6,113.5,67.1,109.9,174.2","rpbs8":"74.3,104.6,54.4,25.1,100.1,39.1,66.9,13.9","aprs8":"639.24,36.61000000000013,-709.52,-675.8299999999999,-40.19,-139.83999999999997,-129.14999999999998,-320.48"},{"ag":"1670_Home & Domiciliary Care_UK_UGC_Katie_PITS_AutomationTest","cat":"Home & Domiciliary Care","cty":"United Kingdom","apr":-307.41,"roas":"0.07","spend":329.55,"spends8":"453.26,423.1,430.34,432.1,382.28,307.15,338.3,329.55","roas8":"0.95,1.05,1.57,0.79,0.85,1.71,0.51,0.07","cpls8":"18.1,26.4,17.2,25.4,19.1,20.5,24.2,41.2","rpbs8":"17.1,27.7,27.1,20.0,16.2,34.9,12.2,2.8","aprs8":"-24.529999999999973,19.849999999999966,247.08999999999997,-92.77000000000004,-58.85999999999996,216.84000000000003,-166.94,-307.41"},{"ag":"1505_Web Design_US_UGC_Trend_Marcus","cat":"Web Design","cty":"United States","apr":-280.53999999999996,"roas":"0.35","spend":431.57,"spends8":"0,0,0,0,291.12,613,633.86,431.57","roas8":"0,0,0,0,0.9,1.47,1.06,0.35","cpls8":"0,0,0,0,41.6,43.8,63.4,71.9","rpbs8":"0,0,0,0,37.6,64.3,67.4,25.2","aprs8":"0,0,0,0,-28.00999999999999,287.07000000000005,39.710000000000036,-280.53999999999996"},{"ag":"1762_Boiler Install_UK_Static_AdFactory_AllTemplates_1","cat":"Boiler Installation or Replacement","cty":"United Kingdom","apr":-257.35,"roas":"0.62","spend":685.84,"spends8":"0,0,0,0,0,277.09,563.58,685.84","roas8":"0,0,0,0,0,1.68,1.96,0.62","cpls8":"0,0,0,0,0,15.4,16.1,34.3","rpbs8":"0,0,0,0,0,25.9,31.6,21.4","aprs8":"0,0,0,0,0,189.61,541.65,-257.35"},{"ag":"1670_Home & Domiciliary Care_UK_Static_AdFactory_AllTemplates_1","cat":"Home & Domiciliary Care","cty":"United Kingdom","apr":-216.16,"roas":"0.45","spend":396.12,"spends8":"0,0,0,0,0,116.05,323.07,396.12","roas8":"0,0,0,0,0,2.14,0.81,0.45","cpls8":"0,0,0,0,0,16.6,17.9,20.8","rpbs8":"0,0,0,0,0,35.5,14.5,9.5","aprs8":"0,0,0,0,0,132.17000000000002,-61.889999999999986,-216.16"},{"ag":"1548_Private Investigators_US_Mixed_CLIP_1","cat":"Private Investigators","cty":"United States","apr":-207.2,"roas":"0.58","spend":493.03,"spends8":"521.86,525.31,511.63,517.9,512.38,499.2,486.83,493.03","roas8":"1.29,1.32,1.17,1.07,1.5,1.04,1.46,0.58","cpls8":"8.4,6.3,7.6,7.5,6.2,6.0,6.8,10.7","rpbs8":"10.9,8.3,9.0,8.0,9.2,6.3,9.9,6.2","aprs8":"152.64999999999998,167.44000000000005,89.31000000000006,34.25999999999999,255.03999999999996,22.359999999999957,222.37000000000006,-207.2"},{"ag":"1081_Garage Door Installation_UK_UGC_Katie_EpsomPITS","cat":"Garage Door Installation","cty":"United Kingdom","apr":-183.59,"roas":"0.03","spend":189.59,"spends8":"0,0,0,0,0,187.77,192.48,189.59","roas8":"0,0,0,0,0,0.0,0.0,0.03","cpls8":"0,0,0,0,0,0,0,189.6","rpbs8":"0,0,0,0,0,0,0,6.0","aprs8":"0,0,0,0,0,-187.77,-192.48,-183.59"},{"ag":"0045_Tutoring_UK_UGC_Katie_PITS","cat":"Tutoring","cty":"United Kingdom","apr":-175.35000000000002,"roas":"0.26","spend":236.71,"spends8":"0,0,0,0,0,0,138.43,236.71","roas8":"0,0,0,0,0,0,0.19,0.26","cpls8":"0,0,0,0,0,0,69.2,26.3","rpbs8":"0,0,0,0,0,0,13.3,6.8","aprs8":"0,0,0,0,0,0,-111.89000000000001,-175.35000000000002"},{"ag":"1820_Bookkeeping_US_Static_AdFactory_AllTemplates_1","cat":"Bookkeeping Services","cty":"United States","apr":-154.76,"roas":"0.71","spend":529.13,"spends8":"0,0,0,0,0,429.03,845.35,529.13","roas8":"0,0,0,0,0,3.38,1.28,0.71","cpls8":"0,0,0,0,0,22.6,49.7,105.8","rpbs8":"0,0,0,0,0,76.4,63.7,74.9","aprs8":"0,0,0,0,0,1023.1300000000001,237.43999999999994,-154.76"},{"ag":"42_Painting & Decoration_UK_Static_Claude_RecoveryDrafts","cat":"Painting & Decoration - Interior","cty":"United Kingdom","apr":-154.03,"roas":"0.33","spend":230.1,"spends8":"0,0,0,61.58,187.31,225.83,239.28,230.1","roas8":"0,0,0,1.6,1.15,1.1,0.56,0.33","cpls8":"0,0,0,3.4,4.3,4.1,6.3,5.4","rpbs8":"0,0,0,5.5,4.9,4.5,3.5,1.8","aprs8":"0,0,0,36.86,27.900000000000006,22.50999999999999,-105.62,-154.03"},{"ag":"1472_Social Media Marketing_UGC_Phase14","cat":"Social Media Marketing","cty":"United States","apr":-151.39999999999998,"roas":"0.25","spend":202.48,"spends8":"0,0,0,0,0,0,0,202.48","roas8":"0,0,0,0,0,0,0,0.25","cpls8":"0,0,0,0,0,0,0,50.6","rpbs8":"0,0,0,0,0,0,0,12.8","aprs8":"0,0,0,0,0,0,0,-151.39999999999998"},{"ag":"1217_Mould Inspection & Remediation_UK_Static_Adfactory_Whiteboard","cat":"Mould Inspection & Remediation","cty":"United Kingdom","apr":-140.15,"roas":"0.22","spend":178.97,"spends8":"0,0,0,0,0,125.01,175.65,178.97","roas8":"0,0,0,0,0,1.26,0.56,0.22","cpls8":"0,0,0,0,0,10.4,13.5,29.8","rpbs8":"0,0,0,0,0,13.1,7.6,6.5","aprs8":"0,0,0,0,0,32.39999999999999,-76.74000000000001,-140.15"},{"ag":"1762_Boiler Install_UK_BenAIBulk_Tap","cat":"Boiler Installation or Replacement","cty":"United Kingdom","apr":-137.45000000000002,"roas":"0.46","spend":256.11,"spends8":"1550.11,573.07,536.35,341.18,108.5,270.6,274.01,256.11","roas8":"0.75,1.76,1.28,0.68,3.65,1.62,0.94,0.46","cpls8":"30.4,15.5,16.8,26.2,6.8,14.2,21.1,28.5","rpbs8":"22.7,27.3,21.4,17.8,24.8,23.1,19.8,13.2","aprs8":"-391.39999999999986,436.79999999999995,149.23000000000002,-110.26000000000002,287.72,167.98999999999995,-16.099999999999966,-137.45000000000002"},{"ag":"1018_DJ_US_Mixed_CC_1 Weekend -80%","cat":"DJ","cty":"United States","apr":-133.70999999999998,"roas":"0.73","spend":497.46,"spends8":"536.95,534.66,536.35,522.33,517.45,512.78,492.24,497.46","roas8":"1.32,1.0,1.73,1.2,1.44,1.27,1.28,0.73","cpls8":"9.1,8.8,6.9,9.9,6.6,8.4,7.7,9.4","rpbs8":"12.0,8.8,11.9,11.8,9.5,10.7,9.8,6.9","aprs8":"170.92999999999995,1.7200000000000273,393.12,102.82999999999993,225.5999999999999,140.41000000000008,135.95000000000005,-133.70999999999998"},{"ag":"1217_Mould Inspection & Remediation_UK_Static_Adfactory_Tap","cat":"Mould Inspection & Remediation","cty":"United Kingdom","apr":-117.16,"roas":"0.33","spend":175.48,"spends8":"0,0,0,0,0,121.2,166.9,175.48","roas8":"0,0,0,0,0,1.57,1.36,0.33","cpls8":"0,0,0,0,0,7.6,11.1,19.5","rpbs8":"0,0,0,0,0,11.9,15.1,6.5","aprs8":"0,0,0,0,0,68.61999999999999,59.26999999999998,-117.16"},{"ag":"1018_DJ_US_Static_Matt_1","cat":"DJ","cty":"United States","apr":-110.1099999999999,"roas":"0.92","spend":1350.55,"spends8":"1170.5,1410.86,1324.08,1322.9,1272.17,1446.29,1391.36,1350.55","roas8":"1.85,1.19,1.2,1.05,1.53,1.51,1.22,0.92","cpls8":"7.8,10.3,10.4,9.9,8.0,7.0,8.5,8.0","rpbs8":"14.3,12.2,12.5,10.4,12.1,10.6,10.4,7.4","aprs8":"989.19,263.97,258.3100000000002,62.59999999999991,670.01,741.79,306.97,-110.1099999999999"},{"ag":"179_Gardening_UK_Sunday pulls_UGC_Katie_PITS","cat":"Gardening","cty":"United Kingdom","apr":-99.98999999999998,"roas":"0.6","spend":248.82,"spends8":"0,0,0,0,0,0,161.07,248.82","roas8":"0,0,0,0,0,0,0.77,0.6","cpls8":"0,0,0,0,0,0,4.0,3.9","rpbs8":"0,0,0,0,0,0,3.1,2.4","aprs8":"0,0,0,0,0,0,-36.44999999999999,-99.98999999999998"},{"ag":"171_Catering_US_Static_AdFactory_AllTemplates_2","cat":"Catering","cty":"United States","apr":-93.89,"roas":"0.13","spend":107.79,"spends8":"0,0,0,0,0,52.19,113.03,107.79","roas8":"0,0,0,0,0,0.35,0.19,0.13","cpls8":"0,0,0,0,0,10.4,8.7,9.0","rpbs8":"0,0,0,0,0,3.7,1.6,1.2","aprs8":"0,0,0,0,0,-33.92,-91.7,-93.89"},{"ag":"42_Painting & Decoration_UK_UGC_Backstage_Emergency","cat":"Painting & Decoration - Interior","cty":"United Kingdom","apr":-92.50999999999999,"roas":"0.75","spend":373.52,"spends8":"0,0,0,61.42,362.13,400.36,392.72,373.52","roas8":"0,0,0,0.25,0.79,0.78,1.16,0.75","cpls8":"0,0,0,15.4,7.5,8.7,7.0,6.0","rpbs8":"0,0,0,3.8,6.0,6.8,8.2,4.5","aprs8":"0,0,0,-46.120000000000005,-74.39999999999998,-89.34000000000003,64.75999999999999,-92.50999999999999"},{"ag":"1108_Roofing Installation Or Replacement_UK_UGC_Katie_EpsomPITS(Roof Installation URL) \u2013 Copy","cat":"Roofing Installation or Replacement","cty":"United Kingdom","apr":-84.31,"roas":"0.65","spend":241.09,"spends8":"0,0,0,0,0,0,177.85,241.09","roas8":"0,0,0,0,0,0,0.68,0.65","cpls8":"0,0,0,0,0,0,59.3,80.4","rpbs8":"0,0,0,0,0,0,40.5,52.3","aprs8":"0,0,0,0,0,0,-56.41999999999999,-84.31"},{"ag":"1695_Marquee Hire_UK_Static_BenAIbulk_WTB_Weekend -80%","cat":"Marquee Hire","cty":"United Kingdom","apr":-81.03999999999999,"roas":"0.54","spend":175.63,"spends8":"399.19,115.14,188.12,181.73,304.91,373.67,282.09,175.63","roas8":"0.85,1.64,1.88,1.15,0.9,0.93,0.55,0.54","cpls8":"4.7,3.0,3.5,3.5,3.3,3.5,4.2,3.0","rpbs8":"4.0,4.8,6.7,4.0,3.0,3.3,2.3,1.6","aprs8":"-59.98000000000002,73.52999999999999,165.13,28.150000000000006,-31.110000000000014,-24.390000000000043,-125.96999999999997,-81.03999999999999"},{"ag":"1018_DJ_US_CopyTestBatch1_Mixed_HV_1 Weekend -80% \u2013 Copy","cat":"DJ","cty":"United States","apr":-79.85000000000001,"roas":"0.55","spend":179.27,"spends8":"185.76,191.34,204.07,181.41,181.55,180.69,182.23,179.27","roas8":"0.87,1.16,1.43,1.08,1.29,0.38,1.47,0.55","cpls8":"9.8,10.6,12.0,12.1,11.3,13.9,10.1,10.5","rpbs8":"8.5,12.4,17.1,13.1,14.7,5.3,14.9,5.8","aprs8":"-23.669999999999987,31.569999999999993,86.91000000000003,14.909999999999997,53.109999999999985,-111.2,86.25000000000003,-79.85000000000001"},{"ag":"1056_Wedding Photography_US_Static_BenAIbulk_WTB","cat":"Wedding Photography","cty":"United States","apr":-79.66,"roas":"0.53","spend":170.57,"spends8":"173.2,170.02,169.05,174.54,163.32,164.21,160.32,170.57","roas8":"1.18,0.91,1.75,0.69,1.21,1.48,1.39,0.53","cpls8":"8.7,11.3,5.5,10.9,6.3,7.5,8.4,6.8","rpbs8":"10.2,10.3,9.5,7.6,7.6,11.1,11.7,3.6","aprs8":"31.26000000000002,-15.280000000000001,126.86000000000001,-53.33999999999999,35.099999999999994,79.20999999999998,62.22,-79.66"},{"ag":"1820_Bookkeeping_CA_Static_AdFactory_AllTemplates_1_HV","cat":"Bookkeeping Services","cty":"Canada","apr":-70.05000000000001,"roas":"0.65","spend":201.97,"spends8":"0,0,0,0,0,0,107.23,201.97","roas8":"0,0,0,0,0,0,4.58,0.65","cpls8":"0,0,0,0,0,0,15.3,40.4","rpbs8":"0,0,0,0,0,0,70.1,26.4","aprs8":"0,0,0,0,0,0,383.56,-70.05000000000001"},{"ag":"1148_Kitchen Installation & Remodelling_UK_Static_Basic","cat":"Kitchen Installation & Remodelling","cty":"United Kingdom","apr":-65.16000000000003,"roas":"0.75","spend":261.55,"spends8":"234.11,229.49,240.85,170.07,130.79,395.15,329.37,261.55","roas8":"0.76,1.6,1.3,1.05,2.03,0.61,1.41,0.75","cpls8":"9.0,6.6,7.5,8.1,6.5,10.7,6.3,10.5","rpbs8":"6.9,10.5,9.8,8.5,13.3,6.5,8.9,7.9","aprs8":"-55.71000000000001,136.95,72.21000000000001,8.77000000000001,135.14000000000001,-155.64999999999998,133.45999999999998,-65.16000000000003"},{"ag":"1138_Bathroom Install_UK_UGC_Phase14","cat":"Bathroom Installation & Remodel","cty":"United Kingdom","apr":-64.0,"roas":"0.48","spend":123.87,"spends8":"73.98,76.78,73.05,64.94,86.79,163.57,150.65,123.87","roas8":"0.87,1.35,2.25,0.91,0.74,0.42,0.74,0.48","cpls8":"10.6,8.5,6.6,8.1,17.4,10.2,16.7,10.3","rpbs8":"9.2,11.5,14.9,7.4,12.9,4.3,12.4,5.0","aprs8":"-9.540000000000006,27.14,91.3,-5.899999999999999,-22.470000000000013,-94.08999999999999,-38.80000000000001,-64.0"},{"ag":"1638_Limousine Hire_US_Static_Template5_BULK","cat":"Limousine Hire","cty":"United States","apr":-61.02999999999997,"roas":"0.82","spend":346.44,"spends8":"370.21,382.43,369.3,359.34,351.57,351.68,351.88,346.44","roas8":"1.4,1.02,1.17,1.42,1.55,1.42,1.1,0.82","cpls8":"2.9,2.8,2.4,2.1,2.1,1.9,2.0,2.2","rpbs8":"4.1,2.9,2.8,2.9,3.3,2.8,2.2,1.8","aprs8":"149.44,8.899999999999977,61.50999999999999,152.12,194.82999999999998,148.82999999999998,34.68000000000001,-61.02999999999997"},{"ag":"995_Photo Booth Hire_US_Static_BenAIbulk_WTB","cat":"Photo Booth Hire","cty":"United States","apr":-60.44,"roas":"0.76","spend":257,"spends8":"541.12,192.48,345.98,337.32,332.07,335.9,325.89,257","roas8":"1.07,1.95,1.78,1.07,1.33,1.34,1.6,0.76","cpls8":"2.7,2.4,2.5,3.0,2.8,2.7,2.5,2.5","rpbs8":"2.9,4.7,4.5,3.3,3.7,3.6,3.9,1.9","aprs8":"40.110000000000014,183.49000000000004,270.29999999999995,25.180000000000007,109.88,112.65000000000003,194.76,-60.44"},{"ag":"1556_Dog Training_US_UGC_Katie_EpsomPITS","cat":"Dog Training","cty":"United States","apr":-59.1,"roas":"0.19","spend":73,"spends8":"0,0,0,0,0,195.78,82.74,73","roas8":"0,0,0,0,0,0.45,0.26,0.19","cpls8":"0,0,0,0,0,7.0,6.9,9.1","rpbs8":"0,0,0,0,0,3.2,1.8,1.7","aprs8":"0,0,0,0,0,-107.16,-61.05,-59.1"},{"ag":"41_General Plumbing_UK_Mixed_UGC_LT_1","cat":"General Plumbing","cty":"United Kingdom","apr":-55.639999999999986,"roas":"0.85","spend":363.38,"spends8":"356.12,365.32,334.3,328.57,314.72,371.81,371.79,363.38","roas8":"0.84,0.99,0.58,0.64,0.87,0.97,0.63,0.85","cpls8":"5.2,5.7,6.7,8.6,5.8,6.8,7.4,5.4","rpbs8":"4.3,5.7,3.9,5.6,5.1,6.6,4.7,4.6","aprs8":"-56.139999999999986,-2.5,-140.24,-116.78,-40.210000000000036,-9.310000000000002,-136.59000000000003,-55.639999999999986"},{"ag":"1138_Bathroom Install_UK_UGC_3","cat":"Bathroom Installation & Remodel","cty":"United Kingdom","apr":-54.47999999999999,"roas":"0.42","spend":93.32,"spends8":"338.52,323.56,318.47,433.03,399.99,96.8,88.3,93.32","roas8":"1.54,1.36,1.33,1.58,0.68,1.03,1.5,0.42","cpls8":"10.6,9.2,8.6,9.4,13.8,8.1,7.4,10.4","rpbs8":"16.3,12.5,11.4,14.9,9.3,8.3,11.0,4.3","aprs8":"183.92000000000007,115.63,104.79999999999995,253.13,-129.78000000000003,2.5600000000000023,44.11999999999999,-54.47999999999999"},{"ag":"1077_Fence & Gate Installation_UK_Main","cat":"Fence & Gate Installation","cty":"United Kingdom","apr":-53.739999999999895,"roas":"0.95","spend":1011.81,"spends8":"0,0,234.83,413.57,906.56,1029.37,1005.53,1011.81","roas8":"0,0,1.75,1.49,1.01,1.23,0.89,0.95","cpls8":"0,0,4.9,5.0,5.8,6.3,7.2,7.4","rpbs8":"0,0,8.6,7.5,5.9,7.7,6.4,7.0","aprs8":"0,0,176.29,200.69,9.75,238.8800000000001,-111.68999999999994,-53.739999999999895"},{"ag":"1976_Property Extensions_CA_Static_AdFactory_AllTemplates_1 \u2013 Copy","cat":"Property Extensions","cty":"Canada","apr":-53.35,"roas":"0.38","spend":85.47,"spends8":"0,0,0,0,0,0,49.16,85.47","roas8":"0,0,0,0,0,0,3.08,0.38","cpls8":"0,0,0,0,0,0,8.2,28.5","rpbs8":"0,0,0,0,0,0,25.2,10.7","aprs8":"0,0,0,0,0,0,102.24000000000001,-53.35"},{"ag":"0045_Tutoring_UK_BenAIbulk_WTB_CC","cat":"Tutoring","cty":"United Kingdom","apr":-48.78,"roas":"0.8","spend":243.35,"spends8":"219.82,205.33,215.98,232.69,209.17,268.09,236.98,243.35","roas8":"1.48,1.29,1.19,0.96,1.15,1.15,1.09,0.8","cpls8":"9.2,8.6,9.4,15.5,13.1,9.9,7.0,11.6","rpbs8":"13.6,11.0,11.2,14.9,15.0,11.4,7.6,9.3","aprs8":"106.25,58.99999999999997,41.97,-8.909999999999997,31.460000000000008,39.170000000000016,21.440000000000026,-48.78"},{"ag":"1077_Fence & Gate Installation_UK_Static_Matt_1_Jan2nd","cat":"Fence & Gate Installation","cty":"United Kingdom","apr":-46.4,"roas":"0.49","spend":91.52,"spends8":"389.18,573.02,234.47,229.3,210.32,91.88,98.07,91.52","roas8":"1.75,1.02,1.14,0.9,1.15,0.81,2.19,0.49","cpls8":"9.1,8.4,9.0,7.2,6.0,9.2,4.5,8.3","rpbs8":"15.8,8.6,10.3,6.4,6.9,7.5,9.8,4.1","aprs8":"290.10999999999996,8.850000000000023,32.130000000000024,-23.680000000000007,31.879999999999995,-17.039999999999992,116.9,-46.4"},{"ag":"1087_Gutter Cleaning_UK_UGC_Katie_EpsomPITS","cat":"Gutter Cleaning","cty":"United Kingdom","apr":-44.77000000000001,"roas":"0.79","spend":208.5,"spends8":"0,0,0,0,0,194.55,216.65,208.5","roas8":"0,0,0,0,0,1.03,1.42,0.79","cpls8":"0,0,0,0,0,10.2,8.0,13.9","rpbs8":"0,0,0,0,0,10.6,11.4,10.9","aprs8":"0,0,0,0,0,5.909999999999997,91.78999999999999,-44.77000000000001"},{"ag":"171_Catering_US_Static_Matt_1","cat":"Catering","cty":"United States","apr":-44.0,"roas":"0.75","spend":175.25,"spends8":"374.12,384.79,355.58,256.16,171.9,172.75,164.46,175.25","roas8":"1.34,0.63,1.16,0.94,1.3,1.89,1.18,0.75","cpls8":"3.4,5.1,5.0,4.9,3.7,3.5,3.5,4.1","rpbs8":"4.6,3.2,5.8,4.6,4.9,6.5,4.1,3.1","aprs8":"126.33999999999997,-141.21,57.84000000000003,-15.160000000000025,51.59,152.91000000000003,29.409999999999997,-44.0"},{"ag":"1949_End of Tenancy Cleaning_UK_UGC_Katie_PITS","cat":"End of Tenancy Cleaning","cty":"United Kingdom","apr":-39.33999999999999,"roas":"0.67","spend":120.27,"spends8":"0,0,0,0,0,0,100.96,120.27","roas8":"0,0,0,0,0,0,0.25,0.67","cpls8":"0,0,0,0,0,0,33.7,9.3","rpbs8":"0,0,0,0,0,0,8.4,6.2","aprs8":"0,0,0,0,0,0,-75.75999999999999,-39.33999999999999"},{"ag":"1077_Fence & Gate Installation_UK_Static_BenAIbulk_WTB","cat":"Fence & Gate Installation","cty":"United Kingdom","apr":-38.370000000000005,"roas":"0.92","spend":472.13,"spends8":"497.36,705.39,743.1,746.26,642.54,520.61,487.44,472.13","roas8":"1.69,1.3,1.39,1.31,1.23,1.48,1.37,0.92","cpls8":"5.7,5.8,6.1,7.9,5.5,5.5,5.4,10.0","rpbs8":"9.5,7.6,8.5,10.3,6.8,8.2,7.4,9.2","aprs8":"343.0,210.60000000000002,292.43999999999994,230.51,149.44000000000005,250.14999999999998,178.94,-38.370000000000005"},{"ag":"1556_Dog Training_US_InHouse_CC_1","cat":"Dog Training","cty":"United States","apr":-35.75999999999999,"roas":"0.79","spend":170.47,"spends8":"153.91,173.25,176.61,176.77,171.79,170.09,163.47,170.47","roas8":"0.67,1.55,0.77,1.74,1.08,1.11,1.9,0.79","cpls8":"3.8,4.3,4.4,4.4,5.7,3.5,3.3,4.5","rpbs8":"2.6,6.7,3.4,7.7,6.2,3.8,6.3,3.5","aprs8":"-50.099999999999994,96.00999999999999,-40.79000000000002,131.46,13.29000000000002,18.22,146.54999999999998,-35.75999999999999"},{"ag":"1212_House Cleaning_US_DCO_Static","cat":"House Cleaning","cty":"United States","apr":-32.410000000000004,"roas":"0.44","spend":58.31,"spends8":"99.65,117.4,67.41,32.93,32.27,29.33,33.64,58.31","roas8":"1.46,2.07,1.61,1.04,0.93,1.09,1.57,0.44","cpls8":"4.0,2.9,2.6,3.7,4.0,2.9,2.6,4.2","rpbs8":"5.8,5.9,4.2,3.8,3.7,3.2,4.1,1.8","aprs8":"46.31999999999999,125.1,40.95,1.1899999999999977,-2.3700000000000045,2.690000000000005,19.28,-32.410000000000004"},{"ag":"1138_Bathroom Install_CA_UGC_1_ACTIVE","cat":"Bathroom Installation & Remodel","cty":"Canada","apr":-27.440000000000012,"roas":"0.8","spend":139.68,"spends8":"106.78,103.53,107.04,110.6,109.1,164.82,138.44,139.68","roas8":"0.27,0.58,0.1,1.06,3.01,0.82,0.5,0.8","cpls8":"53.4,34.5,107.0,27.6,12.1,41.2,34.6,34.9","rpbs8":"14.2,20.1,10.3,29.2,36.4,33.8,17.2,28.1","aprs8":"-78.4,-43.32,-96.72,6.200000000000003,218.85,-29.639999999999986,-69.7,-27.440000000000012"},{"ag":"1069_Driveway Installation_UK_LPV5TEST_UGC_HV_1_Rhys","cat":"Driveway Installation","cty":"United Kingdom","apr":-27.430000000000007,"roas":"0.89","spend":249.19,"spends8":"821.22,477.48,478.87,495.18,606.6,785.86,566.01,249.19","roas8":"0.91,0.56,0.38,1.76,1.39,0.83,0.56,0.89","cpls8":"19.6,20.8,17.1,15.5,12.4,16.0,19.5,10.8","rpbs8":"17.8,11.6,6.5,27.2,17.2,13.4,11.0,9.6","aprs8":"-72.08000000000004,-209.92000000000002,-297.51,374.56,235.90999999999997,-129.99,-247.73000000000002,-27.430000000000007"},{"ag":"42_Painting & Decoration_UK_Video_UGC_2 \u2013 Copy","cat":"Painting & Decoration - Interior","cty":"United Kingdom","apr":-24.880000000000003,"roas":"0.48","spend":47.92,"spends8":"0,0,0,0,0,68.54,128.68,47.92","roas8":"0,0,0,0,0,0.56,1.63,0.48","cpls8":"0,0,0,0,0,5.7,5.1,3.2","rpbs8":"0,0,0,0,0,3.2,8.4,1.5","aprs8":"0,0,0,0,0,-30.090000000000003,80.95999999999998,-24.880000000000003"},{"ag":"1969_Man & Van_UK_InHouse_1","cat":"Man & Van Services","cty":"United Kingdom","apr":-22.470000000000027,"roas":"0.95","spend":463.86,"spends8":"537.83,497.03,554.01,393.18,358.03,487.85,491.81,463.86","roas8":"0.85,0.82,0.74,1.04,1.69,0.94,1.12,0.95","cpls8":"5.9,5.6,5.0,5.3,3.6,6.3,4.8,5.2","rpbs8":"5.0,4.6,3.7,5.5,6.1,5.9,5.3,4.9","aprs8":"-81.34000000000003,-91.91999999999996,-145.24,13.909999999999968,247.14,-30.620000000000005,57.26000000000005,-22.470000000000027"},{"ag":"1505_Web Design_US_Static_L2 Test","cat":"Web Design","cty":"United States","apr":-22.43,"roas":"0.0","spend":22.43,"spends8":"0,0,0,0,0,0,0,22.43","roas8":"0,0,0,0,0,0,0,0.0","cpls8":"0,0,0,0,0,0,0,0","rpbs8":"0,0,0,0,0,0,0,0","aprs8":"0,0,0,0,0,0,0,-22.43"},{"ag":"1556_Dog Training_US_Static_2","cat":"Dog Training","cty":"United States","apr":-20.75000000000003,"roas":"0.92","spend":258.29,"spends8":"273.52,271.25,265.37,272.81,260.8,270.22,251.53,258.29","roas8":"1.06,0.77,1.5,1.33,1.11,1.28,0.74,0.92","cpls8":"5.7,4.8,3.7,5.7,5.4,3.9,6.1,5.1","rpbs8":"6.1,3.7,5.5,7.6,6.0,5.0,4.5,4.7","aprs8":"17.450000000000045,-63.03999999999999,131.83999999999997,90.01999999999998,28.829999999999984,76.76999999999998,-66.11000000000001,-20.75000000000003"},{"ag":"0074_Personal Trainer_US_Mixed_UGC_CLIP_3","cat":"Personal Trainers","cty":"United States","apr":-19.079999999999984,"roas":"0.96","spend":487,"spends8":"520.77,533.77,522.81,500.52,503.21,495.4,481.67,487","roas8":"0.98,0.98,0.83,1.1,1.07,0.93,1.1,0.96","cpls8":"8.4,6.4,6.5,6.3,5.0,5.4,5.5,5.9","rpbs8":"8.2,6.3,5.3,6.9,5.3,5.1,6.1,5.7","aprs8":"-12.21999999999997,-9.92999999999995,-89.50999999999993,52.48000000000002,35.730000000000075,-34.25999999999999,48.849999999999966,-19.079999999999984"},{"ag":"42_Painting & Decoration_UK_LPV4CONTROL_LPV5CONTROL_Video_UGC_Louise_5 \u2013 Copy","cat":"Painting & Decoration - Interior","cty":"United Kingdom","apr":-18.75,"roas":"0.54","spend":40.35,"spends8":"0,0,0,0,0,17.82,29.99,40.35","roas8":"0,0,0,0,0,0.0,5.52,0.54","cpls8":"0,0,0,0,0,8.9,2.5,10.1","rpbs8":"0,0,0,0,0,0.0,13.8,5.4","aprs8":"0,0,0,0,0,-17.82,135.67999999999998,-18.75"},{"ag":"0045_Tutoring_UK_Static_BenAIbulk_WTB","cat":"Tutoring","cty":"United Kingdom","apr":-17.159999999999968,"roas":"0.95","spend":366.84,"spends8":"229.66,425.71,457.29,487.85,413.56,419.52,359.82,366.84","roas8":"2.22,1.31,1.09,1.43,1.02,0.67,0.74,0.95","cpls8":"7.0,10.4,9.9,9.8,13.8,14.5,12.9,14.1","rpbs8":"15.5,13.6,10.8,13.9,14.0,9.8,9.5,13.4","aprs8":"280.69000000000005,133.77000000000004,40.72999999999996,208.32999999999993,6.550000000000011,-136.72999999999996,-95.13,-17.159999999999968"},{"ag":"1548_Private Investigators_US_BenAIbulk_WTB","cat":"Private Investigators","cty":"United States","apr":-15.48999999999998,"roas":"0.9","spend":163.01,"spends8":"174.64,171.5,171.59,171.86,169.42,169.13,161.47,163.01","roas8":"0.6,1.08,1.15,0.74,1.16,0.84,1.32,0.9","cpls8":"6.0,6.9,7.5,10.1,7.7,8.5,6.2,6.3","rpbs8":"3.6,7.4,8.6,7.4,8.9,7.1,8.2,5.7","aprs8":"-69.35999999999999,12.879999999999995,25.75999999999999,-45.530000000000015,27.02000000000001,-26.919999999999987,51.77000000000001,-15.48999999999998"},{"ag":"37_Architect Services_US_UGC_Spark_Batch2_Weekend -80%","cat":"Architectural Services","cty":"United States","apr":-13.689999999999998,"roas":"0.97","spend":488.68,"spends8":"524.51,522.74,557.01,521.3,536.38,534.19,482.45,488.68","roas8":"1.64,1.87,1.8,2.12,1.24,1.89,1.42,0.97","cpls8":"15.4,12.4,12.4,15.8,12.8,11.9,17.2,17.5","rpbs8":"25.3,23.2,22.2,33.6,15.8,22.5,24.5,17.0","aprs8":"334.07000000000005,452.18999999999994,443.04999999999995,585.97,128.66999999999996,476.6199999999999,203.95999999999998,-13.689999999999998"},{"ag":"1556_Dog Training_US_AdFactory_Batch1","cat":"Dog Training","cty":"United States","apr":-12.450000000000003,"roas":"0.82","spend":71.12,"spends8":"0,0,0,0,76.45,141.99,76.92,71.12","roas8":"0,0,0,0,1.39,0.91,1.78,0.82","cpls8":"0,0,0,0,2.7,4.1,5.1,5.1","rpbs8":"0,0,0,0,3.8,3.7,9.1,4.2","aprs8":"0,0,0,0,29.549999999999997,-13.340000000000003,59.61999999999999,-12.450000000000003"},{"ag":"2146_EV Install_UK_UGC_Katie_PITS","cat":"Electric Charge Points Installation","cty":"United Kingdom","apr":-11.590000000000003,"roas":"0.85","spend":76.39,"spends8":"0,0,0,0,0,0,85.32,76.39","roas8":"0,0,0,0,0,0,0.0,0.85","cpls8":"0,0,0,0,0,0,28.4,9.5","rpbs8":"0,0,0,0,0,0,0.0,8.1","aprs8":"0,0,0,0,0,0,-85.32,-11.590000000000003"},{"ag":"171_Catering_US_Static_Basic_2 \u2013 Copy 2","cat":"Catering","cty":"United States","apr":-8.54,"roas":"0.0","spend":8.54,"spends8":"0.4,1.1,0.41,1.04,5.14,5.01,11.42,8.54","roas8":"0.0,0.0,0.0,0.0,3.07,0.0,0.0,0.0","cpls8":"0,0,0,0,1.3,2.5,1.9,2.1","rpbs8":"0,0,0,0,3.9,0.0,0.0,0.0","aprs8":"-0.4,-1.1,-0.41,-1.04,10.64,-5.01,-11.42,-8.54"},{"ag":"1762_Boiler Install_UK_UGC_Katie_PITS","cat":"Boiler Installation or Replacement","cty":"United Kingdom","apr":-8.060000000000002,"roas":"0.93","spend":110.26,"spends8":"0,0,0,0,0,0,90.69,110.26","roas8":"0,0,0,0,0,0,0.68,0.93","cpls8":"0,0,0,0,0,0,45.3,27.6","rpbs8":"0,0,0,0,0,0,30.9,25.6","aprs8":"0,0,0,0,0,0,-28.89,-8.060000000000002"},{"ag":"1670_Home & Domiciliary Care_UK_Static_CC_1","cat":"Home & Domiciliary Care","cty":"United Kingdom","apr":-7.419999999999998,"roas":"0.8","spend":36.22,"spends8":"39.32,41.3,13.79,64.08,116.16,61.64,33.5,36.22","roas8":"1.88,4.11,21.99,1.57,1.92,3.76,1.89,0.8","cpls8":"7.9,4.1,2.8,8.0,12.9,12.3,5.6,18.1","rpbs8":"14.8,17.0,60.6,12.6,24.7,46.4,10.6,14.4","aprs8":"34.51,128.57,289.4,36.36,106.36000000000001,170.43,29.86,-7.419999999999998"},{"ag":"1820_Bookkeeping_US_Static_BenAIbulk_Tap","cat":"Bookkeeping Services","cty":"United States","apr":-5.409999999999997,"roas":"0.93","spend":74.64,"spends8":"186.48,398.1,201.74,193.35,188.4,109.64,76.24,74.64","roas8":"2.33,0.65,1.68,1.99,0.35,0.77,0.0,0.93","cpls8":"186.5,99.5,28.8,64.5,31.4,27.4,76.2,74.6","rpbs8":"433.8,64.3,48.3,128.2,10.9,21.1,0.0,69.2","aprs8":"247.35,-140.90000000000003,136.45,191.21,-123.27000000000001,-25.25,-76.24,-5.409999999999997"},{"ag":"1521_Immigration Lawyers_US_UGC_Phase14 \u2013 Copy 2","cat":"Immigration Lawyers","cty":"United States","apr":-5.049999999999997,"roas":"0.96","spend":113.55,"spends8":"76.22,42.05,21.44,30.41,97.72,158.46,169.55,113.55","roas8":"2.92,1.26,3.46,0.81,1.86,2.51,1.93,0.96","cpls8":"8.5,7.0,4.3,10.1,10.9,7.2,12.1,9.5","rpbs8":"24.7,8.8,14.8,8.2,20.2,18.1,23.4,9.0","aprs8":"146.0,10.770000000000003,52.7,-5.789999999999999,84.38,239.98,158.32,-5.049999999999997"},{"ag":"1638_Limousine Hire_US_Static_BenAIbulk_Tap","cat":"Limousine Hire","cty":"United States","apr":-4.340000000000032,"roas":"0.99","spend":350.85,"spends8":"173.35,169.49,169.36,170.92,174.2,170.03,314.8,350.85","roas8":"1.51,1.13,1.72,1.67,1.9,1.76,1.4,0.99","cpls8":"2.3,2.5,1.7,2.3,1.9,1.9,2.0,2.0","rpbs8":"3.4,2.8,3.0,3.8,3.6,3.3,2.8,2.0","aprs8":"88.15,21.48999999999998,122.71999999999997,114.91,157.02000000000004,129.27,124.36000000000001,-4.340000000000032"},{"ag":"1056_Wedding Photography_CA_Static_AdFactory_AllTemplates_1 \u2013 Copy","cat":"Wedding Photography","cty":"Canada","apr":-4.28,"roas":"0.0","spend":4.28,"spends8":"0,0,0,0,0,0,6.67,4.28","roas8":"0,0,0,0,0,0,0.0,0.0","cpls8":"0,0,0,0,0,0,0,2.1","rpbs8":"0,0,0,0,0,0,0,0.0","aprs8":"0,0,0,0,0,0,-6.67,-4.28"},{"ag":"1069_Driveway Installation_CA_Static_AdFactory_AllTemplates_1 \u2013 Copy","cat":"Driveway Installation","cty":"Canada","apr":-3.88,"roas":"0.0","spend":3.88,"spends8":"0,0,0,0,0,0,2.59,3.88","roas8":"0,0,0,0,0,0,9.88,0.0","cpls8":"0,0,0,0,0,0,2.6,0","rpbs8":"0,0,0,0,0,0,25.6,0","aprs8":"0,0,0,0,0,0,23.01,-3.88"},{"ag":"1247_Artificial Grass Installation_UK_Static_Basic_3","cat":"Artificial Grass Installation","cty":"United Kingdom","apr":-3.7800000000000296,"roas":"0.99","spend":455.68,"spends8":"80.99,79.23,79.9,86.05,130.13,473.05,464.44,455.68","roas8":"1.88,1.0,0.51,0.56,2.71,1.08,1.76,0.99","cpls8":"4.8,5.0,4.4,4.5,2.7,5.6,3.6,3.5","rpbs8":"9.0,5.0,2.3,2.5,7.2,6.1,6.3,3.5","aprs8":"71.64,0.3299999999999983,-39.040000000000006,-37.809999999999995,223.13,37.120000000000005,353.21,-3.7800000000000296"},{"ag":"179_Gardening_UK_Sunday pulls_UGC_Spark_Batch2","cat":"Gardening","cty":"United Kingdom","apr":-2.1699999999999875,"roas":"0.99","spend":197.01,"spends8":"253.62,239.54,233.87,209.57,165.74,197.31,215.65,197.01","roas8":"1.02,1.11,1.18,1.08,1.43,1.11,1.2,0.99","cpls8":"4.2,3.6,3.1,4.3,3.0,3.2,2.7,3.3","rpbs8":"4.3,4.0,3.6,4.6,4.3,3.6,3.3,3.2","aprs8":"3.9399999999999977,26.539999999999992,41.15999999999997,16.590000000000003,71.32,22.409999999999997,43.390000000000015,-2.1699999999999875"},{"ag":"42_Painting & Decoration_UK_Static_AdFactory_AllTemplates_1 \u2013 Copy","cat":"Painting & Decoration - Interior","cty":"United Kingdom","apr":-1.62,"roas":"0.0","spend":1.62,"spends8":"0,0,0,0,0,16.81,5.61,1.62","roas8":"0,0,0,0,0,2.66,0.0,0.0","cpls8":"0,0,0,0,0,5.6,2.8,0","rpbs8":"0,0,0,0,0,14.9,0.0,0","aprs8":"0,0,0,0,0,27.830000000000002,-5.61,-1.62"},{"ag":"1820_Bookkeeping_CA_Static_AdFactory_AllTemplates_1","cat":"Bookkeeping Services","cty":"Canada","apr":-1.58,"roas":"0.0","spend":1.58,"spends8":"0,0,0,0,0,0,26.15,1.58","roas8":"0,0,0,0,0,0,0.0,0.0","cpls8":"0,0,0,0,0,0,0,0","rpbs8":"0,0,0,0,0,0,0,0","aprs8":"0,0,0,0,0,0,-26.15,-1.58"},{"ag":"1252_Landscaping_CA_Static_AdFactory_AllTemplates_1","cat":"Landscaping","cty":"Canada","apr":-0.6700000000000159,"roas":"1.0","spend":346,"spends8":"0,0,0,0,0,192.06,429.96,346","roas8":"0,0,0,0,0,2.06,1.77,1.0","cpls8":"0,0,0,0,0,4.0,3.9,4.6","rpbs8":"0,0,0,0,0,8.2,7.0,4.5","aprs8":"0,0,0,0,0,202.82999999999998,332.93,-0.6700000000000159"},{"ag":"1247_Artificial Grass Installation_UK_Static_BenAIbulk_Tap","cat":"Artificial Grass Installation","cty":"United Kingdom","apr":-0.07999999999998408,"roas":"1.0","spend":152.07,"spends8":"400.85,158.26,136.98,129.43,126.62,149.08,157.16,152.07","roas8":"0.83,2.02,0.88,1.64,1.82,0.86,1.01,1.0","cpls8":"6.4,4.9,6.0,4.8,3.5,4.7,5.2,3.5","rpbs8":"5.3,10.0,5.2,7.9,6.4,4.0,5.3,3.5","aprs8":"-70.09000000000003,161.72000000000003,-16.939999999999984,83.18,103.81,-21.310000000000016,0.9000000000000057,-0.07999999999998408"},{"ag":"1212_House Cleaning_US_Control_Video","cat":"House Cleaning","cty":"United States","apr":-0.060000000000002274,"roas":"1.0","spend":53.49,"spends8":"57.51,64.44,134.08,52.51,29.1,34.39,44.3,53.49","roas8":"0.75,0.86,0.94,2.39,0.52,3.35,1.59,1.0","cpls8":"3.4,4.6,3.5,2.6,3.6,1.7,3.7,3.0","rpbs8":"2.6,4.0,3.3,6.3,1.9,5.8,5.9,3.0","aprs8":"-14.129999999999995,-8.799999999999997,-7.940000000000012,73.06,-14.110000000000001,80.87,26.260000000000005,-0.060000000000002274"},{"ag":"1929_Block Paving_UK_Static_BenAIbulk_WTB Weekend -80%_HV","cat":"Brick & Block Paving Services","cty":"United Kingdom","apr":-0.009999999999990905,"roas":"1.0","spend":379.49,"spends8":"724.35,695.94,728.03,535.42,325.57,409.18,354.93,379.49","roas8":"1.28,0.84,0.96,1.14,1.46,1.83,1.98,1.0","cpls8":"11.1,10.5,10.4,10.1,7.6,8.9,7.0,8.2","rpbs8":"14.2,8.8,10.0,11.5,11.0,16.3,13.8,8.2","aprs8":"200.75,-112.60000000000002,-28.25999999999999,76.43000000000006,149.18,338.87999999999994,349.42,-0.009999999999990905"}];
 
@@ -621,8 +462,8 @@ function init(){
     document.getElementById(k+'-pos-ct').textContent=roasByCtry[k].length;
   });
 
-  buildOverviewTab();
-  buildGrowthTab();
+  document.getElementById('t-neg').textContent=APR_NEG.length;
+  document.getElementById('t-pos').textContent=ROAS_POS.length;
   const topScale=ROAS_POS.slice(0,8);
   document.getElementById('top-scale-list').innerHTML=topScale
     .map(d=>'<li>'+shortAg(d.ag)+' — ROAS '+d.roas+'x, APR +£'+Math.round(d.apr).toLocaleString()+'</li>').join('');
@@ -654,13 +495,10 @@ function buildCatTable(ctyKeyword, containerId, countId){
   const maxApr = Math.max(...cats.map(d=>d.apr), 1);
   const minApr = Math.min(...cats.map(d=>d.apr), -1);
   const wkRow = '<div class="wk-dates">'+WEEKS_SHORT.map(w=>'<span>'+w+'</span>').join('')+'</div>';
-  const allAdsets = [...APR_NEG, ...ROAS_POS];
-  const thSt='background:rgba(255,255,255,.04);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.06)';
 
-  const rows = cats.map((d, idx) => {
-    const gid = containerId+'-'+idx;
+  const rows = cats.map(d => {
     const bg = aprRowColor(d.apr, maxApr, minApr);
-    const aprV   = d.apr >= 0 ? '+£'+Math.round(d.apr).toLocaleString() : '-£'+Math.round(Math.abs(d.apr)).toLocaleString();
+    const aprV   = d.apr >= 0 ? '+£'+d.apr.toLocaleString() : '£'+d.apr.toLocaleString();
     const aprCls = d.apr > 200 ? 'pos' : d.apr >= 0 ? '' : d.apr > -100 ? 'warn' : 'neg';
     const roasV  = parseFloat(d.roas);
     const roasCls= roasV>=1.2?'pos':roasV>=0.8?'warn':'neg';
@@ -670,122 +508,41 @@ function buildCatTable(ctyKeyword, containerId, countId){
     const roas8 = arr8(d.roas8);
     const sp8   = arr8(d.spends8);
 
-    // Aggregate CPL & Rev/Bark from matching adsets
-    const catAds = allAdsets.filter(a => a.cat === d.cat && a.cty === d.cty);
-    const cpls8 = Array.from({length:8}, (_,i) => {
-      const vs = catAds.map(a=>arr8(a.cpls8)[i]).filter(v=>v>0);
-      return vs.length ? vs.reduce((a,b)=>a+b,0)/vs.length : 0;
-    });
-    const rpbs8 = Array.from({length:8}, (_,i) => {
-      const vs = catAds.map(a=>arr8(a.rpbs8)[i]).filter(v=>v>0);
-      return vs.length ? vs.reduce((a,b)=>a+b,0)/vs.length : 0;
-    });
-    const latestCpl = cpls8[7], latestRpb = rpbs8[7];
-    const wtdEntry = WTD_DATA.find(w => w.cat === d.cat && w.cty === d.cty);
-
-    // Adset sub-table
-    const sortedAds = [...catAds].sort((a,b) => b.apr - a.apr);
-    const adSubRows = sortedAds.length ? sortedAds.map(a => {
-      const aR = parseFloat(a.roas);
-      const aRev = Math.round(a.spend * aR);
-      const aCpl = arr8(a.cpls8)[7], aRpb = arr8(a.rpbs8)[7];
-      const isLive = a.status ? (a.status==='ENABLED'||a.status==='ACTIVE') : arr8(a.spends8)[7]>0;
-      const statusBox = isLive
-        ? '<span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);border-radius:3px;color:#10b981;font-size:10px;font-weight:900;flex-shrink:0">✓</span>'
-        : '<span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);border-radius:3px;color:#ef4444;font-size:10px;font-weight:900;flex-shrink:0">✗</span>';
-      return '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'+
-        '<td style="padding:4px 8px;color:#cbd5e1;max-width:230px" title="'+a.ag+'">'+
-          '<span style="display:flex;align-items:center;gap:5px">'+statusBox+'<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+shortAg(a.ag)+'</span></span>'+
-        '</td>'+
-        '<td style="padding:4px 8px;text-align:right;color:#64748b;white-space:nowrap">'+extractStyle(a.ag)+'</td>'+
-        '<td style="padding:4px 8px;text-align:right;color:#60a5fa">£'+Math.round(a.spend).toLocaleString()+'</td>'+
-        '<td style="padding:4px 8px;text-align:right;color:#47BF9C">£'+aRev.toLocaleString()+'</td>'+
-        '<td class="n '+(aR>=1.2?'pos':aR>=0.8?'warn':'neg')+'" style="padding:4px 8px;text-align:right">'+aR.toFixed(2)+'x</td>'+
-        '<td class="n '+(a.apr>=0?'pos':'neg')+'" style="padding:4px 8px;text-align:right">'+(a.apr>=0?'+':'-')+'£'+Math.round(Math.abs(a.apr)).toLocaleString()+'</td>'+
-        '<td style="padding:4px 8px;text-align:right;color:#94a3b8">'+(aCpl>0?'£'+aCpl.toFixed(1):'—')+'</td>'+
-        '<td style="padding:4px 8px;text-align:right;color:#a78bfa">'+(aRpb>0?'£'+aRpb.toFixed(1):'—')+'</td>'+
-      '</tr>';
-    }).join('') : '<tr><td colspan="8" style="padding:6px 8px;color:#475569;font-style:italic">No adsets in APR Neg / ROAS+ lists for this category</td></tr>';
-
-    const adSubTable =
-      '<tr class="cat-adset" data-parent="'+gid+'" style="display:none">'+
-        '<td colspan="9" style="padding:2px 0 8px 24px;background:rgba(0,0,0,.15)">'+
-          '<table style="width:100%;border-collapse:collapse;font-size:11px">'+
-            '<thead><tr style="background:rgba(255,255,255,.03)">'+
-              '<th style="padding:5px 8px;text-align:left;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">Adset</th>'+
-              '<th style="padding:5px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">Style</th>'+
-              '<th style="padding:5px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">Spend</th>'+
-              '<th style="padding:5px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">Revenue</th>'+
-              '<th style="padding:5px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">ROAS</th>'+
-              '<th style="padding:5px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">APR</th>'+
-              '<th style="padding:5px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">CPL</th>'+
-              '<th style="padding:5px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">Rev/Bark</th>'+
-            '</tr></thead>'+
-            '<tbody>'+adSubRows+'</tbody>'+
-          '</table>'+
-        '</td>'+
-      '</tr>';
-
-    const mainRow = '<tr data-gid="'+gid+'" data-open="0" onclick="catToggle(this)" style="background:'+bg+';cursor:pointer">'+
-      '<td style="width:200px;font-size:12px;font-weight:600;color:#e2e8f0;padding:6px 10px">'+
-        '<span class="cat-tog" style="font-size:10px;color:#475569;margin-right:6px">▶</span>'+d.cat+
-      '</td>'+
-      '<td style="width:110px;padding:6px 8px">'+
-        '<div class="sp-label">APR £</div>'+wkRow+
-        aprSpark(aprs8)+
-        '<div class="sp-val '+aprCls+'" style="font-size:11px;font-weight:700">'+aprV+'</div>'+
-      '</td>'+
-      '<td style="width:100px;padding:6px 8px">'+
-        '<div class="sp-label">Revenue</div>'+wkRow+
-        '<div class="spark">'+standardSpark(revs8,()=>'#47BF9C')+'</div>'+
-        '<div class="sp-val" style="color:#47BF9C">£'+Math.round(d.rev).toLocaleString()+'</div>'+
-      '</td>'+
-      '<td style="width:95px;padding:6px 8px">'+
-        '<div class="sp-label">ROAS</div>'+wkRow+
-        '<div class="spark">'+standardSpark(roas8,roasColor)+'</div>'+
-        '<div class="sp-val '+roasCls+'">'+roasV.toFixed(2)+'x</div>'+
-      '</td>'+
-      '<td style="width:95px;padding:6px 8px">'+
-        '<div class="sp-label">Spend</div>'+wkRow+
-        '<div class="spark">'+standardSpark(sp8,()=>'#60a5fa')+'</div>'+
-        '<div class="sp-val" style="color:#60a5fa">£'+Math.round(d.spend).toLocaleString()+'</div>'+
-      '</td>'+
-      '<td style="width:95px;padding:6px 8px">'+
-        '<div class="sp-label">CPL</div>'+wkRow+
-        '<div class="spark">'+standardSpark(cpls8,()=>'#94a3b8')+'</div>'+
-        '<div class="sp-val" style="color:#94a3b8">'+(latestCpl>0?'£'+latestCpl.toFixed(1):'—')+'</div>'+
-      '</td>'+
-      '<td style="width:95px;padding:6px 8px">'+
-        '<div class="sp-label">Rev/Bark</div>'+wkRow+
-        '<div class="spark">'+standardSpark(rpbs8,()=>'#a78bfa')+'</div>'+
-        '<div class="sp-val" style="color:#a78bfa">'+(latestRpb>0?'£'+latestRpb.toFixed(1):'—')+'</div>'+
-      '</td>'+
-      '<td style="width:88px;padding:6px 8px;border-left:1px solid rgba(247,191,83,.12)">'+
-        '<div class="sp-label" style="color:#f7bf53">📅 WTD</div>'+
-        (wtdEntry ?
-          '<div class="sp-val" style="color:#60a5fa;font-size:10px">'+shortPound(wtdEntry.spend)+'</div>'+
-          '<div class="sp-val '+(wtdEntry.roas>=1.2?'pos':wtdEntry.roas>=0.8?'warn':'neg')+'" style="font-size:10px">'+wtdEntry.roas.toFixed(2)+'x</div>'+
-          '<div class="sp-val '+(wtdEntry.apr>=0?'pos':'neg')+'" style="font-size:10px">'+(wtdEntry.apr>=0?'+':'−')+'£'+Math.round(Math.abs(wtdEntry.apr)).toLocaleString()+'</div>'
-        : '<div class="sp-val" style="color:#334155">—</div>')+
-      '</td>'+
-    '</tr>';
-
-    return mainRow + adSubTable;
+    return `<tr style="background:${bg}">
+      <td style="width:200px;font-size:12px;font-weight:600;color:#e2e8f0;padding:6px 10px">${d.cat}</td>
+      <td style="width:110px;padding:6px 8px">
+        <div class="sp-label">APR £</div>${wkRow}
+        ${aprSpark(aprs8)}
+        <div class="sp-val ${aprCls}" style="font-size:11px;font-weight:700">${aprV}</div>
+      </td>
+      <td style="width:100px;padding:6px 8px">
+        <div class="sp-label">Revenue</div>${wkRow}
+        <div class="spark">${standardSpark(revs8,()=>'#47BF9C')}</div>
+        <div class="sp-val" style="color:#47BF9C">£${d.rev.toLocaleString()}</div>
+      </td>
+      <td style="width:95px;padding:6px 8px">
+        <div class="sp-label">ROAS</div>${wkRow}
+        <div class="spark">${standardSpark(roas8,roasColor)}</div>
+        <div class="sp-val ${roasCls}">${roasV.toFixed(2)}x</div>
+      </td>
+      <td style="width:95px;padding:6px 8px">
+        <div class="sp-label">Spend</div>${wkRow}
+        <div class="spark">${standardSpark(sp8,()=>'#60a5fa')}</div>
+        <div class="sp-val" style="color:#60a5fa">£${d.spend.toLocaleString()}</div>
+      </td>
+    </tr>`;
   }).join('');
 
-  el.innerHTML = '<table style="width:100%;border-collapse:collapse">'+
-    '<thead><tr>'+
-      '<th style="'+thSt+';text-align:left">Category</th>'+
-      '<th style="'+thSt+'">APR (8wk)</th>'+
-      '<th style="'+thSt+'">Revenue (8wk)</th>'+
-      '<th style="'+thSt+'">ROAS (8wk)</th>'+
-      '<th style="'+thSt+'">Spend (8wk)</th>'+
-      '<th style="'+thSt+'">CPL (8wk)</th>'+
-      '<th style="'+thSt+'">Rev/Bark (8wk)</th>'+
-      '<th style="'+thSt+';color:#f7bf53">📅 WTD</th>'+
-    '</tr></thead>'+
-    '<tbody>'+rows+'</tbody>'+
-  '</table>';
+  el.innerHTML = `<table style="width:100%;border-collapse:collapse">
+    <thead><tr>
+      <th style="background:rgba(255,255,255,.04);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:7px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)">Category</th>
+      <th style="background:rgba(255,255,255,.04);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.06)">APR (8wk)</th>
+      <th style="background:rgba(255,255,255,.04);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.06)">Revenue (8wk)</th>
+      <th style="background:rgba(255,255,255,.04);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.06)">ROAS (8wk)</th>
+      <th style="background:rgba(255,255,255,.04);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.06)">Spend (8wk)</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
 }
 
 // ── Style extraction ──────────────────────────────────────────────────────
@@ -842,27 +599,7 @@ function extractStyle(ag){
   return 'Other';
 }
 
-function catToggle(tr){
-  const gid=tr.dataset.gid;
-  const rows=document.querySelectorAll('tr.cat-adset[data-parent="'+gid+'"]');
-  const open=tr.dataset.open==='1';
-  rows.forEach(r=>r.style.display=open?'none':'table-row');
-  tr.dataset.open=open?'0':'1';
-  const tog=tr.querySelector('.cat-tog');
-  if(tog) tog.textContent=open?'▶':'▼';
-}
-
 // ── Style tab rendering ──────────────────────────────────────────────────────
-function styleToggle(tr){
-  const gid=tr.dataset.gid;
-  const rows=document.querySelectorAll('tr.sg-adset[data-parent="'+gid+'"]');
-  const open=tr.dataset.open==='1';
-  rows.forEach(r=>r.style.display=open?'none':'table-row');
-  tr.dataset.open=open?'0':'1';
-  const tog=tr.querySelector('.sg-tog');
-  if(tog) tog.textContent=open?'▶':'▼';
-}
-
 function buildStyleTab(tabKey, containerId){
   const ctyFilter={'uk':'Kingdom','us':'States','ca':'Canada'};
   const keyword=ctyFilter[tabKey];
@@ -883,6 +620,7 @@ function buildStyleTab(tabKey, containerId){
     g.cats[d.cat]=(g.cats[d.cat]||0)+1;
   });
 
+  // Sort by total APR descending
   const groups=Object.values(byStyle).sort((a,b)=>b.totalAPR-a.totalAPR);
   const maxAbsAPR=Math.max(...groups.map(g=>Math.abs(g.totalAPR)),1);
 
@@ -891,27 +629,30 @@ function buildStyleTab(tabKey, containerId){
     return;
   }
 
-  const thSub='background:rgba(255,255,255,.02);color:#64748b;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04)';
-
-  const rows=groups.map((g,idx)=>{
-    const gid=containerId+'-'+idx;
+  const rows=groups.map(g=>{
     const avgRoas=g.totalSpend>0?g.totalRev/g.totalSpend:0;
     const roasCls=avgRoas>=1.2?'pos':avgRoas>=0.8?'warn':'neg';
     const aprCls=g.totalAPR>0?'pos':g.totalAPR<-200?'neg':'warn';
     const barPct=Math.round(100*Math.abs(g.totalAPR)/maxAbsAPR);
     const barCol=g.totalAPR>=0?'#10b981':'#ef4444';
     const topCats=Object.entries(g.cats).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([c])=>c).join(', ');
-    const barHTML='<div style="display:flex;align-items:center;gap:4px">'+
-        '<div style="width:80px;height:8px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden">'+
-          '<div style="height:100%;width:'+barPct+'%;background:'+barCol+';border-radius:2px"></div>'+
-        '</div>'+
-        '<span class="'+aprCls+'" style="font-size:11px;font-weight:700">'+(g.totalAPR>=0?'+£':'£')+Math.round(g.totalAPR).toLocaleString()+'</span>'+
-      '</div>';
+    // APR bar (centred)
+    const barHTML=g.totalAPR>=0
+      ? '<div style="display:flex;align-items:center;gap:4px">'+
+          '<div style="width:80px;height:8px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden">'+
+            '<div style="height:100%;width:'+barPct+'%;background:'+barCol+';border-radius:2px"></div>'+
+          '</div>'+
+          '<span class="'+aprCls+'" style="font-size:11px;font-weight:700">+£'+g.totalAPR.toLocaleString()+'</span>'+
+        '</div>'
+      : '<div style="display:flex;align-items:center;gap:4px">'+
+          '<div style="width:80px;height:8px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden">'+
+            '<div style="height:100%;width:'+barPct+'%;background:'+barCol+';border-radius:2px"></div>'+
+          '</div>'+
+          '<span class="'+aprCls+'" style="font-size:11px;font-weight:700">£'+g.totalAPR.toLocaleString()+'</span>'+
+        '</div>';
 
-    const summaryRow='<tr data-gid="'+gid+'" data-open="0" onclick="styleToggle(this)" style="cursor:pointer">'+
-      '<td style="width:160px;font-weight:600;color:#e2e8f0;font-size:12px">'+
-        '<span class="sg-tog" style="font-size:10px;color:#475569;margin-right:6px">▶</span>'+g.style+
-      '</td>'+
+    return '<tr>'+
+      '<td style="width:160px;font-weight:600;color:#e2e8f0;font-size:12px">'+g.style+'</td>'+
       '<td class="n" style="width:45px;color:#64748b">'+g.adsets.length+'</td>'+
       '<td style="width:200px">'+barHTML+'</td>'+
       '<td class="n '+roasCls+'" style="width:70px">'+avgRoas.toFixed(2)+'x</td>'+
@@ -922,43 +663,6 @@ function buildStyleTab(tabKey, containerId){
       '</td>'+
       '<td style="color:#475569;font-size:10px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+topCats+'</td>'+
     '</tr>';
-
-    // Adset detail rows (hidden by default)
-    const sortedAdsets=[...g.adsets].sort((a,b)=>b.apr-a.apr);
-    const adsetHeader='<tr class="sg-adset" data-parent="'+gid+'" style="display:none">'+
-      '<td colspan="6" style="padding:0 0 0 18px">'+
-        '<table style="width:100%;border-collapse:collapse">'+
-        '<thead><tr>'+
-          '<th style="'+thSub+';width:240px;text-align:left">Adset</th>'+
-          '<th style="'+thSub+';text-align:left">Category</th>'+
-          '<th style="'+thSub+';text-align:right">Spend</th>'+
-          '<th style="'+thSub+';text-align:right">ROAS</th>'+
-          '<th style="'+thSub+';text-align:right">APR</th>'+
-          '<th style="'+thSub+';text-align:right">CPL</th>'+
-          '<th style="'+thSub+';text-align:right">Rev/Bark</th>'+
-        '</tr></thead>'+
-        '<tbody>'+
-        sortedAdsets.map(d=>{
-          const roasNum=parseFloat(d.roas);
-          const rCls=roasNum>=1.2?'pos':roasNum>=0.8?'warn':'neg';
-          const aCls=d.apr>=0?'pos':'neg';
-          const latestCpl=arr8(d.cpls8)[7];
-          const latestRpb=arr8(d.rpbs8)[7];
-          return '<tr style="border-bottom:1px solid rgba(255,255,255,.025)">'+
-            '<td style="padding:5px 8px;font-size:11px;color:#e2e8f0;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+d.ag+'">'+shortAg(d.ag)+'</td>'+
-            '<td style="padding:5px 8px;font-size:10px;color:#64748b;white-space:nowrap">'+d.cat+'</td>'+
-            '<td class="n" style="padding:5px 8px;font-size:11px;color:#60a5fa">£'+Math.round(d.spend).toLocaleString()+'</td>'+
-            '<td class="n '+rCls+'" style="padding:5px 8px;font-size:11px">'+roasNum.toFixed(2)+'x</td>'+
-            '<td class="n '+aCls+'" style="padding:5px 8px;font-size:11px">'+(d.apr>=0?'+£':'£')+Math.round(Math.abs(d.apr)).toLocaleString()+'</td>'+
-            '<td class="n" style="padding:5px 8px;font-size:11px;color:#94a3b8">'+(latestCpl>0?'£'+latestCpl:'—')+'</td>'+
-            '<td class="n" style="padding:5px 8px;font-size:11px;color:#47BF9C">'+(latestRpb>0?'£'+latestRpb:'—')+'</td>'+
-          '</tr>';
-        }).join('')+
-        '</tbody></table>'+
-      '</td>'+
-    '</tr>';
-
-    return summaryRow+adsetHeader;
   }).join('');
 
   document.getElementById(containerId).innerHTML=
@@ -999,683 +703,7 @@ function initStyleTabs(){
   buildStyleTab('ca','styles-ca');
 }
 
-function buildGrowthTab(){
-  const UK_GROWTH=['Home & Domiciliary Care','Commercial & Office Cleaning','Immigration Lawyers','Fence & Gate Installation','Wedding Photography','End of Tenancy Cleaning','Security Guard Services','Home Insulation','Marquee Hire','Pressure Washing','Wedding Celebrants','Accounting','Business Accounting Services','Business Consulting','Air Conditioning Installation','Asbestos Removal & Surveys','Solar Panel Installation','Property Management','HR Services','Mould Inspection & Remediation'];
-  const US_GROWTH=['Commercial & Office Cleaning','Wedding DJ','Residential Interior Designers','Tax Preparation','Magician','Immigration Lawyers','Security Guard Services','Mobile Software Development','Web Design','Bookkeeping Services','Auditing Services','Motivational Speaking','Accounting','Business Consulting','Graphic Design','HR Services','Wedding Planning','Video Design & Production','Aerial & Drone Photography','Commercial & Corporate Photographers'];
-
-  const allAdsets=[...APR_NEG,...ROAS_POS];
-  const ukBench=CAT_DATA.filter(d=>d.cty.includes('Kingdom'));
-  const usBench=CAT_DATA.filter(d=>d.cty.includes('States'));
-  const avgRoas=cats=>cats.length?cats.reduce((a,d)=>a+parseFloat(d.roas),0)/cats.length:1.0;
-  const ukBR=avgRoas(ukBench), usBR=avgRoas(usBench);
-
-  // Larger gradient sparklines for growth cards
-  function gcSpark(vals,H=44){
-    const nz=vals.filter(v=>v>0);
-    if(!nz.length) return '<div style="height:'+H+'px;display:flex;align-items:center;justify-content:center;color:#334155;font-size:10px">no data</div>';
-    const maxV=Math.max(...nz), minV=Math.min(...nz);
-    return '<div style="display:flex;align-items:flex-end;gap:2px;height:'+H+'px">'+
-      vals.map((v,i)=>{
-        if(v<=0) return '<div style="flex:1;height:2px;background:rgba(255,255,255,.06);border-radius:1px 1px 0 0;align-self:flex-end"></div>';
-        const pct=maxV===minV?0.75:0.12+0.88*((v-minV)/(maxV-minV));
-        const h=Math.max(3,Math.round(pct*H));
-        return '<div style="flex:1;height:'+h+'px;background:'+weekGrad(i)+';border-radius:2px 2px 0 0;opacity:.9"></div>';
-      }).join('')+
-    '</div>';
-  }
-  function gcAprSpark(vals,H=22){
-    const absMax=Math.max(...vals.map(Math.abs),1);
-    return '<div style="display:flex;gap:2px;height:'+(H*2+2)+'px">'+
-      vals.map((v,i)=>{
-        const h=Math.max(2,Math.round(Math.abs(v)/absMax*H));
-        const col=weekGrad(i);
-        const isPos=v>=0;
-        return '<div style="flex:1;position:relative;height:'+(H*2+2)+'px">'+
-          '<div style="position:absolute;left:0;right:0;top:'+H+'px;height:1px;background:rgba(148,163,184,.18)"></div>'+
-          (v!==0?'<div style="position:absolute;left:0;right:0;height:'+h+'px;background:'+col+';opacity:.85;'+(isPos?'bottom:'+(H+1)+'px;border-radius:2px 2px 0 0':'top:'+(H+1)+'px;border-radius:0 0 2px 2px')+'"></div>':'')+
-        '</div>';
-      }).join('')+
-    '</div>';
-  }
-
-  const wkLabels='<div style="display:flex;gap:2px;margin-bottom:3px">'+WEEKS_SHORT.map(w=>'<div style="flex:1;font-size:7px;color:#334155;text-align:center">'+w+'</div>').join('')+'</div>';
-
-  function buildCard(catName, ctyKeyword, flag, benchRoas){
-    const cd=CAT_DATA.find(d=>d.cat===catName&&d.cty.includes(ctyKeyword));
-    const catAds=allAdsets.filter(d=>d.cat===catName&&d.cty.includes(ctyKeyword));
-
-    if(!cd&&catAds.length===0){
-      return '<div style="background:rgba(255,255,255,.015);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:16px 18px">'+
-        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px">'+
-          '<div style="font-size:14px;font-weight:700;color:#e2e8f0">'+flag+' '+catName+'</div>'+
-          '<span style="background:rgba(239,68,68,.15);color:#ef4444;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:.5px">NO ACTIVE ADS</span>'+
-        '</div>'+
-        '<p style="color:#475569;font-size:11px;margin:0 0 10px">No campaigns found in this reporting period.</p>'+
-        '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#f7bf53;margin-bottom:5px">💡 Actions Required</div>'+
-        '<ul style="margin:0;padding-left:16px;color:#94a3b8;font-size:11px">'+
-          '<li>Launch initial test adsets to establish baseline performance data</li>'+
-          '<li>Check if category is active on Bark platform and confirm minimum volume</li>'+
-        '</ul>'+
-      '</div>';
-    }
-
-    // 8-week arrays from CAT_DATA
-    const aprs8=cd?arr8(cd.aprs8):Array(8).fill(0);
-    const revs8=cd?arr8(cd.revs8):Array(8).fill(0);
-    const roas8=cd?arr8(cd.roas8):Array(8).fill(0);
-    const sp8=cd?arr8(cd.spends8):Array(8).fill(0);
-
-    // Aggregate CPL & RPB from adsets
-    const cpls8=Array.from({length:8},(_,i)=>{const vs=catAds.map(a=>arr8(a.cpls8)[i]).filter(v=>v>0);return vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:0;});
-    const rpbs8=Array.from({length:8},(_,i)=>{const vs=catAds.map(a=>arr8(a.rpbs8)[i]).filter(v=>v>0);return vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:0;});
-
-    const spend=cd?cd.spend:catAds.reduce((s,d)=>s+d.spend,0);
-    const rev=cd?cd.rev:0;
-    const roas=cd?parseFloat(cd.roas):0;
-    const apr=cd?cd.apr:(rev-spend);
-    const cpl=cpls8[7], rpb=rpbs8[7];
-
-    // WoW helpers
-    const pctWow=(cur,prev)=>prev>0?((cur-prev)/Math.abs(prev)*100).toFixed(1)+'%':'—';
-    const absWow=(cur,prev,suffix)=>prev>0?(cur>=prev?'+':'')+((cur-prev).toFixed(2))+suffix:'—';
-    const wCol=(w,inv=false)=>{const n=parseFloat(w);return isNaN(n)?'#64748b':(inv?n<0:n>0)?'#10b981':'#ef4444';};
-
-    const wSp=pctWow(spend,sp8[6]);
-    const wRev=pctWow(rev,revs8[6]);
-    const wRoas=absWow(roas,roas8[6],'x');
-    const wApr=pctWow(apr,aprs8[6]);
-    const wCpl=cpls8[6]>0?pctWow(cpl,cpls8[6]):'—';
-    const wRpb=rpbs8[6]>0?pctWow(rpb,rpbs8[6]):'—';
-
-    // Scale badge
-    const roasCls=roas>=1.3?['rgba(16,185,129,.15)','#10b981','SCALE READY']:roas>=1.0?['rgba(247,191,83,.12)','#f7bf53','MONITOR']:['rgba(239,68,68,.15)','#ef4444','REVIEW'];
-    const scaleBadge='<span style="background:'+roasCls[0]+';color:'+roasCls[1]+';font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:.5px">'+roasCls[2]+'</span>';
-
-    const roasDiff=roas-benchRoas;
-    const benchStr=(roasDiff>=0?'+':'')+roasDiff.toFixed(2)+'x vs acct avg ('+benchRoas.toFixed(2)+'x)';
-    const benchCol=roasDiff>=0?'#10b981':'#ef4444';
-
-    // KPI pills
-    function kpi(lbl,val,wow,inv=false){
-      const wc=wCol(wow,inv);
-      return '<div style="flex:1;min-width:0;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:7px 8px;text-align:center">'+
-        '<div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:3px">'+lbl+'</div>'+
-        '<div style="font-size:15px;font-weight:800;letter-spacing:-.5px;color:#e2e8f0;line-height:1.1">'+val+'</div>'+
-        '<div style="font-size:9px;color:'+wc+';margin-top:2px">'+wow+'</div>'+
-      '</div>';
-    }
-
-    const aprStr=(apr>=0?'+':'')+shortPound(apr);
-    const kpis=
-      kpi('Spend',shortPound(spend),wSp,true)+
-      kpi('Revenue',shortPound(rev),wRev,false)+
-      kpi('ROAS',roas.toFixed(2)+'x',wRoas,false)+
-      kpi('APR',aprStr,wApr,false)+
-      kpi('CPL',cpl>0?'£'+cpl.toFixed(0):'—',wCpl,true)+
-      kpi('Rev/Bark',rpb>0?'£'+rpb.toFixed(1):'—',wRpb,false);
-
-    const wtdE=WTD_DATA.find(w=>w.cat===catName&&w.cty.includes(ctyKeyword));
-    const wtdStrip=wtdE?
-      '<div style="display:flex;gap:12px;align-items:center;margin:8px 0 2px;padding:6px 10px;background:rgba(247,191,83,.06);border:1px solid rgba(247,191,83,.15);border-radius:6px">'+
-        '<span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#f7bf53">📅 '+WTD_LABEL+'</span>'+
-        '<span style="font-size:11px;color:#60a5fa">'+shortPound(wtdE.spend)+' sp</span>'+
-        '<span style="font-size:11px;color:#47BF9C">'+shortPound(wtdE.rev)+' rev</span>'+
-        '<span style="font-size:11px;color:'+(wtdE.roas>=1.2?'#10b981':wtdE.roas>=0.8?'#f97316':'#ef4444')+'">'+wtdE.roas.toFixed(2)+'x ROAS</span>'+
-        '<span style="font-size:11px;color:'+(wtdE.apr>=0?'#10b981':'#ef4444')+'">'+(wtdE.apr>=0?'+':'−')+'£'+Math.round(Math.abs(wtdE.apr)).toLocaleString()+' APR</span>'+
-      '</div>'
-    :
-      '<div style="margin:8px 0 2px;padding:5px 10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:10px;color:#334155">📅 '+WTD_LABEL+' — no spend this week</div>';
-
-    // Sparklines row
-    function sparkCol(label,sparkHtml){
-      return '<div style="flex:1;min-width:0">'+
-        '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:#64748b;margin-bottom:3px">'+label+'</div>'+
-        wkLabels+sparkHtml+
-      '</div>';
-    }
-    const sparks='<div style="display:flex;gap:10px;margin:12px 0 14px">'+
-      sparkCol('APR (8wk)',gcAprSpark(aprs8))+
-      sparkCol('ROAS (8wk)',gcSpark(roas8))+
-      sparkCol('Spend (8wk)',gcSpark(sp8))+
-    '</div>';
-
-    // Actions detection
-    const newThisWeek=catAds.filter(d=>{const s=arr8(d.spends8);return s[6]===0&&s[7]>0;});
-    const newLast4=catAds.filter(d=>{const s=arr8(d.spends8);return s.slice(0,4).every(v=>v===0)&&s.slice(4).some(v=>v>0)&&!(s[6]===0&&s[7]>0);});
-    const pausedThisWeek=catAds.filter(d=>{const s=arr8(d.spends8);return s[7]===0&&s[6]>0;});
-    const activeAds=catAds.filter(d=>arr8(d.spends8)[7]>0);
-    const stylesUsed=[...new Set(activeAds.map(d=>extractStyle(d.ag)))];
-    const actions=[];
-    if(newThisWeek.length) actions.push('⚡ '+newThisWeek.length+' new adset'+(newThisWeek.length>1?'s':'')+' launched this week — '+newThisWeek.map(d=>shortAg(d.ag)).join(', '));
-    if(newLast4.length) actions.push('🆕 '+newLast4.length+' adset'+(newLast4.length>1?'s':'')+' launched in last 4 weeks — '+newLast4.slice(0,3).map(d=>shortAg(d.ag)).join(', ')+(newLast4.length>3?'…':''));
-    if(pausedThisWeek.length) actions.push('⏸ '+pausedThisWeek.length+' adset'+(pausedThisWeek.length>1?'s':'')+' paused this week');
-    if(activeAds.length) actions.push('▶ '+activeAds.length+' adset'+(activeAds.length>1?'s':'')+' currently active'+(stylesUsed.length?' (styles: '+stylesUsed.join(', ')+')':''));
-    if(!actions.length) actions.push('No adset changes detected this week');
-
-    // Suggestions (rule-based)
-    const sugs=[];
-    if(roas>=1.3){
-      const trending=roas8[7]>roas8[6]&&roas8[6]>roas8[5];
-      sugs.push('ROAS '+roas.toFixed(2)+'x'+(trending?' and trending up':'')+' — consider scaling budget 20–30%');
-    } else if(roas<1.0&&cd){
-      sugs.push('ROAS '+roas.toFixed(2)+'x (below breakeven) — pause weakest adsets and review bid strategy');
-    }
-    if(roas8[5]>0&&roas8[6]>0&&roas8[7]>0){
-      if(roas8[7]<roas8[6]&&roas8[6]<roas8[5]) sugs.push('ROAS declining 3 consecutive weeks — refresh creative or tighten audience');
-      else if(roas8[7]>roas8[6]&&roas8[6]>roas8[5]) sugs.push('ROAS improving 3 consecutive weeks — strong momentum, double down');
-    }
-    if(aprs8[5]>0&&aprs8[6]>aprs8[5]&&aprs8[7]>aprs8[6]) sugs.push('APR improving 3 consecutive weeks — strong scaling candidate');
-    if(cpls8[5]>0&&cpls8[7]>cpls8[5]*1.2) sugs.push('CPL up '+(((cpls8[7]-cpls8[5])/cpls8[5])*100).toFixed(0)+'% over 2 weeks — check bid strategy and competition');
-    const hasNewRecent=catAds.some(d=>{const s=arr8(d.spends8);return s.slice(4).some(v=>v>0)&&s.slice(0,4).some(v=>v===0);});
-    if(catAds.length>0&&!hasNewRecent) sugs.push('No new creative launched in last 4 weeks — test a new style to avoid fatigue');
-    if(activeAds.length<=1&&catAds.length>0) sugs.push('Only '+activeAds.length+' active adset — low creative diversification, increase to reduce risk');
-    if(!sugs.length) sugs.push('Performance within normal range — continue monitoring and A/B testing');
-
-    const cardBorder=roas>=1.3?'rgba(16,185,129,.22)':roas>=1.0?'rgba(247,191,83,.15)':'rgba(239,68,68,.2)';
-    return '<div style="background:rgba(255,255,255,.025);border:1px solid '+cardBorder+';border-radius:10px;padding:16px 18px">'+
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px">'+
-        '<div style="font-size:14px;font-weight:700;color:#e2e8f0">'+flag+' '+catName+'</div>'+
-        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'+
-          scaleBadge+
-          '<span style="font-size:10px;color:'+benchCol+'">'+benchStr+'</span>'+
-        '</div>'+
-      '</div>'+
-      '<div style="display:flex;gap:5px;margin-bottom:0">'+kpis+'</div>'+
-      wtdStrip+
-      sparks+
-      '<div style="margin-bottom:10px">'+
-        '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:5px">Actions This Week</div>'+
-        '<ul style="margin:0;padding-left:16px;color:#94a3b8;font-size:11px">'+actions.map(a=>'<li style="margin-bottom:3px">'+a+'</li>').join('')+'</ul>'+
-      '</div>'+
-      '<div>'+
-        '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#f7bf53;margin-bottom:5px">💡 Suggestions</div>'+
-        '<ul style="margin:0;padding-left:16px;color:#94a3b8;font-size:11px">'+sugs.map(s=>'<li style="margin-bottom:3px">'+s+'</li>').join('')+'</ul>'+
-      '</div>'+
-    '</div>';
-  }
-
-  const secHd=(t,n)=>'<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">'+
-    '<h2 style="margin:0;color:#e2e8f0;font-size:16px">'+t+'</h2>'+
-    '<span style="background:rgba(59,130,246,.15);color:#3b82f6;font-size:11px;padding:2px 10px;border-radius:12px;font-weight:600">'+n+' categories</span>'+
-  '</div>';
-
-  document.getElementById('tab-growth').innerHTML=
-    '<div style="padding:4px 0 24px">'+
-      secHd('🇬🇧 UK Growth Categories',UK_GROWTH.length)+
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:36px">'+
-        UK_GROWTH.map(c=>buildCard(c,'Kingdom','🇬🇧',ukBR)).join('')+
-      '</div>'+
-      '<div style="height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);margin:0 0 28px"></div>'+
-      secHd('🇺🇸 US Growth Categories',US_GROWTH.length)+
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">'+
-        US_GROWTH.map(c=>buildCard(c,'States','🇺🇸',usBR)).join('')+
-      '</div>'+
-    '</div>';
-}
-
-function weekGrad(i){
-  const t=i/7;
-  const r=Math.round(239+(16-239)*t);
-  const g=Math.round(68+(185-68)*t);
-  const b=Math.round(68+(129-68)*t);
-  return 'rgb('+r+','+g+','+b+')';
-}
-
-function shortPound(v){
-  const abs=Math.abs(v), sign=v<0?'-':'';
-  if(abs>=1000000) return sign+'£'+(abs/1000000).toFixed(1)+'M';
-  if(abs>=1000) return sign+'£'+Math.round(abs/1000)+'k';
-  return sign+'£'+Math.round(abs);
-}
-
-// colorFn(v, vals) → CSS color string — colour by performance, not by week index
-function perfColor(v, vals){
-  // Maps value within its range to red(low)→green(high)
-  const nz=vals.filter(x=>x>0);
-  if(!nz.length) return '#94a3b8';
-  const min=Math.min(...nz), max=Math.max(...nz);
-  const t=max===min?0.5:Math.max(0,Math.min(1,(v-min)/(max-min)));
-  return 'rgb('+Math.round(239+(16-239)*t)+','+Math.round(68+(185-68)*t)+','+Math.round(68+(129-68)*t)+')';
-}
-function spendColor(v, vals){
-  // Blue gradient: dim (low spend) → bright (high spend) — cost metric, neutral
-  const nz=vals.filter(x=>x>0);
-  if(!nz.length) return '#60a5fa';
-  const min=Math.min(...nz), max=Math.max(...nz);
-  const t=max===min?0.5:Math.max(0,Math.min(1,(v-min)/(max-min)));
-  return 'rgb('+Math.round(30+(96-30)*t)+','+Math.round(64+(165-64)*t)+','+Math.round(175+(250-175)*t)+')';
-}
-
-function ovBigBar(vals, isApr, colorFn, fmtFn){
-  const MAXH=120;
-
-  if(isApr){
-    const posMax=Math.max(...vals.filter(v=>v>0),1);
-    const negMax=Math.max(...vals.filter(v=>v<0).map(Math.abs),1);
-    const HALF=90;
-    const cols=vals.map((v,i)=>{
-      const isPos=v>=0;
-      const absMax=isPos?posMax:negMax;
-      const t=Math.abs(v)/absMax;
-      // positive: dim green → bright green; negative: dim red → bright red
-      const col=isPos
-        ?'rgb(16,'+Math.round(100+t*85)+','+Math.round(60+t*69)+')'
-        :'rgb('+Math.round(180+t*59)+',30,30)';
-      const h=Math.max(3,Math.round(Math.abs(v)/Math.max(posMax,negMax)*HALF));
-      const valStr=(isPos?'+':'-')+'£'+Math.round(Math.abs(v)/1000)+'k';
-      const topHalf='<div style="height:'+HALF+'px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;width:100%">'+
-        (isPos?'<div style="font-size:9px;color:#94a3b8;margin-bottom:2px;white-space:nowrap">'+valStr+'</div>'+
-               '<div style="width:80%;height:'+h+'px;background:'+col+';border-radius:3px 3px 0 0"></div>':'')+
-      '</div>';
-      const midLine='<div style="height:1px;background:rgba(148,163,184,.25);width:100%"></div>';
-      const botHalf='<div style="height:'+HALF+'px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;width:100%">'+
-        (!isPos?'<div style="width:80%;height:'+h+'px;background:'+col+';border-radius:0 0 3px 3px"></div>'+
-                '<div style="font-size:9px;color:#94a3b8;margin-top:2px;white-space:nowrap">'+valStr+'</div>':'')+
-      '</div>';
-      return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;min-width:0">'+
-        topHalf+midLine+botHalf+
-        '<div style="font-size:9px;color:#475569;margin-top:5px">'+WEEKS_SHORT[i]+'</div>'+
-      '</div>';
-    }).join('');
-    return '<div style="display:flex;align-items:stretch;gap:5px;margin-top:8px">'+cols+'</div>';
-  } else {
-    const fn=colorFn||perfColor;
-    const maxV=Math.max(...vals,0.001);
-    const minV=Math.min(0,...vals);
-    const range=Math.max(maxV-minV,0.001);
-    const cols=vals.map((v,i)=>{
-      const pct=(v-minV)/range;
-      const h=Math.max(4,Math.round(pct*MAXH));
-      const col=fn(v,vals);
-      const valStr=(fmtFn||shortPound)(v);
-      return '<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:'+(MAXH+22)+'px;min-width:0">'+
-        '<div style="font-size:9px;color:#94a3b8;margin-bottom:3px;white-space:nowrap;overflow:hidden;max-width:100%;text-align:center;padding:0 2px">'+valStr+'</div>'+
-        '<div style="width:80%;height:'+h+'px;background:'+col+';border-radius:3px 3px 0 0;min-height:4px"></div>'+
-        '<div style="font-size:9px;color:#475569;margin-top:5px">'+WEEKS_SHORT[i]+'</div>'+
-      '</div>';
-    }).join('');
-    return '<div style="display:flex;align-items:flex-end;gap:5px;margin-top:8px">'+cols+'</div>';
-  }
-}
-
-function buildOverviewTab(){
-  // Aggregate 8-week totals across all categories/markets
-  const wkS=[0,0,0,0,0,0,0,0], wkR=[0,0,0,0,0,0,0,0];
-  CAT_DATA.forEach(d=>{
-    arr8(d.spends8).forEach((v,i)=>wkS[i]+=v);
-    arr8(d.revs8).forEach((v,i)=>wkR[i]+=v);
-  });
-  const wkApr=wkS.map((s,i)=>wkR[i]-s);
-  const wkRoas=wkS.map((s,i)=>s>0?wkR[i]/s:0);
-
-  const totS=wkS[7], totR=wkR[7], totApr=wkApr[7], totRoas=wkRoas[7];
-  const prevS=wkS[6], prevR=wkR[6], prevApr=wkApr[6], prevRoas=wkRoas[6];
-  const wowPct=(a,b)=>b>0?((a-b)/b*100).toFixed(1)+'%':'—';
-
-  // KPI pills
-  const kpis=[
-    {lbl:'Spend',      val:'£'+Math.round(totS).toLocaleString(),       wow:wowPct(totS,prevS),   wowInv:true,  col:'#60a5fa'},
-    {lbl:'Revenue',    val:'£'+Math.round(totR).toLocaleString(),       wow:wowPct(totR,prevR),   wowInv:false, col:'#47BF9C'},
-    {lbl:'ROAS',       val:totRoas.toFixed(2)+'x',                     wow:(totRoas-prevRoas>=0?'+':'')+( totRoas-prevRoas).toFixed(2), wowInv:false, col:totRoas>=1.2?'#10b981':'#f97316'},
-    {lbl:'APR',        val:(totApr>=0?'+£':'£')+Math.round(Math.abs(totApr)).toLocaleString(), wow:wowPct(totApr,prevApr), wowInv:false, col:totApr>=0?'#10b981':'#ef4444'},
-    {lbl:'APR Neg',    val:APR_NEG.length,     wow:'',                 col:'#ef4444'},
-    {lbl:'ROAS ≥ 1.2', val:ROAS_POS.length,    wow:'',                 col:'#10b981'},
-  ];
-  const thSt='background:rgba(255,255,255,.04);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:7px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)';
-  document.getElementById('ov-kpis').innerHTML=kpis.map(k=>{
-    const wowDir=k.wow.startsWith('-')||k.wow.startsWith('−')?-1:k.wow===''?0:1;
-    const wowGood=k.wowInv?wowDir<0:wowDir>0;
-    const wowCol=wowDir===0?'#475569':wowGood?'#10b981':'#ef4444';
-    return '<div class="stat-pill">'+
-      '<span class="num" style="color:'+k.col+'">'+k.val+'</span>'+
-      '<span class="lbl">'+k.lbl+'</span>'+
-      (k.wow?'<span style="font-size:10px;color:'+wowCol+'">'+k.wow+' WoW</span>':'')+
-    '</div>';
-  }).join('');
-
-  // WTD section (current partial week)
-  const wtdMkts=[{lbl:'🇬🇧 UK',k:'Kingdom'},{lbl:'🇺🇸 US',k:'States'},{lbl:'🇨🇦 CA',k:'Canada'}];
-  const wtdMktRows=wtdMkts.map(m=>{
-    const wd=WTD_DATA.filter(d=>d.cty.includes(m.k));
-    if(!wd.length) return '';
-    const ws=wd.reduce((a,d)=>a+d.spend,0), wr=wd.reduce((a,d)=>a+d.rev,0);
-    const wa=wr-ws, wro=ws>0?wr/ws:0;
-    return '<tr>'+
-      '<td style="padding:7px 12px;font-weight:700;font-size:12px;color:#e2e8f0">'+m.lbl+'</td>'+
-      '<td class="n" style="color:#60a5fa;padding:7px 10px">£'+Math.round(ws).toLocaleString()+'</td>'+
-      '<td class="n" style="color:#47BF9C;padding:7px 10px">£'+Math.round(wr).toLocaleString()+'</td>'+
-      '<td class="n" style="color:'+(wro>=1.2?'#10b981':wro>=0.8?'#f97316':'#ef4444')+';padding:7px 10px">'+wro.toFixed(2)+'x</td>'+
-      '<td class="n" style="color:'+(wa>=0?'#10b981':'#ef4444')+';padding:7px 10px">'+(wa>=0?'+':'−')+'£'+Math.round(Math.abs(wa)).toLocaleString()+'</td>'+
-    '</tr>';
-  }).filter(Boolean).join('');
-  const wTS=WTD_DATA.reduce((a,d)=>a+d.spend,0), wTR=WTD_DATA.reduce((a,d)=>a+d.rev,0);
-  const wTA=wTR-wTS, wTRo=wTS>0?wTR/wTS:0;
-  const wtdCombRow='<tr style="background:rgba(247,191,83,.07);border-top:1px solid rgba(247,191,83,.2)">'+
-    '<td style="padding:7px 12px;font-weight:800;font-size:12px;color:#f7bf53">Combined</td>'+
-    '<td class="n" style="color:#60a5fa;font-weight:700;padding:7px 10px">£'+Math.round(wTS).toLocaleString()+'</td>'+
-    '<td class="n" style="color:#47BF9C;font-weight:700;padding:7px 10px">£'+Math.round(wTR).toLocaleString()+'</td>'+
-    '<td class="n" style="color:'+(wTRo>=1.2?'#10b981':wTRo>=0.8?'#f97316':'#ef4444')+';font-weight:700;padding:7px 10px">'+wTRo.toFixed(2)+'x</td>'+
-    '<td class="n" style="color:'+(wTA>=0?'#10b981':'#ef4444')+';font-weight:700;padding:7px 10px">'+(wTA>=0?'+':'−')+'£'+Math.round(Math.abs(wTA)).toLocaleString()+'</td>'+
-  '</tr>';
-  document.getElementById('ov-wtd').innerHTML=
-    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'+
-      '<span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#f7bf53">📅 '+WTD_LABEL+'</span>'+
-      '<span style="font-size:10px;color:#475569;font-style:italic">Partial week · Mon 4 May through Wed 7 May · spend / revenue / ROAS / APR</span>'+
-    '</div>'+
-    '<table style="border-collapse:collapse">'+
-      '<thead><tr>'+
-        '<th style="'+thSt+';text-align:left">Market</th>'+
-        '<th style="'+thSt+';text-align:right">Spend</th>'+
-        '<th style="'+thSt+';text-align:right">Revenue</th>'+
-        '<th style="'+thSt+';text-align:right">ROAS</th>'+
-        '<th style="'+thSt+';text-align:right">APR</th>'+
-      '</tr></thead>'+
-      '<tbody>'+wtdMktRows+wtdCombRow+'</tbody>'+
-    '</table>';
-
-  // 8-week trend — 2×2 big bar chart grid
-  const trendMetrics=[
-    {lbl:'Revenue',      data:wkR,    isApr:false, wowInv:false, colorFn:perfColor},
-    {lbl:'Spend',        data:wkS,    isApr:false, wowInv:true,  colorFn:spendColor},
-    {lbl:'APR (Rev−Sp)', data:wkApr,  isApr:true,  wowInv:false},
-    {lbl:'ROAS',         data:wkRoas, isApr:false, wowInv:false, colorFn:(v)=>roasColor(v),
-     fmtLatest:v=>v.toFixed(2)+'x', barFmt:v=>v.toFixed(2)},
-  ];
-  const cardSt='background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px 20px;min-width:0';
-  const trendCards=trendMetrics.map(m=>{
-    const latest=m.data[7], prev=m.data[6];
-    const wow=prev!==0?((latest-prev)/Math.abs(prev)*100).toFixed(1)+'%':'—';
-    const wowNum=parseFloat(wow);
-    const wowDir=isNaN(wowNum)?0:wowNum>0?1:-1;
-    const wowGood=m.wowInv?wowDir<0:wowDir>0;
-    const wowCol=wowDir===0?'#475569':wowGood?'#10b981':'#ef4444';
-    let valStr, valCol;
-    if(m.fmtLatest){
-      valStr=m.fmtLatest(latest);
-      valCol=latest>=1.2?'#10b981':latest>=0.8?'#f97316':'#ef4444';
-    } else if(m.isApr){
-      valStr=(latest>=0?'+':'')+shortPound(latest);
-      valCol=latest>=0?'#10b981':'#ef4444';
-    } else {
-      valStr=shortPound(latest);
-      valCol='#e2e8f0';
-    }
-    return '<div style="'+cardSt+'">'+
-      '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">'+
-        '<span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#64748b">'+m.lbl+'</span>'+
-        '<div>'+
-          '<span style="font-size:22px;font-weight:800;letter-spacing:-.5px;color:'+valCol+'">'+valStr+'</span>'+
-          (wow!=='—'?'<span style="font-size:11px;color:'+wowCol+';margin-left:8px">'+wow+' WoW</span>':'')+
-        '</div>'+
-      '</div>'+
-      ovBigBar(m.data, m.isApr, m.colorFn, m.barFmt)+
-    '</div>';
-  }).join('');
-  document.getElementById('ov-trend-tbl').innerHTML=
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">'+trendCards+'</div>';
-
-  // Per-market table
-  const mkts=[{lbl:'🇬🇧 UK',k:'Kingdom'},{lbl:'🇺🇸 US',k:'States'},{lbl:'🇨🇦 CA',k:'Canada'}];
-  const mktRows=mkts.map(m=>{
-    const cd=CAT_DATA.filter(d=>d.cty.includes(m.k));
-    const ms=cd.reduce((a,d)=>a+d.spend,0), mr=cd.reduce((a,d)=>a+d.rev,0);
-    const ma=mr-ms, mroas=ms>0?mr/ms:0;
-    const mn=APR_NEG.filter(d=>d.cty.includes(m.k)).length;
-    const mp=ROAS_POS.filter(d=>d.cty.includes(m.k)).length;
-    return '<tr>'+
-      '<td style="font-weight:700;font-size:13px;padding:8px 10px">'+m.lbl+'</td>'+
-      '<td class="n" style="color:#60a5fa">£'+Math.round(ms).toLocaleString()+'</td>'+
-      '<td class="n" style="color:#47BF9C">£'+Math.round(mr).toLocaleString()+'</td>'+
-      '<td class="n '+(mroas>=1.2?'pos':mroas>=0.8?'warn':'neg')+'">'+mroas.toFixed(2)+'x</td>'+
-      '<td class="n '+(ma>=0?'pos':'neg')+'">'+(ma>=0?'+£':'£')+Math.round(Math.abs(ma)).toLocaleString()+'</td>'+
-      '<td class="n"><span style="color:#ef4444">'+mn+'✗</span>&nbsp;<span style="color:#475569">/</span>&nbsp;<span style="color:#10b981">'+mp+'✓</span></td>'+
-    '</tr>';
-  }).join('');
-  document.getElementById('ov-mkt-tbl').innerHTML=
-    '<table style="width:auto;border-collapse:collapse">'+
-    '<thead><tr>'+
-      '<th style="'+thSt+'">Market</th>'+
-      '<th style="'+thSt+';text-align:right">Spend</th>'+
-      '<th style="'+thSt+';text-align:right">Revenue</th>'+
-      '<th style="'+thSt+';text-align:right">ROAS</th>'+
-      '<th style="'+thSt+';text-align:right">APR</th>'+
-      '<th style="'+thSt+';text-align:right">APR− / ROAS+</th>'+
-    '</tr></thead>'+
-    '<tbody>'+mktRows+'</tbody></table>';
-
-  // All categories table (reuse existing buildCatTable with empty keyword = all markets)
-  document.getElementById('ov-cat-ct').textContent=CAT_DATA.length+' categories';
-  buildCatTable('', 'ov-cat-tbl', null);
-}
-
-
 init();
 </script>
-<!-- ADSET-TICKER:v5 -->
-<style>
-  /* Bigger native action checkboxes — overrides the inline 13px */
-  input.action-cb {
-    width: 22px !important; height: 22px !important;
-    cursor: pointer !important;
-    accent-color: #10b981 !important;
-    margin: 0 6px !important;
-    vertical-align: middle !important;
-  }
-  /* Row-level visual: ticked rows get a green tint, all adset rows get a pointer cursor */
-  tr[data-agkey] { cursor: pointer; }
-  tr[data-agkey]:hover { background: rgba(255,255,255,.04) !important; }
-  tr[data-agkey].adset-row-ticked { background: rgba(16,185,129,.10) !important; }
-  tr[data-agkey].adset-row-ticked:hover { background: rgba(16,185,129,.15) !important; }
-
-  /* Floating copy-list bar */
-  #adset-ticker-bar {
-    position: fixed; bottom: 18px; right: 18px; z-index: 9998;
-    background: rgba(15,18,30,.95); border: 1px solid rgba(255,255,255,.12);
-    border-radius: 10px; padding: 10px 14px; display: flex;
-    align-items: center; gap: 10px;
-    color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 12px; backdrop-filter: blur(6px);
-    box-shadow: 0 6px 24px rgba(0,0,0,.4);
-  }
-  #adset-ticker-bar .count { color: #10b981; font-weight: 700; font-size: 14px; }
-  #adset-ticker-bar button {
-    background: #10b981; color: #fff; border: none; border-radius: 5px;
-    padding: 6px 12px; cursor: pointer; font-size: 12px; font-weight: 600;
-    font-family: inherit;
-  }
-  #adset-ticker-bar button.secondary { background: rgba(255,255,255,.08); color: #94a3b8; }
-  #adset-ticker-bar button:hover { filter: brightness(1.15); }
-</style>
-<div id="adset-ticker-bar">
-  <span style="color:#94a3b8;font-size:11px">Adset selector</span>
-  <span style="color:#475569">·</span>
-  <span><span class="count">0</span> selected</span>
-  <button class="copy">📋 Copy list</button>
-  <button class="secondary preview">Preview</button>
-  <button class="secondary tick-visible" title="Tick every adset row visible in the current tab">All visible</button>
-  <button class="secondary clear">Clear</button>
-</div>
-<dialog id="adset-ticker-preview" style="background:#0d1024;color:#e2e8f0;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:18px;min-width:500px;max-width:80vw;max-height:80vh">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <strong style="font-size:13px">Selected ad sets (paste anywhere)</strong>
-    <button class="close" style="background:none;color:#94a3b8;border:none;cursor:pointer;font-size:18px">×</button>
-  </div>
-  <textarea readonly style="width:100%;height:300px;background:#0a0c1a;color:#e2e8f0;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:10px;font-family:'SF Mono',Menlo,monospace;font-size:11.5px;line-height:1.4;resize:vertical"></textarea>
-</dialog>
-<script>
-(function () {
-  const NATIVE_KEY = 'ppc_actions_v1';   // same key the page itself uses
-  // country name → 2-letter market code (lower-cased keys for safety)
-  const C2MKT = {
-    'united kingdom':'UK','united states':'US','canada':'CA','south africa':'ZA',
-    'australia':'AU','new zealand':'NZ','ireland':'IE','deutschland':'DE',
-    'germany':'DE','france':'FR',
-  };
-
-  function loadNative() {
-    try { return JSON.parse(localStorage.getItem(NATIVE_KEY) || '{}'); }
-    catch (e) { return {}; }
-  }
-  function checkedKeys() {
-    const all = loadNative();
-    return Object.keys(all).filter(k => all[k] && all[k].checked);
-  }
-  function agkeyToLine(agkey) {
-    // agkey format = "<adset_name>|<country_name>"
-    const i = agkey.lastIndexOf('|');
-    if (i < 0) return agkey;
-    const name = agkey.slice(0, i);
-    const country = agkey.slice(i + 1);
-    const mkt = C2MKT[country.toLowerCase()] || country;
-    return mkt + '/' + name;
-  }
-
-  // ── Bar + dialog wiring ─────────────────────────────────────
-  const bar = document.getElementById('adset-ticker-bar');
-  const dlg = document.getElementById('adset-ticker-preview');
-  const countEl = bar.querySelector('.count');
-  const textarea = dlg.querySelector('textarea');
-
-  function updateBar() {
-    const keys = checkedKeys();
-    const newCount = String(keys.length);
-    // Only write to DOM if value actually changed — avoids any chance of
-    // re-fire loops if anything else is observing.
-    if (countEl.textContent !== newCount) countEl.textContent = newCount;
-    const all = loadNative();
-    // Apply ticked highlight to corresponding rows (idempotent toggle)
-    document.querySelectorAll('tr[data-agkey]').forEach(tr => {
-      const k = tr.dataset.agkey;
-      const want = (all[k] && all[k].checked === true);
-      const has = tr.classList.contains('adset-row-ticked');
-      if (want && !has) tr.classList.add('adset-row-ticked');
-      else if (!want && has) tr.classList.remove('adset-row-ticked');
-    });
-  }
-
-  function copyList() {
-    const lines = checkedKeys().map(agkeyToLine).sort().join('\n');
-    navigator.clipboard.writeText(lines).then(() => {
-      const btn = bar.querySelector('.copy');
-      const orig = btn.textContent;
-      btn.textContent = '✓ Copied';
-      setTimeout(() => btn.textContent = orig, 1500);
-    });
-  }
-  function showPreview() {
-    textarea.value = checkedKeys().map(agkeyToLine).sort().join('\n') || '(none selected)';
-    if (typeof dlg.showModal === 'function') dlg.showModal();
-    else dlg.style.display = 'block';
-  }
-  function clearAll() {
-    const keys = checkedKeys();
-    if (!keys.length) return;
-    if (!confirm('Clear all ' + keys.length + ' ticked ad sets?')) return;
-    const all = loadNative();
-    keys.forEach(k => { if (all[k]) all[k].checked = false; });
-    localStorage.setItem(NATIVE_KEY, JSON.stringify(all));
-    document.querySelectorAll('input.action-cb').forEach(cb => {
-      const tr = cb.closest('tr');
-      if (tr && all[tr.dataset.agkey] && !all[tr.dataset.agkey].checked) cb.checked = false;
-    });
-    updateBar();
-  }
-  function tickAllVisible() {
-    const all = loadNative();
-    let n = 0;
-    document.querySelectorAll('.country-section.active tr[data-agkey]').forEach(tr => {
-      if (tr.offsetParent === null) return;     // not actually visible
-      const k = tr.dataset.agkey;
-      all[k] = { ...(all[k] || {}), checked: true };
-      const cb = tr.querySelector('input.action-cb');
-      if (cb) cb.checked = true;
-      n++;
-    });
-    localStorage.setItem(NATIVE_KEY, JSON.stringify(all));
-    updateBar();
-    if (n) {
-      const btn = bar.querySelector('.tick-visible');
-      const orig = btn.textContent;
-      btn.textContent = '✓ ' + n + ' ticked';
-      setTimeout(() => btn.textContent = orig, 1800);
-    }
-  }
-
-  bar.querySelector('.copy').addEventListener('click', copyList);
-  bar.querySelector('.preview').addEventListener('click', showPreview);
-  bar.querySelector('.tick-visible').addEventListener('click', tickAllVisible);
-  bar.querySelector('.clear').addEventListener('click', clearAll);
-  dlg.querySelector('.close').addEventListener('click', () => {
-    if (typeof dlg.close === 'function') dlg.close();
-    else dlg.style.display = 'none';
-  });
-
-  // ── Multi-tick UX: whole-row click toggles native checkbox; shift+click range ──
-  let LAST_TICKED = null;
-  document.addEventListener('click', (e) => {
-    // Skip clicks on the bar / dialog / interactive elements / notes
-    if (e.target.closest('#adset-ticker-bar, #adset-ticker-preview')) return;
-    if (e.target.closest('input.action-cb')) return;     // native handler will run
-    if (e.target.closest('a, button, .action-note, input:not(.action-cb), select, textarea')) return;
-    const tr = e.target.closest('tr[data-agkey]');
-    if (!tr) return;
-    const cb = tr.querySelector('input.action-cb');
-    if (!cb) return;
-    e.preventDefault();
-    const willCheck = !cb.checked;
-
-    // Shift+click range select within the same table
-    if (e.shiftKey && LAST_TICKED && LAST_TICKED !== tr) {
-      const sameTable = LAST_TICKED.closest('table') === tr.closest('table');
-      if (sameTable) {
-        const tbody = tr.parentNode;
-        const all = [...tbody.children].filter(c => c.dataset && c.dataset.agkey);
-        const i = all.indexOf(LAST_TICKED);
-        const j = all.indexOf(tr);
-        if (i >= 0 && j >= 0) {
-          const [lo, hi] = i < j ? [i, j] : [j, i];
-          for (let k = lo; k <= hi; k++) {
-            const cb2 = all[k].querySelector('input.action-cb');
-            if (cb2 && cb2.checked !== willCheck) {
-              cb2.checked = willCheck;
-              cb2.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-          }
-          LAST_TICKED = tr;
-          updateBar();
-          return;
-        }
-      }
-    }
-
-    cb.checked = willCheck;
-    cb.dispatchEvent(new Event('change', { bubbles: true }));
-    LAST_TICKED = tr;
-    updateBar();
-  });
-
-  // Listen for native checkbox changes (manual single-clicks)
-  document.addEventListener('change', (e) => {
-    if (e.target.classList?.contains('action-cb')) {
-      setTimeout(updateBar, 10);   // run after native save handler
-      LAST_TICKED = e.target.closest('tr[data-agkey]');
-    }
-  });
-
-  // Initial render
-  function start() {
-    setTimeout(updateBar, 200);   // give the page's renderTable() time to draw
-    setTimeout(updateBar, 800);   // belt-and-braces for slow renders
-    document.querySelectorAll('.tab').forEach(t =>
-      t.addEventListener('click', () => setTimeout(updateBar, 80)));
-    // NOTE: no MutationObserver — the v4 version caused an infinite loop.
-    // Tab clicks + the native `change` handler are sufficient to keep the
-    // bar fresh.
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-  else start();
-})();
-</script>
-
 </body>
 </html>

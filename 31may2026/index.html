@@ -80,7 +80,7 @@ td{padding:7px 8px;vertical-align:middle}
 </style>
 </head>
 <body>
-<!-- WEEK-SWITCHER:v1 -->
+<!-- WEEK-SWITCHER:v2 -->
 <style>
   #week-switcher-bar { position: fixed; top: 12px; right: 18px; z-index: 9999;
                         background: rgba(15,18,30,.92); border: 1px solid rgba(255,255,255,.12);
@@ -90,7 +90,7 @@ td{padding:7px 8px;vertical-align:middle}
   #week-switcher-bar label { color: #94a3b8; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; font-size: 10px; }
   #week-switcher-bar select { background: rgba(255,255,255,.04); color: #fff; border: 1px solid rgba(255,255,255,.15);
                                 border-radius: 5px; padding: 5px 8px; font-size: 12px; font-family: inherit;
-                                font-variant-numeric: tabular-nums; cursor: pointer; min-width: 240px; }
+                                font-variant-numeric: tabular-nums; cursor: pointer; min-width: 260px; }
   #week-switcher-bar select:hover { border-color: rgba(255,255,255,.3); }
   #week-switcher-bar .revert { color: #64748b; font-size: 11px; text-decoration: none; padding: 3px 6px;
                                   border-radius: 4px; border: 1px solid transparent; }
@@ -99,12 +99,14 @@ td{padding:7px 8px;vertical-align:middle}
 <div id="week-switcher-bar">
   <label for="week-switcher">Week</label>
   <select id="week-switcher">
-      <option value="wip-10jun2026">Mid-week · 8–10 Jun (in progress)</option>
+      <option value="wip-10jun2026">Mid-week · 10 Jun 2026 (so far)</option>
       <option value="7jun2026">w/e 7 Jun 2026</option>
-      <option value="wip-3jun2026">Mid-week · 1–3 Jun (archived)</option>
       <option value="31may2026" selected>w/e 31 May 2026</option>
+      <option value="18may2026">w/e 17 May 2026</option>
+      <option value="12may2026">w/e 10 May 2026</option>
+      <option value="25may2026">w/e 5 May 2026</option>
   </select>
-  <a href="./index-original.html" class="revert" title="Open the original w/e 31 May report without the week-switcher">⤺ original</a>
+  <a href="./index-original.html" class="revert" title="Open the original report without the week-switcher">⤺ original</a>
 </div>
 <script>
 (function() {
@@ -113,17 +115,16 @@ td{padding:7px 8px;vertical-align:middle}
   sel.addEventListener('change', (e) => {
     const target = e.target.value;
     const hash = window.location.hash || '';
-    // Move to the sibling folder; same-origin so relative path works.
-    window.location.href = `../${target}/${hash}`;
+    // Always include /index.html so file:// URLs land on the report,
+    // not a directory listing. (http(s):// servers redirect themselves.)
+    window.location.href = `../${target}/index.html${hash}`;
   });
 
   // Tab-hash persistence: on load, jump to the tab from the URL hash.
-  // On click of a .tab, update the hash so navigating to another week keeps the tab.
   function applyHashTab() {
-    const hash = window.location.hash; // e.g. '#tab-uk'
+    const hash = window.location.hash;
     if (!hash || !hash.startsWith('#tab-')) return;
     const key = hash.slice(5);
-    // Find the tab button by onclick attribute matching switchTab('<key>', ...)
     const tabBtn = Array.from(document.querySelectorAll('.tab')).find(t =>
       (t.getAttribute('onclick') || '').includes(`'${key}'`));
     if (tabBtn) tabBtn.click();
