@@ -100,6 +100,7 @@ td{padding:7px 8px;vertical-align:middle}
   <label for="week-switcher">Week</label>
   <select id="week-switcher">
       <option value="wip-10jun2026">Mid-week · 10 Jun 2026 (so far)</option>
+      <option value="14jun2026">w/e 14 Jun 2026</option>
       <option value="7jun2026">w/e 7 Jun 2026</option>
       <option value="31may2026">w/e 31 May 2026</option>
       <option value="18may2026">w/e 17 May 2026</option>
@@ -2386,7 +2387,8 @@ init();
   }
 
   function copyList() {
-    const lines = checkedKeys().map(agkeyToLine).sort().join('\n');
+    const lines = checkedKeys().map(agkeyToLine).sort().join('
+');
     navigator.clipboard.writeText(lines).then(() => {
       const btn = bar.querySelector('.copy');
       const orig = btn.textContent;
@@ -2395,7 +2397,8 @@ init();
     });
   }
   function showPreview() {
-    textarea.value = checkedKeys().map(agkeyToLine).sort().join('\n') || '(none selected)';
+    textarea.value = checkedKeys().map(agkeyToLine).sort().join('
+') || '(none selected)';
     if (typeof dlg.showModal === 'function') dlg.showModal();
     else dlg.style.display = 'block';
   }
@@ -2508,6 +2511,5 @@ init();
   else start();
 })();
 </script>
-
 </body>
 </html>

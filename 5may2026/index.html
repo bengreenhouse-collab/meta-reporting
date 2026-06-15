@@ -879,7 +879,8 @@ init();
   }
 
   function copyList() {
-    const lines = checkedKeys().map(agkeyToLine).sort().join('\n');
+    const lines = checkedKeys().map(agkeyToLine).sort().join('
+');
     navigator.clipboard.writeText(lines).then(() => {
       const btn = bar.querySelector('.copy');
       const orig = btn.textContent;
@@ -888,7 +889,8 @@ init();
     });
   }
   function showPreview() {
-    textarea.value = checkedKeys().map(agkeyToLine).sort().join('\n') || '(none selected)';
+    textarea.value = checkedKeys().map(agkeyToLine).sort().join('
+') || '(none selected)';
     if (typeof dlg.showModal === 'function') dlg.showModal();
     else dlg.style.display = 'block';
   }
@@ -1001,6 +1003,5 @@ init();
   else start();
 })();
 </script>
-
 </body>
 </html>
