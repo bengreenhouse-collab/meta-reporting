@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meta Ads Tick-List (ELASTIC) — All Markets — w/e 21 Jun 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0c1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;min-height:100vh;padding-bottom:140px}
+.top-bar{height:4px;background:linear-gradient(90deg,#E85555,#FA9750,#F7BF53,#47BF9C,#2D7AF1)}
+.header{padding:18px 24px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.header h1{font-size:20px;font-weight:700;color:#fff}
+.header .meta{color:#64748b;font-size:12px;margin-top:4px}
+.header .meta span{margin-right:16px}
+.content{padding:18px 24px}
+.section{margin-bottom:28px;border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:auto}
+.section-hd{padding:12px 16px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.02)}
+.section-hd h2{font-size:14px;font-weight:700;color:#fff;flex:1}
+.section-hd .sub{font-size:11px;color:#64748b;font-weight:400;margin-left:8px}
+.section-hd .count{font-size:11px;color:#94a3b8;font-weight:500}
+.section-hd .toggle-all{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#e2e8f0;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:500}
+.section-hd .toggle-all:hover{background:rgba(255,255,255,.1)}
+table{width:100%;border-collapse:collapse}
+thead th{background:rgba(255,255,255,.03);color:#94a3b8;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.035)}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+tbody tr.checked{background:rgba(16,185,129,.04)}
+td{padding:10px;vertical-align:top;font-size:12px}
+td.mkt{font-weight:600;color:#94a3b8;width:42px;vertical-align:middle}
+td.idx{color:#64748b;width:30px;text-align:center;vertical-align:middle}
+td.check{width:42px;text-align:center;vertical-align:middle}
+input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:#10b981}
+td.name{font-size:11px;color:#e2e8f0;line-height:1.4;max-width:260px;vertical-align:middle}
+td.name .cat{font-size:10px;color:#475569;margin-top:1px}
+.flag-pill{display:inline-block;font-size:9px;color:#f97316;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.25);padding:1px 5px;border-radius:3px;margin-left:6px}
+.cap-pill{display:inline-block;font-size:9px;color:#ef4444;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);padding:1px 5px;border-radius:3px;margin-left:6px}
+.cap-pill .x{font-weight:700}
+
+
+.sp-cell{min-width:280px}
+.sp-wrap{display:flex;align-items:flex-start;gap:10px}
+.sp-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;flex:1;min-width:240px}
+.sp-col{display:flex;flex-direction:column;align-items:stretch;gap:2px;min-width:0}
+.sp-col .wk{font-size:8px;color:#334155;text-align:center;text-transform:uppercase;letter-spacing:.2px;line-height:1.1}
+.sp-col .bar-wrap{height:22px;display:flex;align-items:flex-end}
+.sp-col .bar{width:100%;border-radius:1px 1px 0 0;opacity:.55;min-height:2px}
+.sp-col.latest .bar{opacity:1}
+.sp-col .num{font-size:9px;color:#94a3b8;text-align:center;font-variant-numeric:tabular-nums;line-height:1.2;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-col.zero .num{color:#334155}
+.sp-col.latest .num{color:#fff;font-weight:700}
+
+.sp-col .bar-apr-wrap{height:28px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.sp-col .bar-apr-wrap::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(255,255,255,.08)}
+.sp-col .bar-apr-up{width:100%;border-radius:1px 1px 0 0;opacity:.55;min-height:1px;margin-top:auto;background:#10b981}
+.sp-col .bar-apr-down{width:100%;border-radius:0 0 1px 1px;opacity:.55;min-height:1px;margin-bottom:auto;background:#ef4444}
+.sp-col.latest .bar-apr-up,.sp-col.latest .bar-apr-down{opacity:1}
+
+.sp-summary{font-size:11px;color:#e2e8f0;font-variant-numeric:tabular-nums;font-weight:600;min-width:56px;text-align:right;white-space:nowrap;padding-top:14px}
+.sp-summary.neg{color:#ef4444}
+.sp-summary.pos{color:#10b981}
+.sp-trend{font-size:10px;margin-left:2px}
+
+.footer{position:fixed;bottom:0;left:0;right:0;background:rgba(10,12,26,.95);backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.08);padding:14px 24px;display:flex;gap:14px;align-items:center;z-index:100}
+.footer .summary{flex:1;color:#94a3b8;font-size:12px}
+.footer .summary strong{color:#fff;font-size:14px}
+.footer button{background:#3b82f6;color:#fff;border:none;padding:11px 22px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600}
+.footer button:hover{background:#2563eb}
+.footer button.secondary{background:rgba(255,255,255,.06);color:#e2e8f0}
+.footer button.secondary:hover{background:rgba(255,255,255,.1)}
+#output-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
+#output-modal.open{display:flex}
+#output-modal .box{background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:24px;max-width:680px;width:90%;max-height:80vh;overflow:auto}
+#output-modal h3{color:#fff;margin-bottom:12px;font-size:16px}
+#output-modal p{color:#94a3b8;font-size:13px;margin-bottom:14px;line-height:1.5}
+#output-modal pre{background:#0a0c1a;border:1px solid rgba(255,255,255,.08);padding:14px;border-radius:6px;color:#10b981;font-size:12px;line-height:1.5;white-space:pre-wrap;word-break:break-all;font-family:'SF Mono',Menlo,monospace}
+#output-modal .actions{margin-top:14px;display:flex;gap:10px;justify-content:flex-end}
+#output-modal button{padding:9px 16px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;border:none}
+#output-modal .primary{background:#10b981;color:#fff}
+#output-modal .secondary{background:rgba(255,255,255,.08);color:#e2e8f0}
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="header">
+  <h1>Meta Ads Action Tick-List — 🌍 ALL MARKETS · ⚡ ELASTIC RULES (UK · US · CA · ZA · AU · NZ · IE · DE · FR)</h1>
+  <div class="meta">
+    <span>w/e 21 Jun 2026 (Mon 25 May – Sat 30 May)</span>
+    <span>353 active ad sets analysed (across 9 markets)</span>
+    <span style="color:#10b981" id="hdr-action-ct">— proposed actions</span>
+    <span style="color:#64748b">Each metric shows 8 weeks (oldest left → latest right)</span>
+  </div>
+</div>
+
+<div class="content" id="content"></div>
+
+<div class="footer">
+  <div class="summary"><strong id="approved-count">0</strong> approved · <span id="approved-breakdown">none</span></div>
+  <button class="secondary" onclick="selectAll()">Tick all</button>
+  <button class="secondary" onclick="clearAll()">Clear all</button>
+  <button onclick="generateOutput()">Copy approved actions</button>
+</div>
+
+<div id="output-modal" onclick="if(event.target.id==='output-modal')this.classList.remove('open')">
+  <div class="box">
+    <h3>Approved actions</h3>
+    <p>Copy this string and paste it back into Claude. It will execute exactly these actions and skip the rest.</p>
+    <pre id="output-text"></pre>
+    <div class="actions">
+      <button class="secondary" onclick="document.getElementById('output-modal').classList.remove('open')">Close</button>
+      <button class="primary" id="modal-copy-btn" onclick="copyOutput()">Copy to clipboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SECTIONS = [{"key": "pause", "label": "🔴 PAUSE", "sub": "A1 new launch APR<0 · A2 broken creative · B2 never profitable · sustained ROAS<0.7 2wk · bleeding hard (with R1/R2 guards)", "color": "#ef4444", "rows": [{"mkt": "UK", "name": "1102_Patio_Services_UK_UGC_Higgsfield_Timelapse3_DCO_HighestVolume_ATC", "cat": "Patio Services", "apr": -50.78, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 50.78, "spend_prev": 0.0, "sym": "£", "roas0_flag": true, "cap_breach": false, "cap_ratio": 0.31, "cap_value": 1927.0, "reason": "Rule A2 broken creative (ROAS=0, ≥5k impr)", "adset": {"roas8": "0,0,0,0,0,0,0,0", "spends8": "0,0,0,0,0,0,0,50.78", "aprs8": "0,0,0,0,0,0,0,-50.78"}, "idx": 1}]}, {"key": "cut30", "label": "🟠 −30% BUDGET", "sub": "SF1/SF2/B1/R1 guards · ROAS 0.7-0.9 2wk · ROAS 0.9-1.0 2wk (per elasticity finding; cut conservatively)", "color": "#f97316", "rows": [{"mkt": "US", "name": "152_Security Guard Services_US_Static_AdFactory_3Styles_Weekend -80%", "cat": "Security Guard Services", "apr": -79.6, "roas_last": 0.0, "roas_prev": 0.54, "spend_last": 79.6, "spend_prev": 80.91, "sym": "$", "roas0_flag": true, "cap_breach": false, "cap_ratio": 0.63, "cap_value": 358.0, "reason": "R1 recoverable history (40% prior profitable)", "adset": {"roas8": "0,0,3.85,0.80,0.68,1.86,0.54,0", "spends8": "0,0,67.15,136.94,180.71,92.02,80.91,79.60", "aprs8": "0,0,191.13,-27.98,-57.79,79.46,-37.39,-79.60"}, "idx": 1}, {"mkt": "UK", "name": "1077_Fence & Gate Installation_UK_Static_Matt_1_Jan2nd", "cat": "Fence & Gate Installation", "apr": -17.51, "roas_last": 0.72, "roas_prev": 0.39, "spend_last": 62.15, "spend_prev": 99.57, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.26, "cap_value": 1473.0, "reason": "B1 recoverable bleeder (6/8 wks APR<0)", "adset": {"roas8": "0.49,0.61,1.41,0.77,0.72,1.92,0.39,0.72", "spends8": "91.52,206.52,196.51,53.61,63.00,114.30,99.57,62.15", "aprs8": "-46.40,-81.17,81.39,-12.21,-17.64,104.63,-61.05,-17.51"}, "idx": 2}, {"mkt": "CA", "name": "1638_Limousine Hire_CA_Static_AdFactory_AllTemplates_2", "cat": "Limousine Hire", "apr": -17.0, "roas_last": 0.8, "roas_prev": 2.03, "spend_last": 87.17, "spend_prev": 52.38, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.35, "cap_value": 328.0, "reason": "SF2 spike+crash (latest 1.66x prior, APR<0)", "adset": {"roas8": "0,0,1.49,1.21,0.68,2.19,2.03,0.80", "spends8": "0,0,252.09,407.84,321.72,74.04,52.38,87.17", "aprs8": "0,0,122.38,84.41,-103.15,87.91,54.20,-17.00"}, "idx": 3}, {"mkt": "CA", "name": "1638_Limousine Hire_CA_Static_AdFactory_AllTemplates_2_Flexible_ROAS12", "cat": "Limousine Hire", "apr": -17.0, "roas_last": 0.37, "roas_prev": 2.81, "spend_last": 27.12, "spend_prev": 9.56, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.35, "cap_value": 328.0, "reason": "SF2 spike+crash (latest 2.84x prior, APR<0)", "adset": {"roas8": "0,0,0,0,0,0,2.81,0.37", "spends8": "0,0,0,0,0,0,9.56,27.12", "aprs8": "0,0,0,0,0,0,17.29,-17.00"}, "idx": 4}, {"mkt": "NZ", "name": "1261_Tree_Surgery_&_Removal_NZ_Static_AdFactory_3Styles_Flexible_ROAS12", "cat": "Tree Surgery & Removal", "apr": -9.43, "roas_last": 0.6, "roas_prev": 11.0, "spend_last": 23.7, "spend_prev": 15.62, "sym": "NZ$", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "SF2 spike+crash (latest 1.52x prior, APR<0)", "adset": {"roas8": "0,0,0,0,0,0,11.00,0.60", "spends8": "0,0,0,0,0,0,15.62,23.70", "aprs8": "0,0,0,0,0,0,156.26,-9.43"}, "idx": 5}, {"mkt": "NZ", "name": "1539_Counselling_NZ_Static_AdFactory_3Styles", "cat": "Counselling", "apr": -5.04, "roas_last": 0.0, "roas_prev": 0.48, "spend_last": 5.04, "spend_prev": 63.24, "sym": "NZ$", "roas0_flag": true, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "B1 recoverable bleeder (3/4 wks APR<0)", "adset": {"roas8": "0,0,0,0,1.50,0.39,0.48,0", "spends8": "0,0,0,0,13.77,140.25,63.24,5.04", "aprs8": "0,0,0,0,6.90,-85.28,-33.05,-5.04"}, "idx": 6}, {"mkt": "AU", "name": "1819_Business_Accounting_Services_AU_Static_AdFactory_3Styles", "cat": "Business Accounting Services", "apr": -4.55, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 4.55, "spend_prev": 10.7, "sym": "A$", "roas0_flag": true, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "B1 recoverable bleeder (3/4 wks APR<0)", "adset": {"roas8": "0,0,0,0,10.18,0,0,0", "spends8": "0,0,0,0,14.73,45.01,10.70,4.55", "aprs8": "0,0,0,0,135.24,-45.01,-10.70,-4.55"}, "idx": 7}, {"mkt": "CA", "name": "89_Accounting_CA_Static_AdFactory_3Styles", "cat": "Accounting", "apr": -4.27, "roas_last": 0.0, "roas_prev": 0.26, "spend_last": 4.27, "spend_prev": 177.52, "sym": "£", "roas0_flag": true, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "B1 recoverable bleeder (4/5 wks APR<0)", "adset": {"roas8": "0,0,0,1.23,0.72,0,0.26,0", "spends8": "0,0,0,330.85,251.89,54.78,177.52,4.27", "aprs8": "0,0,0,77.53,-71.18,-54.78,-131.72,-4.27"}, "idx": 8}, {"mkt": "ZA", "name": "1056_Wedding Photography_ZA_Static_AdFactory_3Styles", "cat": "Wedding Photography", "apr": -1.87, "roas_last": 0.0, "roas_prev": 0.18, "spend_last": 1.87, "spend_prev": 70.85, "sym": "R", "roas0_flag": true, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "B1 recoverable bleeder (5/6 wks APR<0)", "adset": {"roas8": "0,0,1.04,0.14,0,0.59,0.18,0", "spends8": "0,0,77.19,77.81,44.70,42.54,70.85,1.87", "aprs8": "0,0,3.08,-66.88,-44.70,-17.25,-57.81,-1.87"}, "idx": 9}, {"mkt": "UK", "name": "1670_Home & Domiciliary Care_UK_UGC_Katie_PITS_AutomationTest – Copy", "cat": "Home & Domiciliary Care", "apr": -1.82, "roas_last": 0.0, "roas_prev": 0.0, "spend_last": 1.82, "spend_prev": 4.42, "sym": "£", "roas0_flag": true, "cap_breach": false, "cap_ratio": 0.27, "cap_value": 4274.0, "reason": "B1 recoverable bleeder (6/8 wks APR<0)", "adset": {"roas8": "2.17,0,3.29,0,0,0,0,0", "spends8": "23.23,8.16,10.07,8.65,11.62,8.35,4.42,1.82", "aprs8": "27.26,-8.16,23.05,-8.65,-11.62,-8.35,-4.42,-1.82"}, "idx": 10}, {"mkt": "US", "name": "1556_Dog Training_US_InHouse_CC_1", "cat": "Dog Training", "apr": -1.73, "roas_last": 0.95, "roas_prev": 0.37, "spend_last": 36.83, "spend_prev": 84.5, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.31, "cap_value": 4325.0, "reason": "B1 recoverable bleeder (6/8 wks APR<0)", "adset": {"roas8": "0.79,0.81,1.83,0.73,0.90,1.16,0.37,0.95", "spends8": "170.47,168.05,165.91,160.56,174.47,74.00,84.50,36.83", "aprs8": "-35.76,-32.35,137.81,-42.61,-18.23,11.51,-53.55,-1.73"}, "idx": 11}, {"mkt": "AU", "name": "35_General_Builders_AU_Static_AdFactory_3Styles", "cat": "General Builders", "apr": -1.05, "roas_last": 0.0, "roas_prev": 6.34, "spend_last": 1.05, "spend_prev": 3.4, "sym": "A$", "roas0_flag": true, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "B1 recoverable bleeder (3/4 wks APR<0)", "adset": {"roas8": "0,0,0,0.62,0.27,0,6.34,0", "spends8": "0,0,0,56.15,23.39,0,3.40,1.05", "aprs8": "0,0,0,-21.37,-17.00,0,18.16,-1.05"}, "idx": 12}]}, {"key": "scale20", "label": "🔵 +20% BUDGET", "sub": "ROAS ≥ 1.5 sustained 2wk · capped at +20% (operator preference 2026-06-17, was +10%)", "color": "#3b82f6", "rows": [{"mkt": "US", "name": "1056_Wedding Photography_US_Video_UGC_Lousie_Shoot1_Interview", "cat": "Wedding Photography", "apr": 395.82, "roas_last": 2.48, "roas_prev": 3.07, "spend_last": 267.58, "spend_prev": 393.79, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.49, "cap_value": 1702.0, "reason": "ROAS 3.07->2.48 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.76,2.15,1.91,2.15,1.82,1.62,3.07,2.48", "spends8": "512.07,487.03,592.09,656.51,671.86,516.10,393.79,267.58", "aprs8": "389.09,561.38,540.37,751.96,548.51,319.64,816.93,395.82"}, "idx": 1}, {"mkt": "US", "name": "1141_Commercial & Office Cleaning_US_Static_AdFactory_Plain", "cat": "Commercial & Office Cleaning", "apr": 395.54, "roas_last": 4.18, "roas_prev": 4.27, "spend_last": 124.47, "spend_prev": 149.44, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.55, "cap_value": 354.0, "reason": "ROAS 4.27->4.18 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,1.09,4.30,5.01,2.77,4.27,4.18", "spends8": "0,0,113.67,166.66,170.30,153.00,149.44,124.47", "aprs8": "0,0,10.66,549.24,683.66,270.42,488.46,395.54"}, "idx": 2}, {"mkt": "UK", "name": "1177_Air Conditioning Installation_UK_Static_Adfactory_Tap_WTB", "cat": "Air Conditioning Installation", "apr": 375.06, "roas_last": 1.76, "roas_prev": 1.7, "spend_last": 496.46, "spend_prev": 776.43, "sym": "£", "roas0_flag": false, "cap_breach": true, "cap_ratio": 2.68, "cap_value": 295.0, "reason": "ROAS 1.70->1.76 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.43,2.74,1.55,1.86,2.96,1.84,1.70,1.76", "spends8": "231.46,226.56,501.18,569.76,937.64,785.35,776.43,496.46", "aprs8": "99.03,393.66,277.42,491.52,1836.30,662.60,542.30,375.06"}, "idx": 3}, {"mkt": "US", "name": "1521_Immigration Lawyers_US_UGC_3", "cat": "Immigration Lawyers", "apr": 305.29, "roas_last": 1.93, "roas_prev": 2.19, "spend_last": 328.14, "spend_prev": 420.25, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.27, "cap_value": 4157.0, "reason": "ROAS 2.19->1.93 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.82,2.06,1.79,1.77,2.04,2.24,2.19,1.93", "spends8": "320.11,334.64,440.52,670.14,658.77,508.97,420.25,328.14", "aprs8": "261.48,354.51,349.38,514.20,685.10,633.49,500.04,305.29"}, "idx": 4}, {"mkt": "UK", "name": "1252_Landscaping_UK_Static_BenAIbulk_Tap", "cat": "Landscaping", "apr": 261.95, "roas_last": 2.23, "roas_prev": 1.64, "spend_last": 213.53, "spend_prev": 328.75, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.17, "cap_value": 5942.0, "reason": "ROAS 1.64->2.23 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.22,1.82,2.85,1.25,1.75,1.55,1.64,2.23", "spends8": "764.12,583.19,318.52,244.23,213.96,388.84,328.75,213.53", "aprs8": "165.69,479.55,588.55,61.23,161.52,211.94,211.13,261.95"}, "idx": 5}, {"mkt": "UK", "name": "1102_Patio Services_UK_Static_4_Basic", "cat": "Patio Services", "apr": 234.1, "roas_last": 1.83, "roas_prev": 2.18, "spend_last": 281.69, "spend_prev": 407.65, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.31, "cap_value": 1927.0, "reason": "ROAS 2.18->1.83 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.44,1.63,2.08,2.23,2.16,2.03,2.18,1.83", "spends8": "1097.05,1334.97,665.36,504.90,388.04,317.83,407.65,281.69", "aprs8": "477.66,845.02,717.60,620.00,449.64,328.67,479.35,234.10"}, "idx": 6}, {"mkt": "UK", "name": "42_Painting & Decoration_UK_Static_AdFactory_AllTemplates_1 – Copy", "cat": "Painting & Decoration - Interior", "apr": 219.39, "roas_last": 2.75, "roas_prev": 4.2, "spend_last": 125.46, "spend_prev": 94.4, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.36, "cap_value": 3142.0, "reason": "ROAS 4.20->2.75 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,2.58,1.28,2.23,1.54,1.59,4.20,2.75", "spends8": "1.62,65.54,148.47,263.36,400.02,156.98,94.40,125.46", "aprs8": "-1.62,103.70,41.55,323.33,215.79,91.86,302.02,219.39"}, "idx": 7}, {"mkt": "UK", "name": "1956_Garden Clearance_UK_Sunday pulls_Static_AdFactory_3Styles", "cat": "Garden Clearance", "apr": 204.63, "roas_last": 1.67, "roas_prev": 2.02, "spend_last": 305.07, "spend_prev": 395.97, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 2.02->1.67 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,0,2.75,2.41,2.90,2.02,1.67", "spends8": "0,0,0,77.20,276.50,264.95,395.97,305.07", "aprs8": "0,0,0,135.13,388.64,503.32,405.72,204.63"}, "idx": 8}, {"mkt": "UK", "name": "1757_Conservatory_Installation_GB_Static_WTB_5Variants", "cat": "Conservatory Installation", "apr": 197.52, "roas_last": 2.4, "roas_prev": 2.15, "spend_last": 141.3, "spend_prev": 216.54, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.35, "cap_value": 578.0, "reason": "ROAS 2.15->2.40 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "2.14,1.21,2.42,1.20,1.36,1.74,2.15,2.40", "spends8": "416.47,371.53,367.13,440.90,365.29,259.80,216.54,141.30", "aprs8": "475.93,78.26,519.88,86.53,132.94,191.48,249.96,197.52"}, "idx": 9}, {"mkt": "US", "name": "152_Security Guard Services_US_UGC_Phase14 Weekend -80%", "cat": "Security Guard Services", "apr": 192.41, "roas_last": 2.31, "roas_prev": 3.09, "spend_last": 146.66, "spend_prev": 189.28, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.63, "cap_value": 358.0, "reason": "ROAS 3.09->2.31 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.74,3.23,2.07,0.28,2.12,3.01,3.09,2.31", "spends8": "138.15,132.33,208.20,248.88,229.87,145.85,189.28,146.66", "aprs8": "101.58,295.19,223.58,-178.49,257.39,293.01,394.77,192.41"}, "idx": 10}, {"mkt": "UK", "name": "1138_Bathroom Install_UK_Static_AI_Stefano_WTB", "cat": "Bathroom Installation & Remodel", "apr": 182.64, "roas_last": 1.9, "roas_prev": 2.0, "spend_last": 202.68, "spend_prev": 316.73, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.39, "cap_value": 3024.0, "reason": "ROAS 2.00->1.90 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.62,1.76,2.44,2.27,1.16,2.10,2.00,1.90", "spends8": "245.52,465.97,321.77,413.13,484.52,369.37,316.73,202.68", "aprs8": "153.29,353.89,462.97,523.02,79.19,405.14,315.61,182.64"}, "idx": 11}, {"mkt": "US", "name": "1018_DJ_US_Static_BenAIbulk_WTB", "cat": "DJ", "apr": 179.62, "roas_last": 1.66, "roas_prev": 2.91, "spend_last": 272.02, "spend_prev": 375.6, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.25, "cap_value": 5050.0, "reason": "ROAS 2.91->1.66 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.68,2.03,1.73,1.87,1.44,1.34,2.91,1.66", "spends8": "346.39,352.14,349.84,351.36,375.06,307.54,375.60,272.02", "aprs8": "234.10,362.83,256.78,304.90,166.44,105.03,717.30,179.62"}, "idx": 12}, {"mkt": "UK", "name": "1670_Home & Domiciliary Care_UK_Static_CC_1", "cat": "Home & Domiciliary Care", "apr": 177.52, "roas_last": 2.42, "roas_prev": 2.93, "spend_last": 125.42, "spend_prev": 122.94, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.27, "cap_value": 4274.0, "reason": "ROAS 2.93->2.42 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0.80,2.03,4.05,2.09,1.37,3.67,2.93,2.42", "spends8": "36.22,54.04,32.22,18.93,74.41,138.29,122.94,125.42", "aprs8": "-7.42,55.40,98.35,20.67,27.47,369.66,236.82,177.52"}, "idx": 13}, {"mkt": "CA", "name": "1212_House Cleaning_CA_Static_AdFactory_AllTemplates_1", "cat": "House Cleaning", "apr": 144.63, "roas_last": 2.46, "roas_prev": 2.88, "spend_last": 99.12, "spend_prev": 203.07, "sym": "£", "roas0_flag": false, "cap_breach": true, "cap_ratio": 1.2, "cap_value": 681.0, "reason": "ROAS 2.88->2.46 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "2.55,2.42,2.52,1.81,1.84,4.48,2.88,2.46", "spends8": "524.68,525.05,653.39,1388.63,903.42,162.37,203.07,99.12", "aprs8": "811.62,745.91,989.95,1127.14,755.99,565.43,381.55,144.63"}, "idx": 14}, {"mkt": "UK", "name": "1138_Bathroom Install_UK_UGC_Katie_PITS_AutomationTest", "cat": "Bathroom Installation & Remodel", "apr": 142.54, "roas_last": 1.87, "roas_prev": 2.06, "spend_last": 164.53, "spend_prev": 281.31, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.39, "cap_value": 3024.0, "reason": "ROAS 2.06->1.87 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.60,1.23,1.37,1.23,2.12,2.47,2.06,1.87", "spends8": "769.49,687.18,708.36,490.49,377.14,277.86,281.31,164.53", "aprs8": "460.72,159.08,265.21,110.38,423.85,409.68,298.86,142.54"}, "idx": 15}, {"mkt": "UK", "name": "1261_Tree Surgery & Removal_UK_Sunday pulls_Mixed_UGC_LT_1", "cat": "Tree Surgery & Removal", "apr": 129.9, "roas_last": 1.79, "roas_prev": 2.67, "spend_last": 164.4, "spend_prev": 265.67, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.43, "cap_value": 2077.0, "reason": "ROAS 2.67->1.79 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.46,1.13,1.75,1.64,2.05,1.37,2.67,1.79", "spends8": "148.17,254.25,242.85,140.08,162.27,320.53,265.67,164.40", "aprs8": "68.40,32.49,181.45,89.13,169.95,118.64,444.66,129.90"}, "idx": 16}, {"mkt": "US", "name": "1018_DJ_US_Static_Basic_3 Weekend -80%", "cat": "DJ", "apr": 125.86, "roas_last": 2.02, "roas_prev": 1.61, "spend_last": 122.95, "spend_prev": 356.34, "sym": "$", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.25, "cap_value": 5050.0, "reason": "ROAS 1.61->2.02 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.04,1.15,1.31,1.01,1.03,1.16,1.61,2.02", "spends8": "330.23,327.80,315.42,313.48,432.80,329.66,356.34,122.95", "aprs8": "14.52,47.54,96.49,4.49,14.40,52.42,216.86,125.86"}, "idx": 17}, {"mkt": "UK", "name": "2146_EV Install_UK_Static_CC_1", "cat": "Electric Charge Points Installation", "apr": 122.85, "roas_last": 1.61, "roas_prev": 2.21, "spend_last": 200.86, "spend_prev": 305.4, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.24, "cap_value": 972.0, "reason": "ROAS 2.21->1.61 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.61,1.08,2.64,3.15,2.61,2.22,2.21,1.61", "spends8": "1007.41,1033.82,226.57,257.60,379.97,312.90,305.40,200.86", "aprs8": "611.23,79.57,371.00,555.06,610.81,382.69,368.11,122.85"}, "idx": 18}, {"mkt": "UK", "name": "1247_Artificial Grass Installation_UK_Static_BenAIbulk_WTB", "cat": "Artificial Grass Installation", "apr": 109.13, "roas_last": 2.33, "roas_prev": 1.93, "spend_last": 82.31, "spend_prev": 131.2, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.17, "cap_value": 2144.0, "reason": "ROAS 1.93->2.33 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.12,0.95,1.38,1.74,1.29,1.26,1.93,2.33", "spends8": "487.67,387.28,145.91,64.13,81.69,159.97,131.20,82.31", "aprs8": "59.83,-20.97,55.44,47.33,23.33,41.71,122.58,109.13"}, "idx": 19}, {"mkt": "UK", "name": "1247_Artificial Grass Installation_UK_UGC_AdFactory_Batch1", "cat": "Artificial Grass Installation", "apr": 105.18, "roas_last": 1.94, "roas_prev": 1.51, "spend_last": 112.19, "spend_prev": 174.32, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.17, "cap_value": 2144.0, "reason": "ROAS 1.51->1.94 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.31,1.64,0.95,1.77,1.90,1.67,1.51,1.94", "spends8": "241.51,228.77,239.68,311.73,287.04,214.90,174.32,112.19", "aprs8": "75.74,146.61,-12.11,238.69,258.34,143.78,88.53,105.18"}, "idx": 20}, {"mkt": "UK", "name": "1212_House Cleaning_UK_Static_Matt_1", "cat": "House Cleaning", "apr": 102.16, "roas_last": 1.93, "roas_prev": 2.45, "spend_last": 109.8, "spend_prev": 136.18, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.25, "cap_value": 1707.0, "reason": "ROAS 2.45->1.93 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.24,1.36,2.29,2.14,2.21,2.48,2.45,1.93", "spends8": "1091.74,1149.70,347.77,316.13,187.25,141.50,136.18,109.80", "aprs8": "265.52,418.58,449.86,361.03,226.98,209.17,197.32,102.16"}, "idx": 21}, {"mkt": "UK", "name": "42_Painting & Decoration_UK_LPV6CONTROL_Static_3_Basic – Copy", "cat": "Painting & Decoration - Interior", "apr": 102.16, "roas_last": 2.05, "roas_prev": 1.71, "spend_last": 96.91, "spend_prev": 93.52, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.36, "cap_value": 3142.0, "reason": "ROAS 1.71->2.05 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "1.28,0.94,1.67,1.92,0.94,1.38,1.71,2.05", "spends8": "176.47,143.00,193.60,329.43,227.58,369.04,93.52,96.91", "aprs8": "49.69,-8.80,129.34,303.54,-13.01,140.40,66.04,102.16"}, "idx": 22}, {"mkt": "ZA", "name": "2068_Structural_Engineer_ZA_Static_AdFactory_3Styles", "cat": "Structural Engineer", "apr": 92.79, "roas_last": 2.42, "roas_prev": 3.92, "spend_last": 65.39, "spend_prev": 49.39, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 3.92->2.42 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,0,0,0,5.86,3.92,2.42", "spends8": "0,0,0,0,0,15.66,49.39,65.39", "aprs8": "0,0,0,0,0,76.13,144.13,92.79"}, "idx": 23}, {"mkt": "NZ", "name": "136_Property_Management_NZ_Static_AdFactory_3Styles", "cat": "Property Management", "apr": 86.96, "roas_last": 2.57, "roas_prev": 4.84, "spend_last": 55.39, "spend_prev": 134.33, "sym": "NZ$", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 4.84->2.57 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,0,0.65,1.90,2.32,4.84,2.57", "spends8": "0,0,0,75.31,61.30,233.05,134.33,55.39", "aprs8": "0,0,0,-26.44,54.99,307.30,515.67,86.96"}, "idx": 24}, {"mkt": "AU", "name": "1252_Landscaping_AU_Static_AdFactory_3Styles", "cat": "Landscaping", "apr": 85.8, "roas_last": 1.54, "roas_prev": 1.78, "spend_last": 158.9, "spend_prev": 231.55, "sym": "A$", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 1.78->1.54 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,0,1.19,2.18,2.72,1.78,1.54", "spends8": "0,0,0,164.98,601.06,195.50,231.55,158.90", "aprs8": "0,0,0,30.87,707.01,336.20,179.54,85.80"}, "idx": 25}, {"mkt": "ZA", "name": "1138_Bathroom Install_ZA_Static_AdFactory_3Styles", "cat": "Bathroom Installation & Remodel", "apr": 72.58, "roas_last": 2.02, "roas_prev": 1.89, "spend_last": 71.25, "spend_prev": 147.35, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 1.89->2.02 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,1.33,1.39,1.44,1.89,1.89,2.02", "spends8": "0,0,106.55,90.64,62.74,48.95,147.35,71.25", "aprs8": "0,0,35.46,35.21,27.38,43.81,130.82,72.58"}, "idx": 26}, {"mkt": "UK", "name": "179_Gardening_UK_Sunday pulls_Static_AdFactory_3Styles", "cat": "Gardening", "apr": 72.5, "roas_last": 1.6, "roas_prev": 1.6, "spend_last": 120.87, "spend_prev": 179.83, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.99, "cap_value": 520.0, "reason": "ROAS 1.60->1.60 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,0,1.49,1.10,1.41,1.60,1.60", "spends8": "0,0,0,217.83,326.61,241.85,179.83,120.87", "aprs8": "0,0,0,106.38,33.35,98.08,107.89,72.50"}, "idx": 27}, {"mkt": "ZA", "name": "1785_CCTV_Installation_ZA_Static_AdFactory_3Styles", "cat": "CCTV Installation", "apr": 71.97, "roas_last": 1.68, "roas_prev": 1.69, "spend_last": 106.54, "spend_prev": 308.49, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 1.69->1.68 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,0,0,0,5.76,1.69,1.68", "spends8": "0,0,0,0,0,33.11,308.49,106.54", "aprs8": "0,0,0,0,0,157.76,212.13,71.97"}, "idx": 28}, {"mkt": "UK", "name": "1247_Artificial Grass Installation_UK_Static_Basic_3", "cat": "Artificial Grass Installation", "apr": 65.92, "roas_last": 1.82, "roas_prev": 2.84, "spend_last": 80.01, "spend_prev": 127.58, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.17, "cap_value": 2144.0, "reason": "ROAS 2.84->1.82 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0.99,0.75,1.75,1.63,2.32,2.28,2.84,1.82", "spends8": "455.68,621.13,177.92,115.91,88.56,123.12,127.58,80.01", "aprs8": "-3.78,-153.29,134.28,73.02,116.90,157.56,235.31,65.92"}, "idx": 29}, {"mkt": "ZA", "name": "1119_Solar Panel Installation_ZA_Static_AdFactory_3Styles", "cat": "Solar Panel Installation", "apr": 63.99, "roas_last": 2.5, "roas_prev": 2.76, "spend_last": 42.6, "spend_prev": 125.61, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.2, "cap_value": 332.0, "reason": "ROAS 2.76->2.50 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,2.54,2.35,2.45,4.99,2.76,2.50", "spends8": "0,0,150.38,308.50,276.69,51.80,125.61,42.60", "aprs8": "0,0,231.91,415.86,400.95,206.80,220.80,63.99"}, "idx": 30}, {"mkt": "ZA", "name": "1517_Divorce Lawyers_ZA_Static_AdFactory_3Styles", "cat": "Divorce Lawyers", "apr": 54.72, "roas_last": 3.37, "roas_prev": 1.59, "spend_last": 23.09, "spend_prev": 75.71, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 1.59->3.37 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,1.63,1.06,0.93,1.13,1.59,3.37", "spends8": "0,0,186.20,296.80,207.75,44.49,75.71,23.09", "aprs8": "0,0,116.62,17.40,-14.82,5.81,44.49,54.72"}, "idx": 31}, {"mkt": "ZA", "name": "1517_Divorce Lawyers_ZA_Static_AdFactory_3Styles – Copy", "cat": "Divorce Lawyers", "apr": 46.88, "roas_last": 3.06, "roas_prev": 1.58, "spend_last": 22.73, "spend_prev": 80.13, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": null, "cap_value": null, "reason": "ROAS 1.58->3.06 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,1.37,0.80,0.91,1.06,1.58,3.06", "spends8": "0,0,190.79,290.17,205.42,42.08,80.13,22.73", "aprs8": "0,0,71.16,-57.69,-18.21,2.38,46.56,46.88"}, "idx": 32}, {"mkt": "UK", "name": "42_Painting & Decoration_UK_LPV6CONTROL_Static_3_Basic", "cat": "Painting & Decoration - Interior", "apr": 34.62, "roas_last": 1.51, "roas_prev": 2.32, "spend_last": 68.34, "spend_prev": 107.18, "sym": "£", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.36, "cap_value": 3142.0, "reason": "ROAS 2.32->1.51 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "2.19,1.13,1.59,2.82,1.22,1.68,2.32,1.51", "spends8": "88.09,143.22,70.87,42.89,62.18,119.23,107.18,68.34", "aprs8": "104.60,18.60,41.57,78.27,13.42,81.62,141.12,34.62"}, "idx": 33}, {"mkt": "ZA", "name": "1109_Roof Repair_ZA_Static_AdFactory_3Styles – Copy", "cat": "Roof Repair", "apr": 29.26, "roas_last": 2.33, "roas_prev": 1.66, "spend_last": 22.07, "spend_prev": 78.86, "sym": "R", "roas0_flag": false, "cap_breach": false, "cap_ratio": 0.14, "cap_value": 321.0, "reason": "ROAS 1.66->2.33 (sustained ≥1.5, capped at +20%)", "adset": {"roas8": "0,0,1.46,1.09,1.14,2.80,1.66,2.33", "spends8": "0,0,192.50,290.09,196.30,41.99,78.86,22.07", "aprs8": "0,0,89.20,25.61,27.70,75.61,52.31,29.26"}, "idx": 34}]}, {"key": "firstwk25", "label": "⚡ +25% FIRST-WEEK WINNER", "sub": "Only-latest week, ROAS ≥ 1.5, ≥10k impressions · capped at +25% (was +100%)", "color": "#a855f7", "rows": []}];
+const WEEK_LABELS = ['8w','7w','6w','5w','4w','3w','2w','last'];
+function parse8(s){ return (s||'').split(',').map(p => parseFloat(p)||0); }
+function fmtRoas(v){ return v === 0 ? '—' : v.toFixed(2); }
+function fmtMoney(v, sym){
+  if(v === 0) return '—';
+  if(Math.abs(v) >= 1000) return sym + (v/1000).toFixed(1) + 'k';
+  return sym + Math.round(v).toLocaleString();
+}
+
+function roasGrid(roas8){
+  const arr = parse8(roas8);
+  const SCALE = 3.0;
+  return '<div class="sp-grid">' + arr.map((v,i) => {
+    const isLatest = i === 7;
+    const isZero = v === 0;
+    const h = isZero ? 4 : Math.max(8, Math.min(SCALE, v) / SCALE * 100);
+    const color = isZero ? '#1e293b' : v >= 1.5 ? '#10b981' : v >= 1.0 ? '#3b82f6' : v >= 0.7 ? '#ca8a04' : '#ef4444';
+    const cls = ['sp-col', isLatest ? 'latest' : '', isZero ? 'zero' : ''].join(' ');
+    return `<div class="${cls}">
+      <div class="wk">${WEEK_LABELS[i]}</div>
+      <div class="bar-wrap"><div class="bar" style="height:${h}%;background:${color}"></div></div>
+      <div class="num">${fmtRoas(v)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function spendGrid(spends8, sym){
+  const arr = parse8(spends8);
+  const max = Math.max(...arr, 1);
+  return '<div class="sp-grid">' + arr.map((v,i) => {
+    const isLatest = i === 7;
+    const isZero = v === 0;
+    const h = isZero ? 4 : Math.max(8, v / max * 100);
+    const color = isZero ? '#1e293b' : '#64748b';
+    const cls = ['sp-col', isLatest ? 'latest' : '', isZero ? 'zero' : ''].join(' ');
+    return `<div class="${cls}">
+      <div class="wk">${WEEK_LABELS[i]}</div>
+      <div class="bar-wrap"><div class="bar" style="height:${h}%;background:${color}"></div></div>
+      <div class="num">${fmtMoney(v, sym)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function aprGrid(aprs8, sym){
+  const arr = parse8(aprs8);
+  const max = Math.max(1, ...arr.map(Math.abs));
+  return '<div class="sp-grid">' + arr.map((v,i) => {
+    const isLatest = i === 7;
+    const isZero = v === 0;
+    const h = isZero ? 0 : Math.abs(v) / max * 50;
+    const cls = ['sp-col', isLatest ? 'latest' : '', isZero ? 'zero' : ''].join(' ');
+    const bar = isZero ? '' : (v >= 0
+      ? `<div class="bar-apr-up" style="height:${h}%"></div>`
+      : `<div class="bar-apr-down" style="height:${h}%"></div>`);
+    return `<div class="${cls}">
+      <div class="wk">${WEEK_LABELS[i]}</div>
+      <div class="bar-apr-wrap">${bar}</div>
+      <div class="num">${isZero?'—':fmtMoney(v, sym)}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function trendArrow(prev, last){
+  if(prev === 0) return '';
+  if(last > prev * 1.1) return '<span class="sp-trend" style="color:#10b981">↑</span>';
+  if(last < prev * 0.9) return '<span class="sp-trend" style="color:#ef4444">↓</span>';
+  return '<span class="sp-trend" style="color:#64748b">→</span>';
+}
+
+function renderSection(s){
+  const isPause = s.key === 'pause';
+  const headerCols = '<th style="min-width:280px">ROAS · 8wk</th><th style="min-width:280px">APR · 8wk</th><th style="min-width:280px">Spend · 8wk</th>';
+
+  const rows = s.rows.map(r => {
+    const a = r.adset;
+    const roas0 = r.roas0_flag ? '<span class="flag-pill">ROAS=0</span>' : '';
+    const capPill = r.cap_breach
+      ? `<span class="cap-pill" title="Category running at ${r.cap_ratio}× its 1.3× best-margin-week cap (£${r.cap_value})"><span class="x">⚠</span> cap ${r.cap_ratio}×</span>`
+      : '';
+    const roasCell = `<td class="sp-cell"><div class="sp-wrap">${roasGrid(a.roas8)}<span class="sp-summary ${r.roas_last<1?'neg':r.roas_last>=1.5?'pos':''}">${r.roas_last.toFixed(2)}${trendArrow(r.roas_prev, r.roas_last)}</span></div></td>`;
+    const aprCell = `<td class="sp-cell"><div class="sp-wrap">${aprGrid(a.aprs8, r.sym)}<span class="sp-summary ${r.apr<0?'neg':'pos'}">${fmtMoney(r.apr, r.sym)}</span></div></td>`;
+    const spendCell = `<td class="sp-cell"><div class="sp-wrap">${spendGrid(a.spends8, r.sym)}<span class="sp-summary">${fmtMoney(r.spend_last, r.sym)}</span></div></td>`;
+    return `<tr data-section="${s.key}" data-idx="${r.idx}">
+      <td class="check"><input type="checkbox" data-section="${s.key}" data-idx="${r.idx}" onchange="updateRow(this)"></td>
+      <td class="idx">${r.idx}</td>
+      <td class="mkt">${r.mkt}</td>
+      <td class="name">${r.name}${roas0}${capPill}<div class="cat">${r.cat}</div></td>
+      ${roasCell}${aprCell}${spendCell}
+    </tr>`;
+  }).join('');
+
+  return `<div class="section">
+    <div class="section-hd" style="border-left:3px solid ${s.color}">
+      <h2>${s.label} <span class="sub">${s.sub}</span></h2>
+      <span class="count">${s.rows.length} ad sets</span>
+      <button class="toggle-all" onclick="toggleSection('${s.key}', this)">Tick all in this section</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th></th><th>#</th><th>Mkt</th><th>Ad set</th>${headerCols}</tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+
+document.getElementById('content').innerHTML = SECTIONS.map(renderSection).join('');
+document.getElementById('hdr-action-ct').textContent = SECTIONS.reduce((a,s)=>a+s.rows.length,0) + ' proposed UK actions';
+
+function updateRow(cb){ cb.closest('tr').classList.toggle('checked', cb.checked); updateSummary(); }
+function toggleSection(key, btn){
+  const checks = document.querySelectorAll(`input[type=checkbox][data-section="${key}"]`);
+  const allChecked = [...checks].every(c => c.checked);
+  checks.forEach(c => { c.checked = !allChecked; updateRow(c); });
+  btn.textContent = allChecked ? 'Tick all in this section' : 'Untick all';
+}
+function selectAll(){ document.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = true; updateRow(c); }); }
+function clearAll(){ document.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = false; updateRow(c); }); }
+function updateSummary(){
+  const groups = {};
+  document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
+    const k = c.dataset.section;
+    (groups[k] = groups[k] || []).push(parseInt(c.dataset.idx,10));
+  });
+  const total = Object.values(groups).reduce((a,b)=>a+b.length,0);
+  document.getElementById('approved-count').textContent = total;
+  const parts = SECTIONS.filter(s => groups[s.key]).map(s => `${s.label.split(' ')[0]} ${groups[s.key].length}`);
+  document.getElementById('approved-breakdown').textContent = parts.length ? parts.join(' · ') : 'none';
+}
+function generateOutput(){
+  const groups = {};
+  document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
+    const k = c.dataset.section;
+    (groups[k] = groups[k] || []).push(parseInt(c.dataset.idx,10));
+  });
+  if(!Object.keys(groups).length){ alert('Tick at least one action first.'); return; }
+  const lines = ['# Approved Meta actions — All Markets — w/e 21 Jun 2026 (ELASTIC rules)'];
+  SECTIONS.forEach(s => {
+    if(!groups[s.key]) return;
+    const idxs = groups[s.key].sort((a,b)=>a-b);
+    const names = idxs.map(i => s.rows.find(r => r.idx===i)).map(r => `  - ${r.mkt} | ${r.name}`).join('\n');
+    lines.push(`\n## ${s.label} (${idxs.length} of ${s.rows.length})`);
+    lines.push(`Sequence: ${s.key}: ${idxs.join(',')}`);
+    lines.push(names);
+  });
+  document.getElementById('output-text').textContent = lines.join('\n');
+  document.getElementById('output-modal').classList.add('open');
+}
+function copyOutput(){
+  const txt = document.getElementById('output-text').textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('modal-copy-btn');
+    btn.textContent = '✓ Copied';
+    setTimeout(() => { btn.textContent = 'Copy to clipboard'; }, 2000);
+  });
+}
+updateSummary();
+</script>
+<section style="margin:24px auto; max-width:1400px; padding:18px 22px; background:rgba(34,197,94,.06); border:1px solid rgba(34,197,94,.25); border-radius:10px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:#e2e8f0;">
+<h2 style="margin:0 0 6px 0; color:#22c55e; font-size:18px;">📈 Rev/Bark uplift — categories where £/bark rose vs prior week</h2>
+<p style="margin:0 0 14px 0; color:#94a3b8; font-size:12px;">Top 25 categories ranked by % increase in revenue per bark. Higher Rev/Bark = each project is worth more, so the category warrants scaling regardless of current ROAS. Floor: ≥3 barks + ≥£20 spend per week.</p>
+<table style="width:100%; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums;">
+<thead><tr style="text-align:left; color:#64748b; border-bottom:1px solid rgba(255,255,255,.08);"><th style="padding:6px 8px;">Mkt</th><th style="padding:6px 8px;">Category</th><th style="padding:6px 8px; text-align:right;">Prev wk £/bark</th><th style="padding:6px 8px; text-align:right;">Focus wk £/bark</th><th style="padding:6px 8px; text-align:right;">Δ £/bark</th><th style="padding:6px 8px; text-align:right;">% change</th><th style="padding:6px 8px; text-align:right;">Barks (prev → focus)</th><th style="padding:6px 8px; text-align:right;">Focus spend</th></tr></thead><tbody>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">ZA</td><td style="padding:6px 8px;">Divorce Lawyers</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R1.70</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">R4.06</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+R2.37</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+139%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">121 → 48</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R46</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">AU</td><td style="padding:6px 8px;">Bathroom Installation & Remodel</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">A$11.46</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">A$22.87</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+A$11.41</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+100%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">64 → 16</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">A$80</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">US</td><td style="padding:6px 8px;">TV Installation & Mounting</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">$1.92</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">$3.75</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+$1.83</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+95%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">200 → 80</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">$99</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">CA</td><td style="padding:6px 8px;">Property Extensions</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£18.97</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">£35.24</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+£16.27</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+86%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">20 → 8</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£48</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">ZA</td><td style="padding:6px 8px;">In-Ground Swimming Pool Construction</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R0.48</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">R0.88</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+R0.40</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+83%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">62 → 31</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R27</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">NZ</td><td style="padding:6px 8px;">House Cleaning</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">NZ$4.73</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">NZ$8.38</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+NZ$3.65</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+77%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">25 → 9</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">NZ$61</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">UK</td><td style="padding:6px 8px;">Private Investigators</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£6.23</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">£10.81</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+£4.59</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+74%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">40 → 12</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£108</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">ZA</td><td style="padding:6px 8px;">Man & Van Services</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R2.20</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">R3.68</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+R1.48</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+67%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">44 → 16</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R24</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">US</td><td style="padding:6px 8px;">Private Investigators</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">$5.04</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">$8.29</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+$3.25</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+65%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">98 → 49</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">$285</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">AU</td><td style="padding:6px 8px;">Property Extensions</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">A$27.57</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">A$42.79</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+A$15.23</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+55%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">30 → 5</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">A$37</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">NZ</td><td style="padding:6px 8px;">Property Management</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">NZ$28.21</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">NZ$42.33</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+NZ$14.12</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+50%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">23 → 4</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">NZ$55</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">ZA</td><td style="padding:6px 8px;">Wedding Photography</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R0.82</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">R1.17</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+R0.35</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+43%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">40 → 5</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R21</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">CA</td><td style="padding:6px 8px;">Landscaping</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£6.68</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">£9.45</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+£2.76</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+41%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">49 → 27</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£70</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">UK</td><td style="padding:6px 8px;">End of Tenancy Cleaning</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£5.88</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">£8.20</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+£2.31</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+39%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">98 → 53</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£405</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">UK</td><td style="padding:6px 8px;">Kitchen Installation & Remodelling</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£8.21</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">£11.37</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+£3.16</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+39%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">66 → 44</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£228</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">NZ</td><td style="padding:6px 8px;">Landscaping</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">NZ$12.21</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">NZ$16.88</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+NZ$4.67</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+38%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">21 → 10</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">NZ$58</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">ZA</td><td style="padding:6px 8px;">Structural Engineer</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R5.53</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">R7.57</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+R2.05</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+37%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">34 → 24</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R65</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">US</td><td style="padding:6px 8px;">Photo Booth Hire</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">$4.28</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">$5.80</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+$1.52</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+36%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">433 → 212</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">$530</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">ZA</td><td style="padding:6px 8px;">Solar Panel Installation</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R2.72</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">R3.68</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+R0.96</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+35%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">162 → 61</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">R65</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">UK</td><td style="padding:6px 8px;">Home Insulation</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£26.50</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">£35.71</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+£9.21</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+35%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">11 → 10</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£224</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">US</td><td style="padding:6px 8px;">Architectural Services</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">$17.34</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">$23.35</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+$6.01</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+35%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">151 → 86</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">$891</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">AU</td><td style="padding:6px 8px;">Landscaping</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">A$6.62</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">A$8.65</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+A$2.02</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+31%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">63 → 35</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">A$159</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">UK</td><td style="padding:6px 8px;">Artificial Grass Installation</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£7.50</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">£9.64</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+£2.14</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+28%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">159 → 83</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£358</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">AU</td><td style="padding:6px 8px;">Roof Cleaning</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">A$10.86</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">A$13.94</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+A$3.08</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+28%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">14 → 8</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">A$26</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04);"><td style="padding:6px 8px; color:#94a3b8;">CA</td><td style="padding:6px 8px;">Tax Preparation</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£8.57</td><td style="padding:6px 8px; text-align:right; color:#fff; font-weight:600;">£10.83</td><td style="padding:6px 8px; text-align:right; color:#22c55e;">+£2.26</td><td style="padding:6px 8px; text-align:right; color:#22c55e; font-weight:700;">+26%</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">18 → 10</td><td style="padding:6px 8px; text-align:right; color:#94a3b8;">£43</td></tr>
+</tbody></table></section>
+</body>
+</html>
