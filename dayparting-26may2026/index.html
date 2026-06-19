@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dayparting & Weekend Rules — Pre-build Analysis · 7 non-UK/US Meta markets</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f7f8fc;color:#111827;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+.top-bar{height:4px;background:linear-gradient(90deg,#E85555,#FA9750,#F7BF53,#47BF9C,#2D7AF1)}
+.wrap{max-width:1180px;margin:0 auto;padding:24px}
+.header{padding:8px 0 24px;border-bottom:1px solid #e5e7eb;margin-bottom:24px}
+.header h1{font-size:24px;font-weight:700;color:#0f172a;letter-spacing:-0.02em}
+.header .meta{color:#64748b;font-size:13px;margin-top:6px}
+.header .meta strong{color:#334155}
+h2{font-size:18px;font-weight:700;color:#0f172a;margin:36px 0 14px;letter-spacing:-0.01em}
+h2 .sub{font-size:13px;color:#64748b;font-weight:500;letter-spacing:0;margin-left:8px}
+h3{font-size:15px;font-weight:700;color:#0f172a;margin:20px 0 10px}
+p{color:#334155;margin-bottom:10px}
+p.muted{color:#64748b;font-size:13px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:8px 0 16px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px;transition:border-color .15s}
+.card:hover{border-color:#cbd5e1}
+.card .flag{font-size:18px}
+.card .label{color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;font-weight:600;margin-top:4px}
+.card .value{font-size:22px;font-weight:700;color:#0f172a;margin-top:4px;font-variant-numeric:tabular-nums}
+.card .sub{color:#64748b;font-size:12px;margin-top:2px;font-variant-numeric:tabular-nums}
+.card.pos .value{color:#047857}
+.card.neg .value{color:#b91c1c}
+.card.warn .value{color:#b45309}
+
+.panel{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px;margin-bottom:14px}
+.panel h3{margin-top:0}
+.panel.callout{background:#fffbeb;border-color:#fde68a}
+.panel.callout-good{background:#ecfdf5;border-color:#a7f3d0}
+.panel.callout-bad{background:#fef2f2;border-color:#fecaca}
+
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #f1f5f9;white-space:nowrap}
+th{color:#475569;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.06em;background:#f8fafc;border-bottom:1px solid #e2e8f0}
+td.num,th.num{text-align:right}
+td.country{font-weight:600;color:#0f172a}
+td.flag{padding-right:0;width:24px}
+tr:last-child td{border-bottom:none}
+
+.heatmap td.cell{text-align:center;font-weight:600;font-size:12.5px;padding:9px 4px;border-radius:0;border:1px solid #fff}
+.heatmap td.cell.t-na{background:#f1f5f9;color:#94a3b8;font-weight:500}
+.heatmap td.cell.t-vneg{background:#991b1b;color:#fff}
+.heatmap td.cell.t-neg{background:#dc2626;color:#fff}
+.heatmap td.cell.t-low{background:#fca5a5;color:#7f1d1d}
+.heatmap td.cell.t-mild{background:#fde68a;color:#78350f}
+.heatmap td.cell.t-ok{background:#bbf7d0;color:#14532d}
+.heatmap td.cell.t-good{background:#4ade80;color:#052e16}
+.heatmap td.cell.t-strong{background:#16a34a;color:#fff}
+.heatmap td.cell.t-vstrong{background:#15803d;color:#fff}
+
+.pos{color:#047857;font-weight:600}
+.neg{color:#b91c1c;font-weight:600}
+.warn{color:#b45309;font-weight:600}
+.muted{color:#64748b}
+
+.signal-list{list-style:none;padding:0}
+.signal-list li{padding:10px 0;border-bottom:1px solid #f1f5f9;display:flex;gap:12px;align-items:flex-start}
+.signal-list li:last-child{border-bottom:none}
+.signal-list .badge{flex-shrink:0;display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em}
+.badge-push{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+.badge-pull{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+.badge-watch{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.badge-steady{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe}
+
+.market-block{margin-top:24px}
+.market-block .head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.market-block .head .flag{font-size:22px}
+.market-block .head .name{font-size:17px;font-weight:700;color:#0f172a}
+.market-block .head .tag{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
+.market-block .head .tag.push{background:#ecfdf5;color:#065f46}
+.market-block .head .tag.pull{background:#fef2f2;color:#991b1b}
+.market-block .head .tag.watch{background:#fffbeb;color:#92400e}
+.market-block .head .tag.steady{background:#eff6ff;color:#1e40af}
+.market-block .head .totals{margin-left:auto;color:#64748b;font-size:12px;font-variant-numeric:tabular-nums}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 16px;font-size:11px}
+.legend span{padding:3px 9px;border-radius:6px;font-weight:600}
+
+.footer{margin-top:48px;padding-top:18px;border-top:1px solid #e5e7eb;color:#64748b;font-size:12px}
+.footer p{margin-bottom:4px;color:#64748b}
+
+@media (max-width:720px){
+  .wrap{padding:14px}
+  .header h1{font-size:20px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head><body>
+<div class="top-bar"></div>
+<div class="wrap">
+
+<div class="header">
+  <h1>Dayparting & Weekend Rules — Pre-build Analysis</h1>
+  <div class="meta">
+    7 non-UK/US Meta markets · <strong>last 90 days</strong> to 2026-05-26 · channel: <strong>PPC – Meta (Facebook + Instagram + Other)</strong><br>
+    Source: Tableau <em>📁 APR+ with EP distributed</em> (Bark-attributed) for DoW + Meta Marketing API (hourly_stats_aggregated_by_advertiser_time_zone) for hour-of-day shape · primary metric: <strong>APR+ % ¤</strong>
+  </div>
+</div>
+
+<!-- ============ MARKET SUMMARY CARDS ============ -->
+<h2>Market overview <span class="sub">90-day Meta totals, ranked by APR+ %</span></h2>
+
+<div class="cards">
+  <div class="card pos">
+    <div class="flag">🇳🇿</div>
+    <div class="label">New Zealand</div>
+    <div class="value">53.0%</div>
+    <div class="sub">NZD 2,551 spend · 5,429 rev+</div>
+  </div>
+  <div class="card pos">
+    <div class="flag">🇨🇦</div>
+    <div class="label">Canada</div>
+    <div class="value">36.5%</div>
+    <div class="sub">CAD 98,221 spend · 154,716 rev+</div>
+  </div>
+  <div class="card pos">
+    <div class="flag">🇿🇦</div>
+    <div class="label">South Africa</div>
+    <div class="value">30.6%</div>
+    <div class="sub">ZAR 281k spend · 405k rev+</div>
+  </div>
+  <div class="card warn">
+    <div class="flag">🇩🇪</div>
+    <div class="label">Deutschland</div>
+    <div class="value">8.7%</div>
+    <div class="sub">EUR 6,795 spend · 7,440 rev+</div>
+  </div>
+  <div class="card warn">
+    <div class="flag">🇫🇷</div>
+    <div class="label">France</div>
+    <div class="value">1.4%</div>
+    <div class="sub">EUR 4,314 spend · 4,373 rev+</div>
+  </div>
+  <div class="card neg">
+    <div class="flag">🇮🇪</div>
+    <div class="label">Ireland</div>
+    <div class="value">-5.6%</div>
+    <div class="sub">EUR 17,598 spend · 16,665 rev+</div>
+  </div>
+  <div class="card neg">
+    <div class="flag">🇦🇺</div>
+    <div class="label">Australia</div>
+    <div class="value">-7.5%</div>
+    <div class="sub">AUD 4,581 spend · 4,260 rev+</div>
+  </div>
+</div>
+
+<!-- ============ HEATMAP ============ -->
+<h2>APR+ % by Day-of-Week <span class="sub">Meta-only, last 90 days, per market local currency</span></h2>
+
+<div class="legend">
+  <span style="background:#991b1b;color:#fff">≤ -25%</span>
+  <span style="background:#dc2626;color:#fff">-25 to -10</span>
+  <span style="background:#fca5a5;color:#7f1d1d">-10 to 0</span>
+  <span style="background:#fde68a;color:#78350f">0 to 10</span>
+  <span style="background:#bbf7d0;color:#14532d">10 to 25</span>
+  <span style="background:#4ade80;color:#052e16">25 to 40</span>
+  <span style="background:#16a34a;color:#fff">40 to 55</span>
+  <span style="background:#15803d;color:#fff">≥ 55%</span>
+  <span style="background:#f1f5f9;color:#94a3b8">No data</span>
+</div>
+
+<div class="panel" style="padding:8px">
+<div style="overflow-x:auto">
+<table class="heatmap">
+<thead>
+  <tr>
+    <th>Market</th>
+    <th class="num">Mon</th>
+    <th class="num">Tue</th>
+    <th class="num">Wed</th>
+    <th class="num">Thu</th>
+    <th class="num">Fri</th>
+    <th class="num">Sat</th>
+    <th class="num">Sun</th>
+    <th class="num">90d total</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="country">🇳🇿 New Zealand</td>
+    <td class="cell t-vstrong">48%</td>
+    <td class="cell t-na">–</td>
+    <td class="cell t-na">–</td>
+    <td class="cell t-vneg">-85%</td>
+    <td class="cell t-vstrong">52%</td>
+    <td class="cell t-vstrong">59%</td>
+    <td class="cell t-vstrong">60%</td>
+    <td class="cell t-vstrong">53%</td>
+  </tr>
+  <tr>
+    <td class="country">🇨🇦 Canada</td>
+    <td class="cell t-vstrong">44%</td>
+    <td class="cell t-good">36%</td>
+    <td class="cell t-good">38%</td>
+    <td class="cell t-good">40%</td>
+    <td class="cell t-good">33%</td>
+    <td class="cell t-good">33%</td>
+    <td class="cell t-good">27%</td>
+    <td class="cell t-good">37%</td>
+  </tr>
+  <tr>
+    <td class="country">🇿🇦 South Africa</td>
+    <td class="cell t-vstrong">44%</td>
+    <td class="cell t-vstrong">46%</td>
+    <td class="cell t-good">37%</td>
+    <td class="cell t-good">35%</td>
+    <td class="cell t-good">28%</td>
+    <td class="cell t-low">-8%</td>
+    <td class="cell t-mild">10%</td>
+    <td class="cell t-good">31%</td>
+  </tr>
+  <tr>
+    <td class="country">🇩🇪 Deutschland</td>
+    <td class="cell t-low">-3%</td>
+    <td class="cell t-good">33%</td>
+    <td class="cell t-ok">20%</td>
+    <td class="cell t-mild">4%</td>
+    <td class="cell t-ok">21%</td>
+    <td class="cell t-vneg">-40%</td>
+    <td class="cell t-low">-8%</td>
+    <td class="cell t-mild">9%</td>
+  </tr>
+  <tr>
+    <td class="country">🇫🇷 France</td>
+    <td class="cell t-good">25%</td>
+    <td class="cell t-low">-2%</td>
+    <td class="cell t-neg">-19%</td>
+    <td class="cell t-mild">4%</td>
+    <td class="cell t-low">-8%</td>
+    <td class="cell t-mild">3%</td>
+    <td class="cell t-low">-5%</td>
+    <td class="cell t-mild">1%</td>
+  </tr>
+  <tr>
+    <td class="country">🇮🇪 Ireland</td>
+    <td class="cell t-low">-3%</td>
+    <td class="cell t-mild">5%</td>
+    <td class="cell t-neg">-12%</td>
+    <td class="cell t-neg">-20%</td>
+    <td class="cell t-neg">-24%</td>
+    <td class="cell t-vstrong">58%</td>
+    <td class="cell t-mild">10%</td>
+    <td class="cell t-low">-6%</td>
+  </tr>
+  <tr>
+    <td class="country">🇦🇺 Australia</td>
+    <td class="cell t-good">37%</td>
+    <td class="cell t-na">–</td>
+    <td class="cell t-na">–</td>
+    <td class="cell t-vneg">-486%</td>
+    <td class="cell t-neg">-17%</td>
+    <td class="cell t-ok">12%</td>
+    <td class="cell t-neg">-17%</td>
+    <td class="cell t-low">-8%</td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p class="muted">Cells with very low spend (under ~£20/day) appear as outsized swings (e.g. NZ Thu, AU Thu). These should be treated as noise, not signal, until volume is in.</p>
+
+<!-- ============ KEY SIGNALS ============ -->
+<h2>Top signals from this view <span class="sub">findings that survive without hour-of-day data</span></h2>
+
+<div class="panel callout-bad">
+  <h3>🇮🇪 Ireland — inverted weekend pattern</h3>
+  <p>~EUR 13.5k spent Mon–Fri produced a <span class="neg">-EUR 1,629 loss</span>. Same period spent ~EUR 1k Sat–Sun and produced <span class="pos">+EUR 695 profit</span>.</p>
+  <p>Saturday APR+ is <strong class="pos">58%</strong> on tiny spend. Suggests either (a) hard weekday pulls, or (b) aggressive Saturday push — opposite of the standard "weekend wind-down" rule shape.</p>
+</div>
+
+<div class="panel callout-bad">
+  <h3>🇿🇦 South Africa — Saturday is loss-making at volume</h3>
+  <p>~ZAR 42k weekly Saturday spend at <span class="neg">-8.4% APR+</span> burns ~ZAR 3.5k/wk = <strong>~ZAR 180k/yr saved if pulled to ×0.20</strong> (similar to UK/US evening rule). Sunday is marginal but positive.</p>
+</div>
+
+<div class="panel callout-bad">
+  <h3>🇩🇪 Deutschland — Saturday at -40% APR+</h3>
+  <p>Small spend (~EUR 830/wk Sat), but the worst-performing day-of-week of any market we measured. Hard Saturday pull is a no-brainer once you're building the ruleset.</p>
+</div>
+
+<div class="panel callout-good">
+  <h3>🇳🇿 New Zealand — weekends are MORE profitable, not less</h3>
+  <p>Sat <strong class="pos">59%</strong> and Sun <strong class="pos">60%</strong> APR+ vs Mon <strong>48%</strong>. NZ wants a <em>weekend push</em> rule, not a pull. Inverts the UK/US baseline. Note: very low spend overall (~NZD 28/day) — volume needs to come up before this matters in absolute £.</p>
+</div>
+
+<div class="panel callout-good">
+  <h3>🇨🇦 Canada — boring profitable, ride steady</h3>
+  <p>Every day 27–44% APR+. Largest absolute market alongside ZA. A small Sun trim (~×0.85) and otherwise no daypart aggression needed.</p>
+</div>
+
+<div class="panel callout">
+  <h3>🇦🇺 Australia & 🇫🇷 France — too thin to design rules</h3>
+  <p>AU is 4.6k AUD over 90d (~50 AUD/day) and FR is 4.3k EUR. Both negative or marginal across the week. Recommend fixing targeting / driving spend up first, then add rules once there's ≥ ~3 months at meaningful volume.</p>
+</div>
+
+<!-- ============ PER-MARKET DETAIL ============ -->
+<h2>Spend by hour of day <span class="sub">total 90d spend in each local hour (market currency)</span></h2>
+<div class="legend">
+<span style="background:#f1f5f9;color:#94a3b8">&lt; 0.5% of day</span>
+<span style="background:#fca5a5;color:#7f1d1d">0.5–2%</span>
+<span style="background:#fde68a;color:#78350f">2–4%</span>
+<span style="background:#bbf7d0;color:#14532d">4–6%</span>
+<span style="background:#4ade80;color:#052e16">6–8%</span>
+<span style="background:#16a34a;color:#fff">8–10%</span>
+<span style="background:#15803d;color:#fff">≥ 10%</span>
+</div>
+<div class="panel" style="padding:8px"><div style="overflow-x:auto">
+<table class="heatmap" style="min-width:1080px">
+<thead><tr><th style="text-align:left">Market</th>
+<th class="num">00</th>
+<th class="num">01</th>
+<th class="num">02</th>
+<th class="num">03</th>
+<th class="num">04</th>
+<th class="num">05</th>
+<th class="num">06</th>
+<th class="num">07</th>
+<th class="num">08</th>
+<th class="num">09</th>
+<th class="num">10</th>
+<th class="num">11</th>
+<th class="num">12</th>
+<th class="num">13</th>
+<th class="num">14</th>
+<th class="num">15</th>
+<th class="num">16</th>
+<th class="num">17</th>
+<th class="num">18</th>
+<th class="num">19</th>
+<th class="num">20</th>
+<th class="num">21</th>
+<th class="num">22</th>
+<th class="num">23</th>
+<th class="num">90d total</th></tr></thead><tbody>
+<tr><td class="country">🇳🇿 New Zealand</td>
+<td class="cell t-low" title="Local 00:00 | 32 NZD (1.2% of day)">32</td>
+<td class="cell t-low" title="Local 01:00 | 22 NZD (0.8% of day)">22</td>
+<td class="cell t-low" title="Local 02:00 | 16 NZD (0.6% of day)">16</td>
+<td class="cell t-low" title="Local 03:00 | 17 NZD (0.7% of day)">17</td>
+<td class="cell t-low" title="Local 04:00 | 20 NZD (0.8% of day)">20</td>
+<td class="cell t-low" title="Local 05:00 | 39 NZD (1.5% of day)">39</td>
+<td class="cell t-ok" title="Local 06:00 | 111 NZD (4.3% of day)">111</td>
+<td class="cell t-good" title="Local 07:00 | 167 NZD (6.5% of day)">167</td>
+<td class="cell t-good" title="Local 08:00 | 194 NZD (7.6% of day)">194</td>
+<td class="cell t-good" title="Local 09:00 | 191 NZD (7.5% of day)">191</td>
+<td class="cell t-good" title="Local 10:00 | 182 NZD (7.1% of day)">182</td>
+<td class="cell t-ok" title="Local 11:00 | 135 NZD (5.3% of day)">135</td>
+<td class="cell t-good" title="Local 12:00 | 166 NZD (6.5% of day)">166</td>
+<td class="cell t-mild" title="Local 13:00 | 101 NZD (4.0% of day)">101</td>
+<td class="cell t-mild" title="Local 14:00 | 99 NZD (3.9% of day)">99</td>
+<td class="cell t-ok" title="Local 15:00 | 109 NZD (4.3% of day)">109</td>
+<td class="cell t-ok" title="Local 16:00 | 109 NZD (4.3% of day)">109</td>
+<td class="cell t-ok" title="Local 17:00 | 121 NZD (4.7% of day)">121</td>
+<td class="cell t-ok" title="Local 18:00 | 136 NZD (5.3% of day)">136</td>
+<td class="cell t-ok" title="Local 19:00 | 141 NZD (5.5% of day)">141</td>
+<td class="cell t-ok" title="Local 20:00 | 145 NZD (5.7% of day)">145</td>
+<td class="cell t-ok" title="Local 21:00 | 148 NZD (5.8% of day)">148</td>
+<td class="cell t-mild" title="Local 22:00 | 96 NZD (3.8% of day)">96</td>
+<td class="cell t-mild" title="Local 23:00 | 58 NZD (2.3% of day)">58</td>
+<td class="num"><strong>2,556</strong> NZD</td>
+</tr>
+<tr><td class="country">🇨🇦 Canada</td>
+<td class="cell t-mild" title="Local 00:00 | 1,822 GBP (3.4% of day)">1.8k</td>
+<td class="cell t-mild" title="Local 01:00 | 1,255 GBP (2.3% of day)">1.3k</td>
+<td class="cell t-low" title="Local 02:00 | 768 GBP (1.4% of day)">768</td>
+<td class="cell t-low" title="Local 03:00 | 510 GBP (0.9% of day)">510</td>
+<td class="cell t-low" title="Local 04:00 | 470 GBP (0.9% of day)">470</td>
+<td class="cell t-low" title="Local 05:00 | 642 GBP (1.2% of day)">642</td>
+<td class="cell t-mild" title="Local 06:00 | 1,205 GBP (2.2% of day)">1.2k</td>
+<td class="cell t-mild" title="Local 07:00 | 1,920 GBP (3.6% of day)">1.9k</td>
+<td class="cell t-ok" title="Local 08:00 | 2,458 GBP (4.6% of day)">2.5k</td>
+<td class="cell t-ok" title="Local 09:00 | 2,779 GBP (5.2% of day)">2.8k</td>
+<td class="cell t-ok" title="Local 10:00 | 2,969 GBP (5.5% of day)">3.0k</td>
+<td class="cell t-ok" title="Local 11:00 | 3,027 GBP (5.6% of day)">3.0k</td>
+<td class="cell t-ok" title="Local 12:00 | 2,851 GBP (5.3% of day)">2.9k</td>
+<td class="cell t-ok" title="Local 13:00 | 2,677 GBP (5.0% of day)">2.7k</td>
+<td class="cell t-ok" title="Local 14:00 | 2,672 GBP (5.0% of day)">2.7k</td>
+<td class="cell t-ok" title="Local 15:00 | 2,576 GBP (4.8% of day)">2.6k</td>
+<td class="cell t-ok" title="Local 16:00 | 2,454 GBP (4.6% of day)">2.5k</td>
+<td class="cell t-ok" title="Local 17:00 | 2,413 GBP (4.5% of day)">2.4k</td>
+<td class="cell t-ok" title="Local 18:00 | 2,341 GBP (4.3% of day)">2.3k</td>
+<td class="cell t-good" title="Local 19:00 | 3,543 GBP (6.6% of day)">3.5k</td>
+<td class="cell t-good" title="Local 20:00 | 3,336 GBP (6.2% of day)">3.3k</td>
+<td class="cell t-good" title="Local 21:00 | 3,370 GBP (6.3% of day)">3.4k</td>
+<td class="cell t-ok" title="Local 22:00 | 3,165 GBP (5.9% of day)">3.2k</td>
+<td class="cell t-ok" title="Local 23:00 | 2,585 GBP (4.8% of day)">2.6k</td>
+<td class="num"><strong>53,807</strong> GBP</td>
+</tr>
+<tr><td class="country">🇿🇦 South Africa</td>
+<td class="cell t-low" title="Local 00:00 | 3,692 ZAR (1.3% of day)">3.7k</td>
+<td class="cell t-low" title="Local 01:00 | 3,035 ZAR (1.1% of day)">3.0k</td>
+<td class="cell t-low" title="Local 02:00 | 4,013 ZAR (1.4% of day)">4.0k</td>
+<td class="cell t-low" title="Local 03:00 | 3,800 ZAR (1.3% of day)">3.8k</td>
+<td class="cell t-low" title="Local 04:00 | 5,110 ZAR (1.8% of day)">5.1k</td>
+<td class="cell t-mild" title="Local 05:00 | 8,773 ZAR (3.1% of day)">8.8k</td>
+<td class="cell t-ok" title="Local 06:00 | 13,688 ZAR (4.8% of day)">14k</td>
+<td class="cell t-ok" title="Local 07:00 | 16,953 ZAR (6.0% of day)">17k</td>
+<td class="cell t-ok" title="Local 08:00 | 16,120 ZAR (5.7% of day)">16k</td>
+<td class="cell t-ok" title="Local 09:00 | 14,613 ZAR (5.2% of day)">15k</td>
+<td class="cell t-ok" title="Local 10:00 | 14,523 ZAR (5.1% of day)">15k</td>
+<td class="cell t-ok" title="Local 11:00 | 15,358 ZAR (5.4% of day)">15k</td>
+<td class="cell t-ok" title="Local 12:00 | 15,407 ZAR (5.5% of day)">15k</td>
+<td class="cell t-ok" title="Local 13:00 | 14,191 ZAR (5.0% of day)">14k</td>
+<td class="cell t-ok" title="Local 14:00 | 13,361 ZAR (4.7% of day)">13k</td>
+<td class="cell t-ok" title="Local 15:00 | 12,744 ZAR (4.5% of day)">13k</td>
+<td class="cell t-ok" title="Local 16:00 | 12,259 ZAR (4.3% of day)">12k</td>
+<td class="cell t-ok" title="Local 17:00 | 12,364 ZAR (4.4% of day)">12k</td>
+<td class="cell t-ok" title="Local 18:00 | 13,355 ZAR (4.7% of day)">13k</td>
+<td class="cell t-ok" title="Local 19:00 | 16,481 ZAR (5.8% of day)">16k</td>
+<td class="cell t-good" title="Local 20:00 | 17,932 ZAR (6.3% of day)">18k</td>
+<td class="cell t-ok" title="Local 21:00 | 16,437 ZAR (5.8% of day)">16k</td>
+<td class="cell t-ok" title="Local 22:00 | 11,811 ZAR (4.2% of day)">12k</td>
+<td class="cell t-mild" title="Local 23:00 | 6,844 ZAR (2.4% of day)">6.8k</td>
+<td class="num"><strong>282,863</strong> ZAR</td>
+</tr>
+<tr><td class="country">🇩🇪 Deutschland</td>
+<td class="cell t-mild" title="Local 00:00 | 226 EUR (3.3% of day)">226</td>
+<td class="cell t-low" title="Local 01:00 | 101 EUR (1.5% of day)">101</td>
+<td class="cell t-low" title="Local 02:00 | 61 EUR (0.9% of day)">61</td>
+<td class="cell t-low" title="Local 03:00 | 45 EUR (0.7% of day)">45</td>
+<td class="cell t-low" title="Local 04:00 | 51 EUR (0.7% of day)">51</td>
+<td class="cell t-low" title="Local 05:00 | 81 EUR (1.2% of day)">81</td>
+<td class="cell t-mild" title="Local 06:00 | 148 EUR (2.1% of day)">148</td>
+<td class="cell t-mild" title="Local 07:00 | 221 EUR (3.2% of day)">221</td>
+<td class="cell t-ok" title="Local 08:00 | 291 EUR (4.2% of day)">291</td>
+<td class="cell t-ok" title="Local 09:00 | 311 EUR (4.5% of day)">311</td>
+<td class="cell t-ok" title="Local 10:00 | 320 EUR (4.7% of day)">320</td>
+<td class="cell t-ok" title="Local 11:00 | 339 EUR (4.9% of day)">339</td>
+<td class="cell t-ok" title="Local 12:00 | 373 EUR (5.4% of day)">373</td>
+<td class="cell t-ok" title="Local 13:00 | 387 EUR (5.6% of day)">387</td>
+<td class="cell t-ok" title="Local 14:00 | 379 EUR (5.5% of day)">379</td>
+<td class="cell t-ok" title="Local 15:00 | 379 EUR (5.5% of day)">379</td>
+<td class="cell t-ok" title="Local 16:00 | 373 EUR (5.4% of day)">373</td>
+<td class="cell t-ok" title="Local 17:00 | 368 EUR (5.4% of day)">368</td>
+<td class="cell t-ok" title="Local 18:00 | 371 EUR (5.4% of day)">371</td>
+<td class="cell t-good" title="Local 19:00 | 428 EUR (6.2% of day)">428</td>
+<td class="cell t-good" title="Local 20:00 | 471 EUR (6.9% of day)">471</td>
+<td class="cell t-good" title="Local 21:00 | 475 EUR (6.9% of day)">475</td>
+<td class="cell t-ok" title="Local 22:00 | 399 EUR (5.8% of day)">399</td>
+<td class="cell t-mild" title="Local 23:00 | 273 EUR (4.0% of day)">273</td>
+<td class="num"><strong>6,871</strong> EUR</td>
+</tr>
+<tr><td class="country">🇫🇷 France</td>
+<td class="cell t-mild" title="Local 00:00 | 166 EUR (3.8% of day)">166</td>
+<td class="cell t-low" title="Local 01:00 | 79 EUR (1.8% of day)">79</td>
+<td class="cell t-low" title="Local 02:00 | 42 EUR (1.0% of day)">42</td>
+<td class="cell t-low" title="Local 03:00 | 30 EUR (0.7% of day)">30</td>
+<td class="cell t-low" title="Local 04:00 | 29 EUR (0.7% of day)">29</td>
+<td class="cell t-low" title="Local 05:00 | 47 EUR (1.1% of day)">47</td>
+<td class="cell t-mild" title="Local 06:00 | 101 EUR (2.3% of day)">101</td>
+<td class="cell t-mild" title="Local 07:00 | 170 EUR (3.9% of day)">170</td>
+<td class="cell t-ok" title="Local 08:00 | 203 EUR (4.7% of day)">203</td>
+<td class="cell t-ok" title="Local 09:00 | 201 EUR (4.6% of day)">201</td>
+<td class="cell t-ok" title="Local 10:00 | 193 EUR (4.4% of day)">193</td>
+<td class="cell t-ok" title="Local 11:00 | 189 EUR (4.4% of day)">189</td>
+<td class="cell t-ok" title="Local 12:00 | 209 EUR (4.8% of day)">209</td>
+<td class="cell t-ok" title="Local 13:00 | 235 EUR (5.4% of day)">235</td>
+<td class="cell t-ok" title="Local 14:00 | 224 EUR (5.2% of day)">224</td>
+<td class="cell t-ok" title="Local 15:00 | 233 EUR (5.3% of day)">233</td>
+<td class="cell t-ok" title="Local 16:00 | 229 EUR (5.3% of day)">229</td>
+<td class="cell t-ok" title="Local 17:00 | 240 EUR (5.5% of day)">240</td>
+<td class="cell t-ok" title="Local 18:00 | 233 EUR (5.3% of day)">233</td>
+<td class="cell t-ok" title="Local 19:00 | 234 EUR (5.4% of day)">234</td>
+<td class="cell t-good" title="Local 20:00 | 275 EUR (6.3% of day)">275</td>
+<td class="cell t-good" title="Local 21:00 | 306 EUR (7.0% of day)">306</td>
+<td class="cell t-good" title="Local 22:00 | 283 EUR (6.5% of day)">283</td>
+<td class="cell t-ok" title="Local 23:00 | 199 EUR (4.6% of day)">199</td>
+<td class="num"><strong>4,350</strong> EUR</td>
+</tr>
+<tr><td class="country">🇮🇪 Ireland</td>
+<td class="cell t-mild" title="Local 00:00 | 469 EUR (2.6% of day)">469</td>
+<td class="cell t-low" title="Local 01:00 | 356 EUR (2.0% of day)">356</td>
+<td class="cell t-low" title="Local 02:00 | 190 EUR (1.1% of day)">190</td>
+<td class="cell t-low" title="Local 03:00 | 138 EUR (0.8% of day)">138</td>
+<td class="cell t-low" title="Local 04:00 | 134 EUR (0.8% of day)">134</td>
+<td class="cell t-low" title="Local 05:00 | 199 EUR (1.1% of day)">199</td>
+<td class="cell t-mild" title="Local 06:00 | 362 EUR (2.0% of day)">362</td>
+<td class="cell t-mild" title="Local 07:00 | 635 EUR (3.5% of day)">635</td>
+<td class="cell t-ok" title="Local 08:00 | 876 EUR (4.9% of day)">876</td>
+<td class="cell t-ok" title="Local 09:00 | 957 EUR (5.3% of day)">957</td>
+<td class="cell t-ok" title="Local 10:00 | 922 EUR (5.1% of day)">922</td>
+<td class="cell t-ok" title="Local 11:00 | 938 EUR (5.2% of day)">938</td>
+<td class="cell t-ok" title="Local 12:00 | 913 EUR (5.1% of day)">913</td>
+<td class="cell t-ok" title="Local 13:00 | 962 EUR (5.4% of day)">962</td>
+<td class="cell t-ok" title="Local 14:00 | 910 EUR (5.1% of day)">910</td>
+<td class="cell t-ok" title="Local 15:00 | 900 EUR (5.0% of day)">900</td>
+<td class="cell t-ok" title="Local 16:00 | 983 EUR (5.5% of day)">983</td>
+<td class="cell t-ok" title="Local 17:00 | 971 EUR (5.4% of day)">971</td>
+<td class="cell t-ok" title="Local 18:00 | 1,016 EUR (5.7% of day)">1.0k</td>
+<td class="cell t-good" title="Local 19:00 | 1,077 EUR (6.0% of day)">1.1k</td>
+<td class="cell t-good" title="Local 20:00 | 1,084 EUR (6.0% of day)">1.1k</td>
+<td class="cell t-good" title="Local 21:00 | 1,118 EUR (6.2% of day)">1.1k</td>
+<td class="cell t-ok" title="Local 22:00 | 1,023 EUR (5.7% of day)">1.0k</td>
+<td class="cell t-ok" title="Local 23:00 | 815 EUR (4.5% of day)">815</td>
+<td class="num"><strong>17,949</strong> EUR</td>
+</tr>
+<tr><td class="country">🇦🇺 Australia</td>
+<td class="cell t-low" title="Local 00:00 | 226 AUD (1.9% of day)">226</td>
+<td class="cell t-low" title="Local 01:00 | 166 AUD (1.4% of day)">166</td>
+<td class="cell t-low" title="Local 02:00 | 128 AUD (1.0% of day)">128</td>
+<td class="cell t-low" title="Local 03:00 | 137 AUD (1.1% of day)">137</td>
+<td class="cell t-low" title="Local 04:00 | 203 AUD (1.7% of day)">203</td>
+<td class="cell t-mild" title="Local 05:00 | 380 AUD (3.1% of day)">380</td>
+<td class="cell t-ok" title="Local 06:00 | 603 AUD (4.9% of day)">603</td>
+<td class="cell t-good" title="Local 07:00 | 744 AUD (6.1% of day)">744</td>
+<td class="cell t-good" title="Local 08:00 | 780 AUD (6.4% of day)">780</td>
+<td class="cell t-ok" title="Local 09:00 | 690 AUD (5.6% of day)">690</td>
+<td class="cell t-good" title="Local 10:00 | 817 AUD (6.7% of day)">817</td>
+<td class="cell t-ok" title="Local 11:00 | 617 AUD (5.0% of day)">617</td>
+<td class="cell t-ok" title="Local 12:00 | 591 AUD (4.8% of day)">591</td>
+<td class="cell t-ok" title="Local 13:00 | 580 AUD (4.7% of day)">580</td>
+<td class="cell t-ok" title="Local 14:00 | 545 AUD (4.5% of day)">545</td>
+<td class="cell t-ok" title="Local 15:00 | 513 AUD (4.2% of day)">513</td>
+<td class="cell t-ok" title="Local 16:00 | 548 AUD (4.5% of day)">548</td>
+<td class="cell t-ok" title="Local 17:00 | 527 AUD (4.3% of day)">527</td>
+<td class="cell t-ok" title="Local 18:00 | 554 AUD (4.5% of day)">554</td>
+<td class="cell t-ok" title="Local 19:00 | 640 AUD (5.2% of day)">640</td>
+<td class="cell t-ok" title="Local 20:00 | 698 AUD (5.7% of day)">698</td>
+<td class="cell t-ok" title="Local 21:00 | 637 AUD (5.2% of day)">637</td>
+<td class="cell t-ok" title="Local 22:00 | 565 AUD (4.6% of day)">565</td>
+<td class="cell t-mild" title="Local 23:00 | 359 AUD (2.9% of day)">359</td>
+<td class="num"><strong>12,249</strong> AUD</td>
+</tr>
+</tbody></table></div></div>
+<p class="muted">Cell shows total spend in that hour over 90 days, in the market's local currency. Color = % share of the market's daily spend distribution. Hover any cell for exact value + share %.</p>
+<h2 style="margin-top:28px">ROAS by hour of day <span class="sub">Meta-attributed ROAS in each local hour</span></h2>
+<div class="legend">
+<span style="background:#991b1b;color:#fff">&lt; 25% of avg (dead)</span>
+<span style="background:#dc2626;color:#fff">25–50%</span>
+<span style="background:#fca5a5;color:#7f1d1d">50–80%</span>
+<span style="background:#fde68a;color:#78350f">80–110% (at avg)</span>
+<span style="background:#bbf7d0;color:#14532d">110–140%</span>
+<span style="background:#4ade80;color:#052e16">140–170%</span>
+<span style="background:#16a34a;color:#fff">170–210%</span>
+<span style="background:#15803d;color:#fff">≥ 210%</span>
+<span style="background:#f1f5f9;color:#94a3b8">low spend</span>
+</div>
+<div class="panel" style="padding:8px"><div style="overflow-x:auto">
+<table class="heatmap" style="min-width:1080px">
+<thead><tr><th style="text-align:left">Market</th>
+<th class="num">00</th>
+<th class="num">01</th>
+<th class="num">02</th>
+<th class="num">03</th>
+<th class="num">04</th>
+<th class="num">05</th>
+<th class="num">06</th>
+<th class="num">07</th>
+<th class="num">08</th>
+<th class="num">09</th>
+<th class="num">10</th>
+<th class="num">11</th>
+<th class="num">12</th>
+<th class="num">13</th>
+<th class="num">14</th>
+<th class="num">15</th>
+<th class="num">16</th>
+<th class="num">17</th>
+<th class="num">18</th>
+<th class="num">19</th>
+<th class="num">20</th>
+<th class="num">21</th>
+<th class="num">22</th>
+<th class="num">23</th>
+<th class="num">Avg ROAS</th></tr></thead><tbody>
+<tr><td class="country">🇳🇿 New Zealand</td>
+<td class="cell t-mild" title="Local 00:00 | ROAS 1.93x | Index 95.6 | Spend 32 NZD">1.93</td>
+<td class="cell t-vneg" title="Local 01:00 | ROAS 0.00x | Index n/a | Spend 22 NZD">0.00</td>
+<td class="cell t-vneg" title="Local 02:00 | ROAS 0.00x | Index n/a | Spend 16 NZD">0.00</td>
+<td class="cell t-vneg" title="Local 03:00 | ROAS 0.00x | Index n/a | Spend 17 NZD">0.00</td>
+<td class="cell t-vneg" title="Local 04:00 | ROAS 0.00x | Index n/a | Spend 20 NZD">0.00</td>
+<td class="cell t-mild" title="Local 05:00 | ROAS 1.76x | Index 87.2 | Spend 39 NZD">1.76</td>
+<td class="cell t-low" title="Local 06:00 | ROAS 1.54x | Index 76.4 | Spend 111 NZD">1.54</td>
+<td class="cell t-mild" title="Local 07:00 | ROAS 1.70x | Index 84.4 | Spend 167 NZD">1.70</td>
+<td class="cell t-strong" title="Local 08:00 | ROAS 3.96x | Index 196.2 | Spend 194 NZD">3.96</td>
+<td class="cell t-mild" title="Local 09:00 | ROAS 1.97x | Index 97.4 | Spend 191 NZD">1.97</td>
+<td class="cell t-good" title="Local 10:00 | ROAS 3.10x | Index 153.6 | Spend 182 NZD">3.10</td>
+<td class="cell t-mild" title="Local 11:00 | ROAS 1.62x | Index 80.5 | Spend 135 NZD">1.62</td>
+<td class="cell t-mild" title="Local 12:00 | ROAS 2.13x | Index 105.7 | Spend 166 NZD">2.13</td>
+<td class="cell t-vstrong" title="Local 13:00 | ROAS 4.75x | Index 235.6 | Spend 101 NZD">4.75</td>
+<td class="cell t-ok" title="Local 14:00 | ROAS 2.73x | Index 135.1 | Spend 99 NZD">2.73</td>
+<td class="cell t-ok" title="Local 15:00 | ROAS 2.46x | Index 122.0 | Spend 109 NZD">2.46</td>
+<td class="cell t-neg" title="Local 16:00 | ROAS 0.89x | Index 44.1 | Spend 109 NZD">0.89</td>
+<td class="cell t-low" title="Local 17:00 | ROAS 1.59x | Index 78.8 | Spend 121 NZD">1.59</td>
+<td class="cell t-low" title="Local 18:00 | ROAS 1.28x | Index 63.3 | Spend 136 NZD">1.28</td>
+<td class="cell t-good" title="Local 19:00 | ROAS 2.86x | Index 141.6 | Spend 141 NZD">2.86</td>
+<td class="cell t-low" title="Local 20:00 | ROAS 1.02x | Index 50.7 | Spend 145 NZD">1.02</td>
+<td class="cell t-vneg" title="Local 21:00 | ROAS 0.37x | Index 18.2 | Spend 148 NZD">0.37</td>
+<td class="cell t-low" title="Local 22:00 | ROAS 1.59x | Index 79.0 | Spend 96 NZD">1.59</td>
+<td class="cell t-neg" title="Local 23:00 | ROAS 0.87x | Index 43.2 | Spend 58 NZD">0.87</td>
+<td class="num"><strong>2.02x</strong></td>
+</tr>
+<tr><td class="country">🇨🇦 Canada</td>
+<td class="cell t-low" title="Local 00:00 | ROAS 0.90x | Index 63.7 | Spend 1,822 GBP">0.90</td>
+<td class="cell t-low" title="Local 01:00 | ROAS 0.87x | Index 61.2 | Spend 1,255 GBP">0.87</td>
+<td class="cell t-low" title="Local 02:00 | ROAS 0.83x | Index 58.3 | Spend 768 GBP">0.83</td>
+<td class="cell t-low" title="Local 03:00 | ROAS 0.83x | Index 58.4 | Spend 510 GBP">0.83</td>
+<td class="cell t-low" title="Local 04:00 | ROAS 0.77x | Index 54.4 | Spend 470 GBP">0.77</td>
+<td class="cell t-low" title="Local 05:00 | ROAS 0.75x | Index 52.6 | Spend 642 GBP">0.75</td>
+<td class="cell t-low" title="Local 06:00 | ROAS 0.87x | Index 61.6 | Spend 1,205 GBP">0.87</td>
+<td class="cell t-mild" title="Local 07:00 | ROAS 1.22x | Index 86.2 | Spend 1,920 GBP">1.22</td>
+<td class="cell t-mild" title="Local 08:00 | ROAS 1.51x | Index 106.3 | Spend 2,458 GBP">1.51</td>
+<td class="cell t-ok" title="Local 09:00 | ROAS 1.67x | Index 117.4 | Spend 2,779 GBP">1.67</td>
+<td class="cell t-ok" title="Local 10:00 | ROAS 1.70x | Index 119.9 | Spend 2,969 GBP">1.70</td>
+<td class="cell t-ok" title="Local 11:00 | ROAS 1.93x | Index 136.1 | Spend 3,027 GBP">1.93</td>
+<td class="cell t-ok" title="Local 12:00 | ROAS 1.84x | Index 130.1 | Spend 2,851 GBP">1.84</td>
+<td class="cell t-ok" title="Local 13:00 | ROAS 1.85x | Index 130.4 | Spend 2,677 GBP">1.85</td>
+<td class="cell t-ok" title="Local 14:00 | ROAS 1.87x | Index 131.6 | Spend 2,672 GBP">1.87</td>
+<td class="cell t-ok" title="Local 15:00 | ROAS 1.72x | Index 121.3 | Spend 2,576 GBP">1.72</td>
+<td class="cell t-ok" title="Local 16:00 | ROAS 1.85x | Index 130.7 | Spend 2,454 GBP">1.85</td>
+<td class="cell t-mild" title="Local 17:00 | ROAS 1.43x | Index 100.6 | Spend 2,413 GBP">1.43</td>
+<td class="cell t-mild" title="Local 18:00 | ROAS 1.51x | Index 106.3 | Spend 2,341 GBP">1.51</td>
+<td class="cell t-low" title="Local 19:00 | ROAS 1.11x | Index 78.3 | Spend 3,543 GBP">1.11</td>
+<td class="cell t-mild" title="Local 20:00 | ROAS 1.22x | Index 85.8 | Spend 3,336 GBP">1.22</td>
+<td class="cell t-low" title="Local 21:00 | ROAS 1.13x | Index 79.9 | Spend 3,370 GBP">1.13</td>
+<td class="cell t-low" title="Local 22:00 | ROAS 1.00x | Index 70.8 | Spend 3,165 GBP">1.00</td>
+<td class="cell t-low" title="Local 23:00 | ROAS 1.13x | Index 79.4 | Spend 2,585 GBP">1.13</td>
+<td class="num"><strong>1.42x</strong></td>
+</tr>
+<tr><td class="country">🇿🇦 South Africa</td>
+<td class="cell t-neg" title="Local 00:00 | ROAS 0.61x | Index 39.4 | Spend 3,692 ZAR">0.61</td>
+<td class="cell t-low" title="Local 01:00 | ROAS 1.01x | Index 65.1 | Spend 3,035 ZAR">1.01</td>
+<td class="cell t-vneg" title="Local 02:00 | ROAS 0.30x | Index 19.3 | Spend 4,013 ZAR">0.30</td>
+<td class="cell t-vneg" title="Local 03:00 | ROAS 0.28x | Index 17.9 | Spend 3,800 ZAR">0.28</td>
+<td class="cell t-neg" title="Local 04:00 | ROAS 0.40x | Index 25.5 | Spend 5,110 ZAR">0.40</td>
+<td class="cell t-low" title="Local 05:00 | ROAS 0.81x | Index 52.5 | Spend 8,773 ZAR">0.81</td>
+<td class="cell t-mild" title="Local 06:00 | ROAS 1.41x | Index 91.1 | Spend 13,688 ZAR">1.41</td>
+<td class="cell t-ok" title="Local 07:00 | ROAS 1.79x | Index 115.6 | Spend 16,953 ZAR">1.79</td>
+<td class="cell t-strong" title="Local 08:00 | ROAS 2.66x | Index 172.0 | Spend 16,120 ZAR">2.66</td>
+<td class="cell t-strong" title="Local 09:00 | ROAS 2.86x | Index 184.9 | Spend 14,613 ZAR">2.86</td>
+<td class="cell t-good" title="Local 10:00 | ROAS 2.29x | Index 148.3 | Spend 14,523 ZAR">2.29</td>
+<td class="cell t-ok" title="Local 11:00 | ROAS 2.07x | Index 133.9 | Spend 15,358 ZAR">2.07</td>
+<td class="cell t-ok" title="Local 12:00 | ROAS 1.91x | Index 123.5 | Spend 15,407 ZAR">1.91</td>
+<td class="cell t-mild" title="Local 13:00 | ROAS 1.64x | Index 106.0 | Spend 14,191 ZAR">1.64</td>
+<td class="cell t-mild" title="Local 14:00 | ROAS 1.61x | Index 104.3 | Spend 13,361 ZAR">1.61</td>
+<td class="cell t-mild" title="Local 15:00 | ROAS 1.52x | Index 98.1 | Spend 12,744 ZAR">1.52</td>
+<td class="cell t-mild" title="Local 16:00 | ROAS 1.46x | Index 94.3 | Spend 12,259 ZAR">1.46</td>
+<td class="cell t-mild" title="Local 17:00 | ROAS 1.35x | Index 87.5 | Spend 12,364 ZAR">1.35</td>
+<td class="cell t-mild" title="Local 18:00 | ROAS 1.33x | Index 85.9 | Spend 13,355 ZAR">1.33</td>
+<td class="cell t-mild" title="Local 19:00 | ROAS 1.24x | Index 80.0 | Spend 16,481 ZAR">1.24</td>
+<td class="cell t-low" title="Local 20:00 | ROAS 1.17x | Index 75.3 | Spend 17,932 ZAR">1.17</td>
+<td class="cell t-low" title="Local 21:00 | ROAS 1.08x | Index 69.6 | Spend 16,437 ZAR">1.08</td>
+<td class="cell t-low" title="Local 22:00 | ROAS 0.90x | Index 58.1 | Spend 11,811 ZAR">0.90</td>
+<td class="cell t-low" title="Local 23:00 | ROAS 0.87x | Index 55.9 | Spend 6,844 ZAR">0.87</td>
+<td class="num"><strong>1.55x</strong></td>
+</tr>
+<tr><td class="country">🇩🇪 Deutschland</td>
+<td class="cell t-neg" title="Local 00:00 | ROAS 0.28x | Index 29.8 | Spend 226 EUR">0.28</td>
+<td class="cell t-neg" title="Local 01:00 | ROAS 0.35x | Index 36.9 | Spend 101 EUR">0.35</td>
+<td class="cell t-vneg" title="Local 02:00 | ROAS 0.22x | Index 23.3 | Spend 61 EUR">0.22</td>
+<td class="cell t-low" title="Local 03:00 | ROAS 0.63x | Index 65.8 | Spend 45 EUR">0.63</td>
+<td class="cell t-neg" title="Local 04:00 | ROAS 0.36x | Index 38.3 | Spend 51 EUR">0.36</td>
+<td class="cell t-mild" title="Local 05:00 | ROAS 0.87x | Index 91.5 | Spend 81 EUR">0.87</td>
+<td class="cell t-neg" title="Local 06:00 | ROAS 0.28x | Index 29.4 | Spend 148 EUR">0.28</td>
+<td class="cell t-low" title="Local 07:00 | ROAS 0.54x | Index 56.7 | Spend 221 EUR">0.54</td>
+<td class="cell t-low" title="Local 08:00 | ROAS 0.64x | Index 66.7 | Spend 291 EUR">0.64</td>
+<td class="cell t-ok" title="Local 09:00 | ROAS 1.23x | Index 128.6 | Spend 311 EUR">1.23</td>
+<td class="cell t-good" title="Local 10:00 | ROAS 1.40x | Index 147.0 | Spend 320 EUR">1.40</td>
+<td class="cell t-ok" title="Local 11:00 | ROAS 1.17x | Index 122.4 | Spend 339 EUR">1.17</td>
+<td class="cell t-good" title="Local 12:00 | ROAS 1.52x | Index 159.2 | Spend 373 EUR">1.52</td>
+<td class="cell t-mild" title="Local 13:00 | ROAS 0.92x | Index 96.8 | Spend 387 EUR">0.92</td>
+<td class="cell t-ok" title="Local 14:00 | ROAS 1.14x | Index 119.6 | Spend 379 EUR">1.14</td>
+<td class="cell t-strong" title="Local 15:00 | ROAS 1.76x | Index 185.2 | Spend 379 EUR">1.76</td>
+<td class="cell t-mild" title="Local 16:00 | ROAS 0.94x | Index 98.4 | Spend 373 EUR">0.94</td>
+<td class="cell t-mild" title="Local 17:00 | ROAS 1.02x | Index 107.4 | Spend 368 EUR">1.02</td>
+<td class="cell t-ok" title="Local 18:00 | ROAS 1.15x | Index 121.0 | Spend 371 EUR">1.15</td>
+<td class="cell t-mild" title="Local 19:00 | ROAS 0.81x | Index 85.6 | Spend 428 EUR">0.81</td>
+<td class="cell t-low" title="Local 20:00 | ROAS 0.67x | Index 70.4 | Spend 471 EUR">0.67</td>
+<td class="cell t-mild" title="Local 21:00 | ROAS 0.98x | Index 103.4 | Spend 475 EUR">0.98</td>
+<td class="cell t-mild" title="Local 22:00 | ROAS 0.81x | Index 85.0 | Spend 399 EUR">0.81</td>
+<td class="cell t-neg" title="Local 23:00 | ROAS 0.41x | Index 42.7 | Spend 273 EUR">0.41</td>
+<td class="num"><strong>0.95x</strong></td>
+</tr>
+<tr><td class="country">🇫🇷 France</td>
+<td class="cell t-vneg" title="Local 00:00 | ROAS 0.00x | Index n/a | Spend 166 EUR">0.00</td>
+<td class="cell t-vneg" title="Local 01:00 | ROAS 0.00x | Index n/a | Spend 79 EUR">0.00</td>
+<td class="cell t-neg" title="Local 02:00 | ROAS 0.32x | Index 39.7 | Spend 42 EUR">0.32</td>
+<td class="cell t-vneg" title="Local 03:00 | ROAS 0.00x | Index n/a | Spend 30 EUR">0.00</td>
+<td class="cell t-vneg" title="Local 04:00 | ROAS 0.00x | Index n/a | Spend 29 EUR">0.00</td>
+<td class="cell t-vneg" title="Local 05:00 | ROAS 0.00x | Index n/a | Spend 47 EUR">0.00</td>
+<td class="cell t-vneg" title="Local 06:00 | ROAS 0.00x | Index n/a | Spend 101 EUR">0.00</td>
+<td class="cell t-neg" title="Local 07:00 | ROAS 0.39x | Index 49.2 | Spend 170 EUR">0.39</td>
+<td class="cell t-low" title="Local 08:00 | ROAS 0.64x | Index 79.9 | Spend 203 EUR">0.64</td>
+<td class="cell t-vstrong" title="Local 09:00 | ROAS 1.77x | Index 221.1 | Spend 201 EUR">1.77</td>
+<td class="cell t-strong" title="Local 10:00 | ROAS 1.41x | Index 176.2 | Spend 193 EUR">1.41</td>
+<td class="cell t-good" title="Local 11:00 | ROAS 1.23x | Index 153.4 | Spend 189 EUR">1.23</td>
+<td class="cell t-good" title="Local 12:00 | ROAS 1.16x | Index 144.2 | Spend 209 EUR">1.16</td>
+<td class="cell t-strong" title="Local 13:00 | ROAS 1.62x | Index 201.5 | Spend 235 EUR">1.62</td>
+<td class="cell t-ok" title="Local 14:00 | ROAS 1.09x | Index 136.3 | Spend 224 EUR">1.09</td>
+<td class="cell t-low" title="Local 15:00 | ROAS 0.63x | Index 78.3 | Spend 233 EUR">0.63</td>
+<td class="cell t-good" title="Local 16:00 | ROAS 1.16x | Index 144.0 | Spend 229 EUR">1.16</td>
+<td class="cell t-ok" title="Local 17:00 | ROAS 0.93x | Index 115.5 | Spend 240 EUR">0.93</td>
+<td class="cell t-mild" title="Local 18:00 | ROAS 0.75x | Index 93.9 | Spend 233 EUR">0.75</td>
+<td class="cell t-mild" title="Local 19:00 | ROAS 0.83x | Index 103.5 | Spend 234 EUR">0.83</td>
+<td class="cell t-mild" title="Local 20:00 | ROAS 0.78x | Index 97.1 | Spend 275 EUR">0.78</td>
+<td class="cell t-low" title="Local 21:00 | ROAS 0.49x | Index 60.6 | Spend 306 EUR">0.49</td>
+<td class="cell t-low" title="Local 22:00 | ROAS 0.46x | Index 57.4 | Spend 283 EUR">0.46</td>
+<td class="cell t-neg" title="Local 23:00 | ROAS 0.27x | Index 33.8 | Spend 199 EUR">0.27</td>
+<td class="num"><strong>0.80x</strong></td>
+</tr>
+<tr><td class="country">🇮🇪 Ireland</td>
+<td class="cell t-neg" title="Local 00:00 | ROAS 0.51x | Index 48.5 | Spend 469 EUR">0.51</td>
+<td class="cell t-vneg" title="Local 01:00 | ROAS 0.05x | Index 4.5 | Spend 356 EUR">0.05</td>
+<td class="cell t-vneg" title="Local 02:00 | ROAS 0.00x | Index n/a | Spend 190 EUR">0.00</td>
+<td class="cell t-vneg" title="Local 03:00 | ROAS 0.09x | Index 8.3 | Spend 138 EUR">0.09</td>
+<td class="cell t-vneg" title="Local 04:00 | ROAS 0.07x | Index 6.1 | Spend 134 EUR">0.07</td>
+<td class="cell t-vneg" title="Local 05:00 | ROAS 0.22x | Index 20.6 | Spend 199 EUR">0.22</td>
+<td class="cell t-neg" title="Local 06:00 | ROAS 0.34x | Index 32.0 | Spend 362 EUR">0.34</td>
+<td class="cell t-neg" title="Local 07:00 | ROAS 0.36x | Index 34.4 | Spend 635 EUR">0.36</td>
+<td class="cell t-low" title="Local 08:00 | ROAS 0.79x | Index 74.3 | Spend 876 EUR">0.79</td>
+<td class="cell t-ok" title="Local 09:00 | ROAS 1.37x | Index 129.5 | Spend 957 EUR">1.37</td>
+<td class="cell t-ok" title="Local 10:00 | ROAS 1.19x | Index 112.0 | Spend 922 EUR">1.19</td>
+<td class="cell t-strong" title="Local 11:00 | ROAS 1.93x | Index 182.4 | Spend 938 EUR">1.93</td>
+<td class="cell t-good" title="Local 12:00 | ROAS 1.63x | Index 153.9 | Spend 913 EUR">1.63</td>
+<td class="cell t-ok" title="Local 13:00 | ROAS 1.28x | Index 120.9 | Spend 962 EUR">1.28</td>
+<td class="cell t-strong" title="Local 14:00 | ROAS 1.85x | Index 174.5 | Spend 910 EUR">1.85</td>
+<td class="cell t-ok" title="Local 15:00 | ROAS 1.46x | Index 137.6 | Spend 900 EUR">1.46</td>
+<td class="cell t-mild" title="Local 16:00 | ROAS 1.06x | Index 100.1 | Spend 983 EUR">1.06</td>
+<td class="cell t-mild" title="Local 17:00 | ROAS 1.01x | Index 94.9 | Spend 971 EUR">1.01</td>
+<td class="cell t-ok" title="Local 18:00 | ROAS 1.20x | Index 113.0 | Spend 1,016 EUR">1.20</td>
+<td class="cell t-mild" title="Local 19:00 | ROAS 0.98x | Index 92.9 | Spend 1,077 EUR">0.98</td>
+<td class="cell t-mild" title="Local 20:00 | ROAS 1.04x | Index 98.5 | Spend 1,084 EUR">1.04</td>
+<td class="cell t-mild" title="Local 21:00 | ROAS 0.90x | Index 84.8 | Spend 1,118 EUR">0.90</td>
+<td class="cell t-low" title="Local 22:00 | ROAS 0.78x | Index 73.6 | Spend 1,023 EUR">0.78</td>
+<td class="cell t-low" title="Local 23:00 | ROAS 0.59x | Index 56.0 | Spend 815 EUR">0.59</td>
+<td class="num"><strong>1.06x</strong></td>
+</tr>
+<tr><td class="country">🇦🇺 Australia</td>
+<td class="cell t-strong" title="Local 00:00 | ROAS 1.90x | Index 171.5 | Spend 226 AUD">1.90</td>
+<td class="cell t-neg" title="Local 01:00 | ROAS 0.31x | Index 28.2 | Spend 166 AUD">0.31</td>
+<td class="cell t-neg" title="Local 02:00 | ROAS 0.38x | Index 34.7 | Spend 128 AUD">0.38</td>
+<td class="cell t-vneg" title="Local 03:00 | ROAS 0.26x | Index 23.6 | Spend 137 AUD">0.26</td>
+<td class="cell t-low" title="Local 04:00 | ROAS 0.61x | Index 55.7 | Spend 203 AUD">0.61</td>
+<td class="cell t-low" title="Local 05:00 | ROAS 0.63x | Index 56.9 | Spend 380 AUD">0.63</td>
+<td class="cell t-vneg" title="Local 06:00 | ROAS 0.16x | Index 14.2 | Spend 603 AUD">0.16</td>
+<td class="cell t-neg" title="Local 07:00 | ROAS 0.46x | Index 41.2 | Spend 744 AUD">0.46</td>
+<td class="cell t-ok" title="Local 08:00 | ROAS 1.34x | Index 121.2 | Spend 780 AUD">1.34</td>
+<td class="cell t-vstrong" title="Local 09:00 | ROAS 2.37x | Index 214.1 | Spend 690 AUD">2.37</td>
+<td class="cell t-ok" title="Local 10:00 | ROAS 1.23x | Index 111.2 | Spend 817 AUD">1.23</td>
+<td class="cell t-strong" title="Local 11:00 | ROAS 1.94x | Index 175.8 | Spend 617 AUD">1.94</td>
+<td class="cell t-low" title="Local 12:00 | ROAS 0.83x | Index 75.2 | Spend 591 AUD">0.83</td>
+<td class="cell t-low" title="Local 13:00 | ROAS 0.78x | Index 70.9 | Spend 580 AUD">0.78</td>
+<td class="cell t-vstrong" title="Local 14:00 | ROAS 2.51x | Index 227.3 | Spend 545 AUD">2.51</td>
+<td class="cell t-ok" title="Local 15:00 | ROAS 1.42x | Index 128.4 | Spend 513 AUD">1.42</td>
+<td class="cell t-ok" title="Local 16:00 | ROAS 1.51x | Index 136.8 | Spend 548 AUD">1.51</td>
+<td class="cell t-good" title="Local 17:00 | ROAS 1.60x | Index 145.1 | Spend 527 AUD">1.60</td>
+<td class="cell t-mild" title="Local 18:00 | ROAS 1.06x | Index 96.1 | Spend 554 AUD">1.06</td>
+<td class="cell t-neg" title="Local 19:00 | ROAS 0.50x | Index 45.5 | Spend 640 AUD">0.50</td>
+<td class="cell t-neg" title="Local 20:00 | ROAS 0.50x | Index 44.9 | Spend 698 AUD">0.50</td>
+<td class="cell t-low" title="Local 21:00 | ROAS 0.86x | Index 78.3 | Spend 637 AUD">0.86</td>
+<td class="cell t-mild" title="Local 22:00 | ROAS 0.90x | Index 81.0 | Spend 565 AUD">0.90</td>
+<td class="cell t-low" title="Local 23:00 | ROAS 0.73x | Index 66.0 | Spend 359 AUD">0.73</td>
+<td class="num"><strong>1.10x</strong></td>
+</tr>
+</tbody></table></div></div>
+<p class="muted">Cell shows Meta-pixel-attributed ROAS for that local hour over 90 days. Color = % of that market's 90d average ROAS (its own benchmark, since markets have different baseline ROAS levels). Hours with under 0.3% of spend are shown blank to suppress noisy outliers.</p>
+<h2 style="margin-top:28px">Recommended daypart windows <span class="sub">kill zones (ROAS &lt; 80% of avg) and push zones (ROAS &gt; 140% of avg)</span></h2>
+<ul class="signal-list">
+<li><span class="badge badge-watch">NZ</span><div>🇳🇿 <strong>New Zealand</strong>: <strong>kill</strong> <code>01-05, 06-07, 16-19, 20-24</code> local (currently 39% of spend, ROAS &lt; 80% of avg); <strong>push</strong> <code>08-09, 10-11, 13-14, 19-20</code> local (currently 24% of spend, ROAS &gt; 140% of avg)</div></li>
+<li><span class="badge badge-watch">CA</span><div>🇨🇦 <strong>Canada</strong>: <strong>kill</strong> <code>21-07, 19-20</code> local (currently 36% of spend, ROAS &lt; 80% of avg)</div></li>
+<li><span class="badge badge-watch">ZA</span><div>🇿🇦 <strong>South Africa</strong>: <strong>kill</strong> <code>20-06</code> local (currently 29% of spend, ROAS &lt; 80% of avg); <strong>push</strong> <code>08-11</code> local (currently 16% of spend, ROAS &gt; 140% of avg)</div></li>
+<li><span class="badge badge-watch">DE</span><div>🇩🇪 <strong>Deutschland</strong>: <strong>kill</strong> <code>23-05, 06-09, 20-21</code> local (currently 27% of spend, ROAS &lt; 80% of avg); <strong>push</strong> <code>10-11, 12-13, 15-16</code> local (currently 16% of spend, ROAS &gt; 140% of avg)</div></li>
+<li><span class="badge badge-watch">FR</span><div>🇫🇷 <strong>France</strong>: <strong>kill</strong> <code>21-09, 15-16</code> local (currently 43% of spend, ROAS &lt; 80% of avg); <strong>push</strong> <code>09-14, 16-17</code> local (currently 29% of spend, ROAS &gt; 140% of avg)</div></li>
+<li><span class="badge badge-watch">IE</span><div>🇮🇪 <strong>Ireland</strong>: <strong>kill</strong> <code>22-09</code> local (currently 29% of spend, ROAS &lt; 80% of avg); <strong>push</strong> <code>11-13, 14-15</code> local (currently 15% of spend, ROAS &gt; 140% of avg)</div></li>
+<li><span class="badge badge-watch">AU</span><div>🇦🇺 <strong>Australia</strong>: <strong>kill</strong> <code>01-08, 12-14, 19-22, 23-24</code> local (currently 48% of spend, ROAS &lt; 80% of avg); <strong>push</strong> <code>00-01, 09-10, 11-12, 14-15, 17-18</code> local (currently 21% of spend, ROAS &gt; 140% of avg)</div></li>
+</ul>
+<div class="panel" style="margin-top:14px;background:#f8fafc">
+<p class="muted" style="margin:0">
+<strong>Caveats on hourly data:</strong> hour-level numbers come from Meta API (pixel-attributed), which undercounts Bark-attributed revenue by ~43%. Absolute ROAS levels are wrong; <strong>relative shape across hours</strong> is what to design rules from. That's why coloring is indexed to each market's own average — directly comparable across markets even though their absolute ROAS varies. Hours with under 0.3% of spend are blanked to avoid noisy outliers (e.g. one purchase at 4am inflating ROAS to 99×).
+</p></div>
+
+<h2>Per-market detail <span class="sub">DoW × Meta totals & preliminary rule shape</span></h2>
+
+<div class="market-block">
+  <div class="head">
+    <span class="flag">🇳🇿</span><span class="name">New Zealand</span>
+    <span class="tag push">Push weekends</span>
+    <span class="totals">90d: 2,551 NZD spend · 5,429 rev+ · <strong>53.0% APR+</strong></span>
+  </div>
+  <table>
+    <thead><tr><th>Day</th><th class="num">Spend (NZD)</th><th class="num">Revenue+</th><th class="num">APR+</th><th class="num">APR+ %</th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td class="num">636.92</td><td class="num">1,235.95</td><td class="num pos">599.03</td><td class="num pos">48.5%</td></tr>
+      <tr><td>Tuesday</td><td class="num muted">–</td><td class="num muted">–</td><td class="num muted">–</td><td class="num muted">no data</td></tr>
+      <tr><td>Wednesday</td><td class="num muted">–</td><td class="num muted">–</td><td class="num muted">–</td><td class="num muted">no data</td></tr>
+      <tr><td>Thursday</td><td class="num">158.52</td><td class="num">85.76</td><td class="num neg">-72.76</td><td class="num neg">-84.8%*</td></tr>
+      <tr><td>Friday</td><td class="num">567.71</td><td class="num">1,176.99</td><td class="num pos">609.28</td><td class="num pos">51.8%</td></tr>
+      <tr><td>Saturday</td><td class="num">599.21</td><td class="num">1,464.99</td><td class="num pos">865.78</td><td class="num pos">59.1%</td></tr>
+      <tr><td>Sunday</td><td class="num">588.68</td><td class="num">1,465.02</td><td class="num pos">876.34</td><td class="num pos">59.8%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin-top:8px">Preliminary rule shape: <strong>weekend push rule</strong> (Sat+Sun ×2.0 boost), no evening pull. Tue/Wed gap suggests budget allocation issue (campaigns paused those days) — investigate before adding rules. *Thu sample size: ~3 days of low spend.</p>
+</div>
+
+<div class="market-block">
+  <div class="head">
+    <span class="flag">🇨🇦</span><span class="name">Canada</span>
+    <span class="tag steady">Steady, light trim</span>
+    <span class="totals">90d: 98,221 CAD spend · 154,716 rev+ · <strong>36.5% APR+</strong></span>
+  </div>
+  <table>
+    <thead><tr><th>Day</th><th class="num">Spend (CAD)</th><th class="num">Revenue+</th><th class="num">APR+</th><th class="num">APR+ %</th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td class="num">11,403</td><td class="num">20,339</td><td class="num pos">8,936</td><td class="num pos">43.9%</td></tr>
+      <tr><td>Tuesday</td><td class="num">14,799</td><td class="num">23,212</td><td class="num pos">8,413</td><td class="num pos">36.2%</td></tr>
+      <tr><td>Wednesday</td><td class="num">17,056</td><td class="num">27,682</td><td class="num pos">10,626</td><td class="num pos">38.4%</td></tr>
+      <tr><td>Thursday</td><td class="num">17,849</td><td class="num">29,531</td><td class="num pos">11,681</td><td class="num pos">39.6%</td></tr>
+      <tr><td>Friday</td><td class="num">15,990</td><td class="num">23,899</td><td class="num pos">7,910</td><td class="num pos">33.1%</td></tr>
+      <tr><td>Saturday</td><td class="num">9,479</td><td class="num">14,139</td><td class="num pos">4,661</td><td class="num pos">33.0%</td></tr>
+      <tr><td>Sunday</td><td class="num">11,645</td><td class="num">15,913</td><td class="num pos">4,268</td><td class="num pos">26.8%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin-top:8px">Preliminary rule shape: <strong>mild Sun trim ×0.85</strong>, otherwise keep baseline. Mon already organically higher spend — no boost rule needed.</p>
+</div>
+
+<div class="market-block">
+  <div class="head">
+    <span class="flag">🇿🇦</span><span class="name">South Africa</span>
+    <span class="tag pull">Hard Sat pull</span>
+    <span class="totals">90d: 281,288 ZAR spend · 405,489 rev+ · <strong>30.6% APR+</strong></span>
+  </div>
+  <table>
+    <thead><tr><th>Day</th><th class="num">Spend (ZAR)</th><th class="num">Revenue+</th><th class="num">APR+</th><th class="num">APR+ %</th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td class="num">42,754</td><td class="num">75,717</td><td class="num pos">32,962</td><td class="num pos">43.5%</td></tr>
+      <tr><td>Tuesday</td><td class="num">32,528</td><td class="num">59,933</td><td class="num pos">27,405</td><td class="num pos">45.7%</td></tr>
+      <tr><td>Wednesday</td><td class="num">39,028</td><td class="num">61,859</td><td class="num pos">22,831</td><td class="num pos">36.9%</td></tr>
+      <tr><td>Thursday</td><td class="num">43,484</td><td class="num">66,881</td><td class="num pos">23,397</td><td class="num pos">35.0%</td></tr>
+      <tr><td>Friday</td><td class="num">44,568</td><td class="num">61,481</td><td class="num pos">16,913</td><td class="num pos">27.5%</td></tr>
+      <tr><td>Saturday</td><td class="num">41,853</td><td class="num">38,596</td><td class="num neg">-3,257</td><td class="num neg">-8.4%</td></tr>
+      <tr><td>Sunday</td><td class="num">37,071</td><td class="num">41,022</td><td class="num pos">3,951</td><td class="num pos">9.6%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin-top:8px">Preliminary rule shape: <strong>Sat ×0.20 hard pull</strong> (matches UK/US evening multiplier), Sun ×0.50. Weekday baseline. Estimated annual saving from pulling Sat alone: <strong>~180k ZAR</strong> (≈ £7.5k).</p>
+</div>
+
+<div class="market-block">
+  <div class="head">
+    <span class="flag">🇩🇪</span><span class="name">Deutschland</span>
+    <span class="tag pull">Pull weekends</span>
+    <span class="totals">90d: 6,795 EUR spend · 7,440 rev+ · <strong>8.7% APR+</strong></span>
+  </div>
+  <table>
+    <thead><tr><th>Day</th><th class="num">Spend (EUR)</th><th class="num">Revenue+</th><th class="num">APR+</th><th class="num">APR+ %</th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td class="num">1,048</td><td class="num">1,019</td><td class="num neg">-29</td><td class="num neg">-2.9%</td></tr>
+      <tr><td>Tuesday</td><td class="num">928</td><td class="num">1,388</td><td class="num pos">460</td><td class="num pos">33.1%</td></tr>
+      <tr><td>Wednesday</td><td class="num">888</td><td class="num">1,114</td><td class="num pos">226</td><td class="num pos">20.3%</td></tr>
+      <tr><td>Thursday</td><td class="num">940</td><td class="num">980</td><td class="num pos">40</td><td class="num pos">4.1%</td></tr>
+      <tr><td>Friday</td><td class="num">1,045</td><td class="num">1,315</td><td class="num pos">270</td><td class="num pos">20.5%</td></tr>
+      <tr><td>Saturday</td><td class="num">827</td><td class="num">589</td><td class="num neg">-238</td><td class="num neg">-40.5%</td></tr>
+      <tr><td>Sunday</td><td class="num">1,118</td><td class="num">1,035</td><td class="num neg">-83</td><td class="num neg">-8.1%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin-top:8px">Preliminary rule shape: <strong>Sat ×0.20</strong> (worst Sat APR+ of any market), <strong>Sun ×0.50</strong>. Mon negative is worth a closer look — sample noise vs systematic.</p>
+</div>
+
+<div class="market-block">
+  <div class="head">
+    <span class="flag">🇫🇷</span><span class="name">France</span>
+    <span class="tag watch">Too thin — fix first</span>
+    <span class="totals">90d: 4,314 EUR spend · 4,373 rev+ · <strong>1.4% APR+</strong></span>
+  </div>
+  <table>
+    <thead><tr><th>Day</th><th class="num">Spend (EUR)</th><th class="num">Revenue+</th><th class="num">APR+</th><th class="num">APR+ %</th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td class="num">608</td><td class="num">815</td><td class="num pos">208</td><td class="num pos">25.4%</td></tr>
+      <tr><td>Tuesday</td><td class="num">546</td><td class="num">536</td><td class="num neg">-10</td><td class="num neg">-1.9%</td></tr>
+      <tr><td>Wednesday</td><td class="num">574</td><td class="num">482</td><td class="num neg">-92</td><td class="num neg">-19.1%</td></tr>
+      <tr><td>Thursday</td><td class="num">750</td><td class="num">777</td><td class="num pos">27</td><td class="num pos">3.5%</td></tr>
+      <tr><td>Friday</td><td class="num">696</td><td class="num">643</td><td class="num neg">-54</td><td class="num neg">-8.4%</td></tr>
+      <tr><td>Saturday</td><td class="num">509</td><td class="num">522</td><td class="num pos">13</td><td class="num pos">2.6%</td></tr>
+      <tr><td>Sunday</td><td class="num">631</td><td class="num">598</td><td class="num neg">-33</td><td class="num neg">-5.5%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin-top:8px">Only Mon clearly profitable. Recommend <strong>fixing creative/targeting first</strong> before layering daypart rules. At ~48 EUR/day a rule's effect on absolute APR is small.</p>
+</div>
+
+<div class="market-block">
+  <div class="head">
+    <span class="flag">🇮🇪</span><span class="name">Ireland</span>
+    <span class="tag push">Investigate inversion</span>
+    <span class="totals">90d: 17,598 EUR spend · 16,665 rev+ · <strong>-5.6% APR+</strong></span>
+  </div>
+  <table>
+    <thead><tr><th>Day</th><th class="num">Spend (EUR)</th><th class="num">Revenue+</th><th class="num">APR+</th><th class="num">APR+ %</th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td class="num">2,561</td><td class="num">2,480</td><td class="num neg">-80</td><td class="num neg">-3.2%</td></tr>
+      <tr><td>Tuesday</td><td class="num">3,313</td><td class="num">3,479</td><td class="num pos">166</td><td class="num pos">4.8%</td></tr>
+      <tr><td>Wednesday</td><td class="num">3,313</td><td class="num">2,951</td><td class="num neg">-362</td><td class="num neg">-12.3%</td></tr>
+      <tr><td>Thursday</td><td class="num">3,530</td><td class="num">2,930</td><td class="num neg">-600</td><td class="num neg">-20.5%</td></tr>
+      <tr><td>Friday</td><td class="num">3,875</td><td class="num">3,124</td><td class="num neg">-751</td><td class="num neg">-24.0%</td></tr>
+      <tr><td>Saturday</td><td class="num">455</td><td class="num">1,091</td><td class="num pos">636</td><td class="num pos">58.3%</td></tr>
+      <tr><td>Sunday</td><td class="num">550</td><td class="num">610</td><td class="num pos">59</td><td class="num pos">9.8%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin-top:8px">The most striking pattern in the dataset. <strong>Investigate WHY</strong>: is Sat APR+ real (sustained over weeks?) or a single big response inflating one Saturday? Also: why does spend tank to EUR 455 on Sat when revenue triples? Possible Meta auto-rule already throttling, or different campaign structure on weekends. Worth confirming before designing rules.</p>
+</div>
+
+<div class="market-block">
+  <div class="head">
+    <span class="flag">🇦🇺</span><span class="name">Australia</span>
+    <span class="tag watch">Too thin — also TZ mismatch</span>
+    <span class="totals">90d: 4,581 AUD spend · 4,260 rev+ · <strong>-7.5% APR+</strong></span>
+  </div>
+  <table>
+    <thead><tr><th>Day</th><th class="num">Spend (AUD)</th><th class="num">Revenue+</th><th class="num">APR+</th><th class="num">APR+ %</th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td class="num">859</td><td class="num">1,365</td><td class="num pos">506</td><td class="num pos">37.1%</td></tr>
+      <tr><td>Tuesday</td><td class="num">145</td><td class="num">0</td><td class="num neg">-145</td><td class="num muted">–</td></tr>
+      <tr><td>Wednesday</td><td class="num">127</td><td class="num">0</td><td class="num neg">-127</td><td class="num muted">–</td></tr>
+      <tr><td>Thursday</td><td class="num">480</td><td class="num">82</td><td class="num neg">-398</td><td class="num neg">-485.9%*</td></tr>
+      <tr><td>Friday</td><td class="num">1,119</td><td class="num">956</td><td class="num neg">-163</td><td class="num neg">-17.0%</td></tr>
+      <tr><td>Saturday</td><td class="num">972</td><td class="num">1,105</td><td class="num pos">133</td><td class="num pos">12.0%</td></tr>
+      <tr><td>Sunday</td><td class="num">880</td><td class="num">752</td><td class="num neg">-128</td><td class="num neg">-17.0%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin-top:8px">Two concerns: (a) very lumpy daily spend (Tue+Wed near-zero) suggesting campaigns aren't running consistently, and (b) AU Meta account spend in Meta API (~AUD 12.2k) is ~2.7× Tableau's "Australia"-country figure (~4.6k AUD) — likely the AU account is also serving NZ traffic. <strong>Don't add rules here until campaign structure is fixed and account/country alignment confirmed.</strong></p>
+</div>
+
+<!-- ============ RECOMMENDED RULE DIRECTIONS ============ -->
+<h2>Preliminary rule directions <span class="sub">strawman — not for build yet</span></h2>
+
+<ul class="signal-list">
+  <li><span class="badge badge-push">PUSH</span><div><strong>NZ</strong> · Weekend boost rule (Sat+Sun ×2.0 of baseline). No evening pull. Confirm Tue/Wed campaign gap first.</div></li>
+  <li><span class="badge badge-pull">PULL</span><div><strong>ZA</strong> · Sat ×0.20 hard pull, Sun ×0.50. Weekday baseline unchanged. <em>Highest-impact rule of the set — saves ~ZAR 180k/yr.</em></div></li>
+  <li><span class="badge badge-pull">PULL</span><div><strong>DE</strong> · Sat ×0.20, Sun ×0.50. Look at Mon-negative separately — may be a different fix.</div></li>
+  <li><span class="badge badge-steady">STEADY</span><div><strong>CA</strong> · Mild Sun ×0.85. No daypart aggression. Largest absolute Meta volume of any non-UK/US market.</div></li>
+  <li><span class="badge badge-watch">WATCH</span><div><strong>IE</strong> · Don't deploy rules yet. The weekday-loss / Saturday-spike pattern needs root cause first. Could be (i) different audience composition Sat (residential vs commercial), (ii) existing weekend throttling on Sat that we'd be replicating, or (iii) single-response sampling artefact.</div></li>
+  <li><span class="badge badge-watch">WATCH</span><div><strong>AU</strong> · Fix campaign delivery (Tue+Wed gaps) and account/country attribution before rules.</div></li>
+  <li><span class="badge badge-watch">WATCH</span><div><strong>FR</strong> · Volume too low for daypart rules. Fix targeting/creative first.</div></li>
+</ul>
+
+<!-- ============ WHAT'S MISSING / NEXT ============ -->
+<h2>What's missing <span class="sub">to go from this analysis to deployable rules</span></h2>
+
+<div class="panel">
+  <h3>Pattern stability over multiple weeks</h3>
+  <p>The DoW and hour-of-day cuts above are 90-day averages. Before committing rules, sanity-check that the patterns hold across the last 3–4 individual weeks (not just one dramatic week distorting the average). Particularly relevant for the IE Saturday spike and DE Saturday loss — both could be sampling artefacts.</p>
+</div>
+
+<div class="panel">
+  <h3>Stability check</h3>
+  <p>This is a 90-day average. Before committing rules, sanity-check that the DoW patterns hold over at least the last 3–4 individual weeks (not just one dramatic week distorting the average). Particularly relevant for the IE inversion and DE Sat loss.</p>
+</div>
+
+<div class="panel">
+  <h3>Account ↔ Country alignment</h3>
+  <p>AU Tableau spend (4,581) vs AU Meta account spend (12,249 AUD) suggests the AU Meta account is also serving NZ or other-country traffic. Confirm which Meta accounts produce traffic in which countries — rules run on accounts, but performance lives in countries. Mismatch = wasted rule action.</p>
+</div>
+
+<div class="footer">
+  <p>Generated 2026-05-26 · Source: Tableau "📁 APR+ with EP distributed" (LUID 7a3ed7f8) · Filter: Channel ∈ {Meta-FB, Meta-IG, Meta-Other}, Country ∈ {AU, CA, DE, FR, IE, NZ, ZA}, Calendar Date LAST 90 DAYS</p>
+  <p>Currencies: each market in its own local currency (¤). APR+ ¤ = Revenue+ ¤ – Marketing Spend ¤. APR+ % ¤ = APR+ ¤ / Revenue+ ¤.</p>
+  <p>Caveats: Cells with very low daily spend are noise; pattern stability not yet validated over multiple weeks; existing weekend rules in UK/US may bias what "normal" looks like for the rest.</p>
+</div>
+
+</div>
+</body></html>
