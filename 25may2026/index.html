@@ -100,6 +100,7 @@ td{padding:7px 8px;vertical-align:middle}
   <label for="week-switcher">Week</label>
   <select id="week-switcher">
       <option value="wip-19jun2026">Mid-week · 19 Jun 2026 (so far)</option>
+      <option value="28jun2026">w/e 28 Jun 2026</option>
       <option value="21jun2026">w/e 21 Jun 2026</option>
       <option value="14jun2026">w/e 14 Jun 2026</option>
       <option value="7jun2026">w/e 7 Jun 2026</option>
@@ -1551,215 +1552,473 @@ function initStyleTabs(){
   buildStyleTab('nz','styles-nz');
 }
 
+const GROWTH_TEST_ADS = {"1670_Home_and_Domiciliary_Care_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634666513068","adset_name":"1670_Home_and_Domiciliary_Care_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:39:37+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638337723668","name":"home-domiciliary-care_Sandbox_Raam_Avatar_V1","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T14:48:36+0100"},{"id":"52636116554268","name":"home-domiciliary-care_Sandbox_CF_before-after","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T17:11:10+0100"},{"id":"52634691660268","name":"home-domiciliary-care_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T17:00:10+0100"},{"id":"52634691414268","name":"home-domiciliary-care_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T17:00:00+0100"},{"id":"52634690930868","name":"home-domiciliary-care_Sandbox_CF_flatlay-quotes","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-06-16T16:59:50+0100"},{"id":"52634690726268","name":"home-domiciliary-care_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:59:39+0100"},{"id":"52634683965868","name":"home-domiciliary-care_Sandbox_PriceList_OptionB","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:54:50+0100"},{"id":"52634683713268","name":"home-domiciliary-care_Sandbox_PriceList_OptionA","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:54:35+0100"}]},"1177_Air Conditioning Installation_UK_Static_Adfactory_MattAI|United Kingdom":{"adset_id":"52604233350468","adset_name":"1177_Air Conditioning Installation_UK_Static_Adfactory_MattAI","created_time":"2026-05-27T13:12:44+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52604233750268","name":"AC Install_18-Pun","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:07+0100"},{"id":"52604233745068","name":"AC Install_16-Reversal","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:07+0100"},{"id":"52604233716668","name":"AC Install_13-ColdCalls","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:07+0100"},{"id":"52604233729868","name":"AC Install_17-POV","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:07+0100"},{"id":"52604233730468","name":"AC Install_15-SocialProof","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:07+0100"},{"id":"52604233759268","name":"AC Install_14-Ghosting","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:07+0100"},{"id":"52604233716868","name":"AC Install_12-WeekendDIY","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-05-27T13:14:07+0100"},{"id":"52604233729468","name":"AC Install_11-Seasonal","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:06+0100"},{"id":"52604233660068","name":"AC Install_03-Local","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:04+0100"},{"id":"52604233689468","name":"AC Install_01-FreeQuotes","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:04+0100"},{"id":"52604233643468","name":"AC Install_07-AntiDIY","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:04+0100"},{"id":"52604233681868","name":"AC Install_06-PainHook","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:04+0100"},{"id":"52604233694468","name":"AC Install_08-Consideration","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:04+0100"},{"id":"52604233665068","name":"AC Install_04-Trust","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:04+0100"},{"id":"52604233666068","name":"AC Install_10-Outcome","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-05-27T13:14:04+0100"},{"id":"52604233646068","name":"AC Install_09-Mechanism","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:03+0100"},{"id":"52604233643868","name":"AC Install_05-Ease","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T13:14:03+0100"},{"id":"52604233642268","name":"AC Install_02-Price","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-05-27T13:14:03+0100"}]},"1141_Commercial_and_Office_Cleaning_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634683537068","adset_name":"1141_Commercial_and_Office_Cleaning_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:54:22+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638182920268","name":"commercial-cleaning_Sandbox_CF_before-after","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:03:32+0100"},{"id":"52638181500668","name":"commercial-cleaning_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:03:12+0100"},{"id":"52638181456068","name":"commercial-cleaning_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:02:56+0100"},{"id":"52638181330268","name":"commercial-cleaning_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:02:34+0100"},{"id":"52638181222068","name":"commercial-cleaning_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:02:16+0100"},{"id":"52634684738868","name":"commercial-cleaning_Sandbox_PriceList_OptionB","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:55:17+0100"},{"id":"52634684412268","name":"commercial-cleaning_Sandbox_PriceList_OptionA","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:55:04+0100"}]},"1213_Home Insulation_UK_Static_AdFactory_MattAI|United Kingdom":{"adset_id":"52604476340668","adset_name":"1213_Home Insulation_UK_Static_AdFactory_MattAI","created_time":"2026-05-27T18:21:46+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52604479844668","name":"Home Insulation_17-POV","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:08+0100"},{"id":"52604479828268","name":"Home Insulation_16-Reversal","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:08+0100"},{"id":"52604479834868","name":"Home Insulation_18-Pun","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:08+0100"},{"id":"52604479805668","name":"Home Insulation_13-ColdCalls","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:07+0100"},{"id":"52604479800068","name":"Home Insulation_14-Ghosting","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:07+0100"},{"id":"52604479817668","name":"Home Insulation_15-SocialProof","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:07+0100"},{"id":"52604479817068","name":"Home Insulation_12-WeekendDIY","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-05-27T18:24:07+0100"},{"id":"52604479810468","name":"Home Insulation_11-Seasonal","status":"PAUSED","effective_status":"WITH_ISSUES","created_time":"2026-05-27T18:24:07+0100"},{"id":"52604479715268","name":"Home Insulation_10-Outcome","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:05+0100"},{"id":"52604479714668","name":"Home Insulation_07-AntiDIY","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:05+0100"},{"id":"52604479730868","name":"Home Insulation_02-Price","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:05+0100"},{"id":"52604479731868","name":"Home Insulation_01-FreeQuotes","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:05+0100"},{"id":"52604479692268","name":"Home Insulation_06-PainHook","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:05+0100"},{"id":"52604479716668","name":"Home Insulation_04-Trust","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:05+0100"},{"id":"52604479709068","name":"Home Insulation_08-Consideration","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-05-27T18:24:05+0100"},{"id":"52604479698468","name":"Home Insulation_05-Ease","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:04+0100"},{"id":"52604479698068","name":"Home Insulation_03-Local","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-05-27T18:24:04+0100"},{"id":"52604479732068","name":"Home Insulation_09-Mechanism","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-05-27T18:24:04+0100"}]},"1695_Marquee_Hire_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634666924068","adset_name":"1695_Marquee_Hire_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:39:50+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638202273068","name":"marquee-hire_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:18:54+0100"},{"id":"52638202157268","name":"marquee-hire_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:18:39+0100"},{"id":"52638202006068","name":"marquee-hire_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:18:19+0100"},{"id":"52638201845468","name":"marquee-hire_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:17:54+0100"},{"id":"52634696613668","name":"marquee-hire_Sandbox_PriceList_OptionB","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T17:03:54+0100"},{"id":"52634696457668","name":"marquee-hire_Sandbox_PriceList_OptionA","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T17:03:42+0100"}]},"33_Asbestos_Removal_and_Surveys_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634668008268","adset_name":"33_Asbestos_Removal_and_Surveys_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:40:23+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638207246268","name":"asbestos-removal-surveys_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:23:46+0100"},{"id":"52638207104468","name":"asbestos-removal-surveys_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:23:29+0100"},{"id":"52638206787668","name":"asbestos-removal-surveys_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:23:04+0100"},{"id":"52638206581668","name":"asbestos-removal-surveys_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:22:47+0100"}]},"152_Security_Guard_Services_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634683553268","adset_name":"152_Security_Guard_Services_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:54:23+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638190554868","name":"security-guards_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:12:45+0100"},{"id":"52638190355068","name":"security-guards_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:12:29+0100"},{"id":"52638189751868","name":"security-guards_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:12:08+0100"},{"id":"52638189577068","name":"security-guards_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:11:47+0100"},{"id":"52634686225668","name":"security-guards_Sandbox_PriceList_OptionB","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:56:48+0100"},{"id":"52634685953468","name":"security-guards_Sandbox_PriceList_OptionA","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:56:34+0100"}]},"1213_Home_Insulation_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634668333868","adset_name":"1213_Home_Insulation_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:40:32+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638186938668","name":"insulation_Sandbox_CF_before-after","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:08:20+0100"},{"id":"52638186832068","name":"insulation_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:08:01+0100"},{"id":"52638186649468","name":"insulation_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:07:43+0100"},{"id":"52638186475068","name":"insulation_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:07:22+0100"},{"id":"52638186290868","name":"insulation_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:07:04+0100"},{"id":"52634686930268","name":"insulation_Sandbox_PriceList_OptionB","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:57:17+0100"},{"id":"52634686530068","name":"insulation_Sandbox_PriceList_OptionA","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:57:02+0100"}]},"1077_Fence_and_Gate_Installation_UK_UGC_Higgsfield_Timelapse3_DCO_HighestVolume_ATC|United Kingdom":{"adset_id":"52633267897468","adset_name":"1077_Fence_and_Gate_Installation_UK_UGC_Higgsfield_Timelapse3_DCO_HighestVolume_ATC","created_time":"2026-06-15T23:27:19+0100","status":"PAUSED","effective_status":"PAUSED","ads":[{"id":"52633267929268","name":"1077_Fence_and_Gate_Installation_UK_UGC_Higgsfield_Timelapse3_DCO_HighestVolume_ATC","status":"ACTIVE","effective_status":"ADSET_PAUSED","created_time":"2026-06-15T23:27:21+0100"}]},"1949_End_of_Tenancy_Cleaning_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634667041668","adset_name":"1949_End_of_Tenancy_Cleaning_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:39:53+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638188974668","name":"end-of-tenancy-cleaning_Sandbox_CF_before-after","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:11:27+0100"},{"id":"52638188289068","name":"end-of-tenancy-cleaning_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:11:08+0100"},{"id":"52638187841068","name":"end-of-tenancy-cleaning_Sandbox_CF_aerial-pins","status":"PAUSED","effective_status":"WITH_ISSUES","created_time":"2026-06-19T11:10:52+0100"},{"id":"52638187747868","name":"end-of-tenancy-cleaning_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:10:28+0100"},{"id":"52638187673268","name":"end-of-tenancy-cleaning_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:10:10+0100"},{"id":"52634685783268","name":"end-of-tenancy-cleaning_Sandbox_PriceList_OptionB","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:56:22+0100"},{"id":"52634685645868","name":"end-of-tenancy-cleaning_Sandbox_PriceList_OptionA","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:56:10+0100"}]},"1105_Pressure_Washing_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634667853068","adset_name":"1105_Pressure_Washing_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:40:17+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52636084854068","name":"pressure-washing_Sandbox_CF_before-after","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T16:50:30+0100"},{"id":"52636084686668","name":"pressure-washing_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T16:50:06+0100"},{"id":"52636084508268","name":"pressure-washing_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T16:49:48+0100"},{"id":"52636084353668","name":"pressure-washing_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T16:49:27+0100"},{"id":"52636084183268","name":"pressure-washing_Sandbox_CF_roofer-quotes","status":"PAUSED","effective_status":"WITH_ISSUES","created_time":"2026-06-17T16:49:05+0100"},{"id":"52635962835268","name":"pressure-washing_Sandbox_Video_5","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:15:28+0100"},{"id":"52635962778468","name":"pressure-washing_Sandbox_Video_4","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:15:19+0100"},{"id":"52635962668668","name":"pressure-washing_Sandbox_Video_3","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:15:11+0100"},{"id":"52635962571468","name":"pressure-washing_Sandbox_Video_2","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:14:59+0100"},{"id":"52635962497668","name":"pressure-washing_Sandbox_Video_1","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:14:49+0100"},{"id":"52634697067668","name":"pressure-washing_Sandbox_PriceList_OptionB","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T17:04:16+0100"},{"id":"52634696825668","name":"pressure-washing_Sandbox_PriceList_OptionA","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T17:04:05+0100"}]},"1056_Wedding_Photography_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634666434868","adset_name":"1056_Wedding_Photography_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:39:35+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638200737268","name":"wedding-photography_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:16:25+0100"},{"id":"52638200303268","name":"wedding-photography_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:16:09+0100"},{"id":"52638199380068","name":"wedding-photography_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:15:49+0100"},{"id":"52638197783868","name":"wedding-photography_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:15:32+0100"},{"id":"52634685392268","name":"wedding-photographers_Sandbox_PriceList_OptionB","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:55:57+0100"},{"id":"52634685205268","name":"wedding-photographers_Sandbox_PriceList_OptionA","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T16:55:43+0100"}]},"1177_Air_Conditioning_Installation_UK_UGC_Higgsfield_Timelapse_V2_DCO_HighestVolume_ATC|United Kingdom":{"adset_id":"52633267974268","adset_name":"1177_Air_Conditioning_Installation_UK_UGC_Higgsfield_Timelapse_V2_DCO_HighestVolume_ATC","created_time":"2026-06-15T23:27:33+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52633268003468","name":"1177_Air_Conditioning_Installation_UK_UGC_Higgsfield_Timelapse_V2_DCO_HighestVolume_ATC","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-15T23:27:35+0100"}]},"1213_Home_Insulation_UK_Static_AdFactory_3Styles|United Kingdom":{"adset_id":"52622687836868","adset_name":"1213_Home_Insulation_UK_Static_AdFactory_3Styles","created_time":"2026-06-09T16:41:41+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52622689698868","name":"Basic Statics","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-09T16:43:34+0100"},{"id":"52622688380268","name":"Tap","status":"PAUSED","effective_status":"PAUSED","created_time":"2026-06-09T16:42:51+0100"},{"id":"52622688149268","name":"Whiteboard","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-09T16:42:18+0100"}]},"1105_Pressure_Washing_UK_UGC_Higgsfield_Timelapse3_DCO_HighestVolume_ATC|United Kingdom":{"adset_id":"52633267876468","adset_name":"1105_Pressure_Washing_UK_UGC_Higgsfield_Timelapse3_DCO_HighestVolume_ATC","created_time":"2026-06-15T23:27:12+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52633267886868","name":"1105_Pressure_Washing_UK_UGC_Higgsfield_Timelapse3_DCO_HighestVolume_ATC","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-15T23:27:14+0100"}]},"1077_Fence_and_Gate_Installation_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634666843068","adset_name":"1077_Fence_and_Gate_Installation_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:39:48+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638178418468","name":"fence-installation_Sandbox_CF_before-after","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T10:58:52+0100"},{"id":"52638178378068","name":"fence-installation_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T10:58:31+0100"},{"id":"52638178329868","name":"fence-installation_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T10:58:14+0100"},{"id":"52638178251268","name":"fence-installation_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T10:57:52+0100"},{"id":"52638178135668","name":"fence-installation_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T10:57:32+0100"},{"id":"52635962404268","name":"fence-installation_Sandbox_Video_5","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:14:39+0100"},{"id":"52635962307668","name":"fence-installation_Sandbox_Video_4","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:14:29+0100"},{"id":"52635962205468","name":"fence-installation_Sandbox_Video_3","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:14:20+0100"},{"id":"52635962019268","name":"fence-installation_Sandbox_Video_2","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:14:11+0100"},{"id":"52635961902068","name":"fence-installation_Sandbox_Video_1","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:14:01+0100"},{"id":"52634696261868","name":"fence-installation_Sandbox_PriceList_OptionB","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T17:03:31+0100"},{"id":"52634696082868","name":"fence-installation_Sandbox_PriceList_OptionA","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-16T17:03:20+0100"}]},"1177_Air_Conditioning_Installation_Sandbox_HighestVolume_AddToCart|United Kingdom":{"adset_id":"52634667131668","adset_name":"1177_Air_Conditioning_Installation_Sandbox_HighestVolume_AddToCart","created_time":"2026-06-16T16:39:56+0100","status":"ACTIVE","effective_status":"ACTIVE","ads":[{"id":"52638183957468","name":"central-air-conditioning-installation_Sandbox_CF_before-after","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:05:06+0100"},{"id":"52638183804468","name":"central-air-conditioning-installation_Sandbox_CF_native-lockscreen","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:04:46+0100"},{"id":"52638183681268","name":"central-air-conditioning-installation_Sandbox_CF_aerial-pins","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:04:29+0100"},{"id":"52638183229868","name":"central-air-conditioning-installation_Sandbox_CF_flatlay-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:04:08+0100"},{"id":"52638183115268","name":"central-air-conditioning-installation_Sandbox_CF_roofer-quotes","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-19T11:03:50+0100"},{"id":"52635961277268","name":"central-air-conditioning-installation_Sandbox_Video_5","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:12:59+0100"},{"id":"52635961179468","name":"central-air-conditioning-installation_Sandbox_Video_4","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:12:50+0100"},{"id":"52635961096668","name":"central-air-conditioning-installation_Sandbox_Video_3","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:12:40+0100"},{"id":"52635960988668","name":"central-air-conditioning-installation_Sandbox_Video_2","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:12:32+0100"},{"id":"52635960943668","name":"central-air-conditioning-installation_Sandbox_Video_1","status":"ACTIVE","effective_status":"ACTIVE","created_time":"2026-06-17T15:12:24+0100"}]}};
 function buildGrowthTab(){
-  const UK_GROWTH=['Home & Domiciliary Care','Commercial & Office Cleaning','Immigration Lawyers','Fence & Gate Installation','Wedding Photography','End of Tenancy Cleaning','Security Guard Services','Home Insulation','Marquee Hire','Pressure Washing','Wedding Celebrants','Accounting','Business Accounting Services','Business Consulting','Air Conditioning Installation','Asbestos Removal & Surveys','Solar Panel Installation','Property Management','HR Services','Mould Inspection & Remediation'];
-  const US_GROWTH=['Commercial & Office Cleaning','Wedding DJ','Residential Interior Designers','Tax Preparation','Magician','Immigration Lawyers','Security Guard Services','Mobile Software Development','Web Design','Bookkeeping Services','Auditing Services','Motivational Speaking','Accounting','Business Consulting','Graphic Design','HR Services','Wedding Planning','Video Design & Production','Aerial & Drone Photography','Commercial & Corporate Photographers'];
+  // Data — top-20 growth cats per market, ordered by Mar-Dec 2026 Revenue
+  // Opportunity (£). Source sheet 1bvlqJnZSgM9Z2feHUXLqB0Jmm-STlZBo0N0BIoYhq64.
+  // Updated 2026-06-23.
+  const GROWTH = {
+    UK: [{"cat":"Home & Domiciliary Care","rev_opp":303787,"band":"C"},{"cat":"Commercial & Office Cleaning","rev_opp":451049,"band":"D"},{"cat":"Immigration Lawyers","rev_opp":166612,"band":"C"},{"cat":"Fence & Gate Installation","rev_opp":90284,"band":"C"},{"cat":"Wedding Photography","rev_opp":74080,"band":"C"},{"cat":"End of Tenancy Cleaning","rev_opp":53012,"band":"C"},{"cat":"Security Guard Services","rev_opp":126986,"band":"D"},{"cat":"Home Insulation","rev_opp":44412,"band":"C"},{"cat":"Marquee Hire","rev_opp":72066,"band":"D"},{"cat":"Pressure Washing","rev_opp":192871,"band":"F"},{"cat":"Wedding Celebrants","rev_opp":49121,"band":"A1"},{"cat":"Accounting","rev_opp":79028,"band":"D"},{"cat":"Business Accounting Services","rev_opp":43182,"band":"A2"},{"cat":"Business Consulting","rev_opp":47055,"band":"A2"},{"cat":"Air Conditioning Installation","rev_opp":43208,"band":"E"},{"cat":"Asbestos Removal & Surveys","rev_opp":40476,"band":"A2"},{"cat":"Solar Panel Installation","rev_opp":29291,"band":"C"},{"cat":"Property Management","rev_opp":61277,"band":"D"},{"cat":"HR Services","rev_opp":37630,"band":"A2"},{"cat":"Mould Inspection & Remediation","rev_opp":43087,"band":"A1"}],
+    US: [{"cat":"Commercial & Office Cleaning","rev_opp":1515384,"band":"B"},{"cat":"Wedding DJ","rev_opp":323722,"band":"C"},{"cat":"Residential Interior Designers","rev_opp":282015,"band":"B"},{"cat":"Tax Preparation","rev_opp":197607,"band":"B"},{"cat":"Magician","rev_opp":336288,"band":"A1"},{"cat":"Immigration Lawyers","rev_opp":182529,"band":"B"},{"cat":"Security Guard Services","rev_opp":282013,"band":"E"},{"cat":"Mobile Software Development","rev_opp":411072,"band":"D"},{"cat":"Web Design","rev_opp":88614,"band":"B"},{"cat":"Bookkeeping Services","rev_opp":79316,"band":"C"},{"cat":"Auditing Services","rev_opp":169918,"band":"A1"},{"cat":"Motivational Speaking","rev_opp":192057,"band":"D"},{"cat":"Accounting","rev_opp":64530,"band":"B"},{"cat":"Business Consulting","rev_opp":105139,"band":"A1"},{"cat":"Graphic Design","rev_opp":108715,"band":"A1"},{"cat":"HR Services","rev_opp":85412,"band":"A1"},{"cat":"Wedding Planning","rev_opp":63780,"band":"D"},{"cat":"Video Design & Production","rev_opp":38017,"band":"A2"},{"cat":"Aerial & Drone Photography","rev_opp":34091,"band":"A2"},{"cat":"Commercial & Corporate Photographers","rev_opp":30815,"band":"A2"}]
+  };
+  const BAND_META = {
+    'A1':{c:'#ef4444',e:'🔴',l:'A1 ACTIVATE — Large Opp'},
+    'A2':{c:'#f97316',e:'🟠',l:'A2 ACTIVATE — No Meta yet'},
+    'B' :{c:'#10b981',e:'🟢',l:'B SCALE — ROAS ≥1.2x'},
+    'C' :{c:'#f7bf53',e:'🟡',l:'C GROW — ROAS 0.9–1.2x'},
+    'D' :{c:'#94a3b8',e:'⚪',l:'D TEST — ROAS weak'},
+    'E' :{c:'#3b82f6',e:'🔵',l:'E HOLD — Seller constrained'},
+    'F' :{c:'#475569',e:'⚫',l:'F PAUSE — Below b/e'}
+  };
+  // Period covered by Rev Opp: Mar 2026 → Dec 2026 ≈ 43 weeks
+  const REV_OPP_WEEKS = 43;
 
-  const allAdsets=[...APR_NEG,...ROAS_POS];
-  const ukBench=CAT_DATA.filter(d=>d.cty.includes('Kingdom'));
-  const usBench=CAT_DATA.filter(d=>d.cty.includes('States'));
-  const avgRoas=cats=>cats.length?cats.reduce((a,d)=>a+parseFloat(d.roas),0)/cats.length:1.0;
-  const ukBR=avgRoas(ukBench), usBR=avgRoas(usBench);
+  // Include APR_NEG + ROAS_POS + ACTIVE_ADSETS (the active list catches mid-range
+  // performers that don't appear in either tail — important for spotting new
+  // tests still ramping).
+  const _act = (typeof ACTIVE_ADSETS!=='undefined') ? ACTIVE_ADSETS : [];
+  const allAdsets=[...APR_NEG,...ROAS_POS,..._act];
+  const adsetMap=new Map();
+  allAdsets.forEach(a=>{adsetMap.set(a.ag+'|'+a.cty,a);});
+  const uniqAdsets=[...adsetMap.values()];
 
-  // Larger gradient sparklines for growth cards
-  function gcSpark(vals,H=44){
-    const nz=vals.filter(v=>v>0);
-    if(!nz.length) return '<div style="height:'+H+'px;display:flex;align-items:center;justify-content:center;color:#334155;font-size:10px">no data</div>';
-    const maxV=Math.max(...nz), minV=Math.min(...nz);
-    return '<div style="display:flex;align-items:flex-end;gap:2px;height:'+H+'px">'+
-      vals.map((v,i)=>{
-        if(v<=0) return '<div style="flex:1;height:2px;background:rgba(255,255,255,.06);border-radius:1px 1px 0 0;align-self:flex-end"></div>';
-        const pct=maxV===minV?0.75:0.12+0.88*((v-minV)/(maxV-minV));
-        const h=Math.max(3,Math.round(pct*H));
-        return '<div style="flex:1;height:'+h+'px;background:'+weekGrad(i)+';border-radius:2px 2px 0 0;opacity:.9"></div>';
-      }).join('')+
-    '</div>';
+  // ── Helpers ─────────────────────────────────────────────────────────────
+  const fmtP = v => (v>=0?'+':'−')+'£'+Math.round(Math.abs(v)).toLocaleString();
+  const arr  = s => (typeof s==='string'? s.split(',').map(Number):s);
+  const sum  = xs => xs.reduce((a,b)=>a+b,0);
+  const avg  = (vals, mask) => {
+    const xs = vals.filter((_,i)=>mask[i]>0);
+    return xs.length ? xs.reduce((a,b)=>a+b,0)/xs.length : null;
+  };
+  const tag  = (txt,col,bg)=>'<span style="background:'+bg+';color:'+col+';font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.3px;display:inline-block">'+txt+'</span>';
+  function shortAg(s){
+    if(!s) return '';
+    let raw = s;
+    s = s.replace(/_/g,' ').replace(/\s+/g,' ').trim();
+    s = s.replace(/^\d{2,5}\s+/,'');
+    // Also strip the country prefix words that are noise (e.g. "UK")
+    s = s.replace(/\bHighestVolume AddToCart\b/i, 'ATC');
+    s = s.replace(/\bHighestVolume Purchase\b/i, 'Purchase');
+    const short = s.length>58 ? s.slice(0,56)+'…' : s;
+    return '<span title="'+raw.replace(/"/g,'&quot;')+'">'+short+'</span>';
   }
-  function gcAprSpark(vals,H=22){
-    const absMax=Math.max(...vals.map(Math.abs),1);
-    return '<div style="display:flex;gap:2px;height:'+(H*2+2)+'px">'+
-      vals.map((v,i)=>{
-        const h=Math.max(2,Math.round(Math.abs(v)/absMax*H));
-        const col=weekGrad(i);
-        const isPos=v>=0;
-        return '<div style="flex:1;position:relative;height:'+(H*2+2)+'px">'+
-          '<div style="position:absolute;left:0;right:0;top:'+H+'px;height:1px;background:rgba(148,163,184,.18)"></div>'+
-          (v!==0?'<div style="position:absolute;left:0;right:0;height:'+h+'px;background:'+col+';opacity:.85;'+(isPos?'bottom:'+(H+1)+'px;border-radius:2px 2px 0 0':'top:'+(H+1)+'px;border-radius:0 0 2px 2px')+'"></div>':'')+
+  // Detect creative style from the adset name — looks at suffix tokens
+  function detectStyle(ag){
+    const n = (ag||'').toLowerCase();
+    if(n.includes('higgsfield')||n.includes('higgsf')) return 'higgsfield-ugc';
+    if(n.includes('raam')) return 'raam-ugc';
+    if(n.includes('ugc')) return 'ugc';
+    if(n.includes('higgs')) return 'ai-ugc';
+    if(n.includes('templates')||n.includes('matt')) return 'matt-templates';
+    if(n.includes('basic')||n.includes('bs_')) return 'basic-statics';
+    if(n.includes('three')||n.includes('3style')) return 'three-style';
+    if(n.includes('before')||n.includes('after')) return 'before-after';
+    if(n.includes('tap_')) return 'tap';
+    if(n.includes('wb_')) return 'whitebg';
+    if(n.includes('cf_')||n.includes('creative_factory')) return 'cf';
+    if(n.includes('pits')) return 'pits';
+    if(n.includes('static')) return 'static';
+    return 'mixed';
+  }
+
+  // Tests = adsets whose first non-zero spend lands in the last 4 wks of the
+  // 8-wk window. 7d = index 7 (latest week). 28d = index 4-7. Each test gets
+  // enriched with its own post-launch metrics (spend, ROAS, APR, launch week)
+  // so the row can show per-test impact alongside the test name.
+  function findTests(cat, ctyKey){
+    const cats = uniqAdsets.filter(d=>d.cat===cat && d.cty && d.cty.includes(ctyKey));
+    const enrich = d => {
+      const sp = arr(d.spends8);
+      const rv = d.revs8 ? arr(d.revs8) : sp.map(()=>0);
+      const rs = arr(d.roas8);
+      const ap = arr(d.aprs8);
+      const firstNz = sp.findIndex(v=>v>0);
+      if(firstNz===-1) return null;
+      const postSp  = sp.slice(firstNz).reduce((a,b)=>a+b,0);
+      const postRv  = rv.slice(firstNz).reduce((a,b)=>a+b,0);
+      const postAp  = ap.slice(firstNz).reduce((a,b)=>a+b,0);
+      const postRoas = postSp > 0 ? postRv/postSp : 0;
+      // Bucket the post-launch ROAS into a verdict colour
+      let vCol, vEm;
+      if(postRoas >= 1.3)      { vCol='#10b981'; vEm='🟢'; }
+      else if(postRoas >= 1.0) { vCol='#f7bf53'; vEm='🟡'; }
+      else if(postSp < 30)     { vCol='#94a3b8'; vEm='⚪'; }  // not enough spend to read
+      else                     { vCol='#ef4444'; vEm='🔴'; }
+      return {
+        ag: d.ag, cat: d.cat, cty: d.cty, firstNz,
+        spend: postSp, rev: postRv, apr: postAp, roas: postRoas,
+        vCol, vEm,
+        weeksLive: 8 - firstNz,
+        launchedWeek: firstNz   // index into WEEKS_SHORT
+      };
+    };
+    const enriched = cats.map(enrich).filter(Boolean);
+    // Newest (firstNz=7) first, then older within 28d
+    enriched.sort((a,b)=>b.firstNz - a.firstNz);
+    const d7  = enriched.filter(e=>e.firstNz===7);
+    const d28 = enriched.filter(e=>e.firstNz>=4);
+    return { d7, d28, all:cats };
+  }
+
+  // Impact of recent tests on category ROAS / APR (last-4-wk avg vs prior-4-wk)
+  function impactVerdict(cd, hasTests){
+    if(!cd) return {emoji:'—', short:'no data', col:'#475569'};
+    const roas = arr(cd.roas8), aprs = arr(cd.aprs8), sp = arr(cd.spends8);
+    const r_pre  = avg(roas.slice(0,4), sp.slice(0,4));
+    const r_post = avg(roas.slice(4,8), sp.slice(4,8));
+    const a_pre  = avg(aprs.slice(0,4), sp.slice(0,4));
+    const a_post = avg(aprs.slice(4,8), sp.slice(4,8));
+    if(r_post===null) return {emoji:'⚪', short:'no recent spend', col:'#475569'};
+    if(r_pre===null)  return {emoji:'🆕', short:'new — '+(r_post||0).toFixed(2)+'x', col:'#60a5fa'};
+    const dRoas = r_post - r_pre;
+    const dApr  = (a_post===null||a_pre===null) ? 0 : (a_post - a_pre);
+    if(!hasTests){
+      if(dRoas >  0.10) return {emoji:'🔵', short:'trend up', col:'#60a5fa', dRoas, dApr};
+      if(dRoas < -0.10) return {emoji:'🔵', short:'trend down', col:'#94a3b8', dRoas, dApr};
+      return {emoji:'🔵', short:'flat', col:'#94a3b8', dRoas, dApr};
+    }
+    if(dRoas >= 0.10 && dApr >= 0)     return {emoji:'🟢', short:'tests helping', col:'#10b981', dRoas, dApr};
+    if(dRoas <= -0.10 || dApr < 0)     return {emoji:'🔴', short:'tests hurting', col:'#ef4444', dRoas, dApr};
+    return {emoji:'🟡', short:'inconclusive', col:'#f7bf53', dRoas, dApr};
+  }
+
+  // Scaling progress = this-week revenue ÷ (rev_opp / 43wk target).
+  // Returns {pct, label, color} — answers "is this cat actually scaling?"
+  function scalingProgress(cd, wtd, revOpp){
+    let thisWkRev = 0;
+    if(wtd && wtd.rev) thisWkRev = wtd.rev;
+    else if(cd && cd.rev) thisWkRev = cd.rev;
+    if(revOpp <= 0) return {pct:0, label:'n/a', color:'#475569'};
+    const target = revOpp / REV_OPP_WEEKS;
+    const pct = Math.round(thisWkRev / target * 100);
+    let label, color;
+    if(pct < 5)        { label = 'stuck';    color = '#ef4444'; }
+    else if(pct < 25)  { label = 'slow';     color = '#f97316'; }
+    else if(pct < 75)  { label = 'building'; color = '#f7bf53'; }
+    else if(pct < 110) { label = 'on pace';  color = '#10b981'; }
+    else               { label = 'ahead';    color = '#10b981'; }
+    return {pct, label, color, target};
+  }
+
+  // The diagnosis: combines the sheet's Action band with what Meta data shows.
+  // Returns one of the canonical states, plus a one-line description and the
+  // recommended creative action.
+  function diagnose(cd, tests, band, scaling){
+    const STATES = {
+      UNTESTED:    {e:'🆕', c:'#3b82f6', l:'Untested',
+                    rec:'Launch first-test creative pack (3 styles: AI photo · UGC · before/after). Use [[good-static]] + [[trade-ugc]].'},
+      TESTING:     {e:'🧪', c:'#a78bfa', l:'Testing in progress',
+                    rec:'Hold — wait 7-14 more days for the test data to settle before scaling.'},
+      READY_SCALE: {e:'📈', c:'#10b981', l:'Ready to scale',
+                    rec:'+20% budget step weekly until ROAS bends. Launch 1-2 fresh creative variants in parallel.'},
+      SCALING:     {e:'🟢', c:'#10b981', l:'Scaling',
+                    rec:'Continue +20% cycles. Refresh 1 creative variant per fortnight to avoid fatigue.'},
+      FATIGUE:     {e:'📉', c:'#f7bf53', l:'Fatiguing',
+                    rec:'Refresh creative urgently — current angle is losing edge. Try a new format (UGC, before/after).'},
+      NEEDS_ANGLE: {e:'⚠️', c:'#f97316', l:'Needs a different angle',
+                    rec:'Tested a few styles with weak ROAS — pivot to a fundamentally different angle (e.g. UGC if static failed, problem-aware if benefit-led failed).'},
+      PROVEN_FAIL: {e:'❌', c:'#ef4444', l:'Proven unprofitable',
+                    rec:'Pause Meta investment. Revisit Q4 with a complete creative reset and a different category positioning.'},
+      SELLER_HOLD: {e:'🔵', c:'#3b82f6', l:'Seller-blocked',
+                    rec:'Hold spend flat — supply-side constraint. Flag seller recruitment to Operations.'}
+    };
+
+    // No data at all
+    if(!cd || cd.spend===undefined) {
+      // Fall back to band
+      if(band==='A1'||band==='A2') return {state:'UNTESTED', ...STATES.UNTESTED};
+      if(band==='E') return {state:'SELLER_HOLD', ...STATES.SELLER_HOLD};
+      return {state:'UNTESTED', ...STATES.UNTESTED};
+    }
+
+    const sp = arr(cd.spends8), rs = arr(cd.roas8);
+    const total8wk = sum(sp);
+    const weeksWithSpend = sp.filter(s=>s>5).length;
+    const recentRoas = avg(rs.slice(4,8), sp.slice(4,8));
+    const earlyRoas  = avg(rs.slice(0,4), sp.slice(0,4));
+    const latestRoas = parseFloat(cd.roas) || 0;
+
+    // Band-driven defaults that the data can override
+    // A1 / A2 = sheet says "no Meta spend yet"
+    if((band==='A1'||band==='A2') && total8wk < 500){
+      return {state:'UNTESTED', ...STATES.UNTESTED};
+    }
+    // E = seller-constrained — never recommend scaling
+    if(band==='E'){
+      return {state:'SELLER_HOLD', ...STATES.SELLER_HOLD};
+    }
+
+    // TESTING — multiple new tests recently AND not enough history to verdict yet
+    if(tests.d28.length >= 2 && weeksWithSpend < 4){
+      return {state:'TESTING', ...STATES.TESTING};
+    }
+
+    // PROVEN UNPROFITABLE — material history (4+ weeks spend), low ROAS sustained,
+    // tested multiple times without improvement. Bands D and F are the candidates.
+    if(weeksWithSpend >= 4 && recentRoas !== null && recentRoas < 0.7){
+      if(tests.d28.length >= 3) return {state:'PROVEN_FAIL', ...STATES.PROVEN_FAIL};
+      return {state:'NEEDS_ANGLE', ...STATES.NEEDS_ANGLE};
+    }
+
+    // FATIGUE — was strong, weakening
+    if(earlyRoas !== null && recentRoas !== null && earlyRoas > 1.2 && (earlyRoas - recentRoas) > 0.2){
+      return {state:'FATIGUE', ...STATES.FATIGUE};
+    }
+
+    // READY_TO_SCALE — ROAS decent but spend < 25% of target pace
+    if(latestRoas >= 1.05 && scaling.pct < 25){
+      return {state:'READY_SCALE', ...STATES.READY_SCALE};
+    }
+
+    // SCALING — ROAS decent AND meaningfully on-pace
+    if(latestRoas >= 1.05 && scaling.pct >= 25){
+      return {state:'SCALING', ...STATES.SCALING};
+    }
+
+    // Default: weak — needs different angle
+    return {state:'NEEDS_ANGLE', ...STATES.NEEDS_ANGLE};
+  }
+
+  // Tailored creative action — uses diagnosis + style data to pick something
+  // category-specific. Returns the diagnosis.rec by default but can be enriched.
+  function creativeAction(cat, ctyKey, diag, tests){
+    let rec = diag.rec;
+    // Add format diversity insight where useful
+    const styles = [...new Set(tests.all.map(d=>detectStyle(d.ag)))];
+    const stylesTested = styles.filter(s=>s!=='mixed');
+    if(diag.state === 'NEEDS_ANGLE' && stylesTested.length){
+      const tried = stylesTested.slice(0,4).join(', ');
+      // Suggest a style not yet tried
+      const candidates = ['higgsfield-ugc','raam-ugc','before-after','basic-statics','three-style','matt-templates','pits'];
+      const untried = candidates.filter(c=>!stylesTested.includes(c));
+      if(untried.length) rec += ' Tried so far: '+tried+'. Try next: '+untried.slice(0,2).join(' or ')+'.';
+    } else if((diag.state === 'SCALING' || diag.state === 'READY_SCALE') && stylesTested.length){
+      rec += ' Active styles: '+stylesTested.slice(0,3).join(', ')+'.';
+    } else if(diag.state === 'UNTESTED'){
+      rec = rec; // unchanged
+    }
+    return rec;
+  }
+
+  // ── Render ──────────────────────────────────────────────────────────────
+  const STATE_ORDER = ['SCALING','READY_SCALE','TESTING','FATIGUE','NEEDS_ANGLE','PROVEN_FAIL','SELLER_HOLD','UNTESTED'];
+  const STATE_BADGE = {
+    UNTESTED:{e:'🆕',l:'Untested',c:'#3b82f6'},
+    TESTING:{e:'🧪',l:'Testing',c:'#a78bfa'},
+    READY_SCALE:{e:'📈',l:'Ready to scale',c:'#10b981'},
+    SCALING:{e:'🟢',l:'Scaling',c:'#10b981'},
+    FATIGUE:{e:'📉',l:'Fatigue',c:'#f7bf53'},
+    NEEDS_ANGLE:{e:'⚠️',l:'Needs angle',c:'#f97316'},
+    PROVEN_FAIL:{e:'❌',l:'Proven unprofitable',c:'#ef4444'},
+    SELLER_HOLD:{e:'🔵',l:'Seller-blocked',c:'#3b82f6'}
+  };
+
+  function renderMarketTable(market, flag, ctyKey){
+    const rows = GROWTH[market];
+    const wkBg = 'rgba(247,191,83,.05)';
+
+    // Pre-compute per-cat so the summary block can tally diagnosis states
+    const computed = rows.map(g=>{
+      const cd  = CAT_DATA.find(d=>d.cat===g.cat && d.cty && d.cty.includes(ctyKey));
+      const wtd = WTD_DATA.find(d=>d.cat===g.cat && d.cty && d.cty.includes(ctyKey));
+      const tests = findTests(g.cat, ctyKey);
+      const scaling = scalingProgress(cd, wtd, g.rev_opp);
+      const diag = diagnose(cd, tests, g.band, scaling);
+      const ver = impactVerdict(cd, tests.d28.length>0);
+      const rec = creativeAction(g.cat, ctyKey, diag, tests);
+      return {g, cd, wtd, tests, scaling, diag, ver, rec};
+    });
+
+    // Summary tile — bucket the 20 cats by diagnosis state
+    const tally = {};
+    computed.forEach(c=>{tally[c.diag.state] = (tally[c.diag.state]||0)+1;});
+    const tallyHtml = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">'+
+      STATE_ORDER.filter(s=>tally[s]).map(s=>{
+        const b = STATE_BADGE[s];
+        return '<div style="background:rgba(255,255,255,.03);border:1px solid '+b.c+'33;border-radius:8px;padding:8px 14px;display:flex;flex-direction:column;align-items:center;min-width:100px">'+
+          '<div style="font-size:11px;color:'+b.c+';font-weight:700">'+b.e+' '+b.l+'</div>'+
+          '<div style="font-size:18px;font-weight:800;color:#e2e8f0;letter-spacing:-.5px;margin-top:2px">'+tally[s]+'</div>'+
         '</div>';
       }).join('')+
     '</div>';
+
+    // Header
+    const head = '<thead><tr style="background:rgba(255,255,255,.04);color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.12)">'+
+      '<th style="text-align:left;padding:10px 12px;width:18%">Category</th>'+
+      '<th style="text-align:right;padding:10px 12px;width:9%">Rev opp<br><span style="font-size:9px;color:#64748b;text-transform:none;letter-spacing:0">Mar–Dec 26</span></th>'+
+      '<th style="text-align:right;padding:10px 12px;background:'+wkBg+';width:14%">This week<br><span style="font-size:9px;color:#64748b;text-transform:none;letter-spacing:0">Spend / Rev / ROAS / APR</span></th>'+
+      '<th style="text-align:left;padding:10px 12px;width:9%">Scaling vs opp<br><span style="font-size:9px;color:#64748b;text-transform:none;letter-spacing:0">% of weekly pace</span></th>'+
+      '<th style="text-align:left;padding:10px 12px;width:25%">Tests launched (last 4 weeks)<br><span style="font-size:9px;color:#64748b;text-transform:none;letter-spacing:0">🆕 = launched last 7d · per-test spend · ROAS · APR since launch</span></th>'+
+      '<th style="text-align:left;padding:10px 12px;width:11%">Diagnosis</th>'+
+      '<th style="text-align:left;padding:10px 12px;width:18%">Recommended creative action</th>'+
+    '</tr></thead>';
+
+    const body = computed.map(({g, cd, wtd, tests, scaling, diag, ver, rec})=>{
+      const bm = BAND_META[g.band] || BAND_META.D;
+
+      // Cell 1: cat + band badge
+      const catCell = '<div style="display:flex;flex-direction:column;gap:4px">'+
+        '<div style="font-size:13px;font-weight:700;color:#e2e8f0">'+flag+' '+g.cat+'</div>'+
+        '<div>'+tag(bm.e+' '+bm.l,bm.c,'rgba(255,255,255,.05)')+'</div>'+
+      '</div>';
+
+      // Cell 2: rev opp + weekly target
+      const wkTarget = Math.round(g.rev_opp / REV_OPP_WEEKS);
+      const revOppCell = '<div style="font-size:14px;font-weight:800;color:#47BF9C;letter-spacing:-.3px">£'+g.rev_opp.toLocaleString()+'</div>'+
+        '<div style="font-size:10px;color:#64748b;margin-top:2px">£'+wkTarget.toLocaleString()+'/wk target</div>';
+
+      // Cell 3: this week
+      let wkSpend=0, wkRev=0, wkRoas=0, wkApr=0, wkHas=false;
+      if(wtd){ wkSpend=wtd.spend; wkRev=wtd.rev; wkRoas=wtd.roas; wkApr=wtd.apr; wkHas=wkSpend>0;}
+      else if(cd){ wkSpend=cd.spend; wkRev=cd.rev; wkRoas=parseFloat(cd.roas); wkApr=cd.apr; wkHas=wkSpend>0;}
+      const roasCol = wkRoas>=1.3?'#10b981':wkRoas>=1.0?'#f7bf53':'#ef4444';
+      const wkCell = wkHas
+        ? '<div style="font-size:11px;line-height:1.5;font-variant-numeric:tabular-nums">'+
+            '<span style="color:#60a5fa">£'+Math.round(wkSpend).toLocaleString()+'</span> · '+
+            '<span style="color:#47BF9C">£'+Math.round(wkRev).toLocaleString()+'</span><br>'+
+            '<span style="color:'+roasCol+';font-weight:700">'+wkRoas.toFixed(2)+'x</span> · '+
+            '<span style="color:'+(wkApr>=0?'#10b981':'#ef4444')+'">'+fmtP(wkApr)+'</span>'+
+          '</div>'
+        : '<div style="font-size:11px;color:#475569;font-style:italic">no spend</div>';
+
+      // Cell 4: scaling progress bar
+      const scaleBarW = Math.min(scaling.pct, 100);
+      const scaleCell = '<div style="font-size:11px;line-height:1.4">'+
+        '<div style="font-weight:700;color:'+scaling.color+'">'+scaling.pct+'%'+(scaling.pct>=100?'+':'')+' · '+scaling.label+'</div>'+
+        '<div style="height:5px;background:rgba(255,255,255,.06);border-radius:3px;margin-top:5px;overflow:hidden">'+
+          '<div style="height:100%;width:'+scaleBarW+'%;background:'+scaling.color+';border-radius:3px"></div>'+
+        '</div>'+
+      '</div>';
+
+      // Cell 5: tests — full list with per-test ROAS / APR / spend since launch
+      // + numbered ad-name bullets under each test (when ad data is available)
+      const t28n = tests.d28.length;
+      let testCell;
+      if(t28n === 0){
+        testCell = '<span style="color:#475569;font-size:11px">none in last 4 weeks</span>';
+      } else {
+        const TESTADS = (typeof GROWTH_TEST_ADS!=='undefined') ? GROWTH_TEST_ADS : {};
+        // Helper: shorten an ad name by stripping the adset-name prefix when
+        // the ad name starts with cat-slug. E.g.
+        // "home-domiciliary-care_Sandbox_Raam_Avatar_V1" → "Raam_Avatar_V1"
+        function shortAd(adName, adsetName){
+          if(!adName) return '';
+          let n = adName;
+          // Strip leading "{slug}_Sandbox_" or "{slug}_<market>_" if present
+          const m = n.match(/^[a-z0-9-]+_Sandbox_(.+)$/i);
+          if(m) return m[1].replace(/_/g,' ');
+          // For BAU ads named identically to adset, just say "(matches adset name)"
+          if(n === adsetName) return '<em style="color:#64748b">single creative</em>';
+          // Else strip leading numeric+catwords prefix matching adset prefix
+          // (best effort) — fall through to truncation
+          return (n.length>50 ? n.slice(0,48)+'…' : n).replace(/_/g,' ');
+        }
+        function statusBadge(es){
+          if(!es) return '';
+          if(es === 'ACTIVE')        return '<span style="color:#10b981;font-size:9px;font-weight:700">●</span>';
+          if(es === 'PAUSED' || es === 'ADSET_PAUSED' || es === 'CAMPAIGN_PAUSED')
+                                     return '<span style="color:#94a3b8;font-size:9px;font-weight:700">⏸</span>';
+          return '<span style="color:#64748b;font-size:9px">·</span>';
+        }
+        const lines = tests.d28.map(t=>{
+          const newBadge = t.firstNz === 7
+            ? '<span style="background:rgba(59,130,246,.15);color:#3b82f6;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;letter-spacing:.3px">🆕 Launched last 7 days</span>'
+            : '<span style="color:#94a3b8;font-size:9px">Launched '+t.weeksLive+' '+(t.weeksLive===1?'week':'weeks')+' ago</span>';
+          const styleHint = detectStyle(t.ag);
+          const styleTag = styleHint !== 'mixed' ? '<span style="color:#94a3b8;font-size:9px;background:rgba(255,255,255,.04);padding:1px 5px;border-radius:3px;margin-left:4px">'+styleHint+'</span>' : '';
+
+          // Ad-level bullets
+          const adInfo = TESTADS[t.ag + '|' + t.cty];
+          let adsBlock = '';
+          if(adInfo && adInfo.ads && adInfo.ads.length){
+            const adLines = adInfo.ads.map((a,idx)=>{
+              return '<li style="font-size:10px;color:#cbd5e1;margin-bottom:2px;line-height:1.35">'+
+                statusBadge(a.effective_status)+' '+shortAd(a.name, t.ag)+
+              '</li>';
+            }).join('');
+            adsBlock = '<ol style="margin:6px 0 0 18px;padding:0;list-style:decimal;color:#94a3b8">'+adLines+'</ol>';
+          } else if(adInfo && adInfo.note){
+            adsBlock = '<div style="font-size:10px;color:#64748b;margin-top:4px;font-style:italic">'+adInfo.note+'</div>';
+          }
+
+          return '<div style="margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed rgba(255,255,255,.04)">'+
+            '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:3px">'+
+              newBadge +
+              '<span style="color:#e2e8f0;font-size:11px;font-weight:600;line-height:1.3">'+shortAg(t.ag)+'</span>'+
+              styleTag +
+            '</div>'+
+            '<div style="font-size:10px;color:#94a3b8;font-variant-numeric:tabular-nums">'+
+              '<span style="color:#60a5fa">£'+Math.round(t.spend).toLocaleString()+'</span> · '+
+              t.vEm + ' <span style="color:'+t.vCol+';font-weight:700">'+t.roas.toFixed(2)+'x</span> · '+
+              '<span style="color:'+(t.apr>=0?'#10b981':'#ef4444')+'">'+fmtP(t.apr)+'</span>'+
+            '</div>'+
+            adsBlock +
+          '</div>';
+        }).join('');
+        // Strip the trailing divider
+        testCell = '<div style="font-size:11px;line-height:1.3">' + lines.replace(/border-bottom:1px dashed[^"]*"(?=>[^<]*$)/, 'border-bottom:none"') + '</div>';
+      }
+
+      // Cell 6: diagnosis
+      const diagCell = '<div style="font-size:12px;font-weight:700;color:'+diag.c+';line-height:1.3">'+diag.e+' '+diag.l+'</div>';
+
+      // Cell 7: recommended creative action
+      const recCell = '<div style="font-size:11px;line-height:1.4;color:#cbd5e1">'+rec+'</div>';
+
+      return '<tr style="border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top">'+
+        '<td style="padding:10px 12px">'+catCell+'</td>'+
+        '<td style="padding:10px 12px;text-align:right">'+revOppCell+'</td>'+
+        '<td style="padding:10px 12px;text-align:right;background:'+wkBg+'">'+wkCell+'</td>'+
+        '<td style="padding:10px 12px">'+scaleCell+'</td>'+
+        '<td style="padding:10px 12px">'+testCell+'</td>'+
+        '<td style="padding:10px 12px">'+diagCell+'</td>'+
+        '<td style="padding:10px 12px">'+recCell+'</td>'+
+      '</tr>';
+    }).join('');
+
+    // Footer totals
+    const tot = computed.reduce((a,c)=>{
+      a.revOpp += c.g.rev_opp;
+      const sp = c.wtd?c.wtd.spend:(c.cd?c.cd.spend:0);
+      const rv = c.wtd?c.wtd.rev  :(c.cd?c.cd.rev:0);
+      const ap = c.wtd?c.wtd.apr  :(c.cd?c.cd.apr:0);
+      a.spend += sp; a.rev += rv; a.apr += ap;
+      a.t7  += c.tests.d7.length;
+      a.t28 += c.tests.d28.length;
+      return a;
+    },{revOpp:0,spend:0,rev:0,apr:0,t7:0,t28:0});
+    const totRoas = tot.spend>0 ? (tot.rev/tot.spend) : 0;
+    const totScaling = tot.revOpp>0 ? Math.round(tot.rev / (tot.revOpp/REV_OPP_WEEKS) * 100) : 0;
+    const footer = '<tfoot><tr style="border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);font-weight:700">'+
+      '<td style="padding:10px 12px;color:#e2e8f0">Total ('+rows.length+' cats)</td>'+
+      '<td style="padding:10px 12px;text-align:right;color:#47BF9C">£'+Math.round(tot.revOpp).toLocaleString()+'</td>'+
+      '<td style="padding:10px 12px;text-align:right;background:'+wkBg+';font-size:11px;line-height:1.5">'+
+        '<span style="color:#60a5fa">£'+Math.round(tot.spend).toLocaleString()+'</span> · '+
+        '<span style="color:#47BF9C">£'+Math.round(tot.rev).toLocaleString()+'</span><br>'+
+        '<span style="color:'+(totRoas>=1.0?'#10b981':'#ef4444')+'">'+totRoas.toFixed(2)+'x</span> · '+
+        '<span style="color:'+(tot.apr>=0?'#10b981':'#ef4444')+'">'+fmtP(tot.apr)+'</span>'+
+      '</td>'+
+      '<td style="padding:10px 12px;color:'+(totScaling<10?'#ef4444':totScaling<25?'#f97316':'#f7bf53')+'">'+totScaling+'% portfolio pace</td>'+
+      '<td style="padding:10px 12px;color:#3b82f6">'+tot.t7+' new (7d) · '+tot.t28+' total (4wk)</td>'+
+      '<td style="padding:10px 12px;color:#475569" colspan="2">—</td>'+
+    '</tr></tfoot>';
+
+    return tallyHtml+'<div style="overflow-x:auto;border:1px solid rgba(255,255,255,.06);border-radius:10px;margin-bottom:32px">'+
+      '<table style="width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums">'+
+        head+'<tbody>'+body+'</tbody>'+footer+
+      '</table>'+
+    '</div>';
   }
 
-  const wkLabels='<div style="display:flex;gap:2px;margin-bottom:3px">'+WEEKS_SHORT.map(w=>'<div style="flex:1;font-size:7px;color:#334155;text-align:center">'+w+'</div>').join('')+'</div>';
-
-  function buildCard(catName, ctyKeyword, flag, benchRoas){
-    const cd=CAT_DATA.find(d=>d.cat===catName&&d.cty.includes(ctyKeyword));
-    const catAds=allAdsets.filter(d=>d.cat===catName&&d.cty.includes(ctyKeyword));
-
-    if(!cd&&catAds.length===0){
-      return '<div style="background:rgba(255,255,255,.015);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:16px 18px">'+
-        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px">'+
-          '<div style="font-size:14px;font-weight:700;color:#e2e8f0">'+flag+' '+catName+'</div>'+
-          '<span style="background:rgba(239,68,68,.15);color:#ef4444;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:.5px">NO ACTIVE ADS</span>'+
-        '</div>'+
-        '<p style="color:#475569;font-size:11px;margin:0 0 10px">No campaigns found in this reporting period.</p>'+
-        '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#f7bf53;margin-bottom:5px">💡 Actions Required</div>'+
-        '<ul style="margin:0;padding-left:16px;color:#94a3b8;font-size:11px">'+
-          '<li>Launch initial test adsets to establish baseline performance data</li>'+
-          '<li>Check if category is active on Bark platform and confirm minimum volume</li>'+
-        '</ul>'+
-      '</div>';
-    }
-
-    // 8-week arrays from CAT_DATA
-    const aprs8=cd?arr8(cd.aprs8):Array(8).fill(0);
-    const revs8=cd?arr8(cd.revs8):Array(8).fill(0);
-    const roas8=cd?arr8(cd.roas8):Array(8).fill(0);
-    const sp8=cd?arr8(cd.spends8):Array(8).fill(0);
-
-    // Aggregate CPL & RPB from adsets
-    const cpls8=Array.from({length:8},(_,i)=>{const vs=catAds.map(a=>arr8(a.cpls8)[i]).filter(v=>v>0);return vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:0;});
-    const rpbs8=Array.from({length:8},(_,i)=>{const vs=catAds.map(a=>arr8(a.rpbs8)[i]).filter(v=>v>0);return vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:0;});
-
-    const spend=cd?cd.spend:catAds.reduce((s,d)=>s+d.spend,0);
-    const rev=cd?cd.rev:0;
-    const roas=cd?parseFloat(cd.roas):0;
-    const apr=cd?cd.apr:(rev-spend);
-    const cpl=cpls8[7], rpb=rpbs8[7];
-
-    // WoW helpers
-    const pctWow=(cur,prev)=>prev>0?((cur-prev)/Math.abs(prev)*100).toFixed(1)+'%':'—';
-    const absWow=(cur,prev,suffix)=>prev>0?(cur>=prev?'+':'')+((cur-prev).toFixed(2))+suffix:'—';
-    const wCol=(w,inv=false)=>{const n=parseFloat(w);return isNaN(n)?'#64748b':(inv?n<0:n>0)?'#10b981':'#ef4444';};
-
-    const wSp=pctWow(spend,sp8[6]);
-    const wRev=pctWow(rev,revs8[6]);
-    const wRoas=absWow(roas,roas8[6],'x');
-    const wApr=pctWow(apr,aprs8[6]);
-    const wCpl=cpls8[6]>0?pctWow(cpl,cpls8[6]):'—';
-    const wRpb=rpbs8[6]>0?pctWow(rpb,rpbs8[6]):'—';
-
-    // Scale badge
-    const roasCls=roas>=1.3?['rgba(16,185,129,.15)','#10b981','SCALE READY']:roas>=1.0?['rgba(247,191,83,.12)','#f7bf53','MONITOR']:['rgba(239,68,68,.15)','#ef4444','REVIEW'];
-    const scaleBadge='<span style="background:'+roasCls[0]+';color:'+roasCls[1]+';font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:.5px">'+roasCls[2]+'</span>';
-
-    const roasDiff=roas-benchRoas;
-    const benchStr=(roasDiff>=0?'+':'')+roasDiff.toFixed(2)+'x vs acct avg ('+benchRoas.toFixed(2)+'x)';
-    const benchCol=roasDiff>=0?'#10b981':'#ef4444';
-
-    // KPI pills
-    function kpi(lbl,val,wow,inv=false){
-      const wc=wCol(wow,inv);
-      return '<div style="flex:1;min-width:0;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:7px 8px;text-align:center">'+
-        '<div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:3px">'+lbl+'</div>'+
-        '<div style="font-size:15px;font-weight:800;letter-spacing:-.5px;color:#e2e8f0;line-height:1.1">'+val+'</div>'+
-        '<div style="font-size:9px;color:'+wc+';margin-top:2px">'+wow+'</div>'+
-      '</div>';
-    }
-
-    const aprStr=(apr>=0?'+':'')+shortPound(apr);
-    const kpis=
-      kpi('Spend',shortPound(spend),wSp,true)+
-      kpi('Revenue',shortPound(rev),wRev,false)+
-      kpi('ROAS',roas.toFixed(2)+'x',wRoas,false)+
-      kpi('APR',aprStr,wApr,false)+
-      kpi('CPL',cpl>0?'£'+cpl.toFixed(0):'—',wCpl,true)+
-      kpi('Rev/Bark',rpb>0?'£'+rpb.toFixed(1):'—',wRpb,false);
-
-    const wtdE=WTD_DATA.find(w=>w.cat===catName&&w.cty.includes(ctyKeyword));
-    const wtdStrip=wtdE?
-      '<div style="display:flex;gap:12px;align-items:center;margin:8px 0 2px;padding:6px 10px;background:rgba(247,191,83,.06);border:1px solid rgba(247,191,83,.15);border-radius:6px">'+
-        '<span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#f7bf53">📅 '+WTD_LABEL+'</span>'+
-        '<span style="font-size:11px;color:#60a5fa">'+shortPound(wtdE.spend)+' sp</span>'+
-        '<span style="font-size:11px;color:#47BF9C">'+shortPound(wtdE.rev)+' rev</span>'+
-        '<span style="font-size:11px;color:'+(wtdE.roas>=1.2?'#10b981':wtdE.roas>=0.8?'#f97316':'#ef4444')+'">'+wtdE.roas.toFixed(2)+'x ROAS</span>'+
-        '<span style="font-size:11px;color:'+(wtdE.apr>=0?'#10b981':'#ef4444')+'">'+(wtdE.apr>=0?'+':'−')+'£'+Math.round(Math.abs(wtdE.apr)).toLocaleString()+' APR</span>'+
-      '</div>'
-    :
-      '<div style="margin:8px 0 2px;padding:5px 10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:10px;color:#334155">📅 '+WTD_LABEL+' — no spend this week</div>';
-
-    // Sparklines row
-    function sparkCol(label,sparkHtml){
-      return '<div style="flex:1;min-width:0">'+
-        '<div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:#64748b;margin-bottom:3px">'+label+'</div>'+
-        wkLabels+sparkHtml+
-      '</div>';
-    }
-    const sparks='<div style="display:flex;gap:10px;margin:12px 0 14px">'+
-      sparkCol('APR (8wk)',gcAprSpark(aprs8))+
-      sparkCol('ROAS (8wk)',gcSpark(roas8))+
-      sparkCol('Spend (8wk)',gcSpark(sp8))+
-    '</div>';
-
-    // Actions detection
-    const newThisWeek=catAds.filter(d=>{const s=arr8(d.spends8);return s[6]===0&&s[7]>0;});
-    const newLast4=catAds.filter(d=>{const s=arr8(d.spends8);return s.slice(0,4).every(v=>v===0)&&s.slice(4).some(v=>v>0)&&!(s[6]===0&&s[7]>0);});
-    const pausedThisWeek=catAds.filter(d=>{const s=arr8(d.spends8);return s[7]===0&&s[6]>0;});
-    const activeAds=catAds.filter(d=>arr8(d.spends8)[7]>0);
-    const stylesUsed=[...new Set(activeAds.map(d=>extractStyle(d.ag)))];
-    const actions=[];
-    if(newThisWeek.length) actions.push('⚡ '+newThisWeek.length+' new adset'+(newThisWeek.length>1?'s':'')+' launched this week — '+newThisWeek.map(d=>shortAg(d.ag)).join(', '));
-    if(newLast4.length) actions.push('🆕 '+newLast4.length+' adset'+(newLast4.length>1?'s':'')+' launched in last 4 weeks — '+newLast4.slice(0,3).map(d=>shortAg(d.ag)).join(', ')+(newLast4.length>3?'…':''));
-    if(pausedThisWeek.length) actions.push('⏸ '+pausedThisWeek.length+' adset'+(pausedThisWeek.length>1?'s':'')+' paused this week');
-    if(activeAds.length) actions.push('▶ '+activeAds.length+' adset'+(activeAds.length>1?'s':'')+' currently active'+(stylesUsed.length?' (styles: '+stylesUsed.join(', ')+')':''));
-    if(!actions.length) actions.push('No adset changes detected this week');
-
-    // Suggestions (rule-based)
-    const sugs=[];
-    if(roas>=1.3){
-      const trending=roas8[7]>roas8[6]&&roas8[6]>roas8[5];
-      sugs.push('ROAS '+roas.toFixed(2)+'x'+(trending?' and trending up':'')+' — consider scaling budget 20–30%');
-    } else if(roas<1.0&&cd){
-      sugs.push('ROAS '+roas.toFixed(2)+'x (below breakeven) — pause weakest adsets and review bid strategy');
-    }
-    if(roas8[5]>0&&roas8[6]>0&&roas8[7]>0){
-      if(roas8[7]<roas8[6]&&roas8[6]<roas8[5]) sugs.push('ROAS declining 3 consecutive weeks — refresh creative or tighten audience');
-      else if(roas8[7]>roas8[6]&&roas8[6]>roas8[5]) sugs.push('ROAS improving 3 consecutive weeks — strong momentum, double down');
-    }
-    if(aprs8[5]>0&&aprs8[6]>aprs8[5]&&aprs8[7]>aprs8[6]) sugs.push('APR improving 3 consecutive weeks — strong scaling candidate');
-    if(cpls8[5]>0&&cpls8[7]>cpls8[5]*1.2) sugs.push('CPL up '+(((cpls8[7]-cpls8[5])/cpls8[5])*100).toFixed(0)+'% over 2 weeks — check bid strategy and competition');
-    const hasNewRecent=catAds.some(d=>{const s=arr8(d.spends8);return s.slice(4).some(v=>v>0)&&s.slice(0,4).some(v=>v===0);});
-    if(catAds.length>0&&!hasNewRecent) sugs.push('No new creative launched in last 4 weeks — test a new style to avoid fatigue');
-    if(activeAds.length<=1&&catAds.length>0) sugs.push('Only '+activeAds.length+' active adset — low creative diversification, increase to reduce risk');
-    if(!sugs.length) sugs.push('Performance within normal range — continue monitoring and A/B testing');
-
-    const cardBorder=roas>=1.3?'rgba(16,185,129,.22)':roas>=1.0?'rgba(247,191,83,.15)':'rgba(239,68,68,.2)';
-    return '<div style="background:rgba(255,255,255,.025);border:1px solid '+cardBorder+';border-radius:10px;padding:16px 18px">'+
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px">'+
-        '<div style="font-size:14px;font-weight:700;color:#e2e8f0">'+flag+' '+catName+'</div>'+
-        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'+
-          scaleBadge+
-          '<span style="font-size:10px;color:'+benchCol+'">'+benchStr+'</span>'+
-        '</div>'+
-      '</div>'+
-      '<div style="display:flex;gap:5px;margin-bottom:0">'+kpis+'</div>'+
-      wtdStrip+
-      sparks+
-      '<div style="margin-bottom:10px">'+
-        '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:5px">Actions This Week</div>'+
-        '<ul style="margin:0;padding-left:16px;color:#94a3b8;font-size:11px">'+actions.map(a=>'<li style="margin-bottom:3px">'+a+'</li>').join('')+'</ul>'+
-      '</div>'+
-      '<div>'+
-        '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#f7bf53;margin-bottom:5px">💡 Suggestions</div>'+
-        '<ul style="margin:0;padding-left:16px;color:#94a3b8;font-size:11px">'+sugs.map(s=>'<li style="margin-bottom:3px">'+s+'</li>').join('')+'</ul>'+
-      '</div>'+
-    '</div>';
-  }
-
-  const secHd=(t,n)=>'<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">'+
-    '<h2 style="margin:0;color:#e2e8f0;font-size:16px">'+t+'</h2>'+
-    '<span style="background:rgba(59,130,246,.15);color:#3b82f6;font-size:11px;padding:2px 10px;border-radius:12px;font-weight:600">'+n+' categories</span>'+
-  '</div>';
-
-  // 🔥 Scale-up hotlist: growth cats currently running ROAS ≥ 1.7
-  const ALL_GROWTH=[].concat(
-    UK_GROWTH.map(c=>({cat:c,ctyKey:'Kingdom',flag:'🇬🇧'})),
-    US_GROWTH.map(c=>({cat:c,ctyKey:'States',flag:'🇺🇸'}))
+  // Scale-up hotlist (kept at top)
+  const ALL_GROWTH = [].concat(
+    GROWTH.UK.map(g=>({...g, ctyKey:'Kingdom', flag:'🇬🇧'})),
+    GROWTH.US.map(g=>({...g, ctyKey:'States',  flag:'🇺🇸'}))
   );
-  const hotlist=ALL_GROWTH.map(g=>{
-    const cd=CAT_DATA.find(d=>d.cat===g.cat&&d.cty.includes(g.ctyKey));
+  const hotlist = ALL_GROWTH.map(g=>{
+    const cd = CAT_DATA.find(d=>d.cat===g.cat && d.cty && d.cty.includes(g.ctyKey));
     if(!cd) return null;
-    const r=parseFloat(cd.roas);
+    const r = parseFloat(cd.roas);
     if(isNaN(r)||r<1.7) return null;
     return {...g, roas:r, spend:cd.spend, rev:cd.rev, apr:cd.apr};
   }).filter(Boolean).sort((a,b)=>b.roas-a.roas);
@@ -1795,18 +2054,20 @@ function buildGrowthTab(){
     hotHtml='<div class="flag-card info" style="margin-bottom:24px"><div class="flag-title">No growth categories at ROAS ≥ 1.7x this week</div><div class="flag-body" style="color:#94a3b8;font-size:11px">No scale-up signals from growth cats. Check the main Overview for top-performing non-growth cats.</div></div>';
   }
 
+  const secHd=(t,n)=>'<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">'+
+    '<h2 style="margin:0;color:#e2e8f0;font-size:16px">'+t+'</h2>'+
+    '<span style="background:rgba(59,130,246,.15);color:#3b82f6;font-size:11px;padding:2px 10px;border-radius:12px;font-weight:600">'+n+' categories</span>'+
+    '<span style="font-size:11px;color:#94a3b8">Ordered by Mar–Dec 2026 Revenue Opportunity</span>'+
+  '</div>';
+
   document.getElementById('tab-growth').innerHTML=
     '<div style="padding:4px 0 24px">'+
       hotHtml+
-      secHd('🇬🇧 UK Growth Categories',UK_GROWTH.length)+
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:36px">'+
-        UK_GROWTH.map(c=>buildCard(c,'Kingdom','🇬🇧',ukBR)).join('')+
-      '</div>'+
+      secHd('🇬🇧 UK Growth Categories', GROWTH.UK.length)+
+      renderMarketTable('UK','🇬🇧','Kingdom')+
       '<div style="height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);margin:0 0 28px"></div>'+
-      secHd('🇺🇸 US Growth Categories',US_GROWTH.length)+
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">'+
-        US_GROWTH.map(c=>buildCard(c,'States','🇺🇸',usBR)).join('')+
-      '</div>'+
+      secHd('🇺🇸 US Growth Categories', GROWTH.US.length)+
+      renderMarketTable('US','🇺🇸','States')+
     '</div>';
 }
 
