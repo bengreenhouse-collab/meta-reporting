@@ -99,7 +99,7 @@ td{padding:7px 8px;vertical-align:middle}
 <div id="week-switcher-bar">
   <label for="week-switcher">Week</label>
   <select id="week-switcher">
-      <option value="wip-19jun2026">Mid-week · 19 Jun 2026 (so far)</option>
+      <option value="wip-9jul2026">Mid-week · 9 Jul 2026 (so far)</option>
       <option value="5jul2026" selected>w/e 5 Jul 2026</option>
       <option value="28jun2026">w/e 28 Jun 2026</option>
       <option value="21jun2026">w/e 21 Jun 2026</option>
@@ -1276,6 +1276,20 @@ function buildGrowthTab(){
     return xs.length ? xs.reduce((a,b)=>a+b,0)/xs.length : null;
   };
   const tag  = (txt,col,bg)=>'<span style="background:'+bg+';color:'+col+';font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.3px;display:inline-block">'+txt+'</span>';
+  const mean = xs => xs.length ? xs.reduce((a,b)=>a+b,0)/xs.length : 0;
+  // Momentum badge: latest week vs the last-4-week average, in the metric's own unit.
+  const mom = (series, kind) => {
+    const a = arr(series); if(!a || a.length < 2) return '';
+    const lastV = a[a.length-1];
+    const base = mean(a.slice(-4));            // last 4 weeks
+    const d = lastV - base;
+    if(kind === 'roas'){
+      if(Math.abs(d) < 0.05) return '<span style="color:#64748b;font-size:9px"> =4wk</span>';
+      return '<span style="color:'+(d>0?'#10b981':'#ef4444')+';font-size:9px"> '+(d>0?'▲':'▼')+Math.abs(d).toFixed(2)+'x</span>';
+    }
+    if(Math.abs(d) < 1) return '<span style="color:#64748b;font-size:9px"> =4wk</span>';
+    return '<span style="color:'+(d>0?'#10b981':'#ef4444')+';font-size:9px"> '+(d>0?'▲':'▼')+'£'+Math.round(Math.abs(d)).toLocaleString()+'</span>';
+  };
   function shortAg(s){
     if(!s) return '';
     let raw = s;
@@ -1531,7 +1545,7 @@ function buildGrowthTab(){
     const head = '<thead><tr style="background:rgba(255,255,255,.04);color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.12)">'+
       '<th style="text-align:left;padding:10px 12px;width:18%">Category</th>'+
       '<th style="text-align:right;padding:10px 12px;width:9%">Rev opp<br><span style="font-size:9px;color:#64748b;text-transform:none;letter-spacing:0">Mar–Dec 26</span></th>'+
-      '<th style="text-align:right;padding:10px 12px;background:'+wkBg+';width:14%">This week<br><span style="font-size:9px;color:#64748b;text-transform:none;letter-spacing:0">Spend / Rev / ROAS / APR</span></th>'+
+      '<th style="text-align:right;padding:10px 12px;background:'+wkBg+';width:15%">This week + momentum<br><span style="font-size:9px;color:#64748b;text-transform:none;letter-spacing:0">Spend · Rev · ROAS · APR (Δ vs 4-wk avg)</span></th>'+
       '<th style="text-align:left;padding:10px 12px;width:9%">Scaling vs opp<br><span style="font-size:9px;color:#64748b;text-transform:none;letter-spacing:0">% of weekly pace</span></th>'+
       '<th style="text-align:left;padding:10px 12px;width:25%">Tests launched (last 4 weeks)<br><span style="font-size:9px;color:#64748b;text-transform:none;letter-spacing:0">🆕 = launched last 7d · per-test spend · ROAS · APR since launch</span></th>'+
       '<th style="text-align:left;padding:10px 12px;width:11%">Diagnosis</th>'+
@@ -1557,12 +1571,16 @@ function buildGrowthTab(){
       if(wtd){ wkSpend=wtd.spend; wkRev=wtd.rev; wkRoas=wtd.roas; wkApr=wtd.apr; wkHas=wkSpend>0;}
       else if(cd){ wkSpend=cd.spend; wkRev=cd.rev; wkRoas=parseFloat(cd.roas); wkApr=cd.apr; wkHas=wkSpend>0;}
       const roasCol = wkRoas>=1.3?'#10b981':wkRoas>=1.0?'#f7bf53':'#ef4444';
+      const dSp = cd ? mom(cd.spends8,'money') : '';
+      const dRv = cd ? mom(cd.revs8,'money')  : '';
+      const dRo = cd ? mom(cd.roas8,'roas')   : '';
+      const dAp = cd ? mom(cd.aprs8,'money')  : '';
       const wkCell = wkHas
-        ? '<div style="font-size:11px;line-height:1.5;font-variant-numeric:tabular-nums">'+
-            '<span style="color:#60a5fa">£'+Math.round(wkSpend).toLocaleString()+'</span> · '+
-            '<span style="color:#47BF9C">£'+Math.round(wkRev).toLocaleString()+'</span><br>'+
-            '<span style="color:'+roasCol+';font-weight:700">'+wkRoas.toFixed(2)+'x</span> · '+
-            '<span style="color:'+(wkApr>=0?'#10b981':'#ef4444')+'">'+fmtP(wkApr)+'</span>'+
+        ? '<div style="font-size:11px;line-height:1.7;font-variant-numeric:tabular-nums">'+
+            '<div><span style="color:#64748b;font-size:9px">spend </span><span style="color:#60a5fa">£'+Math.round(wkSpend).toLocaleString()+'</span>'+dSp+'</div>'+
+            '<div><span style="color:#64748b;font-size:9px">rev </span><span style="color:#47BF9C">£'+Math.round(wkRev).toLocaleString()+'</span>'+dRv+'</div>'+
+            '<div><span style="color:'+roasCol+';font-weight:700">'+wkRoas.toFixed(2)+'x</span>'+dRo+' · '+
+            '<span style="color:'+(wkApr>=0?'#10b981':'#ef4444')+'">'+fmtP(wkApr)+'</span>'+dAp+'</div>'+
           '</div>'
         : '<div style="font-size:11px;color:#475569;font-style:italic">no spend</div>';
 
@@ -1739,6 +1757,46 @@ function buildGrowthTab(){
     hotHtml='<div class="flag-card info" style="margin-bottom:24px"><div class="flag-title">No growth categories at ROAS ≥ 1.7x this week</div><div class="flag-body" style="color:#94a3b8;font-size:11px">No scale-up signals from growth cats. Check the main Overview for top-performing non-growth cats.</div></div>';
   }
 
+  // ── £1m UNLOCK headline — portfolio roll-up Stefano asked for (Jul 7) ──
+  // Actionable = bands A1/A2 (activate) + B (scale) + C (grow). Parked = D/E/F
+  // (test-only / seller-constrained / below-breakeven). Shows the prize, what
+  // we're capturing this week, and % of the weekly run-rate needed to hit it.
+  const ACTIONABLE = new Set(['A1','A2','B','C']);
+  const fmtBig = v => v>=1e6 ? '£'+(v/1e6).toFixed(2)+'m' : '£'+Math.round(v/1000).toLocaleString()+'k';
+  const catThisWkRev = g => {
+    const wtd = WTD_DATA.find(d=>d.cat===g.cat && d.cty && d.cty.includes(g.ctyKey));
+    if(wtd) return wtd.rev||0;
+    const cd = CAT_DATA.find(d=>d.cat===g.cat && d.cty && d.cty.includes(g.ctyKey));
+    return cd ? (cd.rev||0) : 0;
+  };
+  let parkOpp=0, ukOpp=0, usOpp=0, ukCap=0, usCap=0;
+  ALL_GROWTH.forEach(g=>{
+    if(ACTIONABLE.has(g.band)){
+      const cap = catThisWkRev(g);
+      if(g.ctyKey==='Kingdom'){ ukOpp += g.rev_opp; ukCap += cap; }
+      else { usOpp += g.rev_opp; usCap += cap; }
+    } else { parkOpp += g.rev_opp; }
+  });
+  // Headline framed on the UK near-term unlock (≈£1m — Stefano's Jul 7 figure).
+  const paceTarget = ukOpp / REV_OPP_WEEKS;
+  const capPct = paceTarget>0 ? Math.round(ukCap/paceTarget*100) : 0;
+  const anchor = ALL_GROWTH.filter(g=>ACTIONABLE.has(g.band)).sort((a,b)=>b.rev_opp-a.rev_opp)[0];
+  const barW = Math.min(capPct,100);
+  const barCol = capPct<10?'#ef4444':capPct<25?'#f97316':capPct<75?'#f7bf53':'#10b981';
+  const unlockHtml =
+    '<div style="background:linear-gradient(135deg,rgba(71,191,156,.12),rgba(59,130,246,.06));border:1px solid rgba(71,191,156,.35);border-radius:12px;padding:18px 20px;margin-bottom:24px">'+
+      '<div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#47BF9C;font-weight:700;margin-bottom:12px">🎯 The £1m unlock — UK growth categories</div>'+
+      '<div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px">'+
+        '<div><div style="font-size:30px;font-weight:800;color:#47BF9C;letter-spacing:-1px">'+fmtBig(ukOpp)+'</div><div style="font-size:11px;color:#94a3b8">UK actionable opportunity · bands A/B/C · Mar–Dec 26</div></div>'+
+        '<div><div style="font-size:23px;font-weight:700;color:#e2e8f0">'+fmtBig(ukCap)+'<span style="font-size:12px;color:#64748b">/wk</span></div><div style="font-size:11px;color:#94a3b8">captured this week (UK)</div></div>'+
+        '<div><div style="font-size:23px;font-weight:700;color:'+barCol+'">'+capPct+'%</div><div style="font-size:11px;color:#94a3b8">of UK weekly pace ('+fmtBig(paceTarget)+'/wk needed)</div></div>'+
+      '</div>'+
+      '<div style="height:8px;background:rgba(255,255,255,.06);border-radius:5px;overflow:hidden;margin-bottom:10px"><div style="height:100%;width:'+barW+'%;background:'+barCol+';border-radius:5px"></div></div>'+
+      '<div style="font-size:11px;color:#64748b;line-height:1.5">US unlock <strong style="color:#94a3b8">'+fmtBig(usOpp)+'</strong>'+
+        (anchor?' · biggest single prize: '+anchor.flag+' <strong style="color:#94a3b8">'+anchor.cat+' '+fmtBig(anchor.rev_opp)+'</strong>':'')+
+        '<br>Parked (bands D/E/F): '+fmtBig(parkOpp)+' in test-only / seller-constrained / below-breakeven cats — excluded from the actionable target.</div>'+
+    '</div>';
+
   const secHd=(t,n)=>'<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">'+
     '<h2 style="margin:0;color:#e2e8f0;font-size:16px">'+t+'</h2>'+
     '<span style="background:rgba(59,130,246,.15);color:#3b82f6;font-size:11px;padding:2px 10px;border-radius:12px;font-weight:600">'+n+' categories</span>'+
@@ -1747,6 +1805,7 @@ function buildGrowthTab(){
 
   document.getElementById('tab-growth').innerHTML=
     '<div style="padding:4px 0 24px">'+
+      unlockHtml+
       hotHtml+
       secHd('🇬🇧 UK Growth Categories', GROWTH.UK.length)+
       renderMarketTable('UK','🇬🇧','Kingdom')+
@@ -2589,6 +2648,161 @@ if(document.readyState === 'loading') {
 } else {
   window.buildFatigueTab();
 }
+</script>
+
+<script>
+window.STRUCT_DATA = {"AU": {"ABO": {"spend": 1251.91, "rev": 3349.05, "apr": 2097.14, "roas": 2.68, "n": 16, "spends8": [0.0, 1657.27, 3685.52, 1599.31, 1068.03, 1163.05, 1234.93, 1251.91], "aprs8": [0.0, 2.4, 2434.44, 1222.49, 2536.57, 1479.57, 2098.29, 2097.14], "roas8": [0, 1.0, 1.66, 1.76, 3.37, 2.27, 2.7, 2.68]}, "Sandbox": {"spend": 256.52, "rev": 953.81, "apr": 697.29, "roas": 3.72, "n": 15, "spends8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 256.52], "aprs8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 697.29], "roas8": [0, 0, 0, 0, 0, 0, 0, 3.72]}}, "ALL": {"ABO": {"spend": 49642.38, "rev": 66940.36, "apr": 17297.98, "roas": 1.35, "n": 189, "spends8": [68211.67, 69892.39, 69312.73, 53182.7, 47090.46, 51756.06, 44903.15, 49642.38], "aprs8": [27340.27, 28711.46, 28288.91, 32200.78, 34344.22, 29687.83, 20101.75, 17297.98], "roas8": [1.4, 1.41, 1.41, 1.61, 1.73, 1.57, 1.45, 1.35]}, "Sandbox": {"spend": 13310.22, "rev": 19826.69, "apr": 6516.47, "roas": 1.49, "n": 131, "spends8": [0.0, 0.0, 0.0, 0.0, 0.0, 1411.61, 7520.01, 13310.22], "aprs8": [0.0, 0.0, 0.0, 0.0, 0.0, 45.65, 394.98, 6516.47], "roas8": [0, 0, 0, 0, 0, 1.03, 1.05, 1.49]}, "CBO": {"spend": 9345.62, "rev": 15552.46, "apr": 6206.84, "roas": 1.66, "n": 70, "spends8": [9636.46, 12347.11, 12077.2, 7821.95, 5390.65, 6872.41, 12432.53, 9345.62], "aprs8": [4989.32, 4314.16, 4715.27, 3359.4, 4666.33, 6035.43, 6114.17, 6206.84], "roas8": [1.52, 1.35, 1.39, 1.43, 1.87, 1.88, 1.49, 1.66]}, "Unknown": {"spend": 5.24, "rev": 40.67, "apr": 35.43, "roas": 7.76, "n": 1, "spends8": [0.0, 61.69, 0.0, 0.0, 0.0, 0.0, 0.0, 5.24], "aprs8": [0.0, -61.69, 0.0, 0.0, 0.0, 0.0, 0.0, 35.43], "roas8": [0, 0.0, 0, 0, 0, 0, 0, 7.76]}}, "US": {"ABO": {"spend": 21784.66, "rev": 25520.43, "apr": 3735.77, "roas": 1.17, "n": 41, "spends8": [29652.31, 29097.8, 29896.49, 22503.71, 20918.18, 25278.24, 16665.13, 21784.66], "aprs8": [10837.53, 11317.24, 11265.99, 13590.11, 14129.53, 11540.57, 6189.3, 3735.77], "roas8": [1.37, 1.39, 1.38, 1.6, 1.68, 1.46, 1.37, 1.17]}, "CBO": {"spend": 3063.56, "rev": 5802.17, "apr": 2738.61, "roas": 1.89, "n": 27, "spends8": [1868.05, 1840.78, 1861.04, 1281.03, 1461.47, 1830.08, 6909.83, 3063.56], "aprs8": [580.84, 808.92, 733.52, 956.74, 1661.08, 1541.52, 3769.51, 2738.61], "roas8": [1.31, 1.44, 1.39, 1.75, 2.14, 1.84, 1.55, 1.89]}, "Sandbox": {"spend": 4654.3, "rev": 5547.69, "apr": 893.39, "roas": 1.19, "n": 29, "spends8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3777.82, 4654.3], "aprs8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 295.42, 893.39], "roas8": [0, 0, 0, 0, 0, 0, 1.08, 1.19]}}, "UK": {"Sandbox": {"spend": 6299.6, "rev": 8499.19, "apr": 2199.59, "roas": 1.35, "n": 32, "spends8": [0.0, 0.0, 0.0, 0.0, 0.0, 1411.61, 3742.19, 6299.6], "aprs8": [0.0, 0.0, 0.0, 0.0, 0.0, 45.65, 99.56, 2199.59], "roas8": [0, 0, 0, 0, 0, 1.03, 1.03, 1.35]}, "ABO": {"spend": 23079.66, "rev": 30673.48, "apr": 7593.82, "roas": 1.33, "n": 67, "spends8": [24981.24, 21446.49, 22442.14, 21026.76, 18836.7, 21103.78, 23392.13, 23079.66], "aprs8": [10988.51, 10709.3, 10081.73, 12281.2, 12175.86, 12027.12, 8517.71, 7593.82], "roas8": [1.44, 1.5, 1.45, 1.58, 1.65, 1.57, 1.36, 1.33]}, "CBO": {"spend": 4796.45, "rev": 6832.93, "apr": 2036.48, "roas": 1.42, "n": 25, "spends8": [7215.7, 10148.31, 9742.71, 6299.14, 2583.39, 2399.23, 3160.03, 4796.45], "aprs8": [4259.45, 3602.72, 3988.02, 2266.54, 2043.85, 3030.94, 846.05, 2036.48], "roas8": [1.59, 1.36, 1.41, 1.36, 1.79, 2.26, 1.27, 1.42]}, "Unknown": {"spend": 0.0, "rev": 0.0, "apr": 0.0, "roas": 0, "n": 0, "spends8": [0.0, 61.69, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "aprs8": [0.0, -61.69, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "roas8": [0, 0.0, 0, 0, 0, 0, 0, 0]}}, "NZ": {"ABO": {"spend": 0.0, "rev": 0.0, "apr": 0.0, "roas": 0, "n": 0, "spends8": [0.0, 834.79, 2184.59, 2440.73, 1072.11, 377.02, 0.0, 0.0], "aprs8": [0.0, 1322.29, 1523.98, 1201.64, 1028.53, 248.51, 0.0, 0.0], "roas8": [0, 2.58, 1.7, 1.49, 1.96, 1.66, 0, 0]}, "CBO": {"spend": 1174.33, "rev": 2177.65, "apr": 1003.32, "roas": 1.85, "n": 13, "spends8": [0.0, 0.0, 0.0, 0.0, 246.64, 775.6, 1127.46, 1174.33], "aprs8": [0.0, 0.0, 0.0, 0.0, 228.84, 222.14, 610.7, 1003.32], "roas8": [0, 0, 0, 0, 1.93, 1.29, 1.54, 1.85]}, "Sandbox": {"spend": 299.47, "rev": 542.49, "apr": 243.02, "roas": 1.81, "n": 13, "spends8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 299.47], "aprs8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 243.02], "roas8": [0, 0, 0, 0, 0, 0, 0, 1.81]}}, "CA": {"ABO": {"spend": 1859.12, "rev": 4025.27, "apr": 2166.15, "roas": 2.17, "n": 19, "spends8": [6933.7, 12049.16, 7332.81, 3089.76, 2095.55, 1940.54, 1990.41, 1859.12], "aprs8": [4417.92, 4021.81, 2410.31, 2571.88, 2681.11, 2799.23, 1553.7, 2166.15], "roas8": [1.64, 1.33, 1.33, 1.83, 2.28, 2.44, 1.78, 2.17]}, "Sandbox": {"spend": 1588.89, "rev": 3166.9, "apr": 1578.01, "roas": 1.99, "n": 22, "spends8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1588.89], "aprs8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1578.01], "roas8": [0, 0, 0, 0, 0, 0, 0, 1.99]}, "CBO": {"spend": 285.7, "rev": 673.23, "apr": 387.53, "roas": 2.36, "n": 4, "spends8": [139.99, 140.16, 41.3, 0.0, 905.04, 1762.25, 1201.06, 285.7], "aprs8": [82.29, -14.32, -26.19, 0.0, 494.82, 1014.51, 858.71, 387.53], "roas8": [1.59, 0.9, 0.37, 0, 1.55, 1.58, 1.71, 2.36]}}, "IE": {"ABO": {"spend": 273.6, "rev": 784.23, "apr": 510.63, "roas": 2.87, "n": 11, "spends8": [2944.02, 533.75, 463.32, 387.94, 163.42, 156.79, 254.89, 273.6], "aprs8": [-366.31, 255.67, 167.66, 213.0, 486.41, 161.16, 292.46, 510.63], "roas8": [0.88, 1.48, 1.36, 1.55, 3.98, 2.03, 2.15, 2.87]}}, "FR": {"ABO": {"spend": 41.12, "rev": 77.27, "apr": 36.15, "roas": 1.88, "n": 5, "spends8": [560.74, 518.69, 556.57, 821.28, 55.18, 42.52, 43.17, 41.12], "aprs8": [-73.18, 487.93, 66.29, -164.18, 106.05, 24.26, 26.29, 36.15], "roas8": [0.87, 1.94, 1.12, 0.8, 2.92, 1.57, 1.61, 1.88]}}, "ZA": {"Sandbox": {"spend": 211.44, "rev": 1116.61, "apr": 905.17, "roas": 5.28, "n": 20, "spends8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 211.44], "aprs8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 905.17], "roas8": [0, 0, 0, 0, 0, 0, 0, 5.28]}, "ABO": {"spend": 1352.31, "rev": 2510.63, "apr": 1158.32, "roas": 1.86, "n": 30, "spends8": [3025.59, 3754.44, 2537.42, 1310.88, 2881.29, 1694.12, 1322.49, 1352.31], "aprs8": [1354.25, 594.81, 530.23, 1286.97, 1200.16, 1407.41, 1424.0, 1158.32], "roas8": [1.45, 1.16, 1.21, 1.98, 1.42, 1.83, 2.08, 1.86]}, "Unknown": {"spend": 5.24, "rev": 40.67, "apr": 35.43, "roas": 7.76, "n": 1, "spends8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.24], "aprs8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 35.43], "roas8": [0, 0, 0, 0, 0, 0, 0, 7.76]}}, "DE": {"CBO": {"spend": 25.57, "rev": 66.48, "apr": 40.91, "roas": 2.6, "n": 1, "spends8": [412.72, 217.86, 432.15, 241.78, 194.12, 105.25, 34.15, 25.57], "aprs8": [66.74, -83.16, 19.92, 136.12, 237.73, 226.32, 29.2, 40.91], "roas8": [1.16, 0.62, 1.05, 1.56, 2.22, 3.15, 1.86, 2.6]}, "ABO": {"spend": 0.0, "rev": 0.0, "apr": 0.0, "roas": 0, "n": 0, "spends8": [114.06, 0.0, 213.87, 2.34, 0.0, 0.0, 0.0, 0.0], "aprs8": [181.56, 0.0, -191.73, -2.34, 0.0, 0.0, 0.0, 0.0], "roas8": [2.59, 0, 0.1, 0.0, 0, 0, 0, 0]}}};
+window.BID_DATA = {"AU": {"Highest volume": {"spend": 1508.43, "rev": 4302.86, "apr": 2794.43, "roas": 2.85, "n": 31, "spends8": [0.0, 1657.27, 3685.52, 1599.31, 1068.03, 1163.05, 1234.93, 1508.43], "aprs8": [0.0, 2.4, 2434.44, 1222.49, 2536.57, 1479.57, 2098.29, 2794.43], "roas8": [0, 1.0, 1.66, 1.76, 3.37, 2.27, 2.7, 2.85]}}, "ALL": {"Highest volume": {"spend": 57019.0, "rev": 78711.36, "apr": 21692.36, "roas": 1.38, "n": 299, "spends8": [63829.09, 68886.82, 68974.12, 53008.16, 43542.67, 49018.76, 48744.38, 57019.0], "aprs8": [25071.94, 25748.02, 26350.72, 29459.14, 31857.87, 27066.56, 19045.59, 21692.36], "roas8": [1.39, 1.37, 1.38, 1.56, 1.73, 1.55, 1.39, 1.38]}, "Cost cap": {"spend": 6426.55, "rev": 9345.16, "apr": 2918.61, "roas": 1.45, "n": 33, "spends8": [14019.04, 13352.67, 12415.81, 7996.48, 6681.5, 6917.96, 6272.74, 6426.55], "aprs8": [7257.65, 7277.61, 6653.45, 6101.05, 5821.42, 6707.09, 3832.07, 2918.61], "roas8": [1.52, 1.55, 1.54, 1.76, 1.87, 1.97, 1.61, 1.45]}, "ROAS goal": {"spend": 8852.67, "rev": 14262.99, "apr": 5410.32, "roas": 1.61, "n": 58, "spends8": [0.0, 0.0, 0.0, 0.0, 2168.87, 3950.54, 9838.57, 8852.67], "aprs8": [0.0, 0.0, 0.0, 0.0, 1367.01, 2016.79, 3733.24, 5410.32], "roas8": [0, 0, 0, 0, 1.63, 1.51, 1.38, 1.61]}, "Bid cap": {"spend": 0.0, "rev": 0.0, "apr": 0.0, "roas": 0, "n": 0, "spends8": [0.0, 0.0, 0.0, 0.0, 88.07, 152.81, 0.0, 0.0], "aprs8": [0.0, 0.0, 0.0, 0.0, -35.75, -21.52, 0.0, 0.0], "roas8": [0, 0, 0, 0, 0.59, 0.86, 0, 0]}, "Unknown": {"spend": 5.24, "rev": 40.67, "apr": 35.43, "roas": 7.76, "n": 1, "spends8": [0.0, 61.69, 0.0, 0.0, 0.0, 0.0, 0.0, 5.24], "aprs8": [0.0, -61.69, 0.0, 0.0, 0.0, 0.0, 0.0, 35.43], "roas8": [0, 0.0, 0, 0, 0, 0, 0, 7.76]}}, "US": {"Cost cap": {"spend": 2286.2, "rev": 2950.43, "apr": 664.23, "roas": 1.29, "n": 11, "spends8": [2874.32, 3139.87, 3598.14, 2584.12, 2448.53, 2073.76, 2355.66, 2286.2], "aprs8": [1720.14, 1737.75, 2622.71, 2488.23, 1947.69, 1973.83, 1782.28, 664.23], "roas8": [1.6, 1.55, 1.73, 1.96, 1.8, 1.95, 1.76, 1.29]}, "Highest volume": {"spend": 24375.09, "rev": 28515.84, "apr": 4140.75, "roas": 1.17, "n": 68, "spends8": [28646.04, 27798.71, 28159.39, 21200.62, 19352.33, 23905.56, 20134.3, 24375.09], "aprs8": [9698.23, 10388.41, 9376.8, 12058.62, 13371.18, 10528.73, 6584.11, 4140.75], "roas8": [1.34, 1.37, 1.33, 1.57, 1.69, 1.44, 1.33, 1.17]}, "ROAS goal": {"spend": 2841.24, "rev": 5404.02, "apr": 2562.78, "roas": 1.9, "n": 18, "spends8": [0.0, 0.0, 0.0, 0.0, 578.79, 1129.0, 4862.83, 2841.24], "aprs8": [0.0, 0.0, 0.0, 0.0, 471.74, 579.53, 1887.83, 2562.78], "roas8": [0, 0, 0, 0, 1.82, 1.51, 1.39, 1.9]}}, "UK": {"Highest volume": {"spend": 26217.32, "rev": 34826.84, "apr": 8609.52, "roas": 1.33, "n": 93, "spends8": [25666.39, 25452.88, 26163.69, 22823.4, 17405.99, 20345.49, 24510.29, 26217.32], "aprs8": [11405.31, 10549.4, 11395.65, 11854.34, 11177.58, 10827.73, 7397.67, 8609.52], "roas8": [1.44, 1.41, 1.44, 1.52, 1.64, 1.53, 1.3, 1.33]}, "Cost cap": {"spend": 3406.99, "rev": 5170.67, "apr": 1763.68, "roas": 1.52, "n": 8, "spends8": [6530.55, 6141.92, 6021.16, 4502.5, 3487.63, 4132.63, 3136.83, 3406.99], "aprs8": [3842.65, 3762.62, 2674.1, 2693.4, 2906.27, 4096.89, 1689.66, 1763.68], "roas8": [1.59, 1.61, 1.44, 1.6, 1.83, 1.99, 1.54, 1.52]}, "Bid cap": {"spend": 0.0, "rev": 0.0, "apr": 0.0, "roas": 0, "n": 0, "spends8": [0.0, 0.0, 0.0, 0.0, 88.07, 152.81, 0.0, 0.0], "aprs8": [0.0, 0.0, 0.0, 0.0, -35.75, -21.52, 0.0, 0.0], "roas8": [0, 0, 0, 0, 0.59, 0.86, 0, 0]}, "ROAS goal": {"spend": 4551.4, "rev": 6008.09, "apr": 1456.69, "roas": 1.32, "n": 23, "spends8": [0.0, 0.0, 0.0, 0.0, 438.4, 283.69, 2647.23, 4551.4], "aprs8": [0.0, 0.0, 0.0, 0.0, 171.61, 200.61, 375.99, 1456.69], "roas8": [0, 0, 0, 0, 1.39, 1.71, 1.14, 1.32]}, "Unknown": {"spend": 0.0, "rev": 0.0, "apr": 0.0, "roas": 0, "n": 0, "spends8": [0.0, 61.69, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "aprs8": [0.0, -61.69, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "roas8": [0, 0.0, 0, 0, 0, 0, 0, 0]}}, "NZ": {"Highest volume": {"spend": 299.47, "rev": 542.49, "apr": 243.02, "roas": 1.81, "n": 13, "spends8": [0.0, 834.79, 2184.59, 2440.73, 1072.11, 377.02, 0.0, 299.47], "aprs8": [0.0, 1322.29, 1523.98, 1201.64, 1028.53, 248.51, 0.0, 243.02], "roas8": [0, 2.58, 1.7, 1.49, 1.96, 1.66, 0, 1.81]}, "ROAS goal": {"spend": 1174.33, "rev": 2177.65, "apr": 1003.32, "roas": 1.85, "n": 13, "spends8": [0.0, 0.0, 0.0, 0.0, 246.64, 775.6, 1127.46, 1174.33], "aprs8": [0.0, 0.0, 0.0, 0.0, 228.84, 222.14, 610.7, 1003.32], "roas8": [0, 0, 0, 0, 1.93, 1.29, 1.54, 1.85]}}, "CA": {"Highest volume": {"spend": 2852.59, "rev": 6180.59, "apr": 3328.0, "roas": 2.17, "n": 34, "spends8": [4498.22, 8632.47, 5088.2, 2391.2, 1447.63, 1324.3, 1332.07, 2852.59], "aprs8": [2577.46, 2498.99, 1196.76, 1768.64, 1795.72, 2231.65, 1158.83, 3328.0], "roas8": [1.57, 1.29, 1.24, 1.74, 2.24, 2.69, 1.87, 2.17]}, "Cost cap": {"spend": 595.42, "rev": 1011.58, "apr": 416.16, "roas": 1.7, "n": 7, "spends8": [2575.47, 3556.85, 2285.91, 698.56, 647.92, 616.24, 658.34, 595.42], "aprs8": [1922.75, 1508.5, 1187.36, 803.24, 885.39, 567.58, 394.87, 416.16], "roas8": [1.75, 1.42, 1.52, 2.15, 2.37, 1.92, 1.6, 1.7]}, "ROAS goal": {"spend": 285.7, "rev": 673.23, "apr": 387.53, "roas": 2.36, "n": 4, "spends8": [0.0, 0.0, 0.0, 0.0, 905.04, 1762.25, 1201.06, 285.7], "aprs8": [0.0, 0.0, 0.0, 0.0, 494.82, 1014.51, 858.71, 387.53], "roas8": [0, 0, 0, 0, 1.55, 1.58, 1.71, 2.36]}}, "IE": {"Cost cap": {"spend": 126.52, "rev": 206.71, "apr": 80.19, "roas": 1.63, "n": 5, "spends8": [1828.66, 317.27, 293.76, 169.26, 77.03, 75.29, 106.97, 126.52], "aprs8": [-191.82, 107.86, 91.77, 42.35, 73.42, 63.87, -19.8, 80.19], "roas8": [0.9, 1.34, 1.31, 1.25, 1.95, 1.85, 0.81, 1.63]}, "Highest volume": {"spend": 147.08, "rev": 577.52, "apr": 430.44, "roas": 3.93, "n": 6, "spends8": [1115.36, 216.48, 169.56, 218.67, 86.39, 81.5, 147.92, 147.08], "aprs8": [-174.49, 147.81, 75.89, 170.66, 412.99, 97.29, 312.26, 430.44], "roas8": [0.84, 1.68, 1.45, 1.78, 5.78, 2.19, 3.11, 3.93]}}, "FR": {"Cost cap": {"spend": 11.42, "rev": 5.77, "apr": -5.65, "roas": 0.51, "n": 2, "spends8": [207.01, 196.77, 216.84, 42.05, 20.39, 20.05, 14.94, 11.42], "aprs8": [-33.04, 160.87, 77.51, 73.82, 8.65, 4.91, -14.94, -5.65], "roas8": [0.84, 1.82, 1.36, 2.76, 1.42, 1.24, 0.0, 0.51]}, "Highest volume": {"spend": 29.7, "rev": 71.5, "apr": 41.8, "roas": 2.41, "n": 3, "spends8": [353.74, 321.92, 339.73, 779.23, 34.79, 22.48, 28.23, 29.7], "aprs8": [-40.15, 327.06, -11.22, -238.0, 97.4, 19.34, 41.23, 41.8], "roas8": [0.89, 2.02, 0.97, 0.69, 3.8, 1.86, 2.46, 2.41]}}, "ZA": {"Highest volume": {"spend": 1563.75, "rev": 3627.24, "apr": 2063.49, "roas": 2.32, "n": 50, "spends8": [3025.59, 3754.44, 2537.42, 1310.88, 2881.29, 1694.12, 1322.49, 1563.75], "aprs8": [1354.25, 594.81, 530.23, 1286.97, 1200.16, 1407.41, 1424.0, 2063.49], "roas8": [1.45, 1.16, 1.21, 1.98, 1.42, 1.83, 2.08, 2.32]}, "Unknown": {"spend": 5.24, "rev": 40.67, "apr": 35.43, "roas": 7.76, "n": 1, "spends8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.24], "aprs8": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 35.43], "roas8": [0, 0, 0, 0, 0, 0, 0, 7.76]}}, "DE": {"Highest volume": {"spend": 25.57, "rev": 66.48, "apr": 40.91, "roas": 2.6, "n": 1, "spends8": [523.75, 217.86, 646.02, 244.12, 194.12, 105.25, 34.15, 25.57], "aprs8": [251.33, -83.16, -171.81, 133.78, 237.73, 226.32, 29.2, 40.91], "roas8": [1.48, 0.62, 0.73, 1.55, 2.22, 3.15, 1.86, 2.6]}, "Cost cap": {"spend": 0.0, "rev": 0.0, "apr": 0.0, "roas": 0, "n": 0, "spends8": [3.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "aprs8": [-3.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "roas8": [0.0, 0, 0, 0, 0, 0, 0, 0]}}};
+window.SB_WEEKS = ["11My", "18My", "25My", "1Jn", "8Jn", "15Jn", "22Jn", "29Jn"];
+window.SB_MATCH_PCT = 100.0;
+window.AN_TAB = true;
+
+(function(){
+  const MARKET_ORDER = [
+    {k:'UK',label:'UK 🇬🇧'},{k:'US',label:'US 🇺🇸'},{k:'CA',label:'CA 🇨🇦'},
+    {k:'AU',label:'AU 🇦🇺'},{k:'NZ',label:'NZ 🇳🇿'},{k:'ZA',label:'ZA 🇿🇦'},
+    {k:'IE',label:'IE 🇮🇪'},{k:'DE',label:'DE 🇩🇪'},{k:'FR',label:'FR 🇫🇷'},
+  ];
+  const SYM = {UK:'£',US:'$',CA:'$',AU:'$',NZ:'$',ZA:'R',IE:'€',DE:'€',FR:'€'};
+  const tdSt = 'padding:9px 11px;font-size:12.5px';
+
+  function sparkline(arr, colLast){
+    const maxV = Math.max(...arr.map(Math.abs), 0.01);
+    return '<div style="display:flex;align-items:flex-end;gap:2px;height:26px;width:150px">' +
+      arr.map((v,i) => {
+        if(v <= 0) return '<div style="flex:1;height:2px;background:rgba(255,255,255,.06);align-self:flex-end;border-radius:1px"></div>';
+        const h = Math.max(3, Math.round(Math.abs(v)/maxV*26));
+        const isLast = i === arr.length-1;
+        const lbl = (window.SB_WEEKS||[])[i] || '';
+        return '<div title="'+lbl+': '+v.toFixed(2)+'" style="flex:1;height:'+h+'px;background:'+(isLast?colLast:'#64748b')+';border-radius:2px 2px 0 0;opacity:.9"></div>';
+      }).join('') + '</div>';
+  }
+
+  // Render one comparison tab into a container.
+  function renderBreakdown(elId, cfg){
+    const el = document.getElementById(elId);
+    if(!el) return;
+    const DATA = cfg.data || {};
+    const order = cfg.order, colors = cfg.colors;
+    const present = order.filter(g => Object.values(DATA).some(m => m && m[g]));
+
+    // ── Global summary (all markets) — ROAS + spend share are currency-safe ──
+    const ALL = DATA.ALL || {};
+    const totalSpend = present.reduce((a,g)=> a + ((ALL[g]||{}).spend||0), 0) || 1;
+    let cards = '<div style="display:flex;gap:12px;flex-wrap:wrap;margin:0 0 14px">';
+    present.forEach(g => {
+      const d = ALL[g]; if(!d) return;
+      const roas = d.roas || 0;
+      const share = Math.round((d.spend||0)/totalSpend*100);
+      const roasCol = roas >= 1.3 ? '#10b981' : roas >= 1.0 ? '#60a5fa' : roas > 0 ? '#f97316' : '#64748b';
+      cards += '<div style="flex:1;min-width:150px;background:rgba(255,255,255,.03);border:1px solid '+colors[g]+'55;border-left:3px solid '+colors[g]+';border-radius:8px;padding:11px 13px">' +
+        '<div style="font-size:12px;color:#e2e8f0;font-weight:600;margin-bottom:6px">'+g+'</div>' +
+        '<div style="font-size:20px;font-weight:700;color:'+roasCol+'">'+roas.toFixed(2)+'<span style="font-size:11px;color:#94a3b8;font-weight:400"> ROAS</span></div>' +
+        '<div style="font-size:11px;color:#94a3b8;margin-top:3px">'+share+'% of spend · '+(d.n||0)+' adsets</div>' +
+      '</div>';
+    });
+    cards += '</div>';
+
+    const renderTable = (mkt) => {
+      const m = DATA[mkt]; if(!m) return '';
+      const rows = present.filter(g => m[g]);
+      if(!rows.length) return '';
+      const s = SYM[mkt] || '£';
+      const totSp = rows.reduce((a,g)=> a + (m[g].spend||0), 0);
+      return '<div style="margin:0 0 22px">' +
+        '<h3 style="margin:0 0 8px;font-size:15px;color:#e2e8f0;font-weight:600;padding:0 4px">' +
+          (MARKET_ORDER.find(x=>x.k===mkt)||{label:mkt}).label +
+          '<span style="color:#64748b;font-size:11px;font-weight:400;margin-left:8px">'+s+Math.round(totSp).toLocaleString()+' spend this week</span></h3>' +
+        '<div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:8px;overflow-x:auto">' +
+        '<table style="width:100%;border-collapse:collapse;min-width:820px">' +
+        '<thead><tr style="color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)">' +
+          '<th style="text-align:left;padding:9px 11px">'+cfg.dim+'</th>' +
+          '<th style="text-align:right;padding:9px 11px">Spend</th>' +
+          '<th style="text-align:right;padding:9px 11px">Revenue</th>' +
+          '<th style="text-align:right;padding:9px 11px">APR (rev−spend)</th>' +
+          '<th style="text-align:right;padding:9px 11px">ROAS</th>' +
+          '<th style="text-align:right;padding:9px 11px">Adsets</th>' +
+          '<th style="text-align:left;padding:9px 11px">ROAS trend (8 wk)</th>' +
+        '</tr></thead><tbody>' +
+        rows.map(g => {
+          const d = m[g];
+          const roasCol = d.roas >= 1.3 ? '#10b981' : d.roas >= 1.0 ? '#60a5fa' : d.roas > 0 ? '#f97316' : '#64748b';
+          const aprCol = d.apr >= 0 ? '#10b981' : '#ef4444';
+          return '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">' +
+            '<td style="'+tdSt+';color:#e2e8f0;font-weight:600"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+colors[g]+';margin-right:7px"></span>'+g+'</td>' +
+            '<td style="'+tdSt+';text-align:right;color:#cbd5e1">'+s+Math.round(d.spend).toLocaleString()+'</td>' +
+            '<td style="'+tdSt+';text-align:right;color:#cbd5e1">'+s+Math.round(d.rev).toLocaleString()+'</td>' +
+            '<td style="'+tdSt+';text-align:right;color:'+aprCol+';font-weight:600">'+(d.apr<0?'−':'')+s+Math.abs(Math.round(d.apr)).toLocaleString()+'</td>' +
+            '<td style="'+tdSt+';text-align:right;color:'+roasCol+';font-weight:700">'+d.roas.toFixed(2)+'</td>' +
+            '<td style="'+tdSt+';text-align:right;color:#94a3b8">'+(d.n||0)+'</td>' +
+            '<td style="'+tdSt+'">'+sparkline(d.roas8||[], colors[g])+'</td>' +
+          '</tr>';
+        }).join('') +
+        '</tbody></table></div></div>';
+    };
+
+    let body = '<div style="margin-bottom:14px">' +
+      '<h2 style="margin:0 0 4px;color:#e2e8f0">'+cfg.title+'</h2>' +
+      '<p style="color:#94a3b8;font-size:12px;margin:0 0 4px">'+cfg.subtitle+'</p>' +
+      '<p style="color:#64748b;font-size:11px;margin:0">Summary cards = all markets combined (ROAS &amp; spend-share are currency-neutral; absolute £ across markets is mixed-currency, so use the per-market tables below for money figures). '+
+      (window.SB_MATCH_PCT||0)+'% of this week\'s spend matched to a live structure record; the rest shows as <em>Unknown</em>.</p></div>';
+    body += cards;
+    MARKET_ORDER.forEach(mo => { body += renderTable(mo.k); });
+    el.innerHTML = body;
+  }
+
+  const STRUCT_CFG = {
+    data: window.STRUCT_DATA, dim:'Structure',
+    order:['CBO','ABO','Sandbox'],
+    colors:{CBO:'#3b82f6',ABO:'#f7bf53',Sandbox:'#a78bfa',Unknown:'#64748b'},
+    title:'🧱 CBO vs ABO — budget structure breakdown',
+    subtitle:'How spend, APR and ROAS split across budget structures. CBO = one shared campaign budget Meta allocates across ad sets; ABO = a fixed budget per ad set; Sandbox = the category test campaign. This is the unified CBO-vs-ABO view from the Jul 7 sync.',
+  };
+  const BID_CFG = {
+    data: window.BID_DATA, dim:'Bid strategy',
+    order:['ROAS goal','Cost cap','Highest volume','Bid cap'],
+    colors:{'ROAS goal':'#10b981','Cost cap':'#3b82f6','Highest volume':'#f7bf53','Bid cap':'#a78bfa',Unknown:'#64748b'},
+    title:'🎯 Bidding strategy breakdown',
+    subtitle:'Spend, APR and ROAS split by bid strategy — purchase-ROAS goal vs cost cap vs highest volume vs bid cap. Use this to decide which bidding approach to lean into per market.',
+  };
+
+  function mountTabs(){
+    const tabs = document.querySelector('.tabs');
+    const content = document.querySelector('.content');
+    if(!tabs || !content) return;
+    [['structure','🧱 CBO vs ABO',STRUCT_CFG],['bidding','🎯 Bidding',BID_CFG]].forEach(([key,label,cfg]) => {
+      if(document.getElementById('tab-'+key)) return;  // idempotent
+      const btn = document.createElement('div');
+      btn.className = 'tab'; btn.textContent = label;
+      btn.addEventListener('click', function(){ switchTab(key, this); });
+      tabs.appendChild(btn);
+      const sec = document.createElement('div');
+      sec.id = 'tab-'+key; sec.className = 'country-section';
+      sec.innerHTML = '<div class="section"></div>';
+      content.appendChild(sec);
+      renderBreakdown('tab-'+key, cfg);
+      // renderBreakdown writes into el directly, wipes the placeholder
+    });
+    // Audience Network tab — embeds the standalone AN-by-category report
+    if(window.AN_TAB && !document.getElementById('tab-an')){
+      const btn = document.createElement('div');
+      btn.className = 'tab'; btn.textContent = '📡 Audience Network';
+      btn.addEventListener('click', function(){ switchTab('an', this); });
+      tabs.appendChild(btn);
+      const sec = document.createElement('div');
+      sec.id = 'tab-an'; sec.className = 'country-section';
+      sec.innerHTML =
+        '<div style="margin:0 0 10px">' +
+          '<h2 style="margin:0 0 4px;color:#e2e8f0">📡 Audience Network by Category</h2>' +
+          '<p style="color:#94a3b8;font-size:12px;margin:0">AN placement keep/cut vs the FB+IG benchmark, sorted by APR contribution (▲/▼ = AN ROAS above/below FB+IG). 8-month Tableau view, UK/US/CA. <a href="audience-network.html" target="_blank" style="color:#60a5fa">Open full report ↗</a></p>' +
+        '</div>' +
+        '<iframe src="audience-network.html" style="width:100%;height:1600px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:#f7f7f4"></iframe>';
+      content.appendChild(sec);
+    }
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountTabs);
+  else mountTabs();
+})();
 </script>
 </body>
 </html>

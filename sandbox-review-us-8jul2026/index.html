@@ -1,0 +1,678 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>US Sandbox Review — 1 Jul – 8 Jul 2026</title>
+<style>
+  body { background:#0f0f1a; color:#e2e8f0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+         margin:0; padding:24px 36px; line-height:1.5; }
+  h1 { margin:0 0 4px 0; font-size:24px; }
+  h2 { margin:24px 0 4px 0; font-size:18px; }
+  .sub { color:#94a3b8; font-size:13px; margin-bottom:18px; }
+  section { background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:18px 22px; margin:18px 0; }
+  .stat { display:inline-block; margin-right:24px; }
+  .stat .v { font-size:22px; font-weight:700; }
+  .stat .l { font-size:11px; color:#94a3b8; text-transform:uppercase; letter-spacing:.05em; }
+  table { border-collapse:collapse; }
+  th, td { vertical-align:top; }
+</style>
+</head><body>
+<h1>🇺🇸 US Sandbox — Ad-Level Review</h1>
+<div class="sub">Window: <strong>1 Jul – 8 Jul 2026</strong> · 32 ads across 29 active sandbox adsets · BAU baseline excludes sandbox</div>
+
+<section>
+  <div class="stat"><div class="v">$6,779</div><div class="l">Sandbox spend</div></div>
+  <div class="stat"><div class="v">8,792</div><div class="l">Link clicks</div></div>
+  <div class="stat"><div class="v">636</div><div class="l">Purchases</div></div>
+  <div class="stat"><div class="v" style="color:#ef4444">0.80x</div><div class="l">Overall ROAS</div></div>
+  <div class="stat"><div class="v" style="color:#22c55e">10</div><div class="l">PROMOTE</div></div>
+  <div class="stat"><div class="v" style="color:#ef4444">21</div><div class="l">PAUSE</div></div>
+  <div class="stat"><div class="v" style="color:#eab308">1</div><div class="l">EXTEND</div></div>
+  <div class="stat"><div class="v" style="color:#94a3b8">0</div><div class="l">HOLD</div></div>
+</section>
+
+<section style="background:rgba(247,191,83,.05);border-color:rgba(247,191,83,.2)">
+  <div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Verdict rules (link-click based · updated 2026-06-25)</div>
+  <div style="font-size:12px;color:#cbd5e1;line-height:1.7">
+    <strong style="color:#22c55e">🟢 PROMOTE</strong> — any of: (a) ≥20 link clicks AND CTR &gt; 1.30× BAU cat avg · (b) ≥20 link clicks AND ROAS &gt; 1.50x · (c) ≥20 link clicks AND ATC/click &gt; 1.50× BAU cat avg<br>
+    <strong style="color:#ef4444">🔴 PAUSE</strong> — any of: (a) ≥30 link clicks AND CTR &lt; BAU cat avg · (b) spend ≥£30 with 0 link clicks · (c) ≥1k impr with 0 link clicks<br>
+    <strong style="color:#eab308">🟡 EXTEND</strong> — has signal, not enough yet to verdict<br>
+    <strong style="color:#94a3b8">⚪ HOLD</strong> — guard: any of &lt;£15 spent · &lt;500 impr · &lt;24h since launch (day-1 don't-touch)
+  </div>
+</section>
+
+<section style="background:rgba(34,197,94,.05);border-color:rgba(34,197,94,.25)"><h2 style="color:#22c55e;margin-top:0">🌍 Winning UK styles — consider for US growth cats</h2><div class="sub">These creative styles have ≥2 PROMOTE verdicts in UK sandbox. Worth queuing variants for the US growth cats (Commercial Cleaning · Wedding DJ · Residential Interior Designers · Tax Prep · Magician).</div><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="color:#94a3b8;font-size:10px;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid rgba(255,255,255,.08)"><th style="text-align:left;padding:6px 10px">Style</th><th style="text-align:right;padding:6px 10px">Promotes</th><th style="text-align:right;padding:6px 10px">Ads tested</th><th style="text-align:right;padding:6px 10px">ROAS</th><th style="text-align:left;padding:6px 10px">Won in cats</th></tr></thead><tbody><tr style="border-bottom:1px solid rgba(255,255,255,.05)"><td style="padding:6px 10px"><strong>other</strong></td><td style="padding:6px 10px;text-align:right;color:#22c55e">9 promotes</td><td style="padding:6px 10px;text-align:right">16 ads tested</td><td style="padding:6px 10px;text-align:right">1.12x</td><td style="padding:6px 10px;color:#94a3b8;font-size:11px">Architectural Services, Bookkeeping Services, Catering, DJ…</td></tr></tbody></table></section>
+
+
+
+<section>
+  <h2>📊 Creative style leaderboard</h2>
+  <div class="sub">Grouped by detected creative-style token in the ad name. Sorted by spend.</div>
+  <table id="styleLeaderboard" style="width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums">
+    <thead><tr style="text-align:left;color:#64748b;border-bottom:1px solid rgba(255,255,255,.08)">
+      <th style="padding:6px 10px">Style</th>
+      <th style="padding:6px 10px;text-align:right">Ads</th>
+      <th style="padding:6px 10px;text-align:right">Cats</th>
+      <th style="padding:6px 10px;text-align:right">Spend</th>
+      <th style="padding:6px 10px;text-align:right">Impr</th>
+      <th style="padding:6px 10px;text-align:right">Link clicks</th>
+      <th style="padding:6px 10px;text-align:right">CTR</th>
+      <th style="padding:6px 10px;text-align:right">ROAS</th>
+      <th style="padding:6px 10px;text-align:right;color:#22c55e">PROMOTE</th>
+      <th style="padding:6px 10px;text-align:right;color:#ef4444">PAUSE</th>
+    </tr></thead><tbody>
+<tr style="border-bottom:1px solid rgba(255,255,255,.04)"><td style="padding:6px 10px"><strong>other</strong></td><td style="padding:6px 10px;text-align:right">16</td><td style="padding:6px 10px;text-align:right;color:#94a3b8">16</td><td style="padding:6px 10px;text-align:right">$4116</td><td style="padding:6px 10px;text-align:right;color:#94a3b8">167,464</td><td style="padding:6px 10px;text-align:right;color:#60a5fa">6678</td><td style="padding:6px 10px;text-align:right">3.99%</td><td style="padding:6px 10px;text-align:right;color:#22c55e;font-weight:700">1.12x</td><td style="padding:6px 10px;text-align:right;color:#22c55e">9</td><td style="padding:6px 10px;text-align:right;color:#ef4444">7</td></tr><tr style="border-bottom:1px solid rgba(255,255,255,.04)"><td style="padding:6px 10px"><strong>raam_avatar</strong></td><td style="padding:6px 10px;text-align:right">11</td><td style="padding:6px 10px;text-align:right;color:#94a3b8">8</td><td style="padding:6px 10px;text-align:right">$1683</td><td style="padding:6px 10px;text-align:right;color:#94a3b8">35,497</td><td style="padding:6px 10px;text-align:right;color:#60a5fa">662</td><td style="padding:6px 10px;text-align:right">1.86%</td><td style="padding:6px 10px;text-align:right;color:#ef4444;font-weight:700">0.47x</td><td style="padding:6px 10px;text-align:right;color:#22c55e">1</td><td style="padding:6px 10px;text-align:right;color:#ef4444">9</td></tr><tr style="border-bottom:1px solid rgba(255,255,255,.04)"><td style="padding:6px 10px"><strong>dynamiccreative</strong></td><td style="padding:6px 10px;text-align:right">5</td><td style="padding:6px 10px;text-align:right;color:#94a3b8">5</td><td style="padding:6px 10px;text-align:right">$980</td><td style="padding:6px 10px;text-align:right;color:#94a3b8">39,194</td><td style="padding:6px 10px;text-align:right;color:#60a5fa">1452</td><td style="padding:6px 10px;text-align:right">3.70%</td><td style="padding:6px 10px;text-align:right;color:#ef4444;font-weight:700">0.00x</td><td style="padding:6px 10px;text-align:right;color:#22c55e">0</td><td style="padding:6px 10px;text-align:right;color:#ef4444">5</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>📋 All ads — sorted by verdict, then confidence</h2>
+  <div class="sub">PROMOTE first, then PAUSE, then EXTEND, then HOLD. Tick boxes are added by make_sandbox_actionable.py post-processing.</div>
+  <table id="adsTable" style="width:100%; border-collapse:collapse; font-size:12px; font-variant-numeric:tabular-nums;">
+<thead><tr style="position:sticky;top:0;background:#0f0f1a;text-align:left;color:#64748b;border-bottom:1px solid rgba(255,255,255,.12);">
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">#</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">Verdict</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">Ad name</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">Category</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">Spend</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">Impr</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">Link clicks</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">CTR</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">vs BAU</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">CPC</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">ATC</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">ATC/click</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">Purch</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">ROAS</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">APR</th>
+<th style="padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.3px;">Reason</th>
+</tr></thead><tbody>
+<tr data-verdict="PROMOTE" data-ad-id="120246778366400177" data-ad-name="dj_cost2026_b2_DC" data-adset-id="120246760798560177" data-reason="CTR 6.00% vs BAU 0.96% (+523%) · ROAS 1.75x > 1.50 floor" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">1</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>dj_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1018_DJ_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">DJ</td>
+<td style="padding:7px 10px;text-align:right;">$286</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">21,207</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">1272</td>
+<td style="padding:7px 10px;text-align:right;">6.00%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+523%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.23</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">108</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">8.5% <span style="color:#64748b">(-48%)</span></td>
+<td style="padding:7px 10px;text-align:right;">33</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#22c55e;">1.75x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£170</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">CTR 6.00% vs BAU 0.96% (+523%) · ROAS 1.75x > 1.50 floor</td>
+</tr>
+<tr data-verdict="PROMOTE" data-ad-id="120246777667320177" data-ad-name="immigration-lawyer_cost2026_b2_DC" data-adset-id="120246760800850177" data-reason="CTR 4.03% vs BAU 1.43% (+182%) · ROAS 3.56x > 1.50 floor" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">2</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>immigration-lawyer_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1521_Immigration_Lawyers_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Immigration Lawyers</td>
+<td style="padding:7px 10px;text-align:right;">$337</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">17,259</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">696</td>
+<td style="padding:7px 10px;text-align:right;">4.03%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+182%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.48</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">94</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">13.5% <span style="color:#64748b">(-13%)</span></td>
+<td style="padding:7px 10px;text-align:right;">93</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#22c55e;">3.56x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£683</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">CTR 4.03% vs BAU 1.43% (+182%) · ROAS 3.56x > 1.50 floor</td>
+</tr>
+<tr data-verdict="PROMOTE" data-ad-id="120246778329970177" data-ad-name="dog-training_cost2026_b2_DC" data-adset-id="120246760797410177" data-reason="CTR 4.51% vs BAU 2.67% (+69%) · ROAS 1.65x > 1.50 floor" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">3</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>dog-training_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1556_Dog_Training_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Dog Training</td>
+<td style="padding:7px 10px;text-align:right;">$345</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">22,149</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">998</td>
+<td style="padding:7px 10px;text-align:right;">4.51%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+69%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.35</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">255</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">25.6% <span style="color:#64748b">(-21%)</span></td>
+<td style="padding:7px 10px;text-align:right;">109</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#22c55e;">1.65x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£176</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">CTR 4.51% vs BAU 2.67% (+69%) · ROAS 1.65x > 1.50 floor</td>
+</tr>
+<tr data-verdict="PROMOTE" data-ad-id="120246778700080177" data-ad-name="personal-trainers_cost2026_b2_DC" data-adset-id="120246760808920177" data-reason="CTR 3.87% vs BAU 1.92% (+102%)" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">4</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>personal-trainers_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">74_Personal_Trainers_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Personal Trainers</td>
+<td style="padding:7px 10px;text-align:right;">$320</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">14,978</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">580</td>
+<td style="padding:7px 10px;text-align:right;">3.87%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+102%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.55</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">101</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">17.4% <span style="color:#64748b">(-40%)</span></td>
+<td style="padding:7px 10px;text-align:right;">64</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#eab308;">1.22x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£57</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">CTR 3.87% vs BAU 1.92% (+102%)</td>
+</tr>
+<tr data-verdict="PROMOTE" data-ad-id="120246778583520177" data-ad-name="architects_cost2026_b2_DC" data-adset-id="120246760803720177" data-reason="CTR 3.21% vs BAU 1.41% (+129%)" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">5</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>architects_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">37_Architectural_Services_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Architectural Services</td>
+<td style="padding:7px 10px;text-align:right;">$326</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">13,163</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">423</td>
+<td style="padding:7px 10px;text-align:right;">3.21%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+129%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.77</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">31</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">7.3% <span style="color:#64748b">(-46%)</span></td>
+<td style="padding:7px 10px;text-align:right;">18</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#eab308;">1.42x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£107</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">CTR 3.21% vs BAU 1.41% (+129%)</td>
+</tr>
+<tr data-verdict="PROMOTE" data-ad-id="120246778858100177" data-ad-name="motivational-speaker_cost2026_b2_DC" data-adset-id="120246778043630177" data-reason="ROAS 2.61x > 1.50 floor" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">6</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>motivational-speaker_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">2067_Motivational_Speaking_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Motivational Speaking</td>
+<td style="padding:7px 10px;text-align:right;">$359</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">9,483</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">361</td>
+<td style="padding:7px 10px;text-align:right;">3.81%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">—</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.99</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">14</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">3.9% <span style="color:#64748b"></span></td>
+<td style="padding:7px 10px;text-align:right;">29</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#22c55e;">2.61x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£457</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">ROAS 2.61x > 1.50 floor</td>
+</tr>
+<tr data-verdict="PROMOTE" data-ad-id="120246777649790177" data-ad-name="house-cleaning_cost2026_b2_DC" data-adset-id="120246760799670177" data-reason="CTR 5.53% vs BAU 3.51% (+57%)" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">7</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>house-cleaning_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1212_House_Cleaning_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">House Cleaning</td>
+<td style="padding:7px 10px;text-align:right;">$316</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">8,738</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">483</td>
+<td style="padding:7px 10px;text-align:right;">5.53%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+57%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.65</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">122</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">25.3% <span style="color:#64748b">(+2%)</span></td>
+<td style="padding:7px 10px;text-align:right;">54</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#eab308;">1.03x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£8</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">CTR 5.53% vs BAU 3.51% (+57%)</td>
+</tr>
+<tr data-verdict="PROMOTE" data-ad-id="120247058391840177" data-ad-name="interior-designer_Sandbox_Raam_Avatar_V1" data-adset-id="120247058371460177" data-reason="CTR 2.51% vs BAU 1.46% (+72%) · ROAS 1.86x > 1.50 floor · ATC/click 20.6% vs BAU 12.5% (+65%)" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">8</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>interior-designer_Sandbox_Raam_Avatar_V1</strong><br><span style="color:#475569;font-size:10px">387_Residential_Interior_Designers_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Residential Interior Designers</td>
+<td style="padding:7px 10px;text-align:right;">$273</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">4,065</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">102</td>
+<td style="padding:7px 10px;text-align:right;">2.51%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+72%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$2.68</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">21</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">20.6% <span style="color:#64748b">(+65%)</span></td>
+<td style="padding:7px 10px;text-align:right;">21</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#22c55e;">1.86x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£186</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">CTR 2.51% vs BAU 1.46% (+72%) · ROAS 1.86x > 1.50 floor · ATC/click 20.6% vs BAU 12.5% (+65%)</td>
+</tr>
+<tr data-verdict="PROMOTE" data-ad-id="120246778814120177" data-ad-name="security-guards_cost2026_b2_DC" data-adset-id="120246760813880177" data-reason="ROAS 1.66x > 1.50 floor" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">9</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>security-guards_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">152_Security_Guard_Services_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Security Guard Services</td>
+<td style="padding:7px 10px;text-align:right;">$197</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">4,915</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">105</td>
+<td style="padding:7px 10px;text-align:right;">2.14%</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;font-weight:600;">-12%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$1.87</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">3</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">2.9% <span style="color:#64748b">(-47%)</span></td>
+<td style="padding:7px 10px;text-align:right;">4</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#22c55e;">1.66x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£103</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">ROAS 1.66x > 1.50 floor</td>
+</tr>
+<tr data-verdict="PROMOTE" data-ad-id="120246778662140177" data-ad-name="web-design_cost2026_b2_DC" data-adset-id="120246760807440177" data-reason="ROAS 1.63x > 1.50 floor" style="background:rgba(34,197,94,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">10</td>
+<td style="padding:7px 10px;"><span style="background:rgba(34,197,94,.10);color:#22c55e;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PROMOTE</span></td>
+<td style="padding:7px 10px;"><strong>web-design_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1505_Web_Design_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Web Design</td>
+<td style="padding:7px 10px;text-align:right;">$351</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">4,244</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">79</td>
+<td style="padding:7px 10px;text-align:right;">1.86%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">—</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$4.44</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">5</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">6.3% <span style="color:#64748b"></span></td>
+<td style="padding:7px 10px;text-align:right;">11</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#22c55e;">1.63x</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;" title="APR in £ (bark rev - spend converted at FX)">+£174</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">ROAS 1.63x > 1.50 floor</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246778613810177" data-ad-name="wedding-photography_cost2026_b2_DC" data-adset-id="120246760805240177" data-reason="$180 spent · ROAS 0.54x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">11</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>wedding-photography_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1056_Wedding_Photography_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Wedding Photography</td>
+<td style="padding:7px 10px;text-align:right;">$180</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">8,302</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">335</td>
+<td style="padding:7px 10px;text-align:right;">4.04%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+205%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.54</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">28</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">8.4% <span style="color:#64748b">(-65%)</span></td>
+<td style="padding:7px 10px;text-align:right;">4</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.54x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£65</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$180 spent · ROAS 0.54x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246778766350177" data-ad-name="private-investigators_cost2026_b2_DC" data-adset-id="120246760812160177" data-reason="$173 spent · ROAS 0.95x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">12</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>private-investigators_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1548_Private_Investigators_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Private Investigators</td>
+<td style="padding:7px 10px;text-align:right;">$173</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">7,850</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">238</td>
+<td style="padding:7px 10px;text-align:right;">3.03%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+81%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.73</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">44</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">18.5% <span style="color:#64748b">(+21%)</span></td>
+<td style="padding:7px 10px;text-align:right;">20</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.95x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£6</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$173 spent · ROAS 0.95x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246777848530177" data-ad-name="photo-booth-hire_cost2026_b2_DC" data-adset-id="120246760810280177" data-reason="$185 spent · ROAS 0.74x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">13</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>photo-booth-hire_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">995_Photo_Booth_Hire_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Photo Booth Hire</td>
+<td style="padding:7px 10px;text-align:right;">$185</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">7,120</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">270</td>
+<td style="padding:7px 10px;text-align:right;">3.79%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+66%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.68</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">46</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">17.0% <span style="color:#64748b">(-40%)</span></td>
+<td style="padding:7px 10px;text-align:right;">9</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.74x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£38</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$185 spent · ROAS 0.74x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246778631140177" data-ad-name="limousine-hire_cost2026_b2_DC" data-adset-id="120246760806420177" data-reason="$187 spent · ROAS 0.42x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">14</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>limousine-hire_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1638_Limousine_Hire_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Limousine Hire</td>
+<td style="padding:7px 10px;text-align:right;">$187</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">8,961</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">319</td>
+<td style="padding:7px 10px;text-align:right;">3.56%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+60%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.59</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">36</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">11.3% <span style="color:#64748b">(-67%)</span></td>
+<td style="padding:7px 10px;text-align:right;">11</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.42x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£86</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$187 spent · ROAS 0.42x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246778040730177" data-ad-name="tv-mounting-installation_cost2026_b2_DC" data-adset-id="120246760815130177" data-reason="$190 spent · ROAS 0.48x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">15</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>tv-mounting-installation_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1234_TV_Installation_Mounting_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">TV Installation & Mounting</td>
+<td style="padding:7px 10px;text-align:right;">$190</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">9,716</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">325</td>
+<td style="padding:7px 10px;text-align:right;">3.34%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">+7%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.58</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">62</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">19.1% <span style="color:#64748b">(-30%)</span></td>
+<td style="padding:7px 10px;text-align:right;">8</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.48x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£78</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$190 spent · ROAS 0.48x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120247058292340177" data-ad-name="house-cleaning_Sandbox_Raam_Avatar_V2" data-adset-id="120247006670140177" data-reason="$223 spent · ROAS 0.64x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">16</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>house-cleaning_Sandbox_Raam_Avatar_V2</strong><br><span style="color:#475569;font-size:10px">1212_House_Cleaning_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">House Cleaning</td>
+<td style="padding:7px 10px;text-align:right;">$223</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">3,820</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">154</td>
+<td style="padding:7px 10px;text-align:right;">4.03%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">+15%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$1.45</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">57</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">37.0% <span style="color:#64748b">(+50%)</span></td>
+<td style="padding:7px 10px;text-align:right;">30</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.64x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£63</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$223 spent · ROAS 0.64x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246757988080177" data-ad-name="387_Residential_Interior_Designers_Sandbox_DynamicCreative" data-adset-id="120246757978420177" data-reason="$212 spent · ROAS 0.00x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">17</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>387_Residential_Interior_Designers_Sandbox_DynamicCreative</strong><br><span style="color:#475569;font-size:10px">387_Residential_Interior_Designers_Sandbox_HighestVolume_AddToCar</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Residential Interior Designers</td>
+<td style="padding:7px 10px;text-align:right;">$212</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">4,224</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">201</td>
+<td style="padding:7px 10px;text-align:right;">4.76%</td>
+<td style="padding:7px 10px;text-align:right;color:#22c55e;font-weight:600;">+227%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$1.05</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">40</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">19.9% <span style="color:#64748b">(+59%)</span></td>
+<td style="padding:7px 10px;text-align:right;">30</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£167</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$212 spent · ROAS 0.00x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246758005350177" data-ad-name="1693_Wedding_DJ_Sandbox_DynamicCreative" data-adset-id="120246757993180177" data-reason="$190 spent · ROAS 0.00x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">18</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>1693_Wedding_DJ_Sandbox_DynamicCreative</strong><br><span style="color:#475569;font-size:10px">1693_Wedding_DJ_Sandbox_HighestVolume_AddToCart DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Wedding DJ</td>
+<td style="padding:7px 10px;text-align:right;">$190</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">11,986</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">582</td>
+<td style="padding:7px 10px;text-align:right;">4.86%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">—</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.33</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">44</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">7.6% <span style="color:#64748b"></span></td>
+<td style="padding:7px 10px;text-align:right;">22</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£150</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$190 spent · ROAS 0.00x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120247058444230177" data-ad-name="magician_Sandbox_Raam_Avatar_V2" data-adset-id="120247058398080177" data-reason="$144 spent · ROAS 0.43x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">19</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>magician_Sandbox_Raam_Avatar_V2</strong><br><span style="color:#475569;font-size:10px">989_Magician_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Magician</td>
+<td style="padding:7px 10px;text-align:right;">$144</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">4,731</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">101</td>
+<td style="padding:7px 10px;text-align:right;">2.13%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">—</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$1.42</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">7</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">6.9% <span style="color:#64748b"></span></td>
+<td style="padding:7px 10px;text-align:right;">9</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.43x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£64</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$144 spent · ROAS 0.43x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120247058318750177" data-ad-name="architects_Sandbox_Raam_Avatar_V2" data-adset-id="120247006867610177" data-reason="$178 spent · ROAS 0.70x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">20</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>architects_Sandbox_Raam_Avatar_V2</strong><br><span style="color:#475569;font-size:10px">37_Architectural_Services_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Architectural Services</td>
+<td style="padding:7px 10px;text-align:right;">$178</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">4,750</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">62</td>
+<td style="padding:7px 10px;text-align:right;">1.31%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">-7%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$2.86</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">11</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">17.7% <span style="color:#64748b">(+32%)</span></td>
+<td style="padding:7px 10px;text-align:right;">5</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.70x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£42</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$178 spent · ROAS 0.70x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246757954810177" data-ad-name="989_Magician_Sandbox_DynamicCreative" data-adset-id="120246757939760177" data-reason="$194 spent · ROAS 0.00x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">21</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>989_Magician_Sandbox_DynamicCreative</strong><br><span style="color:#475569;font-size:10px">989_Magician_Sandbox_HighestVolume_AddToCart DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Magician</td>
+<td style="padding:7px 10px;text-align:right;">$194</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">7,388</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">263</td>
+<td style="padding:7px 10px;text-align:right;">3.56%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">—</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.74</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">25</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">9.5% <span style="color:#64748b"></span></td>
+<td style="padding:7px 10px;text-align:right;">14</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£153</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$194 spent · ROAS 0.00x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246757974360177" data-ad-name="1474_Tax_Preparation_Sandbox_DynamicCreative" data-adset-id="120246757961990177" data-reason="$196 spent · ROAS 0.00x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">22</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>1474_Tax_Preparation_Sandbox_DynamicCreative</strong><br><span style="color:#475569;font-size:10px">1474_Tax_Preparation_Sandbox_HighestVolume_AddToCart DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Tax Preparation</td>
+<td style="padding:7px 10px;text-align:right;">$196</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">7,290</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">240</td>
+<td style="padding:7px 10px;text-align:right;">3.29%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">—</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$0.82</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">15</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">6.2% <span style="color:#64748b"></span></td>
+<td style="padding:7px 10px;text-align:right;">14</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£155</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$196 spent · ROAS 0.00x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120247058387330177" data-ad-name="tax-preparation_Sandbox_Raam_Avatar_V1" data-adset-id="120247058372260177" data-reason="$161 spent · ROAS 0.53x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">23</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>tax-preparation_Sandbox_Raam_Avatar_V1</strong><br><span style="color:#475569;font-size:10px">1474_Tax_Preparation_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Tax Preparation</td>
+<td style="padding:7px 10px;text-align:right;">$161</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">2,294</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">30</td>
+<td style="padding:7px 10px;text-align:right;">1.31%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">—</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$5.36</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">5</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">16.7% <span style="color:#64748b"></span></td>
+<td style="padding:7px 10px;text-align:right;">6</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.53x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£60</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$161 spent · ROAS 0.53x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120247006948800177" data-ad-name="architects_Sandbox_Raam_Avatar_V1" data-adset-id="120247006867610177" data-reason="$82 spent · ROAS 0.46x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">24</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>architects_Sandbox_Raam_Avatar_V1</strong><br><span style="color:#475569;font-size:10px">37_Architectural_Services_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Architectural Services</td>
+<td style="padding:7px 10px;text-align:right;">$82</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">1,787</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">29</td>
+<td style="padding:7px 10px;text-align:right;">1.62%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">+15%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$2.81</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">3</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">10.3% <span style="color:#64748b">(-23%)</span></td>
+<td style="padding:7px 10px;text-align:right;">3</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.46x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£35</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$82 spent · ROAS 0.46x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246758040630177" data-ad-name="1141_Commercial_and_Office_Cleaning_Sandbox_DynamicCreative" data-adset-id="120246758011900177" data-reason="$188 spent · ROAS 0.00x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">25</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>1141_Commercial_and_Office_Cleaning_Sandbox_DynamicCreative</strong><br><span style="color:#475569;font-size:10px">1141_Commercial_and_Office_Cleaning_Sandbox_HighestVolume_AddToCa</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Commercial & Office Cleaning</td>
+<td style="padding:7px 10px;text-align:right;">$188</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">8,306</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">166</td>
+<td style="padding:7px 10px;text-align:right;">2.00%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">-9%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$1.13</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">5</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">3.0% <span style="color:#64748b">(-36%)</span></td>
+<td style="padding:7px 10px;text-align:right;">4</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£149</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$188 spent · ROAS 0.00x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246778539660177" data-ad-name="catering_cost2026_b2_DC" data-adset-id="120246760802690177" data-reason="$169 spent · ROAS 0.00x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">26</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>catering_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">171_Catering_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Catering</td>
+<td style="padding:7px 10px;text-align:right;">$169</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">4,339</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">111</td>
+<td style="padding:7px 10px;text-align:right;">2.56%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">+3%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$1.52</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">2</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">1.8% <span style="color:#64748b">(-90%)</span></td>
+<td style="padding:7px 10px;text-align:right;">0</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£133</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$169 spent · ROAS 0.00x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120247006864810177" data-ad-name="wedding-photography_Sandbox_Raam_Avatar_V1" data-adset-id="120247006788260177" data-reason="$138 spent · ROAS 0.21x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">27</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>wedding-photography_Sandbox_Raam_Avatar_V1</strong><br><span style="color:#475569;font-size:10px">1056_Wedding_Photography_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Wedding Photography</td>
+<td style="padding:7px 10px;text-align:right;">$138</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">2,885</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">34</td>
+<td style="padding:7px 10px;text-align:right;">1.18%</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;font-weight:600;">-11%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$4.05</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">11</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">32.4% <span style="color:#64748b">(+37%)</span></td>
+<td style="padding:7px 10px;text-align:right;">3</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.21x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£86</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$138 spent · ROAS 0.21x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120247058355230177" data-ad-name="commercial-cleaning_Sandbox_Raam_Avatar_V1" data-adset-id="120247058342770177" data-reason="$149 spent · ROAS 0.00x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">28</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>commercial-cleaning_Sandbox_Raam_Avatar_V1</strong><br><span style="color:#475569;font-size:10px">1141_Commercial_Cleaning_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Commercial & Office Cleaning</td>
+<td style="padding:7px 10px;text-align:right;">$149</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">3,151</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">55</td>
+<td style="padding:7px 10px;text-align:right;">1.75%</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;font-weight:600;">-21%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$2.70</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">0</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">0.0% <span style="color:#64748b">(-100%)</span></td>
+<td style="padding:7px 10px;text-align:right;">0</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£117</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$149 spent · ROAS 0.00x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120247058304850177" data-ad-name="wedding-photography_Sandbox_Raam_Avatar_V2" data-adset-id="120247006788260177" data-reason="$130 spent · ROAS 0.09x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">29</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>wedding-photography_Sandbox_Raam_Avatar_V2</strong><br><span style="color:#475569;font-size:10px">1056_Wedding_Photography_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Wedding Photography</td>
+<td style="padding:7px 10px;text-align:right;">$130</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">3,379</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">43</td>
+<td style="padding:7px 10px;text-align:right;">1.27%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">-4%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$3.03</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">7</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">16.3% <span style="color:#64748b">(-31%)</span></td>
+<td style="padding:7px 10px;text-align:right;">2</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.09x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£94</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$130 spent · ROAS 0.09x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120246778788230177" data-ad-name="bookkeeping-services_cost2026_b2_DC" data-adset-id="120246760816610177" data-reason="$197 spent · ROAS 0.00x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">30</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>bookkeeping-services_cost2026_b2_DC</strong><br><span style="color:#475569;font-size:10px">1820_Bookkeeping_Services_Sandbox_DC</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Bookkeeping Services</td>
+<td style="padding:7px 10px;text-align:right;">$197</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">5,040</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">83</td>
+<td style="padding:7px 10px;text-align:right;">1.65%</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;font-weight:600;">-52%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$2.37</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">5</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">6.0% <span style="color:#64748b">(+629%)</span></td>
+<td style="padding:7px 10px;text-align:right;">4</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£156</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$197 spent · ROAS 0.00x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="PAUSE" data-ad-id="120247058367360177" data-ad-name="wedding-dj_Sandbox_Raam_Avatar_V1" data-adset-id="120247058356790177" data-reason="$155 spent · ROAS 0.00x < 1.0 — burning, not profitable" style="background:rgba(239,68,68,.10);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">31</td>
+<td style="padding:7px 10px;"><span style="background:rgba(239,68,68,.10);color:#ef4444;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">PAUSE</span></td>
+<td style="padding:7px 10px;"><strong>wedding-dj_Sandbox_Raam_Avatar_V1</strong><br><span style="color:#475569;font-size:10px">1693_Wedding_DJ_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">Wedding DJ</td>
+<td style="padding:7px 10px;text-align:right;">$155</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">3,985</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">34</td>
+<td style="padding:7px 10px;text-align:right;">0.85%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;font-weight:600;">—</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$4.55</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">5</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">14.7% <span style="color:#64748b"></span></td>
+<td style="padding:7px 10px;text-align:right;">2</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£122</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$155 spent · ROAS 0.00x < 1.0 — burning, not profitable</td>
+</tr>
+<tr data-verdict="EXTEND" data-ad-id="120247006761690177" data-ad-name="house-cleaning_Sandbox_Raam_Avatar_V1" data-adset-id="120247006670140177" data-reason="$52 · 18 clicks · CTR 2.77% · keep running" style="background:rgba(234,179,8,.06);border-bottom:1px solid rgba(255,255,255,.04);">
+<td style="padding:7px 10px;color:#475569;font-size:10px;">32</td>
+<td style="padding:7px 10px;"><span style="background:rgba(234,179,8,.06);color:#eab308;font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.3px;">EXTEND</span></td>
+<td style="padding:7px 10px;"><strong>house-cleaning_Sandbox_Raam_Avatar_V1</strong><br><span style="color:#475569;font-size:10px">1212_House_Cleaning_Sandbox_Raam</span></td>
+<td style="padding:7px 10px;color:#94a3b8;font-size:11px">House Cleaning</td>
+<td style="padding:7px 10px;text-align:right;">$52</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">650</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#60a5fa;">18</td>
+<td style="padding:7px 10px;text-align:right;">2.77%</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;font-weight:600;">-21%</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">$2.91</td>
+<td style="padding:7px 10px;text-align:right;color:#94a3b8;">0</td>
+<td style="padding:7px 10px;text-align:right;font-size:11px;">0.0% <span style="color:#64748b">(-100%)</span></td>
+<td style="padding:7px 10px;text-align:right;">0</td>
+<td style="padding:7px 10px;text-align:right;font-weight:700;color:#ef4444;">0.00x</td>
+<td style="padding:7px 10px;text-align:right;color:#ef4444;" title="APR in £ (bark rev - spend converted at FX)">−£41</td>
+<td style="padding:7px 10px;color:#cbd5e1;font-size:11px;max-width:340px;">$52 · 18 clicks · CTR 2.77% · keep running</td>
+</tr>
+</tbody></table>
+</section>
+
+<section>
+  <h2>⚙️ Method</h2>
+  <ul style="color:#cbd5e1;font-size:12px">
+    <li><strong>Source</strong> — Meta Graph API ad-level insights (spend / impr / clicks / inline_link_clicks / actions). Window = 1 Jul – 8 Jul 2026.</li>
+    <li><strong>CTR</strong> — link_clicks ÷ impressions. <strong>vs BAU</strong> = (ad_CTR ÷ cat_CTR_BAU − 1).</li>
+    <li><strong>BAU cat baseline</strong> — Tableau PPC Adgroup Stats — Buyer for the focus week, UK only, <em>excluding</em> sandbox adsets. ATC rate baseline pulled from Meta (Tableau lacks ATC).</li>
+    <li><strong>Est Bark ROAS</strong> — per-ad pixel_revenue × (adset_bark_PPR ÷ adset_pixel_revenue). True Bark £ isn't ad-grain in Tableau, so we scale.</li>
+    <li><strong>Day-1 guard</strong> — ads &lt;24h since creation are auto-HELD (Meta delivery still settling).</li>
+  </ul>
+</section>
+
+</body></html>

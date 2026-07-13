@@ -1,0 +1,269 @@
+<!doctype html><meta charset="utf-8"><title>Multi-Market Sandbox Audit</title>
+<style>
+:root{--bg:#0b0f17;--panel:#151b27;--panel2:#1c2435;--line:#2a3247;--t1:#eef1f7;--t2:#9aa4bb;--t3:#6c7793;--green:#16d4a4;--amber:#ffb547;--red:#ff5d6b;--blue:#6ea8ff;--violet:#b27dff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t1);font:13px/1.5 -apple-system,sans-serif}
+.wrap{max-width:1440px;margin:0 auto;padding:22px 26px 80px}
+h1{font-size:22px;margin:0 0 6px}.lede{color:var(--t2);margin:0 0 22px}
+h2{font-size:16px;margin:26px 0 10px}
+.market{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:20px}
+.market-hd{display:flex;align-items:baseline;gap:14px;margin-bottom:14px}
+.market-hd h2{margin:0;font-size:17px}.market-hd .stats{color:var(--t2);font-size:12.5px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:var(--panel2);border-radius:8px;padding:10px 14px}
+.kpi .label{color:var(--t2);font-size:10px;text-transform:uppercase;letter-spacing:0.04em}
+.kpi .val{font-size:20px;font-weight:600;margin-top:4px}
+.kpi.green .val{color:var(--green)}.kpi.red .val{color:var(--red)}.kpi.blue .val{color:var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+th{background:var(--panel2);color:var(--t2);font-weight:500;font-size:10.5px;text-transform:uppercase;letter-spacing:0.04em;text-align:right}
+th:first-child,td:first-child,th:nth-child(2),td:nth-child(2),th:nth-child(3),td:nth-child(3){text-align:left}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600}
+.pill.promote{background:rgba(22,212,164,.15);color:var(--green)}
+.pill.pause{background:rgba(255,93,107,.15);color:var(--red)}
+.pill.testing{background:rgba(110,168,255,.15);color:var(--blue)}
+.style-bar{display:inline-flex;height:10px;border-radius:4px;overflow:hidden;min-width:80px;vertical-align:middle;margin-right:6px}
+.style-bar > span{display:block;height:100%}
+.style-bar .p{background:var(--green)}.style-bar .x{background:var(--red)}.style-bar .t{background:var(--blue)}
+.empty{color:var(--t3);font-style:italic;padding:12px}
+</style>
+<body><div class="wrap">
+<h1>🧪 Multi-Market Sandbox Audit — Mon 30 Jun → Fri 4 Jul 2026</h1>
+<p class="lede">Retrospective view of sandbox activity across all 9 accounts. Verdict = name prefix (<code>PROMOTED-</code>, <code>PAUSED-</code>, or in-test). Grouped by market → creative style → category.</p>
+
+<div class="market"><div class="market-hd"><h2>🇬🇧 UK</h2><div class="stats">63 ads updated this week · 266 total in sandbox · 37 adsets</div></div>
+<div class="kpi-row">
+      <div class="kpi green"><div class="label">Promoted</div><div class="val">25</div></div>
+      <div class="kpi red"><div class="label">Paused</div><div class="val">6</div></div>
+      <div class="kpi blue"><div class="label">Still testing</div><div class="val">32</div></div>
+      <div class="kpi"><div class="label">Categories touched</div><div class="val">21</div></div>
+    </div>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">🏆 Creative style breakdown</h2>
+<table><thead><tr><th>Style</th><th>Total</th><th>✓ Promoted</th><th>✗ Paused</th><th>… Testing</th><th>Win %</th><th>Split</th></tr></thead><tbody>
+<tr><td>Cost2026</td><td>26</td><td style="color:var(--green)">10</td><td style="color:var(--red)">0</td><td style="color:var(--blue)">16</td><td class="good">100%</td><td><span class="style-bar"><span class="p" style="width:38%"></span><span class="x" style="width:0%"></span><span class="t" style="width:62%"></span></span></td></tr>
+<tr><td>Other</td><td>18</td><td style="color:var(--green)">6</td><td style="color:var(--red)">1</td><td style="color:var(--blue)">11</td><td class="good">86%</td><td><span class="style-bar"><span class="p" style="width:33%"></span><span class="x" style="width:6%"></span><span class="t" style="width:61%"></span></span></td></tr>
+<tr><td>CF (Creative Factory)</td><td>17</td><td style="color:var(--green)">9</td><td style="color:var(--red)">3</td><td style="color:var(--blue)">5</td><td class="good">75%</td><td><span class="style-bar"><span class="p" style="width:53%"></span><span class="x" style="width:18%"></span><span class="t" style="width:29%"></span></span></td></tr>
+<tr><td>Raam</td><td>1</td><td style="color:var(--green)">0</td><td style="color:var(--red)">1</td><td style="color:var(--blue)">0</td><td class="bad">0%</td><td><span class="style-bar"><span class="p" style="width:0%"></span><span class="x" style="width:100%"></span><span class="t" style="width:0%"></span></span></td></tr>
+<tr><td>Katie PITS UGC</td><td>1</td><td style="color:var(--green)">0</td><td style="color:var(--red)">1</td><td style="color:var(--blue)">0</td><td class="bad">0%</td><td><span class="style-bar"><span class="p" style="width:0%"></span><span class="x" style="width:100%"></span><span class="t" style="width:0%"></span></span></td></tr>
+</tbody></table>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">📋 All actions this week</h2>
+<table><thead><tr><th>Updated</th><th>Verdict</th><th>Category</th><th>Style</th><th>Ad name</th></tr></thead><tbody>
+<tr><td class="muted">2026-07-03T12:44</td><td><span class="pill testing">… testing</span></td><td>Security Guard Services</td><td>CF (Creative Factory)</td><td>security-guards_Sandbox_CF_aerial-pins</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Boiler Installation or Replacement</td><td>Cost2026</td><td>PROMOTED-boiler-installation_cost2026_van</td></tr>
+<tr><td class="muted">2026-06-30T12:08</td><td><span class="pill promote">✓ promoted</span></td><td>Boiler Installation or Replacement</td><td>Cost2026</td><td>PROMOTED-boiler-installation_cost2026_newspaper</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Gutter Cleaning</td><td>CF (Creative Factory)</td><td>PROMOTED-gutter-cleaning_Sandbox_CF_before-after</td></tr>
+<tr><td class="muted">2026-06-30T12:08</td><td><span class="pill promote">✓ promoted</span></td><td>Gutter Cleaning</td><td>CF (Creative Factory)</td><td>PROMOTED-gutter-cleaning_Sandbox_CF_roofer-quotes</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Pressure Washing</td><td>Other</td><td>PROMOTED-pressure-washing_Sandbox_Video_4</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Pressure Washing</td><td>Other</td><td>PROMOTED-pressure-washing_Sandbox_PriceList_OptionA</td></tr>
+<tr><td class="muted">2026-07-02T11:02</td><td><span class="pill pause">✗ paused</span></td><td>Kitchen Installation and Remodelling</td><td>CF (Creative Factory)</td><td>PAUSED-kitchen-fitters_Sandbox_CF_flatlay-quotes</td></tr>
+<tr><td class="muted">2026-06-30T12:08</td><td><span class="pill promote">✓ promoted</span></td><td>Kitchen Installation and Remodelling</td><td>CF (Creative Factory)</td><td>PROMOTED-kitchen-fitters_Sandbox_CF_roofer-quotes</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Cost2026</td><td>paving-services_cost2026_object</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Cost2026</td><td>paving-services_cost2026_newspaper</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Cost2026</td><td>paving-services_cost2026_phone</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Cost2026</td><td>paving-services_cost2026_van</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Cost2026</td><td>paving-services_cost2026_clipboard</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Other</td><td>paving-services_Sandbox_Video_5</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Other</td><td>paving-services_Sandbox_Video_1</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Other</td><td>paving-services_Sandbox_Video_3</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Other</td><td>paving-services_Sandbox_Video_2</td></tr>
+<tr><td class="muted">2026-07-03T12:42</td><td><span class="pill testing">… testing</span></td><td>Brick and Block Paving Services</td><td>Other</td><td>paving-services_Sandbox_Video_4</td></tr>
+<tr><td class="muted">2026-07-03T12:54</td><td><span class="pill pause">✗ paused</span></td><td>Air Conditioning Installation</td><td>CF (Creative Factory)</td><td>PAUSED-central-air-conditioning-installation_Sandbox_CF_native-lockscreen</td></tr>
+<tr><td class="muted">2026-07-03T12:53</td><td><span class="pill promote">✓ promoted</span></td><td>Air Conditioning Installation</td><td>Other</td><td>PROMOTED-central-air-conditioning-installation_Sandbox_Video_3</td></tr>
+<tr><td class="muted">2026-07-02T11:02</td><td><span class="pill pause">✗ paused</span></td><td>Fence and Gate Installation</td><td>Other</td><td>PAUSED-fence-installation_Sandbox_PriceList_OptionA</td></tr>
+<tr><td class="muted">2026-06-30T12:07</td><td><span class="pill promote">✓ promoted</span></td><td>Fence and Gate Installation</td><td>Cost2026</td><td>PROMOTED-fence-installation_cost2026_newspaper</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Patio Services</td><td>Cost2026</td><td>PROMOTED-patio-services_cost2026_clipboard</td></tr>
+<tr><td class="muted">2026-07-03T12:43</td><td><span class="pill testing">… testing</span></td><td>Garage Door Installation</td><td>CF (Creative Factory)</td><td>garage-door-installation_Sandbox_CF_aerial-pins</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Driveway Installation</td><td>Other</td><td>PROMOTED-driveway-installation-maintenance_Sandbox_Video_1</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Driveway Installation</td><td>CF (Creative Factory)</td><td>PROMOTED-driveway-installation-maintenance_Sandbox_CF_roofer-quotes</td></tr>
+<tr><td class="muted">2026-06-30T12:07</td><td><span class="pill promote">✓ promoted</span></td><td>Driveway Installation</td><td>Cost2026</td><td>PROMOTED-driveway-installation-maintenance_cost2026_object</td></tr>
+<tr><td class="muted">2026-06-30T12:07</td><td><span class="pill promote">✓ promoted</span></td><td>Home and Domiciliary Care</td><td>CF (Creative Factory)</td><td>PROMOTED-home-domiciliary-care_Sandbox_CF_aerial-pins</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Wedding Photography</td><td>Other</td><td>PROMOTED-wedding-photographers_Sandbox_PriceList_OptionB</td></tr>
+<tr><td class="muted">2026-06-30T12:07</td><td><span class="pill promote">✓ promoted</span></td><td>Wedding Photography</td><td>Other</td><td>PROMOTED-wedding-photographers_Sandbox_PriceList_OptionA</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Electric Charge Points Installation</td><td>CF (Creative Factory)</td><td>PROMOTED-electric-charge-points-installation_Sandbox_CF_roofer-quotes</td></tr>
+<tr><td class="muted">2026-06-30T12:07</td><td><span class="pill promote">✓ promoted</span></td><td>Electric Charge Points Installation</td><td>CF (Creative Factory)</td><td>PROMOTED-electric-charge-points-installation_Sandbox_CF_native-lockscreen</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill promote">✓ promoted</span></td><td>Artificial Grass Installation</td><td>Cost2026</td><td>PROMOTED-artificial-grass-installation_cost2026_van</td></tr>
+<tr><td class="muted">2026-06-30T12:07</td><td><span class="pill promote">✓ promoted</span></td><td>Artificial Grass Installation</td><td>CF (Creative Factory)</td><td>PROMOTED-artificial-grass-installation_Sandbox_CF_before-after</td></tr>
+<tr><td class="muted">2026-07-03T12:43</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery and Removal</td><td>Cost2026</td><td>tree-surgeon_cost2026_object</td></tr>
+<tr><td class="muted">2026-07-03T12:43</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery and Removal</td><td>Cost2026</td><td>tree-surgeon_cost2026_newspaper</td></tr>
+<tr><td class="muted">2026-07-03T12:43</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery and Removal</td><td>Cost2026</td><td>tree-surgeon_cost2026_van</td></tr>
+<tr><td class="muted">2026-07-03T12:43</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery and Removal</td><td>Cost2026</td><td>tree-surgeon_cost2026_phone</td></tr>
+<tr><td class="muted">2026-07-03T12:43</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery and Removal</td><td>Cost2026</td><td>tree-surgeon_cost2026_clipboard</td></tr>
+<tr><td class="muted">2026-07-03T12:43</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery and Removal</td><td>Other</td><td>tree-surgeon_Sandbox_Video_1</td></tr>
+<tr><td class="muted">2026-07-03T12:43</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery and Removal</td><td>Other</td><td>tree-surgeon_Sandbox_Video_2</td></tr>
+<tr><td class="muted">2026-07-03T12:43</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery and Removal</td><td>Other</td><td>tree-surgeon_Sandbox_Video_5</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill promote">✓ promoted</span></td><td>Garden Clearance</td><td>CF (Creative Factory)</td><td>PROMOTED-garden-clearance_Sandbox_CF_aerial-pins</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill testing">… testing</span></td><td>Garden Clearance</td><td>Cost2026</td><td>garden-clearance_cost2026_object</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill testing">… testing</span></td><td>Garden Clearance</td><td>Cost2026</td><td>garden-clearance_cost2026_van</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill testing">… testing</span></td><td>Garden Clearance</td><td>Cost2026</td><td>garden-clearance_cost2026_phone</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill testing">… testing</span></td><td>Garden Clearance</td><td>Cost2026</td><td>garden-clearance_cost2026_newspaper</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill testing">… testing</span></td><td>Garden Clearance</td><td>Cost2026</td><td>garden-clearance_cost2026_clipboard</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill testing">… testing</span></td><td>Garden Clearance</td><td>Other</td><td>garden-clearance_Sandbox_Video_3</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill testing">… testing</span></td><td>Garden Clearance</td><td>Other</td><td>garden-clearance_Sandbox_Video_2</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill testing">… testing</span></td><td>Garden Clearance</td><td>CF (Creative Factory)</td><td>garden-clearance_Sandbox_CF_flatlay-quotes</td></tr>
+<tr><td class="muted">2026-07-03T12:50</td><td><span class="pill testing">… testing</span></td><td>Garden Clearance</td><td>Other</td><td>garden-clearance_Sandbox_Video_5</td></tr>
+<tr><td class="muted">2026-06-30T12:07</td><td><span class="pill promote">✓ promoted</span></td><td>Bathroom Installation and Remodel</td><td>Cost2026</td><td>PROMOTED-bathroom-installation_cost2026_newspaper</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill pause">✗ paused</span></td><td>Gardening</td><td>CF (Creative Factory)</td><td>PAUSED-gardeners_Sandbox_CF_roofer-quotes</td></tr>
+<tr><td class="muted">2026-07-03T12:51</td><td><span class="pill promote">✓ promoted</span></td><td>Painting and Decoration Interior</td><td>Cost2026</td><td>PROMOTED-painter-decorator_cost2026_object</td></tr>
+<tr><td class="muted">2026-07-03T12:51</td><td><span class="pill testing">… testing</span></td><td>Painting and Decoration Interior</td><td>Cost2026</td><td>painter-decorator_cost2026_phone</td></tr>
+<tr><td class="muted">2026-07-03T12:51</td><td><span class="pill pause">✗ paused</span></td><td>Painting and Decoration Interior</td><td>Raam</td><td>PAUSED-Fail-Painting_RaamUGC_Timelapse</td></tr>
+<tr><td class="muted">2026-07-03T12:51</td><td><span class="pill promote">✓ promoted</span></td><td>Painting and Decoration Interior</td><td>Cost2026</td><td>PROMOTED-painter-decorator_cost2026_van</td></tr>
+<tr><td class="muted">2026-07-02T11:01</td><td><span class="pill pause">✗ paused</span></td><td>Landscaping</td><td>Katie PITS UGC</td><td>PAUSED-landscaping_Sandbox_PITSAI_5voice_Flexible</td></tr>
+<tr><td class="muted">2026-06-30T13:14</td><td><span class="pill testing">… testing</span></td><td>Landscaping</td><td>CF (Creative Factory)</td><td>landscaping_Sandbox_CF_ProcessSplit</td></tr>
+<tr><td class="muted">2026-06-30T12:59</td><td><span class="pill testing">… testing</span></td><td>Landscaping</td><td>CF (Creative Factory)</td><td>landscaping_Sandbox_CF_LandscaperPhone</td></tr>
+<tr><td class="muted">2026-06-30T12:06</td><td><span class="pill promote">✓ promoted</span></td><td>Landscaping</td><td>Cost2026</td><td>PROMOTED-landscaping_cost2026_newspaper</td></tr>
+</tbody></table></div>
+<div class="market"><div class="market-hd"><h2>🇺🇸 US</h2><div class="stats">11 ads updated this week · 32 total in sandbox · 30 adsets</div></div>
+<div class="kpi-row">
+      <div class="kpi green"><div class="label">Promoted</div><div class="val">0</div></div>
+      <div class="kpi red"><div class="label">Paused</div><div class="val">0</div></div>
+      <div class="kpi blue"><div class="label">Still testing</div><div class="val">11</div></div>
+      <div class="kpi"><div class="label">Categories touched</div><div class="val">8</div></div>
+    </div>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">🏆 Creative style breakdown</h2>
+<table><thead><tr><th>Style</th><th>Total</th><th>✓ Promoted</th><th>✗ Paused</th><th>… Testing</th><th>Win %</th><th>Split</th></tr></thead><tbody>
+<tr><td>Raam</td><td>11</td><td style="color:var(--green)">0</td><td style="color:var(--red)">0</td><td style="color:var(--blue)">11</td><td class="muted">0%</td><td><span class="style-bar"><span class="p" style="width:0%"></span><span class="x" style="width:0%"></span><span class="t" style="width:100%"></span></span></td></tr>
+</tbody></table>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">📋 All actions this week</h2>
+<table><thead><tr><th>Updated</th><th>Verdict</th><th>Category</th><th>Style</th><th>Ad name</th></tr></thead><tbody>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>Magician</td><td>Raam</td><td>magician_Sandbox_Raam_Avatar_V2</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>Tax Preparation</td><td>Raam</td><td>tax-preparation_Sandbox_Raam_Avatar_V1</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>Residential Interior Designers</td><td>Raam</td><td>interior-designer_Sandbox_Raam_Avatar_V1</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>Wedding DJ</td><td>Raam</td><td>wedding-dj_Sandbox_Raam_Avatar_V1</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>Commercial Cleaning</td><td>Raam</td><td>commercial-cleaning_Sandbox_Raam_Avatar_V1</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>Architectural Services</td><td>Raam</td><td>architects_Sandbox_Raam_Avatar_V2</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>Architectural Services</td><td>Raam</td><td>architects_Sandbox_Raam_Avatar_V1</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>Wedding Photography</td><td>Raam</td><td>wedding-photography_Sandbox_Raam_Avatar_V1</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>Wedding Photography</td><td>Raam</td><td>wedding-photography_Sandbox_Raam_Avatar_V2</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>House Cleaning</td><td>Raam</td><td>house-cleaning_Sandbox_Raam_Avatar_V2</td></tr>
+<tr><td class="muted">2026-07-03T16:28</td><td><span class="pill testing">… testing</span></td><td>House Cleaning</td><td>Raam</td><td>house-cleaning_Sandbox_Raam_Avatar_V1</td></tr>
+</tbody></table></div>
+<div class="market"><div class="market-hd"><h2>🇨🇦 CA</h2><div class="stats">22 ads updated this week · 22 total in sandbox · 23 adsets</div></div>
+<div class="kpi-row">
+      <div class="kpi green"><div class="label">Promoted</div><div class="val">0</div></div>
+      <div class="kpi red"><div class="label">Paused</div><div class="val">0</div></div>
+      <div class="kpi blue"><div class="label">Still testing</div><div class="val">22</div></div>
+      <div class="kpi"><div class="label">Categories touched</div><div class="val">22</div></div>
+    </div>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">🏆 Creative style breakdown</h2>
+<table><thead><tr><th>Style</th><th>Total</th><th>✓ Promoted</th><th>✗ Paused</th><th>… Testing</th><th>Win %</th><th>Split</th></tr></thead><tbody>
+<tr><td>Other</td><td>22</td><td style="color:var(--green)">0</td><td style="color:var(--red)">0</td><td style="color:var(--blue)">22</td><td class="muted">0%</td><td><span class="style-bar"><span class="p" style="width:0%"></span><span class="x" style="width:0%"></span><span class="t" style="width:100%"></span></span></td></tr>
+</tbody></table>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">📋 All actions this week</h2>
+<table><thead><tr><th>Updated</th><th>Verdict</th><th>Category</th><th>Style</th><th>Ad name</th></tr></thead><tbody>
+<tr><td class="muted">2026-07-03T10:15</td><td><span class="pill testing">… testing</span></td><td>General Builders</td><td>Other</td><td>builders_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:15</td><td><span class="pill testing">… testing</span></td><td>Roofing Installation</td><td>Other</td><td>roofing_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:15</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery Removal</td><td>Other</td><td>tree-surgeon_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:15</td><td><span class="pill testing">… testing</span></td><td>Web Development</td><td>Other</td><td>web-development_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Financial Advisors</td><td>Other</td><td>financial-advisors_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Personal Trainers</td><td>Other</td><td>personal-trainers_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Magician</td><td>Other</td><td>magician_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Social Media Marketing</td><td>Other</td><td>social-media-marketing_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Accounting</td><td>Other</td><td>accountants_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Home Domiciliary Care</td><td>Other</td><td>home-domiciliary-care_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>DJ</td><td>Other</td><td>dj_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Driveway Installation</td><td>Other</td><td>driveway-installation_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Property Extensions</td><td>Other</td><td>property-extensions_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Painting Decoration</td><td>Other</td><td>painter-decorator_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Property Management</td><td>Other</td><td>property-management_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Therapist</td><td>Other</td><td>therapist_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:16</td><td><span class="pill testing">… testing</span></td><td>Landscaping</td><td>Other</td><td>landscaping_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:17</td><td><span class="pill testing">… testing</span></td><td>Tax Preparation</td><td>Other</td><td>tax-preparation_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:17</td><td><span class="pill testing">… testing</span></td><td>Limousine Hire</td><td>Other</td><td>limousine-hire_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:17</td><td><span class="pill testing">… testing</span></td><td>Fence Gate Installation</td><td>Other</td><td>fence-installation_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:17</td><td><span class="pill testing">… testing</span></td><td>Bathroom Installation Remodel</td><td>Other</td><td>bathroom-installation_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T10:17</td><td><span class="pill testing">… testing</span></td><td>House Cleaning</td><td>Other</td><td>house-cleaning_sandbox_blended</td></tr>
+</tbody></table></div>
+<div class="market"><div class="market-hd"><h2>🇦🇺 AU</h2><div class="stats">15 ads updated this week · 15 total in sandbox · 20 adsets</div></div>
+<div class="kpi-row">
+      <div class="kpi green"><div class="label">Promoted</div><div class="val">0</div></div>
+      <div class="kpi red"><div class="label">Paused</div><div class="val">0</div></div>
+      <div class="kpi blue"><div class="label">Still testing</div><div class="val">15</div></div>
+      <div class="kpi"><div class="label">Categories touched</div><div class="val">15</div></div>
+    </div>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">🏆 Creative style breakdown</h2>
+<table><thead><tr><th>Style</th><th>Total</th><th>✓ Promoted</th><th>✗ Paused</th><th>… Testing</th><th>Win %</th><th>Split</th></tr></thead><tbody>
+<tr><td>Other</td><td>14</td><td style="color:var(--green)">0</td><td style="color:var(--red)">0</td><td style="color:var(--blue)">14</td><td class="muted">0%</td><td><span class="style-bar"><span class="p" style="width:0%"></span><span class="x" style="width:0%"></span><span class="t" style="width:100%"></span></span></td></tr>
+<tr><td>Raam</td><td>1</td><td style="color:var(--green)">0</td><td style="color:var(--red)">0</td><td style="color:var(--blue)">1</td><td class="muted">0%</td><td><span class="style-bar"><span class="p" style="width:0%"></span><span class="x" style="width:0%"></span><span class="t" style="width:100%"></span></span></td></tr>
+</tbody></table>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">📋 All actions this week</h2>
+<table><thead><tr><th>Updated</th><th>Verdict</th><th>Category</th><th>Style</th><th>Ad name</th></tr></thead><tbody>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Funeral Services</td><td>Other</td><td>funeral-services_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Business Accounting Services</td><td>Raam</td><td>business-accounting-services_sandbox_raam</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Social Media Marketing</td><td>Other</td><td>social-media-marketing_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Buyers Agent</td><td>Other</td><td>buyer-s-agent_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Financial Advisors</td><td>Other</td><td>financial-advisors_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Accounting</td><td>Other</td><td>accountants_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Bookkeeping Services</td><td>Other</td><td>bookkeeping-services_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Property Management</td><td>Other</td><td>property-management_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Wedding Celebrants</td><td>Other</td><td>wedding-celebrants_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Security Guard Services</td><td>Other</td><td>security-guards_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Roof Cleaning</td><td>Other</td><td>roof-cleaning_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:18</td><td><span class="pill testing">… testing</span></td><td>Tutoring</td><td>Other</td><td>tutoring_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:19</td><td><span class="pill testing">… testing</span></td><td>Property Extensions</td><td>Other</td><td>property-extensions_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:19</td><td><span class="pill testing">… testing</span></td><td>Bathroom Installation Remodel</td><td>Other</td><td>bathroom-installation_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:19</td><td><span class="pill testing">… testing</span></td><td>Landscaping</td><td>Other</td><td>landscaping_sandbox_blended</td></tr>
+</tbody></table></div>
+<div class="market"><div class="market-hd"><h2>🇳🇿 NZ</h2><div class="stats">13 ads updated this week · 13 total in sandbox · 21 adsets</div></div>
+<div class="kpi-row">
+      <div class="kpi green"><div class="label">Promoted</div><div class="val">0</div></div>
+      <div class="kpi red"><div class="label">Paused</div><div class="val">0</div></div>
+      <div class="kpi blue"><div class="label">Still testing</div><div class="val">13</div></div>
+      <div class="kpi"><div class="label">Categories touched</div><div class="val">13</div></div>
+    </div>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">🏆 Creative style breakdown</h2>
+<table><thead><tr><th>Style</th><th>Total</th><th>✓ Promoted</th><th>✗ Paused</th><th>… Testing</th><th>Win %</th><th>Split</th></tr></thead><tbody>
+<tr><td>Other</td><td>13</td><td style="color:var(--green)">0</td><td style="color:var(--red)">0</td><td style="color:var(--blue)">13</td><td class="muted">0%</td><td><span class="style-bar"><span class="p" style="width:0%"></span><span class="x" style="width:0%"></span><span class="t" style="width:100%"></span></span></td></tr>
+</tbody></table>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">📋 All actions this week</h2>
+<table><thead><tr><th>Updated</th><th>Verdict</th><th>Category</th><th>Style</th><th>Ad name</th></tr></thead><tbody>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>Business Consulting</td><td>Other</td><td>business-consulting_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>Counselling</td><td>Other</td><td>counselling_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>Wedding Celebrants</td><td>Other</td><td>wedding-celebrants_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>House Cleaning</td><td>Other</td><td>house-cleaning_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>Web Design</td><td>Other</td><td>web-design_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>Property Extensions</td><td>Other</td><td>property-extensions_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>General Builders</td><td>Other</td><td>builders_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>Property Management</td><td>Other</td><td>property-management_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>Landscaping</td><td>Other</td><td>landscaping_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:22</td><td><span class="pill testing">… testing</span></td><td>Fence Gate Installation</td><td>Other</td><td>fence-installation_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:23</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery Removal</td><td>Other</td><td>tree-surgeon_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:23</td><td><span class="pill testing">… testing</span></td><td>Painting Decoration</td><td>Other</td><td>painter-decorator_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:23</td><td><span class="pill testing">… testing</span></td><td>End of Tenancy Cleaning</td><td>Other</td><td>end-of-tenancy-cleaning_sandbox_blended</td></tr>
+</tbody></table></div>
+<div class="market"><div class="market-hd"><h2>🇿🇦 ZA</h2><div class="stats">20 ads updated this week · 20 total in sandbox · 32 adsets</div></div>
+<div class="kpi-row">
+      <div class="kpi green"><div class="label">Promoted</div><div class="val">0</div></div>
+      <div class="kpi red"><div class="label">Paused</div><div class="val">0</div></div>
+      <div class="kpi blue"><div class="label">Still testing</div><div class="val">20</div></div>
+      <div class="kpi"><div class="label">Categories touched</div><div class="val">20</div></div>
+    </div>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">🏆 Creative style breakdown</h2>
+<table><thead><tr><th>Style</th><th>Total</th><th>✓ Promoted</th><th>✗ Paused</th><th>… Testing</th><th>Win %</th><th>Split</th></tr></thead><tbody>
+<tr><td>Other</td><td>18</td><td style="color:var(--green)">0</td><td style="color:var(--red)">0</td><td style="color:var(--blue)">18</td><td class="muted">0%</td><td><span class="style-bar"><span class="p" style="width:0%"></span><span class="x" style="width:0%"></span><span class="t" style="width:100%"></span></span></td></tr>
+<tr><td>Raam</td><td>2</td><td style="color:var(--green)">0</td><td style="color:var(--red)">0</td><td style="color:var(--blue)">2</td><td class="muted">0%</td><td><span class="style-bar"><span class="p" style="width:0%"></span><span class="x" style="width:0%"></span><span class="t" style="width:100%"></span></span></td></tr>
+</tbody></table>
+<h2 style="font-size:13px;color:var(--t2);margin:14px 0 8px">📋 All actions this week</h2>
+<table><thead><tr><th>Updated</th><th>Verdict</th><th>Category</th><th>Style</th><th>Ad name</th></tr></thead><tbody>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>General Builders</td><td>Raam</td><td>builders_sandbox_raam</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>House Cleaning</td><td>Raam</td><td>house-cleaning_sandbox_raam</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>HR and Payroll Services</td><td>Other</td><td>hr-and-payroll-services_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>Removal Companies</td><td>Other</td><td>removal-companies_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>Maths Tutoring</td><td>Other</td><td>maths-tutors_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>Business Accounting Services</td><td>Other</td><td>business-accounting-services_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>Catering</td><td>Other</td><td>catering_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>Pest Control</td><td>Other</td><td>pest-control_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>Private Investigators</td><td>Other</td><td>private-investigators_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>Man Van Services</td><td>Other</td><td>man-van-services_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:20</td><td><span class="pill testing">… testing</span></td><td>Structural Engineer</td><td>Other</td><td>structural-engineer_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:21</td><td><span class="pill testing">… testing</span></td><td>Wedding Photography</td><td>Other</td><td>wedding-photography_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:21</td><td><span class="pill testing">… testing</span></td><td>Counselling</td><td>Other</td><td>counselling_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:21</td><td><span class="pill testing">… testing</span></td><td>Roof Repair</td><td>Other</td><td>roof-repair_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:21</td><td><span class="pill testing">… testing</span></td><td>Divorce Lawyers</td><td>Other</td><td>divorce-lawyer_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:21</td><td><span class="pill testing">… testing</span></td><td>Brick Block Paving</td><td>Other</td><td>paving-services_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:21</td><td><span class="pill testing">… testing</span></td><td>Painting Decoration</td><td>Other</td><td>painter-decorator_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:21</td><td><span class="pill testing">… testing</span></td><td>Solar Panel Installation</td><td>Other</td><td>solar-panel-installation_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:21</td><td><span class="pill testing">… testing</span></td><td>Tree Surgery Removal</td><td>Other</td><td>tree-surgeon_sandbox_blended</td></tr>
+<tr><td class="muted">2026-07-03T09:21</td><td><span class="pill testing">… testing</span></td><td>CCTV Installation</td><td>Other</td><td>cctv-installation_sandbox_blended</td></tr>
+</tbody></table></div>
+<div class="market"><div class="market-hd"><h2>🇮🇪 IE</h2><div class="stats">no ads updated this week · sandbox campaign has 35 total ads across 37 adsets</div></div><div class="empty">No sandbox activity between 2026-06-30 and 2026-07-04</div></div>
+</div></body>

@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>UK Category-specific CBO Report — 28jun2026</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root { --bg:#0b0f17; --panel:#151b27; --panel2:#1c2435; --line:#2a3247;
+  --t1:#eef1f7; --t2:#9aa4bb; --t3:#6c7793;
+  --green:#16d4a4; --amber:#ffb547; --red:#ff5d6b; --blue:#6ea8ff; --violet:#b27dff; }
+* { box-sizing:border-box }
+html, body { margin:0; padding:0; background:var(--bg); color:var(--t1);
+  font:13px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif; }
+.wrap { max-width:1620px; margin:0 auto; padding:18px 24px 60px }
+h1 { font-size:22px; margin:0 0 4px; letter-spacing:-0.01em }
+.lede { color:var(--t2); font-size:13px; margin:0 0 18px }
+.kpi-row { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-bottom:16px }
+.kpi { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px 12px }
+.kpi .label { color:var(--t2); font-size:10px; text-transform:uppercase; letter-spacing:0.05em }
+.kpi .val { font-size:18px; font-weight:600; margin-top:2px; letter-spacing:-0.02em }
+.kpi.green .val { color:var(--green) } .kpi.red .val { color:var(--red) } .kpi.amber .val { color:var(--amber) }
+
+.section { background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-bottom:18px }
+.section-hd { padding:12px 16px; border-bottom:1px solid var(--line); border-left:3px solid #2563eb;
+  display:flex; align-items:baseline; gap:14px }
+.section-hd h2 { margin:0; font-size:15px; font-weight:600 }
+.section-hd .sub { color:var(--t3); font-size:12px; font-weight:400 }
+.section-hd .count { color:var(--t2); font-size:12px; margin-left:auto }
+
+table { width:100%; border-collapse:collapse; font-size:12px }
+th, td { padding:6px 8px; text-align:right; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; vertical-align:middle }
+th { background:var(--panel2); color:var(--t2); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:0.04em; text-align:right }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2), th:nth-child(3), td:nth-child(3) { text-align:left }
+tr:hover td { background:rgba(255,255,255,.02) }
+td.cat { font-weight:500; min-width:160px }
+td .meta { color:var(--t3); font-size:10.5px; margin-top:1px }
+td.bad { color:var(--red); font-weight:500 }
+td.good { color:var(--green); font-weight:500 }
+td.warn { color:var(--amber); font-weight:500 }
+td.muted { color:var(--t3) }
+
+.sp-cell { min-width:240px }
+.sp-wrap { display:flex; gap:8px; align-items:center; justify-content:flex-end }
+.grid { display:inline-flex; gap:2px; align-items:flex-end; height:24px }
+.grid > span { width:14px; background:var(--panel2); display:inline-block; border-radius:1px; position:relative }
+.grid > span.roas-pos { background:linear-gradient(180deg, var(--green), #128360) }
+.grid > span.roas-neg { background:linear-gradient(180deg, var(--red), #8b2a35) }
+.grid > span.zero { background:transparent; border-bottom:1px solid var(--t3); height:1px; align-self:flex-end; min-height:1px }
+.grid > span:hover::after { content:attr(data-tip); position:absolute; bottom:100%; left:50%; transform:translateX(-50%); background:#000; color:#fff; padding:3px 6px; border-radius:4px; font-size:10px; white-space:nowrap; z-index:10 }
+.sp-summary { font-weight:600 }
+.sp-summary.neg { color:var(--red) } .sp-summary.pos { color:var(--green) }
+
+.pill { display:inline-block; padding:1px 6px; border-radius:99px; font-size:10px; font-weight:600; margin-left:4px }
+.pill.red { background:rgba(255,93,107,.15); color:var(--red) }
+.pill.amber { background:rgba(255,181,71,.15); color:var(--amber) }
+.pill.green { background:rgba(22,212,164,.15); color:var(--green) }
+.pill.blue { background:rgba(110,168,255,.15); color:var(--blue) }
+.pill.violet { background:rgba(178,125,255,.15); color:var(--violet) }
+.pill.muted { background:var(--panel2); color:var(--t3) }
+
+.bar { height:5px; background:var(--panel2); border-radius:99px; overflow:hidden; min-width:60px; max-width:90px; display:inline-block; vertical-align:middle; margin-right:6px }
+.bar > span { display:block; height:100%; background:var(--green) }
+.bar > span.r { background:var(--red) } .bar > span.a { background:var(--amber) }
+
+.footnote { color:var(--t3); font-size:11px; margin-top:20px; padding-top:10px; border-top:1px solid var(--line) }
+.footnote code { font-family:"SF Mono",Menlo,monospace; background:rgba(255,255,255,.04); padding:1px 4px; border-radius:3px; color:var(--blue); font-size:10.5px }
+</style>
+</head><body>
+<div class="wrap">
+
+  <h1>🟦 UK Category CBO Report — w/e 2026-06-28</h1>
+  <p class="lede">Tableau-validated health snapshot for every active <code style="background:rgba(255,255,255,.04); padding:1px 5px; border-radius:3px; font-family:'SF Mono',monospace; font-size:11px; color:#6ea8ff">GB_B2C_CBO_*PurchaseROAS*</code> campaign + the Landscaping Awareness CBO. ROAS / revenue from Tableau PPC Adgroup Stats — Buyer (Meta-pixel overstates ~2x). Latest-week data: <strong>2026-06-22</strong> to <strong>2026-06-28</strong>.</p>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="label">CBOs live</div><div class="val">18</div></div>
+    <div class="kpi"><div class="label">Daily budget total</div><div class="val">£1,410</div></div>
+    <div class="kpi"><div class="label">Last-wk spend</div><div class="val">£2,906</div></div>
+    <div class="kpi"><div class="label">Last-wk revenue</div><div class="val">£3,309</div></div>
+    <div class="kpi green"><div class="label">Last-wk APR</div><div class="val">£+403</div></div>
+    <div class="kpi amber"><div class="label">Aggregate ROAS</div><div class="val">1.14x</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-hd">
+      <h2>🟦 UK Category-Specific CBOs <span class="sub">One row per CBO. Tableau-validated metrics. Sparklines = 8-week trend; latest week bolded. ROAS &lt;1 = losing money this week.</span></h2>
+      <span class="count">18 CBOs</span>
+    </div>
+    <table>
+      <thead><tr>
+        <th>#</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Bgt/d</th>
+        <th>ROAS Floor</th>
+        <th>Util (wk)</th>
+        <th>Spend · 8wk</th>
+        <th>ROAS · 8wk</th>
+        <th>APR · 8wk</th>
+        <th>Last CPL</th>
+        <th>Last R/B</th>
+        <th>Days live</th>
+      </tr></thead>
+      <tbody>
+<tr>
+      <td class="muted">1</td>
+      <td class="cat">House Cleaning<div class="meta">GB_B2C_CBO_House_Cleaning_PurchaseROAS140</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£102</td>
+      <td class="muted">1.40x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='' style='width:100%'></span></div><span class="good">129%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-pos' style='height:3px' data-tip='£127'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£918'></span></span><span class='sp-summary'>£918</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-pos' style='height:24px' data-tip='2.00x'></span><span class='roas-pos' style='height:17px; outline:1px solid #fff; outline-offset:1px' data-tip='1.47x'></span></span><span class='sp-summary '>1.47x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-pos' style='height:7px' data-tip='£127'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£430'></span></span><span class='sp-summary pos'>£+430</span></div></td>
+      <td>£2.9</td>
+      <td>£4.3</td>
+      <td class="muted">12d</td>
+    </tr><tr>
+      <td class="muted">2</td>
+      <td class="cat">Landscaping<span class="pill blue">6d old</span><div class="meta">GB_B2C_CBO_Landscaping_PurchaseROAS150</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£102</td>
+      <td class="muted">1.50x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='' style='width:78%'></span></div><span class="good">78%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£553'></span></span><span class='sp-summary'>£553</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='1.07x'></span></span><span class='sp-summary '>1.07x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£39'></span></span><span class='sp-summary pos'>£+39</span></div></td>
+      <td>£9.1</td>
+      <td>£9.7</td>
+      <td class="muted">6d</td>
+    </tr><tr>
+      <td class="muted">3</td>
+      <td class="cat">Electric Charge Points<span class="pill blue">5d old</span><div class="meta">GB_B2C_CBO_Electric_Charge_Points_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£102</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='a' style='width:64%'></span></div><span class="warn">64%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£453'></span></span><span class='sp-summary'>£453</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='0.76x'></span></span><span class='sp-summary neg'>0.76x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£-108'></span></span><span class='sp-summary neg'>£-108</span></div></td>
+      <td>£5.1</td>
+      <td>£3.9</td>
+      <td class="muted">5d</td>
+    </tr><tr>
+      <td class="muted">4</td>
+      <td class="cat">Fence and Gate<span class="pill blue">5d old</span><div class="meta">GB_B2C_CBO_Fence_and_Gate_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£100</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='a' style='width:48%'></span></div><span class="warn">48%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£334'></span></span><span class='sp-summary'>£334</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='0.59x'></span></span><span class='sp-summary neg'>0.59x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£-137'></span></span><span class='sp-summary neg'>£-137</span></div></td>
+      <td>£10.1</td>
+      <td>£6.0</td>
+      <td class="muted">5d</td>
+    </tr><tr>
+      <td class="muted">5</td>
+      <td class="cat">Landscaping Awareness<span class="pill violet">awareness</span><span class="pill muted">3/3 adsets</span><div class="meta">GB_CUS_B2C_CBO_Landscaping_Awareness</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£60</td>
+      <td class="muted">—</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='a' style='width:62%'></span></div><span class="warn">62%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='roas-pos' style='height:14px' data-tip='£1,053'></span><span class='roas-pos' style='height:21px' data-tip='£1,601'></span><span class='roas-pos' style='height:24px' data-tip='£1,767'></span><span class='roas-pos' style='height:23px' data-tip='£1,749'></span><span class='roas-pos' style='height:15px' data-tip='£1,114'></span><span class='roas-pos' style='height:5px' data-tip='£380'></span><span class='roas-pos' style='height:1px' data-tip='£107'></span><span class='roas-pos' style='height:3px; outline:1px solid #fff; outline-offset:1px' data-tip='£260'></span></span><span class='sp-summary'>£260</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='roas-pos' style='height:18px' data-tip='1.92x'></span><span class='roas-pos' style='height:17px' data-tip='1.83x'></span><span class='roas-pos' style='height:13px' data-tip='1.38x'></span><span class='roas-pos' style='height:16px' data-tip='1.70x'></span><span class='roas-pos' style='height:15px' data-tip='1.61x'></span><span class='roas-pos' style='height:24px' data-tip='2.50x'></span><span class='roas-pos' style='height:13px' data-tip='1.41x'></span><span class='roas-pos' style='height:20px; outline:1px solid #fff; outline-offset:1px' data-tip='2.13x'></span></span><span class='sp-summary pos'>2.13x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='roas-pos' style='height:17px' data-tip='£966'></span><span class='roas-pos' style='height:24px' data-tip='£1,332'></span><span class='roas-pos' style='height:12px' data-tip='£667'></span><span class='roas-pos' style='height:22px' data-tip='£1,231'></span><span class='roas-pos' style='height:12px' data-tip='£681'></span><span class='roas-pos' style='height:10px' data-tip='£570'></span><span class='roas-pos' style='height:1px' data-tip='£43'></span><span class='roas-pos' style='height:5px; outline:1px solid #fff; outline-offset:1px' data-tip='£295'></span></span><span class='sp-summary pos'>£+295</span></div></td>
+      <td>£4.6</td>
+      <td>£9.7</td>
+      <td class="muted">88d</td>
+    </tr><tr>
+      <td class="muted">6</td>
+      <td class="cat">Garage Door Installation<span class="pill blue">6d old</span><div class="meta">GB_B2C_CBO_Garage_Door_Installation_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£25</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='' style='width:100%'></span></div><span class="good">129%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£230'></span></span><span class='sp-summary'>£230</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='0.91x'></span></span><span class='sp-summary neg'>0.91x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£-20'></span></span><span class='sp-summary neg'>£-20</span></div></td>
+      <td>£10.0</td>
+      <td>£9.2</td>
+      <td class="muted">6d</td>
+    </tr><tr>
+      <td class="muted">7</td>
+      <td class="cat">Patio Services<span class="pill blue">6d old</span><div class="meta">GB_B2C_CBO_Patio_Services_PurchaseROAS150</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£100</td>
+      <td class="muted">1.50x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:22%'></span></div><span class="bad">22%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£157'></span></span><span class='sp-summary'>£157</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='0.39x'></span></span><span class='sp-summary neg'>0.39x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='£-96'></span></span><span class='sp-summary neg'>£-96</span></div></td>
+      <td>£12.1</td>
+      <td>£4.7</td>
+      <td class="muted">6d</td>
+    </tr><tr>
+      <td class="muted">8</td>
+      <td class="cat">CCTV Installation<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_CCTV_Installation_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£100</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">9</td>
+      <td class="cat">Brick Block Paving<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_Brick_Block_Paving_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£70</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">10</td>
+      <td class="cat">End of Tenancy Cleaning<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_End_of_Tenancy_Cleaning_PurchaseROAS110</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£100</td>
+      <td class="muted">1.10x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">11</td>
+      <td class="cat">Driveway Installation<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_Driveway_Installation_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£100</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">12</td>
+      <td class="cat">Home Domiciliary Care<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_Home_Domiciliary_Care_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£50</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">13</td>
+      <td class="cat">Wedding Photography<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_Wedding_Photography_PurchaseROAS110</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£50</td>
+      <td class="muted">1.10x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">14</td>
+      <td class="cat">Artificial Grass<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_Artificial_Grass_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£90</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">15</td>
+      <td class="cat">Tree Surgery<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_Tree_Surgery_PurchaseROAS110</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£50</td>
+      <td class="muted">1.10x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">16</td>
+      <td class="cat">Garden Clearance<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_Garden_Clearance_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£60</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">17</td>
+      <td class="cat">Bathroom Installation<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_Bathroom_Installation_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£100</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr><tr>
+      <td class="muted">18</td>
+      <td class="cat">Painting and Decoration<span class="pill blue">4d old</span><div class="meta">GB_B2C_CBO_Painting_and_Decoration_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>£50</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary'>£0</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px' data-tip='£0'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='£0'></span></span><span class='sp-summary pos'>£+0</span></div></td>
+      <td>£0.0</td>
+      <td>£0.0</td>
+      <td class="muted">4d</td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="footnote">
+    Source: Meta Graph API v23.0 (live campaign metadata + budgets) · Tableau <code>PPC Adgroup Stats — Buyer</code> LUID <code>ff73b413-eaa4-43b8-9b5a-9c3fd24d2e67</code> (spend, revenue, barks).<br>
+    ROAS = Tableau revenue ÷ spend. <strong>Do NOT trust Meta-pixel ROAS</strong> — overstates revenue ~2x per [[tableau-source-of-truth]].<br>
+    CPL = spend / Project Count submitted. R/B = revenue / Project Count submitted (the true marketplace revenue per bark).<br>
+    Utilisation = last-week spend ÷ (daily budget × 7). 75%+ = healthy delivery; under 25% = starved.<br>
+    Generated Mon 29 Jun 2026 14:08.
+  </p>
+</div></body></html>

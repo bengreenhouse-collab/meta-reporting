@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>US Category-specific CBO Report — 28jun2026</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root { --bg:#0b0f17; --panel:#151b27; --panel2:#1c2435; --line:#2a3247;
+  --t1:#eef1f7; --t2:#9aa4bb; --t3:#6c7793;
+  --green:#16d4a4; --amber:#ffb547; --red:#ff5d6b; --blue:#6ea8ff; --violet:#b27dff; }
+* { box-sizing:border-box }
+html, body { margin:0; padding:0; background:var(--bg); color:var(--t1);
+  font:13px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif; }
+.wrap { max-width:1620px; margin:0 auto; padding:18px 24px 60px }
+h1 { font-size:22px; margin:0 0 4px; letter-spacing:-0.01em }
+.lede { color:var(--t2); font-size:13px; margin:0 0 18px }
+.kpi-row { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-bottom:16px }
+.kpi { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px 12px }
+.kpi .label { color:var(--t2); font-size:10px; text-transform:uppercase; letter-spacing:0.05em }
+.kpi .val { font-size:18px; font-weight:600; margin-top:2px; letter-spacing:-0.02em }
+.kpi.green .val { color:var(--green) } .kpi.red .val { color:var(--red) } .kpi.amber .val { color:var(--amber) }
+
+.section { background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-bottom:18px }
+.section-hd { padding:12px 16px; border-bottom:1px solid var(--line); border-left:3px solid #2563eb;
+  display:flex; align-items:baseline; gap:14px }
+.section-hd h2 { margin:0; font-size:15px; font-weight:600 }
+.section-hd .sub { color:var(--t3); font-size:12px; font-weight:400 }
+.section-hd .count { color:var(--t2); font-size:12px; margin-left:auto }
+
+table { width:100%; border-collapse:collapse; font-size:12px }
+th, td { padding:6px 8px; text-align:right; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; vertical-align:middle }
+th { background:var(--panel2); color:var(--t2); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:0.04em; text-align:right }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2), th:nth-child(3), td:nth-child(3) { text-align:left }
+tr:hover td { background:rgba(255,255,255,.02) }
+td.cat { font-weight:500; min-width:160px }
+td .meta { color:var(--t3); font-size:10.5px; margin-top:1px }
+td.bad { color:var(--red); font-weight:500 }
+td.good { color:var(--green); font-weight:500 }
+td.warn { color:var(--amber); font-weight:500 }
+td.muted { color:var(--t3) }
+
+.sp-cell { min-width:240px }
+.sp-wrap { display:flex; gap:8px; align-items:center; justify-content:flex-end }
+.grid { display:inline-flex; gap:2px; align-items:flex-end; height:24px }
+.grid > span { width:14px; background:var(--panel2); display:inline-block; border-radius:1px; position:relative }
+.grid > span.roas-pos { background:linear-gradient(180deg, var(--green), #128360) }
+.grid > span.roas-neg { background:linear-gradient(180deg, var(--red), #8b2a35) }
+.grid > span.zero { background:transparent; border-bottom:1px solid var(--t3); height:1px; align-self:flex-end; min-height:1px }
+.grid > span:hover::after { content:attr(data-tip); position:absolute; bottom:100%; left:50%; transform:translateX(-50%); background:#000; color:#fff; padding:3px 6px; border-radius:4px; font-size:10px; white-space:nowrap; z-index:10 }
+.sp-summary { font-weight:600 }
+.sp-summary.neg { color:var(--red) } .sp-summary.pos { color:var(--green) }
+
+.pill { display:inline-block; padding:1px 6px; border-radius:99px; font-size:10px; font-weight:600; margin-left:4px }
+.pill.red { background:rgba(255,93,107,.15); color:var(--red) }
+.pill.amber { background:rgba(255,181,71,.15); color:var(--amber) }
+.pill.green { background:rgba(22,212,164,.15); color:var(--green) }
+.pill.blue { background:rgba(110,168,255,.15); color:var(--blue) }
+.pill.violet { background:rgba(178,125,255,.15); color:var(--violet) }
+.pill.muted { background:var(--panel2); color:var(--t3) }
+
+.bar { height:5px; background:var(--panel2); border-radius:99px; overflow:hidden; min-width:60px; max-width:90px; display:inline-block; vertical-align:middle; margin-right:6px }
+.bar > span { display:block; height:100%; background:var(--green) }
+.bar > span.r { background:var(--red) } .bar > span.a { background:var(--amber) }
+
+.footnote { color:var(--t3); font-size:11px; margin-top:20px; padding-top:10px; border-top:1px solid var(--line) }
+.footnote code { font-family:"SF Mono",Menlo,monospace; background:rgba(255,255,255,.04); padding:1px 4px; border-radius:3px; color:var(--blue); font-size:10.5px }
+</style>
+</head><body>
+<div class="wrap">
+
+  <h1>🇺🇸 US Category CBO Report — w/e 2026-06-28</h1>
+  <p class="lede">Tableau-validated health snapshot for every active <code style="background:rgba(255,255,255,.04); padding:1px 5px; border-radius:3px; font-family:'SF Mono',monospace; font-size:11px; color:#6ea8ff">US_B2C_CBO_*</code> / <code style="background:rgba(255,255,255,.04); padding:1px 5px; border-radius:3px; font-family:'SF Mono',monospace; font-size:11px; color:#6ea8ff">US_CUS_B2C_CBO_*</code> campaign. ROAS / revenue from Tableau PPC Adgroup Stats — Buyer (Meta-pixel overstates ~2x). Latest-week data: <strong>2026-06-22</strong> to <strong>2026-06-28</strong>.</p>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="label">CBOs live</div><div class="val">10</div></div>
+    <div class="kpi"><div class="label">Daily budget total</div><div class="val">$1,032</div></div>
+    <div class="kpi"><div class="label">Last-wk spend</div><div class="val">$6,843</div></div>
+    <div class="kpi"><div class="label">Last-wk revenue</div><div class="val">$10,031</div></div>
+    <div class="kpi green"><div class="label">Last-wk APR</div><div class="val">$+3,188</div></div>
+    <div class="kpi green"><div class="label">Aggregate ROAS</div><div class="val">1.47x</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-hd">
+      <h2>🇺🇸 US Category-Specific CBOs <span class="sub">One row per CBO. Tableau-validated metrics. Sparklines = 8-week trend; latest week bolded. ROAS &lt;1 = losing money this week.</span></h2>
+      <span class="count">10 CBOs</span>
+    </div>
+    <table>
+      <thead><tr>
+        <th>#</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Bgt/d</th>
+        <th>ROAS Floor</th>
+        <th>Util (wk)</th>
+        <th>Spend · 8wk</th>
+        <th>ROAS · 8wk</th>
+        <th>APR · 8wk</th>
+        <th>Last CPL</th>
+        <th>Last R/B</th>
+        <th>Days live</th>
+      </tr></thead>
+      <tbody>
+<tr>
+      <td class="muted">1</td>
+      <td class="cat">Dog Training<div class="meta">US_B2C_CBO_Dog_Training_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$228</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='' style='width:100%'></span></div><span class="good">112%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$1,787'></span></span><span class='sp-summary'>$1,787</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='1.21x'></span></span><span class='sp-summary '>1.21x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$371'></span></span><span class='sp-summary pos'>$+371</span></div></td>
+      <td>$4.1</td>
+      <td>$4.9</td>
+      <td class="muted">7d</td>
+    </tr><tr>
+      <td class="muted">2</td>
+      <td class="cat">ROAS Top10 APR Purchase<span class="pill muted">7/10 adsets</span><div class="meta">US_CUS_B2C_CBO_ROAS_Top10_APR_Purchase</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$183</td>
+      <td class="muted">—</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='' style='width:100%'></span></div><span class="good">112%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:5px' data-tip='$333'></span><span class='roas-pos' style='height:16px' data-tip='$990'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$1,439'></span></span><span class='sp-summary'>$1,439</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-pos' style='height:24px' data-tip='1.78x'></span><span class='roas-pos' style='height:19px' data-tip='1.48x'></span><span class='roas-pos' style='height:23px; outline:1px solid #fff; outline-offset:1px' data-tip='1.76x'></span></span><span class='sp-summary pos'>1.76x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:5px' data-tip='$260'></span><span class='roas-pos' style='height:10px' data-tip='$479'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$1,097'></span></span><span class='sp-summary pos'>$+1,097</span></div></td>
+      <td>$3.6</td>
+      <td>$6.4</td>
+      <td class="muted">25d</td>
+    </tr><tr>
+      <td class="muted">3</td>
+      <td class="cat">CostCap TEST<span class="pill muted">5/22 adsets</span><div class="meta">US_CUS_B2C_CBO_CostCap_TEST</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$38</td>
+      <td class="muted">—</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='' style='width:100%'></span></div><span class="good">443%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='roas-pos' style='height:15px' data-tip='$732'></span><span class='roas-pos' style='height:18px' data-tip='$900'></span><span class='roas-pos' style='height:19px' data-tip='$927'></span><span class='roas-pos' style='height:19px' data-tip='$943'></span><span class='roas-pos' style='height:8px' data-tip='$411'></span><span class='roas-pos' style='height:11px' data-tip='$558'></span><span class='roas-pos' style='height:7px' data-tip='$363'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$1,168'></span></span><span class='sp-summary'>$1,168</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='roas-pos' style='height:14px' data-tip='1.56x'></span><span class='roas-pos' style='height:11px' data-tip='1.25x'></span><span class='roas-pos' style='height:13px' data-tip='1.51x'></span><span class='roas-pos' style='height:14px' data-tip='1.55x'></span><span class='roas-pos' style='height:18px' data-tip='2.00x'></span><span class='roas-pos' style='height:21px' data-tip='2.36x'></span><span class='roas-pos' style='height:24px' data-tip='2.62x'></span><span class='roas-pos' style='height:16px; outline:1px solid #fff; outline-offset:1px' data-tip='1.77x'></span></span><span class='sp-summary pos'>1.77x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='roas-pos' style='height:10px' data-tip='$412'></span><span class='roas-pos' style='height:5px' data-tip='$224'></span><span class='roas-pos' style='height:12px' data-tip='$471'></span><span class='roas-pos' style='height:13px' data-tip='$521'></span><span class='roas-pos' style='height:10px' data-tip='$412'></span><span class='roas-pos' style='height:20px' data-tip='$760'></span><span class='roas-pos' style='height:15px' data-tip='$587'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$904'></span></span><span class='sp-summary pos'>$+904</span></div></td>
+      <td>$6.4</td>
+      <td>$11.4</td>
+      <td class="muted">130d</td>
+    </tr><tr>
+      <td class="muted">4</td>
+      <td class="cat">House Cleaning<span class="pill muted">5/6 adsets</span><div class="meta">US_CUS_B2C_CBO_House_Cleaning</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$26</td>
+      <td class="muted">—</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='' style='width:100%'></span></div><span class="good">488%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='roas-pos' style='height:20px' data-tip='$734'></span><span class='roas-pos' style='height:22px' data-tip='$802'></span><span class='roas-pos' style='height:21px' data-tip='$782'></span><span class='roas-pos' style='height:22px' data-tip='$824'></span><span class='roas-pos' style='height:23px' data-tip='$841'></span><span class='roas-pos' style='height:7px' data-tip='$291'></span><span class='roas-pos' style='height:8px' data-tip='$311'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$874'></span></span><span class='sp-summary'>$874</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='roas-pos' style='height:14px' data-tip='1.39x'></span><span class='roas-pos' style='height:14px' data-tip='1.40x'></span><span class='roas-pos' style='height:14px' data-tip='1.40x'></span><span class='roas-pos' style='height:13px' data-tip='1.28x'></span><span class='roas-pos' style='height:17px' data-tip='1.62x'></span><span class='roas-pos' style='height:24px' data-tip='2.24x'></span><span class='roas-pos' style='height:23px' data-tip='2.21x'></span><span class='roas-pos' style='height:20px; outline:1px solid #fff; outline-offset:1px' data-tip='1.89x'></span></span><span class='sp-summary pos'>1.89x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='roas-pos' style='height:8px' data-tip='$288'></span><span class='roas-pos' style='height:9px' data-tip='$321'></span><span class='roas-pos' style='height:9px' data-tip='$310'></span><span class='roas-pos' style='height:7px' data-tip='$227'></span><span class='roas-pos' style='height:16px' data-tip='$521'></span><span class='roas-pos' style='height:11px' data-tip='$362'></span><span class='roas-pos' style='height:11px' data-tip='$376'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$776'></span></span><span class='sp-summary pos'>$+776</span></div></td>
+      <td>$2.7</td>
+      <td>$5.1</td>
+      <td class="muted">133d</td>
+    </tr><tr>
+      <td class="muted">5</td>
+      <td class="cat">Limousine Hire<span class="pill blue">6d old</span><div class="meta">US_B2C_CBO_Limousine_Hire_PurchaseROAS130</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$91</td>
+      <td class="muted">1.30x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='' style='width:91%'></span></div><span class="good">91%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$581'></span></span><span class='sp-summary'>$581</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='1.24x'></span></span><span class='sp-summary '>1.24x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$142'></span></span><span class='sp-summary pos'>$+142</span></div></td>
+      <td>$3.2</td>
+      <td>$4.0</td>
+      <td class="muted">6d</td>
+    </tr><tr>
+      <td class="muted">6</td>
+      <td class="cat">Private Investigators<span class="pill blue">6d old</span><div class="meta">US_B2C_CBO_Private_Investigators_PurchaseROAS120</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$91</td>
+      <td class="muted">1.20x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='a' style='width:69%'></span></div><span class="warn">69%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$445'></span></span><span class='sp-summary'>$445</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='0.89x'></span></span><span class='sp-summary neg'>0.89x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$-48'></span></span><span class='sp-summary neg'>$-48</span></div></td>
+      <td>$10.1</td>
+      <td>$9.0</td>
+      <td class="muted">6d</td>
+    </tr><tr>
+      <td class="muted">7</td>
+      <td class="cat">Personal Trainers<span class="pill blue">6d old</span><div class="meta">US_B2C_CBO_Personal_Trainers_PurchaseROAS120</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$100</td>
+      <td class="muted">1.20x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='a' style='width:61%'></span></div><span class="warn">61%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$429'></span></span><span class='sp-summary'>$429</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='0.89x'></span></span><span class='sp-summary neg'>0.89x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$-49'></span></span><span class='sp-summary neg'>$-49</span></div></td>
+      <td>$8.9</td>
+      <td>$7.9</td>
+      <td class="muted">6d</td>
+    </tr><tr>
+      <td class="muted">8</td>
+      <td class="cat">Residential Interior Designers<span class="pill blue">6d old</span><div class="meta">US_B2C_CBO_Residential_Interior_Designers_PurchaseROAS120</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$91</td>
+      <td class="muted">1.20x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:12%'></span></div><span class="bad">12%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$75'></span></span><span class='sp-summary'>$75</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='1.54x'></span></span><span class='sp-summary pos'>1.54x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$41'></span></span><span class='sp-summary pos'>$+41</span></div></td>
+      <td>$10.7</td>
+      <td>$16.5</td>
+      <td class="muted">6d</td>
+    </tr><tr>
+      <td class="muted">9</td>
+      <td class="cat">Security Guard Services<span class="pill blue">6d old</span><div class="meta">US_B2C_CBO_Security_Guard_Services_PurchaseROAS150</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$46</td>
+      <td class="muted">1.50x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:13%'></span></div><span class="bad">13%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$42'></span></span><span class='sp-summary'>$42</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$-42'></span></span><span class='sp-summary neg'>$-42</span></div></td>
+      <td>$0.0</td>
+      <td>$0.0</td>
+      <td class="muted">6d</td>
+    </tr><tr>
+      <td class="muted">10</td>
+      <td class="cat">Web Design<span class="pill blue">6d old</span><div class="meta">US_B2C_CBO_Web_Design_PurchaseROAS120</div></td>
+      <td><span class="pill green">ACTIVE</span></td>
+      <td>$137</td>
+      <td class="muted">1.20x</td>
+      <td><div class='bar' style='display:inline-block; vertical-align:middle'><span class='r' style='width:0%'></span></div><span class="bad">0%</span></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-pos' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$4'></span></span><span class='sp-summary'>$4</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px' data-tip='0.00x'></span><span class='zero' style='height:1px; outline:1px solid #fff; outline-offset:1px' data-tip='0.00x'></span></span><span class='sp-summary neg'>0.00x</span></div></td>
+      <td class="sp-cell"><div class="sp-wrap"><span class='grid'><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='zero' style='height:1px' data-tip='$0'></span><span class='roas-neg' style='height:24px; outline:1px solid #fff; outline-offset:1px' data-tip='$-4'></span></span><span class='sp-summary neg'>$-4</span></div></td>
+      <td>$0.0</td>
+      <td>$0.0</td>
+      <td class="muted">6d</td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="footnote">
+    Source: Meta Graph API v23.0 (live campaign metadata + budgets) · Tableau <code>PPC Adgroup Stats — Buyer</code> LUID <code>ff73b413-eaa4-43b8-9b5a-9c3fd24d2e67</code> (spend, revenue, barks).<br>
+    ROAS = Tableau revenue ÷ spend. <strong>Do NOT trust Meta-pixel ROAS</strong> — overstates revenue ~2x per [[tableau-source-of-truth]].<br>
+    CPL = spend / Project Count submitted. R/B = revenue / Project Count submitted (the true marketplace revenue per bark).<br>
+    Utilisation = last-week spend ÷ (daily budget × 7). 75%+ = healthy delivery; under 25% = starved.<br>
+    Generated Mon 29 Jun 2026 22:35.
+  </p>
+</div></body></html>

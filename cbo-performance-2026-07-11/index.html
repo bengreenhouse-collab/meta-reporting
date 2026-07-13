@@ -1,0 +1,323 @@
+<!doctype html><meta charset=utf-8><title>CBO Performance — 2026-07-11</title>
+<style>
+body{font:13px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;max-width:1080px;margin:22px auto;padding:0 16px;color:#1a1a1a;background:#fafafa}
+h1{font-size:22px;margin-bottom:2px} h2{font-size:18px;margin:26px 0 6px;border-bottom:2px solid #ddd;padding-bottom:4px}
+h3{font-size:15px;margin:0 0 2px} .meta{color:#888;font-weight:400;font-size:12px}
+.camp{background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:12px 14px;margin:10px 0}
+.lbl{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#777;margin:10px 0 3px}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th{text-align:left;color:#666;font-weight:600;border-bottom:1px solid #eee;padding:3px 6px}
+td{padding:3px 6px;border-bottom:1px solid #f3f3f3} .nm{font-weight:600;max-width:340px} .sub{color:#888}
+.good{color:#0a7d33;font-weight:600} .bad{color:#c0392b;font-weight:600} .na{color:#bbb} .k{color:#a06;font-weight:600}
+.hdr{background:#1a1a1a;color:#fff;border-radius:10px;padding:14px 16px;font-size:13px}
+</style>
+<h1>CBO Performance — adset (Tableau-true) + ad (Meta-reconciled)</h1>
+<div class=hdr>Window <b>2026-06-14 → 2026-07-11</b> (28d). <b>Adsets</b> ranked by <b>Tableau APR</b> (source of truth, adset grain, £).
+<b>Ads</b> ranked by <b>reconciled ROAS</b> = Meta ad ROAS × each adset's calibration (Tableau ROAS ÷ Meta ROAS),
+which strips out Meta pixel overstatement <b>and</b> is FX-safe (US Meta is $, Tableau is £; ROAS ratios cancel currency).
+Per-market median overstatement shown in each header. Spend floors: adset £20 / ad $10.</div>
+<h2>UK <span class=meta>· 23 CBOs with spend · median Meta overstatement 1.15x vs Tableau (n=25 verified adsets)</span></h2><div class=camp>
+          <h3>House Cleaning ROAS140 <span class=meta>· ACTIVE · £12/d · £1,709 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1212_House_Cleaning_UK_Core</td><td>✓</td><td>£1,661</td><td>£3,150</td><td class='good'>1.90x</td><td class='good'>£1,489</td><td class='good'>1.63x</td><td class=k>0.86x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>template2_static_tappropertytype_cleaning_240725_uk_v1</td><td class=sub>Core</td><td>£159</td><td>33</td><td class='good'>1.73x</td><td class='good'>2.01x</td></tr><tr><td class=nm>template44_static_price_cleaning_051225_uk_1</td><td class=sub>Core</td><td>£1,398</td><td>258</td><td class='good'>1.66x</td><td class='good'>1.92x</td></tr><tr><td class=nm>template2_static_tappropertytype_cleaning_240725_uk_v1 – Copy</td><td class=sub>Core</td><td>£124</td><td>19</td><td class='good'>1.39x</td><td class='good'>1.61x</td></tr><tr><td class=nm>HouseCleaning_WB_V1_Living</td><td class=sub>Core</td><td>£16</td><td>1</td><td class='bad'>0.76x</td><td class='bad'>0.89x</td></tr></table>
+        </div><div class=camp>
+          <h3>Landscaping ROAS150 <span class=meta>· ACTIVE · £8/d · £900 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1252_Landscaping_UK_Core</td><td>✓</td><td>£827</td><td>£985</td><td class='good'>1.19x</td><td class='good'>£158</td><td class='good'>1.13x</td><td class=k>0.95x</td></tr><tr><td class=nm>1252_Landscaping_UK_L3Awareness_IMG</td><td>✓</td><td>£34</td><td>£22</td><td class='bad'>0.64x</td><td class='bad'>-£12</td><td class='bad'>0.89x</td><td class=k>1.39x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>landscaping_Sandbox_Raam_Avatar_V1</td><td class=sub>Core</td><td>£44</td><td>5</td><td class='good'>2.30x</td><td class='good'>2.42x</td></tr><tr><td class=nm>template44_static_price_landscaping_050126_uk_1 – Copy</td><td class=sub>Core</td><td>£22</td><td>2</td><td class='good'>1.48x</td><td class='good'>1.55x</td></tr><tr><td class=nm>1252_Landscaping_UK_landscaping_cost2026_newspaper</td><td class=sub>Core</td><td>£108</td><td>8</td><td class='good'>1.23x</td><td class='good'>1.29x</td></tr><tr><td class=nm>landscape script 1 hook 3</td><td class=sub>Core</td><td>£577</td><td>37</td><td class='good'>1.06x</td><td class='good'>1.11x</td></tr><tr><td class=nm>1252_Landscaping_Sandbox_before-after-v3</td><td class=sub>Core</td><td>£56</td><td>3</td><td class='bad'>0.96x</td><td class='good'>1.01x</td></tr><tr><td class=nm>Landscaping Variant - Flower Borders</td><td class=sub>Core</td><td>£33</td><td>1</td><td class='bad'>0.77x</td><td class='bad'>0.81x</td></tr></table>
+        </div><div class=camp>
+          <h3>Garage Door Installation ROAS130 <span class=meta>· ACTIVE · £15/d · £841 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1081_Garage_Door_Installation_UK_Core</td><td>✓</td><td>£783</td><td>£1,714</td><td class='good'>2.19x</td><td class='good'>£931</td><td class='good'>2.13x</td><td class=k>0.97x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>template2_static_pricetype_garageinstall_090925_uk_2</td><td class=sub>Core</td><td>£361</td><td>74</td><td class='good'>3.10x</td><td class='good'>3.19x</td></tr><tr><td class=nm>template2_static_pricetype_garageinstall_090925_uk_1</td><td class=sub>Core</td><td>£97</td><td>16</td><td class='good'>2.94x</td><td class='good'>3.02x</td></tr><tr><td class=nm>garage-door-installation_Sandbox_CF_before-after</td><td class=sub>Core</td><td>£19</td><td>2</td><td class='good'>1.51x</td><td class='good'>1.55x</td></tr><tr><td class=nm>imageonly_aistatic_affordable_GarageDoorInstallation_UK_111125_v1</td><td class=sub>Core</td><td>£342</td><td>25</td><td class='bad'>0.92x</td><td class='bad'>0.95x</td></tr><tr><td class=nm>52656086445868_Garage_Door_Installation_UK_London</td><td class=sub>London</td><td>£12</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>Fence and Gate ROAS130 <span class=meta>· ACTIVE · £12/d · £720 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1077_Fence_and_Gate_UK_L3Awareness_IMG</td><td>✓</td><td>£48</td><td>£112</td><td class='good'>2.31x</td><td class='good'>£64</td><td class='good'>1.59x</td><td class=k>0.69x</td></tr><tr><td class=nm>1077_Fence_and_Gate_UK_Core</td><td>✓</td><td>£612</td><td>£626</td><td class='good'>1.02x</td><td class='good'>£14</td><td class='good'>1.33x</td><td class=k>1.30x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>52656066057068_Fence_and_Gate_UK_L3Awareness_IMG</td><td class=sub>IMG</td><td>£55</td><td>5</td><td class='good'>1.59x</td><td class='good'>2.31x</td></tr><tr><td class=nm>1077_Fence_and_Gate_Installation_UK_fence-installation_cost2026_van</td><td class=sub>Core</td><td>£226</td><td>29</td><td class='good'>1.96x</td><td class='good'>1.50x</td></tr><tr><td class=nm>Basic Statics</td><td class=sub>Core</td><td>£349</td><td>23</td><td class='bad'>0.88x</td><td class='bad'>0.68x</td></tr><tr><td class=nm>FenceGateInstallation_V3</td><td class=sub>Core</td><td>£45</td><td>3</td><td class='bad'>0.88x</td><td class='bad'>0.67x</td></tr><tr><td class=nm>template44_static_price_fencegate_050126_uk_1</td><td class=sub>Core</td><td>£10</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>52656066485468_Fence_and_Gate_UK_L3Awareness_VID</td><td class=sub>VID</td><td>£16</td><td>1</td><td class='bad'>0.41x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>Gardening ROAS110 <span class=meta>· ACTIVE · £12/d · £657 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>179_Gardening_UK_Core</td><td>✓</td><td>£598</td><td>£1,020</td><td class='good'>1.71x</td><td class='good'>£422</td><td class='good'>1.85x</td><td class=k>1.08x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>Bark_UK_GardeningOption B_V1</td><td class=sub>Core</td><td>£11</td><td>3</td><td class='good'>2.63x</td><td class='good'>2.42x</td></tr><tr><td class=nm>Whiteboard</td><td class=sub>Core</td><td>£64</td><td>12</td><td class='good'>2.23x</td><td class='good'>2.06x</td></tr><tr><td class=nm>Basic Statics</td><td class=sub>Core</td><td>£93</td><td>17</td><td class='good'>2.22x</td><td class='good'>2.05x</td></tr><tr><td class=nm>template5_static_price_gardening_200525_uk_2</td><td class=sub>Core</td><td>£427</td><td>74</td><td class='good'>1.83x</td><td class='good'>1.69x</td></tr><tr><td class=nm>52656068116868_Gardening_UK_L3Awareness_IMG</td><td class=sub>IMG</td><td>£16</td><td>1</td><td class='bad'>0.90x</td><td class='good'>1.01x</td></tr><tr><td class=nm>template5_static_price_gardening_200525_uk_3</td><td class=sub>Core</td><td>£34</td><td>1</td><td class='bad'>0.34x</td><td class='bad'>0.31x</td></tr></table>
+        </div><div class=camp>
+          <h3>Electric Charge Points ROAS130 <span class=meta>· ACTIVE · £11/d · £620 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>2146_Electric_Charge_Points_UK_Core</td><td>✓</td><td>£584</td><td>£532</td><td class='bad'>0.91x</td><td class='bad'>-£52</td><td class='bad'>0.73x</td><td class=k>0.81x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>electric-charge-points-installation_Sandbox_CF_flatlay-quotes</td><td class=sub>Core</td><td>£16</td><td>1</td><td class='good'>1.31x</td><td class='good'>1.63x</td></tr><tr><td class=nm>electric-charge-points-installation_Sandbox_CF_aerial-pins</td><td class=sub>Core</td><td>£59</td><td>2</td><td class='bad'>0.87x</td><td class='good'>1.08x</td></tr><tr><td class=nm>H05_r1.32_imageonly_aistatic_finding_evcharge_UK_0311205_v1</td><td class=sub>Core</td><td>£468</td><td>27</td><td class='bad'>0.76x</td><td class='bad'>0.95x</td></tr><tr><td class=nm>H03_r1.38_EV_Template_Tesla_Model_3</td><td class=sub>Core</td><td>£32</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>52656064874468_Electric_Charge_Points_UK_L3Awareness</td><td class=sub>L3Awareness</td><td>£13</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr><tr><td class=nm>Electric Charge Points_SandboxWinnerBatch1</td><td class=sub>SandboxWinnerBatch1</td><td>£13</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>Bathroom Installation ROAS130 <span class=meta>· ACTIVE · £12/d · £604 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1138_Bathroom_Installation_UK_Core</td><td>✓</td><td>£514</td><td>£957</td><td class='good'>1.86x</td><td class='good'>£443</td><td class='good'>2.09x</td><td class=k>1.12x</td></tr><tr><td class=nm>1138_Bathroom_Installation_UK_L3Awareness_IMG</td><td>✓</td><td>£36</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£36</td><td class='bad'>0.00x</td><td class=na>n/a</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>bathroom_installation_renovation_furkhan-2-photo-tap-quiz_UK_Furkhan_7DGn</td><td class=sub>Core</td><td>£22</td><td>9</td><td class='good'>5.23x</td><td class='good'>4.67x</td></tr><tr><td class=nm>bathroom-installation_cost2026_newspaper</td><td class=sub>Core</td><td>£239</td><td>48</td><td class='good'>2.32x</td><td class='good'>2.07x</td></tr><tr><td class=nm>Bathroom_WB_V1_Installation</td><td class=sub>Core</td><td>£286</td><td>35</td><td class='good'>1.65x</td><td class='good'>1.48x</td></tr><tr><td class=nm>52656062582868_Bathroom_Installation_UK_L3Awareness_IMG</td><td class=sub>IMG</td><td>£39</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>Painting and Decoration ROAS130 <span class=meta>· ACTIVE · £8/d · £413 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>42_Painting_and_Decoration_UK_Core</td><td>✓</td><td>£379</td><td>£408</td><td class='good'>1.07x</td><td class='good'>£28</td><td class='good'>1.23x</td><td class=k>1.15x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>painting_decoration_variant_1</td><td class=sub>Core</td><td>£36</td><td>8</td><td class='good'>3.56x</td><td class='good'>3.10x</td></tr><tr><td class=nm>imageonly_aistatic_questionfinding_Painting_UK_0311205_V1</td><td class=sub>Core</td><td>£352</td><td>23</td><td class='good'>1.04x</td><td class='bad'>0.90x</td></tr></table>
+        </div><div class=camp>
+          <h3>Garden Clearance ROAS130 <span class=meta>· ACTIVE · £8/d · £410 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1956_Garden_Clearance_UK_Core</td><td>✓</td><td>£366</td><td>£496</td><td class='good'>1.35x</td><td class='good'>£130</td><td class='good'>1.59x</td><td class=k>1.18x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>Basic Statics Phone</td><td class=sub>Core</td><td>£382</td><td>79</td><td class='good'>1.61x</td><td class='good'>1.37x</td></tr><tr><td class=nm>52656086539668_Garden_Clearance_UK_London</td><td class=sub>London</td><td>£12</td><td>1</td><td class='bad'>0.48x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>52656067721068_Garden_Clearance_UK_L3Awareness</td><td class=sub>L3Awareness</td><td>£13</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>Driveway Installation ROAS130 <span class=meta>· ACTIVE · £8/d · £409 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1069_Driveway_Installation_UK_Core</td><td>✓</td><td>£335</td><td>£365</td><td class='good'>1.09x</td><td class='good'>£30</td><td class='good'>1.33x</td><td class=k>1.22x</td></tr><tr><td class=nm>1069_Driveway_Installation_UK_L3Awareness_VID</td><td>✓</td><td>£31</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£31</td><td class='bad'>0.91x</td><td class=na>n/a</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>driveway_installation_C_wb07_team_UK_B2_pKfv</td><td class=sub>Core</td><td>£13</td><td>3</td><td class='good'>4.47x</td><td class='good'>3.65x</td></tr><tr><td class=nm>1069_Driveway_Installation_UK_driveway-installation-maintenance_cost2026_van</td><td class=sub>Core</td><td>£288</td><td>22</td><td class='good'>1.30x</td><td class='good'>1.06x</td></tr><tr><td class=nm>1069_Driveway_Installation_UK_Video_1</td><td class=sub>Core</td><td>£24</td><td>3</td><td class='good'>1.23x</td><td class='good'>1.01x</td></tr><tr><td class=nm>1069_Driveway_Installation_UK_driveway-installation-maintenance_cost2026_object</td><td class=sub>Core</td><td>£13</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>52656064173068_Driveway_Installation_UK_L3Awareness_IMG</td><td class=sub>IMG</td><td>£18</td><td>1</td><td class='bad'>0.62x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>52656064541068_Driveway_Installation_UK_L3Awareness_VID</td><td class=sub>VID</td><td>£41</td><td>1</td><td class='bad'>0.91x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>Tree Surgery ROAS110 <span class=meta>· ACTIVE · £8/d · £405 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1261_Tree_Surgery_UK_Core</td><td>✓</td><td>£298</td><td>£303</td><td class='good'>1.01x</td><td class='good'>£4</td><td class='good'>1.44x</td><td class=k>1.41x</td></tr><tr><td class=nm>1261_Tree_Surgery_UK_L3Awareness_IMG</td><td>✓</td><td>£33</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£33</td><td class='bad'>0.00x</td><td class=na>n/a</td></tr><tr><td class=nm>1261_Tree_Surgery_UK_London</td><td>✓</td><td>£47</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£47</td><td class='bad'>0.37x</td><td class=na>n/a</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>template44_static_price_treesurgery_051225_uk_1</td><td class=sub>Core</td><td>£20</td><td>3</td><td class='good'>4.42x</td><td class='good'>3.12x</td></tr><tr><td class=nm>imageonly_aistatic_affordable_TreeSurgery_UK_051225_v4</td><td class=sub>Core</td><td>£42</td><td>7</td><td class='good'>3.43x</td><td class='good'>2.43x</td></tr><tr><td class=nm>imageonly_aistatic_affordable_TreeSurgery_UK_051225_v1</td><td class=sub>Core</td><td>£243</td><td>11</td><td class='bad'>0.85x</td><td class='bad'>0.60x</td></tr><tr><td class=nm>52656087383068_Tree_Surgery_UK_London</td><td class=sub>London</td><td>£57</td><td>1</td><td class='bad'>0.37x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>52656073301268_Tree_Surgery_UK_L3Awareness_IMG</td><td class=sub>IMG</td><td>£38</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>End of Tenancy Cleaning ROAS110 <span class=meta>· ACTIVE · £5/d · £375 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1949_End_of_Tenancy_Cleaning_UK_Core</td><td>✓</td><td>£342</td><td>£421</td><td class='good'>1.23x</td><td class='good'>£80</td><td class='good'>1.20x</td><td class=k>0.97x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>EndOfTenancyCleaning_V2</td><td class=sub>Core</td><td>£315</td><td>40</td><td class='good'>1.25x</td><td class='good'>1.28x</td></tr><tr><td class=nm>1949_End_of_Tenancy_Cleaning_UK_CF_before-after</td><td class=sub>Core</td><td>£29</td><td>3</td><td class='good'>1.06x</td><td class='good'>1.10x</td></tr><tr><td class=nm>52656065296268_End_of_Tenancy_Cleaning_UK_L3Awareness_IMG</td><td class=sub>IMG</td><td>£16</td><td>2</td><td class='bad'>0.85x</td><td class='bad'>0.62x</td></tr></table>
+        </div><div class=camp>
+          <h3>Patio Services ROAS150 <span class=meta>· ACTIVE · £8/d · £355 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1102_Patio_Services_UK_L3Awareness_IMG</td><td>✓</td><td>£25</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£25</td><td class='good'>1.09x</td><td class=na>n/a</td></tr><tr><td class=nm>1102_Patio_Services_UK_L3Awareness_VID</td><td>✓</td><td>£48</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£48</td><td class='good'>1.76x</td><td class=na>n/a</td></tr><tr><td class=nm>1102_Patio_Services_UK_Core</td><td>✓</td><td>£250</td><td>£152</td><td class='bad'>0.61x</td><td class='bad'>-£98</td><td class='good'>1.07x</td><td class=k>1.76x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>1102_patio_UK_PROMOTED</td><td class=sub>Core</td><td>£27</td><td>5</td><td class='good'>2.44x</td><td class='good'>1.39x</td></tr><tr><td class=nm>patio-services_Sandbox_CF_before-after</td><td class=sub>Core</td><td>£76</td><td>10</td><td class='good'>1.38x</td><td class='bad'>0.79x</td></tr><tr><td class=nm>patio_services_A01_lifestyle_puro_UK_B2_ovNH</td><td class=sub>Core</td><td>£20</td><td>3</td><td class='good'>1.34x</td><td class='bad'>0.76x</td></tr><tr><td class=nm>patio-services_Sandbox_Raam_Avatar_V1</td><td class=sub>Core</td><td>£59</td><td>3</td><td class='bad'>0.49x</td><td class='bad'>0.28x</td></tr><tr><td class=nm>imageonly_aistatic_local_PatioServices_UK_0212205_v3</td><td class=sub>Core</td><td>£25</td><td>2</td><td class='bad'>0.42x</td><td class='bad'>0.24x</td></tr><tr><td class=nm>1102_Patio_Services_UK_Raam_Avatar_V1</td><td class=sub>Core</td><td>£28</td><td>1</td><td class='bad'>0.26x</td><td class='bad'>0.15x</td></tr></table>
+        </div><div class=camp>
+          <h3>Home Domiciliary Care ROAS130 <span class=meta>· ACTIVE · £8/d · £323 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1670_Home_Domiciliary_Care_UK_Core</td><td>✓</td><td>£247</td><td>£294</td><td class='good'>1.19x</td><td class='good'>£47</td><td class='good'>1.37x</td><td class=k>1.15x</td></tr><tr><td class=nm>1670_Home_Domiciliary_Care_UK_L3Awareness_VID</td><td>✓</td><td>£40</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£40</td><td class='bad'>0.00x</td><td class=na>n/a</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>52656086715268_Home_Domiciliary_Care_UK_London</td><td class=sub>London</td><td>£13</td><td>2</td><td class='good'>4.57x</td><td class='good'>4.67x</td></tr><tr><td class=nm>template5_static_price_homeandd_300525_uk</td><td class=sub>Core</td><td>£32</td><td>3</td><td class='good'>2.05x</td><td class='good'>1.78x</td></tr><tr><td class=nm>1670_Home_and_Domiciliary_Care_UK_home-domiciliary-care_cost2026_newspaper</td><td class=sub>Core</td><td>£216</td><td>11</td><td class='good'>1.19x</td><td class='good'>1.03x</td></tr><tr><td class=nm>Home Care_SandboxWinnerBatch1</td><td class=sub>SandboxWinnerBatch1</td><td>£11</td><td>1</td><td class='bad'>0.81x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>52656069086668_Home_Domiciliary_Care_UK_L3Awareness_VID</td><td class=sub>VID</td><td>£42</td><td>1</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>Artificial Grass ROAS130 <span class=meta>· ACTIVE · £5/d · £311 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1247_Artificial_Grass_UK_Core</td><td>✓</td><td>£255</td><td>£250</td><td class='bad'>0.98x</td><td class='bad'>-£5</td><td class='good'>1.13x</td><td class=k>1.15x</td></tr><tr><td class=nm>1247_Artificial_Grass_UK_L3Awareness_IMG</td><td>✓</td><td>£40</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£40</td><td class='bad'>0.00x</td><td class=na>n/a</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>1247_Artificial_Grass_Installation_UK_artificial-grass-installation_cost2026_van</td><td class=sub>Core</td><td>£163</td><td>18</td><td class='good'>1.11x</td><td class='bad'>0.96x</td></tr><tr><td class=nm>1247_Artificial_Grass_Installation_UK_Raam_Avatar_V1</td><td class=sub>Core</td><td>£38</td><td>3</td><td class='good'>1.07x</td><td class='bad'>0.93x</td></tr><tr><td class=nm>imageonly_aistatic_affordable_ArtificialGrass_UK_041125_v2</td><td class=sub>Core</td><td>£25</td><td>2</td><td class='bad'>0.79x</td><td class='bad'>0.69x</td></tr><tr><td class=nm>Artificial Grass Installation - Static</td><td class=sub>Core</td><td>£13</td><td>1</td><td class='bad'>0.77x</td><td class='bad'>0.67x</td></tr><tr><td class=nm>52656061809068_Artificial_Grass_UK_L3Awareness_IMG</td><td class=sub>IMG</td><td>£53</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>Kitchen Installation ROAS110 v2 <span class=meta>· PAUSED · £4/d · £232 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1148_Kitchen_Installation_UK_Core</td><td>✓</td><td>£232</td><td>£187</td><td class='bad'>0.81x</td><td class='bad'>-£45</td><td class='bad'>0.96x</td><td class=k>1.18x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>KitchenInstallation_V3_Updated</td><td class=sub>Core</td><td>£178</td><td>18</td><td class='good'>1.25x</td><td class='good'>1.05x</td></tr><tr><td class=nm>KitchenInstallation_V3_Updated</td><td class=sub>Core</td><td>£50</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>House Clearance ROAS100 v2 <span class=meta>· PAUSED · £3/d · £224 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>2047_House_Clearance_UK_Core</td><td>✓</td><td>£217</td><td>£198</td><td class='bad'>0.92x</td><td class='bad'>-£18</td><td class='good'>1.02x</td><td class=k>1.11x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>template5_static_price_houseclearance_050126_uk_1</td><td class=sub>Core</td><td>£217</td><td>31</td><td class='good'>1.02x</td><td class='bad'>0.92x</td></tr></table>
+        </div><div class=camp>
+          <h3>Conservatory Installation ROAS130 <span class=meta>· PAUSED · £10/d · £215 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1757_Conservatory_Installation_UK_Core</td><td>✓</td><td>£189</td><td>£174</td><td class='bad'>0.92x</td><td class='bad'>-£15</td><td class='good'>1.24x</td><td class=k>1.35x</td></tr><tr><td class=nm>1757_Conservatory_Installation_UK_London</td><td>✓</td><td>£26</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£26</td><td class='bad'>0.00x</td><td class=na>n/a</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>Price Update Variant A</td><td class=sub>Core</td><td>£21</td><td>4</td><td class='good'>3.97x</td><td class='good'>2.95x</td></tr><tr><td class=nm>imageonly_aistatic_localqualified_conservatory_UK_0311205_v3</td><td class=sub>Core</td><td>£20</td><td>4</td><td class='good'>2.83x</td><td class='good'>2.10x</td></tr><tr><td class=nm>imageonly_aistatic_localqualified_conservatory_UK_0311205_v1</td><td class=sub>Core</td><td>£87</td><td>5</td><td class='bad'>0.90x</td><td class='bad'>0.67x</td></tr><tr><td class=nm>Ad 1 Variant A</td><td class=sub>Core</td><td>£61</td><td>1</td><td class='bad'>0.24x</td><td class='bad'>0.18x</td></tr><tr><td class=nm>52656086161068_Conservatory_Installation_UK_London</td><td class=sub>London</td><td>£26</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>Pressure Washing ROAS130 <span class=meta>· ACTIVE · £9/d · £183 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1105_Pressure_Washing_UK_Core</td><td>✓</td><td>£140</td><td>£32</td><td class='bad'>0.23x</td><td class='bad'>-£108</td><td class='good'>1.12x</td><td class=k>4.91x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>52656072817068_Pressure_Washing_UK_L3Awareness_IMG</td><td class=sub>IMG</td><td>£18</td><td>2</td><td class='good'>1.59x</td><td class='good'>2.40x</td></tr><tr><td class=nm>Basic Statics Phone</td><td class=sub>Core</td><td>£126</td><td>8</td><td class='good'>1.06x</td><td class='bad'>0.22x</td></tr><tr><td class=nm>Pressure Washing_SandboxWinnerBatch1</td><td class=sub>SandboxWinnerBatch1</td><td>£12</td><td>4</td><td class='good'>3.77x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>Brick Block Paving ROAS130 <span class=meta>· ACTIVE · £5/d · £146 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1929_Brick_Block_Paving_UK_Core</td><td>✓</td><td>£132</td><td>£20</td><td class='bad'>0.15x</td><td class='bad'>-£111</td><td class='bad'>0.58x</td><td class=k>3.79x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>BrickBlockPaving_V2</td><td class=sub>Core</td><td>£118</td><td>6</td><td class='bad'>0.51x</td><td class='bad'>0.14x</td></tr><tr><td class=nm>Brick &amp; Block Paving_SandboxWinnerBatch1</td><td class=sub>SandboxWinnerBatch1</td><td>£11</td><td>1</td><td class='good'>1.74x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>Wedding Photography ROAS110 <span class=meta>· PAUSED · £1/d · £139 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1056_Wedding_Photography_UK_Core</td><td>✓</td><td>£139</td><td>£59</td><td class='bad'>0.42x</td><td class='bad'>-£80</td><td class='bad'>0.25x</td><td class=k>0.59x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>Gemini_Generated_Image_2if04x2if04x2if0</td><td class=sub>Core</td><td>£92</td><td>2</td><td class='bad'>0.38x</td><td class='bad'>0.64x</td></tr><tr><td class=nm>1056_Wedding_Photography_UK_CF_flatlay-quotes</td><td class=sub>Core</td><td>£25</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>CCTV Installation ROAS130 <span class=meta>· PAUSED · £1/d · £120 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1785_CCTV_Installation_UK_Core</td><td>✓</td><td>£120</td><td>£94</td><td class='bad'>0.78x</td><td class='bad'>-£26</td><td class='bad'>0.50x</td><td class=k>0.64x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>H01_r1.48_Basic Statics Phone</td><td class=sub>Core</td><td>£102</td><td>7</td><td class='bad'>0.59x</td><td class='bad'>0.92x</td></tr><tr><td class=nm>Whiteboard</td><td class=sub>Core</td><td>£14</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>Air Conditioning ROAS110 <span class=meta>· PAUSED · £50/d · £35 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1177_Air_Conditioning_Installation_UK_Core</td><td>✓</td><td>£35</td><td>£24</td><td class='bad'>0.68x</td><td class='bad'>-£11</td><td class='bad'>0.35x</td><td class=k>0.51x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in £.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>air-conditioning-installation_wb01_UK_Whiteboard_e6g8</td><td class=sub>Core</td><td>£25</td><td>1</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr></table>
+        </div><h2>US <span class=meta>· 15 CBOs with spend · median Meta overstatement 0.96x vs Tableau (n=13 verified adsets)</span></h2><div class=camp>
+          <h3>Dog Training ROAS130 <span class=meta>· ACTIVE · $32/d · $3,309 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1556_Dog_Training_US_Core</td><td>✓</td><td>£2,459</td><td>£4,092</td><td class='good'>1.66x</td><td class='good'>£1,633</td><td class='good'>1.55x</td><td class=k>0.93x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>template12_static_price_dogtraining_020724_us_v1</td><td class=sub>Core</td><td>$27</td><td>7</td><td class='good'>2.98x</td><td class='good'>3.20x</td></tr><tr><td class=nm>Dog_Training_Template_1_Need_A_Hand</td><td class=sub>Core</td><td>$3,109</td><td>481</td><td class='good'>1.58x</td><td class='good'>1.70x</td></tr><tr><td class=nm>DogTraining_US_V7_Down_Clean</td><td class=sub>Core</td><td>$82</td><td>5</td><td class='bad'>0.88x</td><td class='bad'>0.94x</td></tr><tr><td class=nm>whiteboard_static_price_dogtraining_170825_us_v4</td><td class=sub>Core</td><td>$62</td><td>5</td><td class='bad'>0.70x</td><td class='bad'>0.75x</td></tr><tr><td class=nm>US Dog Training - Puppy _75 _1NA6</td><td class=sub>Core</td><td>$21</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>Limousine Hire ROAS130 <span class=meta>· ACTIVE · $32/d · $1,496 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1638_Limousine_Hire_US_Core</td><td>✓</td><td>£1,085</td><td>£2,284</td><td class='good'>2.11x</td><td class='good'>£1,199</td><td class='good'>1.89x</td><td class=k>0.90x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>Limousine Hire POV V1</td><td class=sub>Core</td><td>$427</td><td>106</td><td class='good'>2.69x</td><td class='good'>3.01x</td></tr><tr><td class=nm>Limousine Hire POV V1</td><td class=sub>Core</td><td>$1,065</td><td>169</td><td class='good'>1.56x</td><td class='good'>1.75x</td></tr></table>
+        </div><div class=camp>
+          <h3>Personal Trainers ROAS120 <span class=meta>· ACTIVE · $24/d · $1,165 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>74_Personal_Trainers_US_Core</td><td>✓</td><td>£844</td><td>£1,179</td><td class='good'>1.40x</td><td class='good'>£335</td><td class='good'>1.33x</td><td class=k>0.96x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>Personal_Trainers_Template_1_Need_A_Hand</td><td class=sub>Core</td><td>$721</td><td>89</td><td class='good'>1.71x</td><td class='good'>1.79x</td></tr><tr><td class=nm>H06_r0.76_Personal Trainer Ad</td><td class=sub>Core</td><td>$120</td><td>10</td><td class='good'>1.24x</td><td class='good'>1.30x</td></tr><tr><td class=nm>H01_r1.29_PT Price (2)</td><td class=sub>Core</td><td>$296</td><td>10</td><td class='bad'>0.56x</td><td class='bad'>0.59x</td></tr><tr><td class=nm>H02_r0.97_personal_trainers_A01_lifestyle_puro_US_</td><td class=sub>Core</td><td>$17</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>Private Investigators ROAS120 <span class=meta>· ACTIVE · $8/d · $950 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1548_Private_Investigators_US_Core</td><td>✓</td><td>£707</td><td>£827</td><td class='good'>1.17x</td><td class='good'>£121</td><td class='bad'>0.95x</td><td class=k>0.81x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>H03_r0.99_Private Investigator POV V1</td><td class=sub>Core</td><td>$865</td><td>68</td><td class='good'>1.02x</td><td class='good'>1.26x</td></tr><tr><td class=nm>template5_static_question_privateinvestigator_300525_us_v1</td><td class=sub>Core</td><td>$74</td><td>1</td><td class='bad'>0.26x</td><td class='bad'>0.31x</td></tr></table>
+        </div><div class=camp>
+          <h3>Wedding Photography ROAS130 <span class=meta>· ACTIVE · $16/d · $673 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1056_Wedding_Photography_US_Core</td><td>✓</td><td>£474</td><td>£851</td><td class='good'>1.79x</td><td class='good'>£377</td><td class='good'>1.65x</td><td class=k>0.92x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>template4_static_price_weddingphoto_210725_us_1</td><td class=sub>Core</td><td>$632</td><td>55</td><td class='good'>1.72x</td><td class='good'>1.87x</td></tr><tr><td class=nm>Wedding Photography Updated</td><td class=sub>Core</td><td>$19</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>120247270780720177_Wedding_Photography_US_L3Awareness_IMG</td><td class=sub>IMG</td><td>$14</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>House Cleaning ROAS140 <span class=meta>· ACTIVE · $16/d · $671 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1212_House_Cleaning_US_Core</td><td>✓</td><td>£465</td><td>£1,015</td><td class='good'>2.18x</td><td class='good'>£550</td><td class='good'>2.10x</td><td class=k>0.96x</td></tr><tr><td class=nm>1212_House_Cleaning_US_L3Awareness_IMG</td><td>✓</td><td>£15</td><td>£17</td><td class='good'>1.09x</td><td class='good'>£1</td><td class='good'>1.20x</td><td class=k>1.10x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>House Cleaning V7 - Messy Kitchen</td><td class=sub>Core</td><td>$44</td><td>8</td><td class='good'>2.20x</td><td class='good'>2.29x</td></tr><tr><td class=nm>louisevid_spinclips_price_cleaning_111125_us_2</td><td class=sub>Core</td><td>$579</td><td>111</td><td class='good'>2.15x</td><td class='good'>2.23x</td></tr><tr><td class=nm>120247270535830177_House_Cleaning_US_L3Awareness_IMG</td><td class=sub>IMG</td><td>$28</td><td>3</td><td class='good'>1.20x</td><td class='good'>1.09x</td></tr><tr><td class=nm>DCO_CBO_Video_House_Cleaning</td><td class=sub>Core</td><td>$14</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>DJ ROAS130 <span class=meta>· ACTIVE · $16/d · $486 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1018_DJ_US_Core</td><td>✓</td><td>£276</td><td>£303</td><td class='good'>1.10x</td><td class='good'>£27</td><td class='good'>1.29x</td><td class=k>1.18x</td></tr><tr><td class=nm>1018_DJ_US_L3Awareness_IMG</td><td>✓</td><td>£64</td><td>£87</td><td class='good'>1.37x</td><td class='good'>£23</td><td class='good'>1.47x</td><td class=k>1.07x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>120247270487810177_DJ_US_L3Awareness_IMG</td><td class=sub>IMG</td><td>$92</td><td>7</td><td class='good'>1.47x</td><td class='good'>1.37x</td></tr><tr><td class=nm>DJ Services POV V1</td><td class=sub>Core</td><td>$362</td><td>30</td><td class='good'>1.38x</td><td class='good'>1.17x</td></tr><tr><td class=nm>sanchez_ugc_pov_dj_110725_us</td><td class=sub>Core</td><td>$18</td><td>0</td><td class='bad'>0.00x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>Photo Booth Hire ROAS130 <span class=meta>· ACTIVE · $13/d · $409 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>995_Photo_Booth_Hire_US_Core</td><td>✓</td><td>£277</td><td>£373</td><td class='good'>1.35x</td><td class='good'>£96</td><td class='good'>1.08x</td><td class=k>0.80x</td></tr><tr><td class=nm>995_Photo_Booth_Hire_US_L3Awareness_IMG</td><td>✓</td><td>£14</td><td>£6</td><td class='bad'>0.45x</td><td class='bad'>-£8</td><td class='good'>1.37x</td><td class=k>3.07x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>Photo Booth Hire V7 - Wedding Reception</td><td class=sub>Core</td><td>$367</td><td>27</td><td class='good'>1.02x</td><td class='good'>1.28x</td></tr><tr><td class=nm>120247270646280177_Photo_Booth_Hire_US_L3Awareness_IMG</td><td class=sub>IMG</td><td>$21</td><td>2</td><td class='good'>1.37x</td><td class='bad'>0.45x</td></tr></table>
+        </div><div class=camp>
+          <h3>Architectural Services ROAS130 <span class=meta>· ACTIVE · $16/d · $363 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>37_Architectural_Services_US_Core</td><td>✓</td><td>£251</td><td>£637</td><td class='good'>2.54x</td><td class='good'>£386</td><td class='good'>2.50x</td><td class=k>0.99x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>H01_r1.20_Bark_US_ArchitectServices_Feb26_ScriptOption A_V1</td><td class=sub>Core</td><td>$10</td><td>1</td><td class='good'>4.57x</td><td class='good'>4.63x</td></tr><tr><td class=nm>Benvid_postit_Price_Architects_041125_US_v1</td><td class=sub>Core</td><td>$334</td><td>18</td><td class='good'>2.30x</td><td class='good'>2.33x</td></tr></table>
+        </div><div class=camp>
+          <h3>Catering ROAS130 <span class=meta>· ACTIVE · $8/d · $334 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>171_Catering_US_L3Awareness_IMG</td><td>✓</td><td>£37</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£37</td><td class='bad'>0.15x</td><td class=na>n/a</td></tr><tr><td class=nm>171_Catering_US_Core</td><td>✓</td><td>£202</td><td>£51</td><td class='bad'>0.25x</td><td class='bad'>-£152</td><td class='bad'>0.76x</td><td class=k>3.04x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>Catering POV V1</td><td class=sub>Core</td><td>$262</td><td>11</td><td class='bad'>0.79x</td><td class='bad'>0.26x</td></tr><tr><td class=nm>120247270462080177_Catering_US_L3Awareness_IMG</td><td class=sub>IMG</td><td>$59</td><td>1</td><td class='bad'>0.15x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>Immigration Lawyers ROAS130 <span class=meta>· ACTIVE · $8/d · $309 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1521_Immigration_Lawyers_US_Core</td><td>✓</td><td>£218</td><td>£461</td><td class='good'>2.12x</td><td class='good'>£243</td><td class='good'>2.13x</td><td class=k>1.00x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>template1_static_topfeed_immigrationlaw_190925_us_v2</td><td class=sub>Core</td><td>$296</td><td>42</td><td class='good'>2.18x</td><td class='good'>2.17x</td></tr></table>
+        </div><div class=camp>
+          <h3>Residential Interior Designers ROAS120 <span class=meta>· ACTIVE · $8/d · $275 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>387_Residential_Interior_Designers_US_Core</td><td>✓</td><td>£187</td><td>£443</td><td class='good'>2.37x</td><td class='good'>£256</td><td class='good'>2.03x</td><td class=k>0.86x</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>H02_r1.05_interior_design_C_wb01_park_US_B1</td><td class=sub>Core</td><td>$239</td><td>18</td><td class='good'>2.02x</td><td class='good'>2.36x</td></tr><tr><td class=nm>120247270703950177_Residential_Interior_Designers_US_L3Awareness</td><td class=sub>L3Awareness</td><td>$14</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>Security Guard Services ROAS150 <span class=meta>· ACTIVE · $4/d · $135 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>152_Security_Guard_Services_US_L3Awareness_IMG</td><td>✓</td><td>£19</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£19</td><td class='bad'>0.00x</td><td class=na>n/a</td></tr><tr><td class=nm>152_Security_Guard_Services_US_Core</td><td>✓</td><td>£74</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£74</td><td class='bad'>0.48x</td><td class=na>n/a</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>H04_r0.52_template44_static_Price_Security Guard S</td><td class=sub>Core</td><td>$92</td><td>2</td><td class='bad'>0.51x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>120247270715150177_Security_Guard_Services_US_L3Awareness_IMG</td><td class=sub>IMG</td><td>$31</td><td>0</td><td class='bad'>0.00x</td><td class='na'>–</td></tr></table>
+        </div><div class=camp>
+          <h3>Web Design ROAS120 <span class=meta>· ACTIVE · $11/d · $89 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1505_Web_Design_US_L3Awareness_VID</td><td>✓</td><td>£38</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£38</td><td class='bad'>0.41x</td><td class=na>n/a</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>120247270751800177_Web_Design_US_L3Awareness_IMG</td><td class=sub>IMG</td><td>$17</td><td>1</td><td class='bad'>0.85x</td><td class='bad'>0.00x</td></tr><tr><td class=nm>120247270769200177_Web_Design_US_L3Awareness_VID</td><td class=sub>VID</td><td>$60</td><td>2</td><td class='bad'>0.41x</td><td class='bad'>0.00x</td></tr></table>
+        </div><div class=camp>
+          <h3>TV Installation ROAS110 v2 <span class=meta>· ACTIVE · $8/d · $59 Meta spend (28d)</span></h3>
+          <div class=lbl>ADSETS — ranked by Tableau APR (£, source of truth). Meta/Tab = how much Meta ROAS overstates (&gt;1 = hot).</div>
+          <table><tr><th>Adset</th><th>Verified</th><th>Spend</th><th>Revenue £</th><th>ROAS</th><th>APR £</th><th>Meta ROAS</th><th>Meta/Tab</th></tr>
+          <tr><td class=nm>1234_TV_Installation_US_CF_DC</td><td>✓</td><td>£34</td><td>£0</td><td class='bad'>0.00x</td><td class='bad'>-£34</td><td class='bad'>0.32x</td><td class=na>n/a</td></tr></table>
+          <div class=lbl>TOP ADS — ranked by RECONCILED ROAS (Meta ad ROAS × adset calibration; FX-safe ratio). Spend in $.</div>
+          <table><tr><th>Ad</th><th>Adset</th><th>Spend</th><th>Purch</th><th>Meta ROAS</th><th>Recon ROAS</th></tr>
+          <tr><td class=nm>tv-mounting-installation_US_CF_DC</td><td class=sub>DC</td><td>$59</td><td>1</td><td class='bad'>0.32x</td><td class='bad'>0.00x</td></tr></table>
+        </div>
