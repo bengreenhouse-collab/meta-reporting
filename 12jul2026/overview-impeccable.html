@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meta Performance — Overview · w/e 12 Jul 2026</title>
+<style>
+:root{
+  --bg:oklch(0.985 0.004 255); --panel:oklch(0.998 0.002 255);
+  --ink:oklch(0.24 0.02 262); --ink-2:oklch(0.42 0.018 262); --muted:oklch(0.505 0.014 262);
+  --line:oklch(0.912 0.006 262); --line-2:oklch(0.86 0.008 262);
+  --accent:oklch(0.47 0.10 264); --accent-soft:oklch(0.945 0.028 264);
+  --pos:oklch(0.47 0.12 162); --pos-soft:oklch(0.93 0.045 162);
+  --neg:oklch(0.50 0.18 25);  --neg-soft:oklch(0.93 0.06 25);
+  --warn:oklch(0.55 0.11 66);
+  --rev:oklch(0.52 0.10 192);  --rev-fill:oklch(0.86 0.05 192);
+  --spend:oklch(0.47 0.10 264);
+  --radius:10px; --maxw:1080px;
+  --z-sticky:100; --z-tooltip:400;
+  --font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:oklch(0.19 0.02 262); --panel:oklch(0.225 0.021 262);
+  --ink:oklch(0.96 0.006 262); --ink-2:oklch(0.80 0.01 262); --muted:oklch(0.66 0.013 262);
+  --line:oklch(0.32 0.015 262); --line-2:oklch(0.40 0.018 262);
+  --accent:oklch(0.78 0.10 264); --accent-soft:oklch(0.34 0.05 264);
+  --pos:oklch(0.78 0.14 162); --pos-soft:oklch(0.34 0.06 162);
+  --neg:oklch(0.72 0.16 25);  --neg-soft:oklch(0.36 0.08 25);
+  --warn:oklch(0.80 0.12 78);
+  --rev:oklch(0.74 0.11 192); --rev-fill:oklch(0.40 0.06 192);
+  --spend:oklch(0.74 0.11 264);
+}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1,"cv01" 1}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 28px 72px}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* header */
+header{margin-bottom:34px}
+.eyebrow{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.01em}
+h1{font-size:26px;font-weight:660;letter-spacing:-0.02em;line-height:1.15;margin:6px 0 12px;text-wrap:balance}
+.scope{display:flex;flex-wrap:wrap;gap:8px 8px;align-items:center}
+.chip{font-size:12px;color:var(--ink-2);background:var(--panel);border:1px solid var(--line);
+  border-radius:999px;padding:3px 11px;display:inline-flex;gap:6px;align-items:center}
+.chip b{color:var(--ink);font-weight:620}
+.chip .dot{width:6px;height:6px;border-radius:50%}
+
+/* KPI band */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);overflow:hidden;margin-bottom:40px}
+.kpi{padding:20px 22px;border-left:1px solid var(--line)}
+.kpi:first-child{border-left:none}
+.kpi .k-lbl{font-size:12px;color:var(--muted);font-weight:550;margin-bottom:9px}
+.kpi .k-val{font-size:33px;font-weight:670;letter-spacing:-0.025em;line-height:1;color:var(--ink)}
+.kpi.hero .k-val{color:var(--pos)}
+.kpi.hero.negv .k-val{color:var(--neg)}
+.k-wow{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:560;margin-top:11px}
+.k-wow.up{color:var(--pos)} .k-wow.down{color:var(--neg)} .k-wow.flat{color:var(--muted)}
+.k-wow .arw{font-size:11px}
+.k-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+/* section */
+section{margin-bottom:46px}
+.s-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:16px;
+  padding-bottom:10px;border-bottom:1px solid var(--line)}
+h2{font-size:16px;font-weight:640;letter-spacing:-0.01em;color:var(--ink)}
+.s-sub{font-size:12.5px;color:var(--muted)}
+
+/* trend chart */
+.chart-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px 14px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:6px;font-size:12.5px;color:var(--ink-2)}
+.legend i{display:inline-block;vertical-align:middle;margin-right:7px;border-radius:2px}
+.legend .sw-rev{background:var(--rev-fill);height:10px;width:16px}
+.legend .sw-spend{background:var(--spend);height:3px;width:22px}
+.legend .sw-apr{background:var(--pos-soft);height:11px;width:16px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.gridline{stroke:var(--line);stroke-width:1}
+.axis-lbl{fill:var(--muted);font-size:10.5px;font-family:var(--font)}
+.wk-lbl{fill:var(--ink-2);font-size:11px;font-family:var(--font);text-anchor:middle}
+.dot-rev{fill:var(--rev)} .dot-spend{fill:var(--spend)}
+.roas-strip{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:16px;padding-top:16px;border-top:1px dashed var(--line)}
+.roas-cell{text-align:center}
+.roas-bar-track{height:44px;display:flex;align-items:flex-end;justify-content:center}
+.roas-bar{width:60%;border-radius:3px 3px 0 0;background:var(--pos);transform-origin:bottom;position:relative}
+.roas-bar.low{background:var(--warn)} .roas-bar.bad{background:var(--neg)}
+.roas-val{font-size:11.5px;font-weight:600;margin-top:5px;color:var(--ink-2)}
+.roas-wk{font-size:10px;color:var(--muted);margin-top:1px}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl thead th{font-size:11px;font-weight:600;color:var(--muted);text-align:right;padding:0 12px 9px;
+  border-bottom:1px solid var(--line-2);white-space:nowrap}
+.tbl thead th:first-child{text-align:left}
+.tbl tbody td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:right}
+.tbl tbody td:first-child{text-align:left;font-weight:560;color:var(--ink)}
+.tbl tbody tr:hover{background:color-mix(in oklch,var(--accent-soft) 45%,transparent)}
+.tbl tbody tr:last-child td{border-bottom:none}
+.mkt{display:inline-flex;align-items:center;gap:9px}
+.mkt .fl{font-size:15px;line-height:1}
+.val-strong{font-weight:600;color:var(--ink)}
+.money-rev{color:var(--rev);font-weight:560}
+.money-spend{color:var(--ink-2)}
+.wow{font-size:11.5px;font-weight:560;margin-left:7px}
+.wow.up{color:var(--pos)} .wow.down{color:var(--neg)} .wow.flat{color:var(--muted)}
+.roas-tag{display:inline-block;font-weight:600}
+.roas-tag.good{color:var(--pos)} .roas-tag.mid{color:var(--warn)} .roas-tag.bad{color:var(--neg)}
+tr.combined td{border-top:2px solid var(--line-2);border-bottom:none;font-weight:680;padding-top:13px}
+tr.combined td:first-child{color:var(--accent)}
+
+/* category leaderboard */
+.lead{display:flex;flex-direction:column;gap:2px}
+.lrow{display:grid;grid-template-columns:26px 1fr 128px 96px 70px;align-items:center;gap:14px;
+  padding:9px 4px;border-bottom:1px solid var(--line)}
+.lrow:last-child{border-bottom:none}
+.lrk{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.lcat{min-width:0}
+.lcat .cn{font-weight:560;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lcat .cm{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-top:1px}
+.lbar-wrap{height:10px;background:var(--accent-soft);border-radius:999px;overflow:hidden}
+.lbar{height:100%;background:var(--accent);border-radius:999px;transform-origin:left}
+.lapr{text-align:right;font-weight:620;color:var(--pos);font-size:14px}
+.lspk{display:flex;align-items:flex-end;gap:2px;height:22px;justify-content:flex-end}
+.lspk span{width:4px;border-radius:1px;background:var(--line-2);transform-origin:bottom}
+.lspk span.p{background:var(--pos)} .lspk span.n{background:var(--neg)}
+.two-col{display:grid;grid-template-columns:1.55fr 1fr;gap:34px;align-items:start}
+.drain h3{font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:12px}
+.drow{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:8px 2px;border-bottom:1px solid var(--line)}
+.drow:last-child{border:none}
+.drow .dn{font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drow .dm{font-size:11px;color:var(--muted)}
+.drow .dv{font-weight:600;color:var(--neg);font-size:13.5px;white-space:nowrap}
+
+footer{margin-top:20px;font-size:12px;color:var(--muted);text-align:center;line-height:1.7}
+a{color:var(--accent)}
+
+@media (max-width:820px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .kpi:nth-child(3){border-left:none}
+  .kpi:nth-child(n+3){border-top:1px solid var(--line)}
+  .two-col{grid-template-columns:1fr;gap:34px}
+  .lrow{grid-template-columns:22px 1fr 84px 58px;gap:10px}
+  .lbar-wrap{display:none}
+}
+@media (max-width:560px){
+  .wrap{padding:26px 16px 56px}
+  .kpi .k-val{font-size:27px}
+  .tbl{font-size:12.5px}
+  .roas-strip{gap:3px}
+}
+
+/* motion — enhances an already-visible default; gated on no-preference */
+@media (prefers-reduced-motion:no-preference){
+  .animate .lbar{animation:barIn .7s cubic-bezier(.22,1,.36,1) both}
+  .animate .roas-bar{animation:barUp .6s cubic-bezier(.22,1,.36,1) both}
+  .animate .lspk span{animation:barUp .5s cubic-bezier(.22,1,.36,1) both}
+  .animate .draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.1s cubic-bezier(.4,0,.1,1) .1s forwards}
+  .animate .rev-area{animation:fade .9s ease-out .35s both}
+}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes barUp{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Weekly Meta performance · redesigned with /impeccable</div>
+    <h1>Combined Overview — week ending 12 July 2026</h1>
+    <div class="scope">
+      <span class="chip"><span class="dot" style="background:var(--pos)"></span><b>9</b> markets</span>
+      <span class="chip"><b>200</b> categories</span>
+      <span class="chip"><b>483</b> active adsets</span>
+      <span class="chip">8-week view · 18 May → 6 Jul</span>
+      <span class="chip">Meta · FB + IG + Other</span>
+    </div>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <div class="s-head"><h2>8-week combined trend</h2>
+      <div class="s-sub">Shaded band = APR (revenue over spend)</div></div>
+    <div class="chart-card">
+      <div class="legend">
+        <span><i class="sw-rev"></i>Revenue</span>
+        <span><i class="sw-spend"></i>Spend</span>
+        <span><i class="sw-apr"></i>APR (the gap)</span>
+      </div>
+      <div class="chart" id="chart"></div>
+      <div class="roas-strip" id="roas-strip"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="s-head"><h2>By market</h2><div class="s-sub">Sorted by APR · WoW vs previous full week</div></div>
+    <table class="tbl">
+      <thead><tr><th>Market</th><th>APR</th><th>ROAS</th><th>Revenue</th><th>Spend</th></tr></thead>
+      <tbody id="mkt-body"></tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="s-head"><h2>Category performance</h2><div class="s-sub">Top contributors by APR, and this week's drains</div></div>
+    <div class="two-col">
+      <div class="lead" id="lead"></div>
+      <div class="drain"><h3>Draining APR</h3><div id="drain"></div></div>
+    </div>
+  </section>
+
+  <footer>
+    Redesigned Overview · data reconciled from the live report (Tableau source).
+    Original report untouched at <a href="./index.html">index.html</a>.
+  </footer>
+</main>
+<script>
+const D={"weeks":["18My","25My","1Jn","8Jn","15Jn","22Jn","29Jn","6Jl"],"trend":{"spend":[85216.57999999997,83490.95999999996,62993.10999999997,55042.839999999975,62511.73000000003,66813.09,74365.81999999999,77132.13],"rev":[116477.76,112487.21,100089.11999999998,92391.32999999997,96137.17999999993,90532.12999999998,112308.16000000002,124099.49000000003],"apr":[31261.180000000022,28996.250000000044,37096.01000000001,37348.49,33625.4499999999,23719.03999999998,37942.340000000026,46967.36000000003],"roas":[1.366843870054396,1.347298078738106,1.5888899595527197,1.6785349375141256,1.5379062457557948,1.3550058828292477,1.5102120839923507,1.6089208219713371]},"kpis":{"spend":{"val":77132.13,"wow":3.719867541297887},"revenue":{"val":124099.49000000003,"wow":10.499085729834782},"roas":{"val":1.6089208219713371,"delta":0.09870873797898638},"apr":{"val":46967.36000000003,"wow":23.78614497682536},"aprNeg":100,"roasPos":100},"markets":[{"flag":"🇬🇧","code":"UK","spend":35749.01000000001,"rev":49919.2,"apr":14170.189999999988,"roas":1.3963799277238722,"aprWow":-8.07513735025113,"roasPrev":1.4451808465874647},{"flag":"🇺🇸","code":"US","spend":27685.099999999995,"rev":44854.65,"apr":17169.550000000007,"roas":1.6201729450137443,"aprWow":69.15862805505827,"roasPrev":1.326333171398726},{"flag":"🇨🇦","code":"CA","spend":6468.78,"rev":12998.11,"apr":6529.330000000001,"roas":2.0093603430631433,"aprWow":40.89717335151734,"roasPrev":2.2395573649465566},{"flag":"🇮🇪","code":"IE","spend":445.98,"rev":745.02,"apr":299.03999999999996,"roas":1.6705233418538947,"aprWow":-54.56493003327408,"roasPrev":3.404976796872145},{"flag":"🇩🇪","code":"DE","spend":35.07,"rev":151.24,"apr":116.17000000000002,"roas":4.312517821499858,"aprWow":184.03422982885084,"roasPrev":2.598905394839719},{"flag":"🇫🇷","code":"FR","spend":62.92,"rev":246.16,"apr":183.24,"roas":3.912269548633185,"aprWow":141.77332101860407,"roasPrev":2.843142023346303},{"flag":"🇿🇦","code":"ZA","spend":3968.43,"rev":7524.839999999998,"apr":3556.4099999999985,"roas":1.8961755656519073,"aprWow":49.23398416355095,"roasPrev":2.5181848876544075},{"flag":"🇦🇺","code":"AU","spend":1299.73,"rev":4173.53,"apr":2873.7999999999997,"roas":3.211074607803159,"aprWow":-5.7025387273222865,"roasPrev":3.0181378716641296},{"flag":"🇳🇿","code":"NZ","spend":1417.11,"rev":3486.7400000000002,"apr":2069.63,"roas":2.460458256592643,"aprWow":34.589947520045826,"roasPrev":2.0406098584305545}],"topCats":[{"cat":"House Cleaning","cty":"United States","apr":3334.49,"roas":1.7,"spend":4779.58,"rev":8114.07,"aprs8":[1169.25,1019.23,2033.41,2287.05,2898.24,2927.56,2726.82,3334.49],"roas8":[1.34,1.3,1.73,1.94,2,1.71,1.57,1.7]},{"cat":"Immigration Lawyers","cty":"United States","apr":2916.13,"roas":2.13,"spend":2583.14,"rev":5499.27,"aprs8":[2766.86,2373.15,2411.85,2642.54,1093.87,1430.16,1108.43,2916.13],"roas8":[1.87,1.68,2.02,2.36,1.43,1.6,1.34,2.13]},{"cat":"Architectural Services","cty":"United States","apr":2403.28,"roas":1.8,"spend":3003.74,"rev":5407.02,"aprs8":[1321.33,803.06,654.28,1083.75,2019.23,1115.26,499.99,2403.28],"roas8":[1.53,1.31,1.36,1.71,2.03,1.46,1.16,1.8]},{"cat":"Landscaping","cty":"United Kingdom","apr":2205.9,"roas":2.08,"spend":2034.77,"rev":4240.67,"aprs8":[1470.46,2701.07,1824,1310.73,2724.55,1490.19,2167.7,2205.9],"roas8":[1.29,1.57,1.5,1.76,2.56,1.69,2.19,2.08]},{"cat":"Property Extensions","cty":"Canada","apr":2113.6,"roas":5.54,"spend":465.43,"rev":2579.03,"aprs8":[315.27,123.47,154.4,251.97,307.29,19.42,961.55,2113.6],"roas8":[2.26,1.85,2.12,2.98,3.87,1.2,6.81,5.54]},{"cat":"Bathroom Installation & Remodel","cty":"United Kingdom","apr":1899.69,"roas":1.78,"spend":2424.83,"rev":4324.52,"aprs8":[1330.15,1180.13,1643.46,1651.01,1140.74,1891.27,2241.44,1899.69],"roas8":[1.41,1.39,1.88,2.08,1.61,1.97,1.88,1.78]},{"cat":"Wedding Photography","cty":"United States","apr":1777.31,"roas":1.61,"spend":2890.35,"rev":4667.66,"aprs8":[1454.31,1500.56,1972.61,2081.07,1842.48,1322.93,837.13,1777.31],"roas8":[1.7,1.67,2.14,2.3,1.91,1.48,1.23,1.61]},{"cat":"Dog Training","cty":"United States","apr":1589.32,"roas":2.31,"spend":1215.69,"rev":2805.01,"aprs8":[370.22,-208,1483.32,331.89,898.38,1131.36,1130.96,1589.32],"roas8":[1.09,0.95,1.47,1.12,1.29,1.55,3.02,2.31]},{"cat":"Fence & Gate Installation","cty":"United Kingdom","apr":1443.43,"roas":1.87,"spend":1661.92,"rev":3105.35,"aprs8":[320.59,427.16,493.59,390.49,384.42,217.86,1091.62,1443.43],"roas8":[1.24,1.41,1.77,1.74,1.59,1.16,1.65,1.87]},{"cat":"DJ","cty":"United States","apr":1438.48,"roas":1.34,"spend":4197.03,"rev":5635.51,"aprs8":[714.06,710.46,1401.95,2090.44,1338.02,841,969.7,1438.48],"roas8":[1.21,1.18,1.47,1.84,1.46,1.28,1.2,1.34]},{"cat":"Home & Domiciliary Care","cty":"United Kingdom","apr":1282.49,"roas":1.3,"spend":4213.9,"rev":5496.39,"aprs8":[1693,111.41,1886.87,1227.33,1956.8,832.82,2565.48,1282.49],"roas8":[1.52,1.04,1.86,1.72,2.04,1.53,2.08,1.3]},{"cat":"Driveway Installation","cty":"United Kingdom","apr":1185.5,"roas":1.48,"spend":2479.13,"rev":3664.63,"aprs8":[837.5,942.97,873.93,1031.52,876.81,837.58,534.63,1185.5],"roas8":[1.43,1.46,1.56,1.73,1.57,1.46,1.25,1.48]}],"worstCats":[{"cat":"Bookkeeping Services","cty":"United States","apr":-409.83,"roas":0.52,"spend":859.73,"rev":449.9,"aprs8":[-159.67,51.08,-262.29,41.09,-676.81,-603.11,866.54,-409.83],"roas8":[0.78,1.14,0.43,1.06,0.22,0.36,1.84,0.52]},{"cat":"Unassigned","cty":"United Kingdom","apr":-351.11,"roas":0,"spend":351.11,"rev":0,"aprs8":[-822.21,-644.26,-823.17,-847.87,-676.45,-708.06,-432.13,-351.11],"roas8":[0,0,0,0,0,0,0,0]},{"cat":"Tree Surgery & Removal","cty":"United Kingdom","apr":-191.94,"roas":0.93,"spend":2882.58,"rev":2690.64,"aprs8":[1045.15,545.62,303.13,977.14,39.21,-272.94,159.3,-191.94],"roas8":[1.59,1.25,1.14,1.71,1.03,0.85,1.08,0.93]},{"cat":"Home Insulation","cty":"United Kingdom","apr":-173.72,"roas":0.51,"spend":351.92,"rev":178.2,"aprs8":[259.18,43.06,297.61,3.91,79.26,-149.1,-193.62,-173.72],"roas8":[1.4,1.06,1.56,1.01,1.2,0.71,0.6,0.51]},{"cat":"Unassigned","cty":"United States","apr":-128.48,"roas":0,"spend":128.48,"rev":0,"aprs8":[-569.11,-358.5,-328.18,-295.38,-256.79,-186.31,-163.05,-128.48],"roas8":[0,0,0,0,0,0,0,0]},{"cat":"Pest Control","cty":"United States","apr":-124.94,"roas":0,"spend":124.94,"rev":0,"aprs8":[-35.02,14.43,0,0,0,0,-93.77,-124.94],"roas8":[0.44,1.36,0,0,0,0,0,0]}],"nCats":200};
+const gbp=n=>'£'+Math.round(n).toLocaleString('en-GB');
+const gbpS=n=>(n<0?'−£':'£')+Math.round(Math.abs(n)).toLocaleString('en-GB');
+const pct=n=>(n>0?'+':'')+n.toFixed(1)+'%';
+const wowCls=n=>n==null?'flat':Math.abs(n)<1?'flat':n>0?'up':'down';
+const arw=n=>n==null||Math.abs(n)<1?'':n>0?'▲':'▼';
+const roasCls=r=>r>=1.2?'good':r>=0.9?'mid':'bad';
+
+/* KPI band */
+const k=D.kpis;
+const kband=[
+  {lbl:'Spend',val:gbp(k.spend.val),wow:k.spend.wow,inv:true},
+  {lbl:'Revenue (PPR)',val:gbp(k.revenue.val),wow:k.revenue.wow},
+  {lbl:'ROAS',val:k.roas.val.toFixed(2)+'×',delta:k.roas.delta},
+  {lbl:'APR (rev − spend)',val:gbpS(k.apr.val),wow:k.apr.wow,hero:true,neg:k.apr.val<0},
+];
+document.getElementById('kpis').innerHTML=kband.map(x=>{
+  let foot;
+  if('delta'in x){const c=wowCls(x.delta*100);foot='<div class="k-wow '+c+'">'+(arw(x.delta*100)?'<span class="arw">'+arw(x.delta*100)+'</span>':'')+(x.delta>=0?'+':'')+x.delta.toFixed(2)+' vs prev wk</div>';}
+  else{const w=x.inv?(x.wow==null?null:-x.wow):x.wow;const c=wowCls(w);
+    foot='<div class="k-wow '+c+'">'+(arw(w)?'<span class="arw">'+arw(w)+'</span>':'')+pct(x.wow)+' <span style="color:var(--muted);font-weight:500">WoW</span></div>';}
+  return '<div class="kpi'+(x.hero?' hero':'')+(x.neg?' negv':'')+'"><div class="k-lbl">'+x.lbl+'</div>'+
+    '<div class="k-val num">'+x.val+'</div>'+foot+'</div>';
+}).join('');
+
+/* ---- 8-week trend chart (Revenue area + Spend line; gap = APR) ---- */
+(function(){
+  const W=980,H=260,PL=54,PR=14,PT=16,PB=30;
+  const iw=W-PL-PR, ih=H-PT-PB;
+  const wk=D.weeks, rev=D.trend.rev, spend=D.trend.spend;
+  const maxY=Math.max(...rev,...spend)*1.08;
+  const x=i=>PL+iw*(i/(wk.length-1));
+  const y=v=>PT+ih*(1-v/maxY);
+  const pts=a=>a.map((v,i)=>x(i)+','+y(v)).join(' ');
+  const areaRev='M'+x(0)+','+y(rev[0])+' L'+rev.map((v,i)=>x(i)+','+y(v)).join(' L')+
+    ' L'+x(wk.length-1)+','+y(0)+' L'+x(0)+','+y(0)+' Z';
+  // APR band = between rev and spend
+  const aprBand='M'+rev.map((v,i)=>x(i)+','+y(v)).join(' L')+
+    ' L'+[...spend].map((v,i)=>x(spend.length-1-i)+','+y(spend[spend.length-1-i])).join(' L')+' Z';
+  const revLine=pts(rev), spendLine=pts(spend);
+  // gridlines + y labels
+  const ticks=4;let grid='';
+  for(let t=0;t<=ticks;t++){const val=maxY*t/ticks;const yy=y(val);
+    grid+='<line class="gridline" x1="'+PL+'" y1="'+yy+'" x2="'+(W-PR)+'" y2="'+yy+'"/>'+
+      '<text class="axis-lbl" x="'+(PL-8)+'" y="'+(yy+3)+'" text-anchor="end">£'+Math.round(val/1000)+'k</text>';}
+  let xl='';wk.forEach((w,i)=>{xl+='<text class="wk-lbl" x="'+x(i)+'" y="'+(H-10)+'">'+w+'</text>';});
+  const dots=(a,c)=>a.map((v,i)=>'<circle class="'+c+'" cx="'+x(i)+'" cy="'+y(v)+'" r="3"/>').join('');
+  // path length for draw animation
+  const revLen=Math.round(rev.reduce((s,v,i)=>i?s+Math.hypot(x(i)-x(i-1),y(v)-y(rev[i-1])):0,0));
+  const spLen=Math.round(spend.reduce((s,v,i)=>i?s+Math.hypot(x(i)-x(i-1),y(v)-y(spend[i-1])):0,0));
+  document.getElementById('chart').innerHTML=
+    '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="8-week combined revenue and spend trend">'+
+    grid+
+    '<path class="rev-area" d="'+areaRev+'" fill="var(--rev-fill)" opacity="0.5"/>'+
+    '<path d="'+aprBand+'" fill="var(--pos-soft)" opacity="0.65"/>'+
+    '<polyline class="draw" style="--len:'+revLen+'" points="'+revLine+'" fill="none" stroke="var(--rev)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>'+
+    '<polyline class="draw" style="--len:'+spLen+'" points="'+spendLine+'" fill="none" stroke="var(--spend)" stroke-width="2.5" stroke-dasharray="1 0" stroke-linejoin="round" stroke-linecap="round"/>'+
+    dots(rev,'dot-rev')+dots(spend,'dot-spend')+
+    xl+'</svg>';
+  // ROAS strip
+  const roas=D.trend.roas;const mr=Math.max(...roas);
+  document.getElementById('roas-strip').innerHTML=roas.map((r,i)=>{
+    const cls=r>=1.2?'':r>=0.9?'low':'bad';const h=Math.max(6,Math.round(r/mr*100));
+    return '<div class="roas-cell"><div class="roas-bar-track"><div class="roas-bar '+cls+'" style="height:'+h+'%"></div></div>'+
+      '<div class="roas-val num">'+r.toFixed(2)+'×</div><div class="roas-wk">'+D.weeks[i]+'</div></div>';
+  }).join('');
+})();
+
+/* ---- markets table ---- */
+(function(){
+  const rows=[...D.markets].sort((a,b)=>b.apr-a.apr);
+  const tot=rows.reduce((a,r)=>({spend:a.spend+r.spend,rev:a.rev+r.rev}),{spend:0,rev:0});
+  const tApr=tot.rev-tot.spend, tRoas=tot.spend>0?tot.rev/tot.spend:0;
+  const wowSpan=(v)=>v==null||Math.abs(v)<1?'':'<span class="wow '+wowCls(v)+'">'+(v>0?'+':'')+v.toFixed(0)+'%</span>';
+  const body=rows.map(r=>
+    '<tr><td><span class="mkt"><span class="fl">'+r.flag+'</span>'+r.code+'</span></td>'+
+    '<td class="num"><span class="val-strong" style="color:'+(r.apr>=0?'var(--pos)':'var(--neg)')+'">'+gbpS(r.apr)+'</span>'+wowSpan(r.aprWow)+'</td>'+
+    '<td class="num"><span class="roas-tag '+roasCls(r.roas)+'">'+r.roas.toFixed(2)+'×</span></td>'+
+    '<td class="num money-rev">'+gbp(r.rev)+'</td>'+
+    '<td class="num money-spend">'+gbp(r.spend)+'</td></tr>').join('');
+  const comb='<tr class="combined"><td>Combined</td>'+
+    '<td class="num" style="color:var(--pos)">'+gbpS(tApr)+'</td>'+
+    '<td class="num"><span class="roas-tag '+roasCls(tRoas)+'">'+tRoas.toFixed(2)+'×</span></td>'+
+    '<td class="num">'+gbp(tot.rev)+'</td><td class="num">'+gbp(tot.spend)+'</td></tr>';
+  document.getElementById('mkt-body').innerHTML=body+comb;
+})();
+
+/* ---- category leaderboard ---- */
+(function(){
+  const top=D.topCats.slice(0,10);const max=Math.max(...top.map(c=>c.apr));
+  const flagFor=cty=>({'United Kingdom':'🇬🇧','United States':'🇺🇸','Canada':'🇨🇦','Ireland':'🇮🇪','Germany':'🇩🇪','France':'🇫🇷','South Africa':'🇿🇦','Australia':'🇦🇺','New Zealand':'🇳🇿'}[cty]||'');
+  document.getElementById('lead').innerHTML=top.map((c,i)=>{
+    const w=Math.round(c.apr/max*100);
+    const s8=c.aprs8||[];const sm=Math.max(...s8.map(Math.abs))||1;
+    const spk=s8.map(v=>'<span class="'+(v>=0?'p':'n')+'" style="height:'+Math.max(10,Math.round(Math.abs(v)/sm*100))+'%"></span>').join('');
+    return '<div class="lrow"><div class="lrk num">'+(i+1)+'</div>'+
+      '<div class="lcat"><div class="cn">'+c.cat+'</div><div class="cm">'+flagFor(c.cty)+' '+c.cty.replace('United ','')+' · '+c.roas.toFixed(2)+'× ROAS</div></div>'+
+      '<div class="lbar-wrap"><div class="lbar" style="width:'+w+'%"></div></div>'+
+      '<div class="lapr num">'+gbp(c.apr)+'</div>'+
+      '<div class="lspk" title="8-wk APR">'+spk+'</div></div>';
+  }).join('');
+  // drain list
+  const worst=D.worstCats.filter(c=>c.apr<200).slice(0,6);
+  document.getElementById('drain').innerHTML=worst.map(c=>{
+    const flag={'United Kingdom':'🇬🇧','United States':'🇺🇸','Canada':'🇨🇦','Ireland':'🇮🇪','Germany':'🇩🇪','France':'🇫🇷','South Africa':'🇿🇦','Australia':'🇦🇺','New Zealand':'🇳🇿'}[c.cty]||'';
+    return '<div class="drow"><div style="min-width:0"><div class="dn">'+c.cat+'</div><div class="dm">'+flag+' '+c.cty.replace('United ','')+' · '+c.roas.toFixed(2)+'×</div></div>'+
+      '<div class="dv num">'+gbpS(c.apr)+'</div></div>';
+  }).join('')||'<div class="dm" style="color:var(--muted);font-size:12.5px">No draining categories this week.</div>';
+})();
+
+/* trigger motion after first paint (default state is already fully visible) */
+requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.add('animate')));
+</script>
+</body>
+</html>
