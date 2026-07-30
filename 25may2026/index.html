@@ -99,7 +99,8 @@ td{padding:7px 8px;vertical-align:middle}
 <div id="week-switcher-bar">
   <label for="week-switcher">Week</label>
   <select id="week-switcher">
-      <option value="wip-15jul2026">Mid-week · 15 Jul 2026 (so far)</option>
+      <option value="wip-30jul2026">Mid-week · 30 Jul 2026 (so far)</option>
+      <option value="26jul2026">w/e 26 Jul 2026</option>
       <option value="19jul2026">w/e 19 Jul 2026</option>
       <option value="12jul2026">w/e 12 Jul 2026</option>
       <option value="5jul2026">w/e 5 Jul 2026</option>
@@ -794,6 +795,74 @@ document.addEventListener('input', e=>{
   saveAction(agKey, checked, e.target.value);
 });
 
+// ── Tick-list ACTION selector: proposed change per adset + override + export ──
+// Recommendation comes from the real tick-list (d.action). Operator can override
+// via the dropdown; selections (incl. untouched proposals) export as a bucketed
+// copy-list matching the executor's format.
+const ACTION_OPTIONS = [
+  ['hold','— hold —'],['pause','🔴 Pause'],['cut30','🟠 −30%'],['cut50','🟠 −50%'],
+  ['scale10','🔵 +10%'],['scale20','🔵 +20%'],['firstwk25','⚡ +25%'],
+  ['turn_off_ads','🛑 Turn off ads'],['sandbox_pause','🧪 Sandbox pause'],
+  ['sandbox_scale','🟩 Sandbox scale'],
+];
+const ACTION_COLORS = {hold:'#64748b',pause:'#ef4444',cut30:'#fb923c',cut50:'#f97316',
+  scale10:'#60a5fa',scale20:'#3b82f6',firstwk25:'#a78bfa',turn_off_ads:'#ef4444',sandbox_pause:'#a78bfa',sandbox_scale:'#16a34a'};
+const ACTION_LABELS = {pause:'🔴 PAUSE',cut30:'🟠 −30% BUDGET',cut50:'🟠 −50% BUDGET',
+  scale10:'🔵 +10% BUDGET',scale20:'🔵 +20% BUDGET',firstwk25:'⚡ +25% FIRST-WEEK WINNER',
+  turn_off_ads:'🛑 TURN OFF ADS',sandbox_pause:'🔴 SANDBOX PAUSE',sandbox_scale:'🟩 SANDBOX SCALE (+25–100%)'};
+function cty2mkt(c){return ({'united kingdom':'UK','united states':'US','canada':'CA','south africa':'ZA','australia':'AU','new zealand':'NZ','ireland':'IE','deutschland':'DE','germany':'DE','france':'FR'})[(c||'').toLowerCase()]||c;}
+function actionSelect(name, cty, rec){
+  rec = rec||'hold';
+  const agKey = name+'|'+cty, mkt = cty2mkt(cty);
+  const saved = loadActions()[agKey]||{};
+  const cur = (saved.action!==undefined && saved.action!=='') ? saved.action : rec;
+  const col = ACTION_COLORS[cur]||'#64748b';
+  const opts = ACTION_OPTIONS.map(function(o){ var v=o[0],l=o[1];
+    return '<option value="'+v+'"'+(v===cur?' selected':'')+'>'+l+(v===rec&&rec!=='hold'?' ✦':'')+'</option>'; }).join('');
+  const proposed = (rec!=='hold' && (saved.action===undefined||saved.action===''));
+  return '<select class="action-sel" data-agkey="'+agKey.replace(/"/g,'&quot;')+'" data-mkt="'+mkt+'" data-rec="'+rec+'" '+
+    'onclick="event.stopPropagation()" title="Proposed: '+rec+' — change to override" '+
+    'style="width:118px;font-size:11px;font-weight:600;color:'+col+';background:rgba(255,255,255,.05);border:1px solid '+col+'66;border-radius:5px;padding:4px 5px;cursor:pointer">'+opts+'</select>'+
+    (proposed?'<div class="prop-tag" style="font-size:8px;color:'+col+';margin-top:2px;text-align:center;letter-spacing:.3px">✦ proposed</div>':'');
+}
+document.addEventListener('change', function(e){
+  if(!e.target.classList||!e.target.classList.contains('action-sel')) return;
+  var sel=e.target, agKey=sel.dataset.agkey, v=sel.value, col=ACTION_COLORS[v]||'#64748b';
+  var all=loadActions(); all[agKey]=Object.assign({}, all[agKey]||{}, {action:v});
+  localStorage.setItem(ACTION_KEY, JSON.stringify(all));
+  document.querySelectorAll('select.action-sel').forEach(function(s){
+    if(s.dataset.agkey===agKey){ s.value=v; s.style.color=col; s.style.borderColor=col+'66';
+      var pt=s.nextSibling; if(pt&&pt.classList&&pt.classList.contains('prop-tag')) pt.remove(); }
+  });
+  if(window.__updateActionBar) window.__updateActionBar();
+});
+function gatherActionList(){
+  var seen={};
+  document.querySelectorAll('select.action-sel').forEach(function(s){
+    var v=s.value; if(!v||v==='hold') return;
+    var k=s.dataset.agkey; seen[k]={mkt:s.dataset.mkt,name:k.slice(0,k.lastIndexOf('|')),bucket:v};
+  });
+  return Object.keys(seen).map(function(k){return seen[k];});
+}
+function actionListText(){
+  var items=gatherActionList(), by={};
+  items.forEach(function(it){(by[it.bucket]=by[it.bucket]||[]).push(it.mkt+' | '+it.name);});
+  var order=['pause','cut30','cut50','scale10','scale20','firstwk25','turn_off_ads','sandbox_pause'];
+  var out=['# Adset action list — from /performance',''], total=0;
+  order.forEach(function(b){ if(by[b]){ out.push('## '+(ACTION_LABELS[b]||b)+' ('+by[b].length+')'); by[b].sort().forEach(function(l){out.push('  - '+l);}); out.push(''); total+=by[b].length; }});
+  return total?out.join('\n'):'(no actions selected — pick one in the Action column of any adset table)';
+}
+function previewActionList(btn){
+  var dlg=document.getElementById('adset-ticker-preview'); var ta=dlg.querySelector('textarea');
+  ta.value=actionListText();
+  if(dlg.showModal) dlg.showModal(); else dlg.style.display='block';
+  navigator.clipboard.writeText(ta.value).then(function(){ if(btn){var o=btn.textContent;btn.textContent='✓ Copied';setTimeout(function(){btn.textContent=o;},1500);} }).catch(function(){});
+}
+window.__updateActionBar=function(){
+  var n=gatherActionList().length, b=document.querySelector('#adset-ticker-bar .copy-actions');
+  if(b) b.textContent='🎯 Actions ('+n+')';
+};
+
 function sortTable(tableId, col){
   const st=SORT_STATE[tableId];
   if(st.col===col){ st.dir*=-1; } else { st.col=col; st.dir= col==='apr'?1:-1; }
@@ -830,6 +899,7 @@ function renderTable(tableId){
     const agKey=d.ag+'|'+d.cty;
     const saved=loadActions()[agKey]||{};
     return '<tr data-agkey="'+agKey.replace(/"/g,'&quot;')+'">'+
+      '<td style="width:128px;vertical-align:top;padding:8px 8px 0">'+actionSelect(d.ag, d.cty, d.action)+'</td>'+
       '<td style="width:230px;min-width:230px">'+
         '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">'+
           '<div style="min-width:0">'+
@@ -851,6 +921,11 @@ function renderTable(tableId){
         '<div class="sp-val '+latestAprCls+'">'+latestApr+'</div>'+
       '</td>'+
       '<td class="sp-cell" style="width:95px">'+
+        '<div class="sp-label">Spend</div>'+wkRow+
+        '<div class="spark">'+standardSpark(sp8,()=>'#60a5fa')+'</div>'+
+        '<div class="sp-val" style="color:#60a5fa">'+latestSp+'</div>'+
+      '</td>'+
+      '<td class="sp-cell" style="width:95px">'+
         '<div class="sp-label">ROAS</div>'+wkRow+
         '<div class="spark">'+standardSpark(roas8,roasColor)+'</div>'+
         '<div class="sp-val '+roasCls+'">'+latestRoas+'</div>'+
@@ -864,11 +939,6 @@ function renderTable(tableId){
         '<div class="sp-label">Rev/Bark</div>'+wkRow+
         '<div class="spark">'+standardSpark(rpbs8,()=>'#47BF9C')+'</div>'+
         '<div class="sp-val" style="color:#47BF9C">'+latestRpb+'</div>'+
-      '</td>'+
-      '<td class="sp-cell" style="width:95px">'+
-        '<div class="sp-label">Spend</div>'+wkRow+
-        '<div class="spark">'+standardSpark(sp8,()=>'#60a5fa')+'</div>'+
-        '<div class="sp-val" style="color:#60a5fa">'+latestSp+'</div>'+
       '</td>'+
       (()=>{
         const ctrs8 = arr8(d.ctrs8||'0,0,0,0,0,0,0,0');
@@ -914,16 +984,18 @@ function renderTable(tableId){
 
   el.innerHTML='<table>'+
     '<colgroup>'+
+      '<col style="width:128px">'+
       '<col style="width:230px"><col style="width:105px"><col style="width:95px">'+
       '<col style="width:95px"><col style="width:95px"><col style="width:95px"><col style="width:95px"><col style="width:95px"><col style="width:52px">'+
     '</colgroup>'+
     '<thead><tr>'+
+      '<th style="width:128px" title="Proposed tick-list change — editable. ✦ = the recommendation.">Action</th>'+
       th('Adset','adset')+
       th('APR (8wk)','apr')+
+      th('Spend (8wk)','spend')+
       th('ROAS (8wk)','roas')+
       th('CPL (8wk)','cpl')+
       th('Rev/Bark (8wk)','rpb')+
-      th('Spend (8wk)','spend')+
       th('CTR (8wk)','ctr')+
       th('CVR (8wk)','cvr')+
       '<th style="color:#475569">EP data</th>'+
@@ -1240,6 +1312,7 @@ function buildCatTable(ctyKeyword, containerId, countId){
         ? '<span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);border-radius:3px;color:#10b981;font-size:10px;font-weight:900;flex-shrink:0">✓</span>'
         : '<span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);border-radius:3px;color:#ef4444;font-size:10px;font-weight:900;flex-shrink:0">✗</span>';
       return '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'+
+        '<td style="padding:4px 8px;vertical-align:top">'+actionSelect(a.ag, a.cty, a.action)+'</td>'+
         '<td style="padding:4px 8px;color:#cbd5e1;max-width:230px" title="'+a.ag+'">'+
           '<span style="display:flex;align-items:center;gap:5px">'+statusBox+'<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+shortAg(a.ag)+'</span></span>'+
         '</td>'+
@@ -1251,13 +1324,14 @@ function buildCatTable(ctyKeyword, containerId, countId){
         '<td style="padding:4px 8px;text-align:right;color:#94a3b8">'+(aCpl>0?'£'+aCpl.toFixed(1):'—')+'</td>'+
         '<td style="padding:4px 8px;text-align:right;color:#a78bfa">'+(aRpb>0?'£'+aRpb.toFixed(1):'—')+'</td>'+
       '</tr>';
-    }).join('') : '<tr><td colspan="8" style="padding:6px 8px;color:#475569;font-style:italic">No active adsets with spend this week for this category</td></tr>';
+    }).join('') : '<tr><td colspan="9" style="padding:6px 8px;color:#475569;font-style:italic">No active adsets with spend this week for this category</td></tr>';
 
     const adSubTable =
       '<tr class="cat-adset" data-parent="'+gid+'" style="display:none">'+
         '<td colspan="9" style="padding:2px 0 8px 24px;background:rgba(0,0,0,.15)">'+
           '<table style="width:100%;border-collapse:collapse;font-size:11px">'+
             '<thead><tr style="background:rgba(255,255,255,.03)">'+
+              '<th style="padding:5px 8px;text-align:left;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">Action</th>'+
               '<th style="padding:5px 8px;text-align:left;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">Adset</th>'+
               '<th style="padding:5px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">Style</th>'+
               '<th style="padding:5px 8px;text-align:right;color:#64748b;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)">Spend</th>'+
@@ -1479,6 +1553,7 @@ function buildStyleTab(tabKey, containerId){
       '<td colspan="6" style="padding:0 0 0 18px">'+
         '<table style="width:100%;border-collapse:collapse">'+
         '<thead><tr>'+
+          '<th style="'+thSub+';width:128px;text-align:left">Action</th>'+
           '<th style="'+thSub+';width:240px;text-align:left">Adset</th>'+
           '<th style="'+thSub+';text-align:left">Category</th>'+
           '<th style="'+thSub+';text-align:right">Spend</th>'+
@@ -1495,6 +1570,7 @@ function buildStyleTab(tabKey, containerId){
           const latestCpl=arr8(d.cpls8)[7];
           const latestRpb=arr8(d.rpbs8)[7];
           return '<tr style="border-bottom:1px solid rgba(255,255,255,.025)">'+
+            '<td style="padding:5px 8px;vertical-align:top">'+actionSelect(d.ag, d.cty, d.action)+'</td>'+
             '<td style="padding:5px 8px;font-size:11px;color:#e2e8f0;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+d.ag+'">'+shortAg(d.ag)+'</td>'+
             '<td style="padding:5px 8px;font-size:10px;color:#64748b;white-space:nowrap">'+d.cat+'</td>'+
             '<td class="n" style="padding:5px 8px;font-size:11px;color:#60a5fa">£'+Math.round(d.spend).toLocaleString()+'</td>'+
