@@ -2231,233 +2231,6 @@ init();
 </script>
 <!-- /style controls -->
 
-<!-- ADSET-TICKER:v5 -->
-<style>
-  /* Bigger native action checkboxes — overrides the inline 13px */
-  input.action-cb {
-    width: 22px !important; height: 22px !important;
-    cursor: pointer !important;
-    accent-color: #10b981 !important;
-    margin: 0 6px !important;
-    vertical-align: middle !important;
-  }
-  /* Row-level visual: ticked rows get a green tint, all adset rows get a pointer cursor */
-  tr[data-agkey] { cursor: pointer; }
-  tr[data-agkey]:hover { background: rgba(255,255,255,.04) !important; }
-  tr[data-agkey].adset-row-ticked { background: rgba(16,185,129,.10) !important; }
-  tr[data-agkey].adset-row-ticked:hover { background: rgba(16,185,129,.15) !important; }
-
-  /* Floating copy-list bar */
-  #adset-ticker-bar {
-    position: fixed; bottom: 18px; right: 18px; z-index: 9998;
-    background: rgba(15,18,30,.95); border: 1px solid rgba(255,255,255,.12);
-    border-radius: 10px; padding: 10px 14px; display: flex;
-    align-items: center; gap: 10px;
-    color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 12px; backdrop-filter: blur(6px);
-    box-shadow: 0 6px 24px rgba(0,0,0,.4);
-  }
-  #adset-ticker-bar .count { color: #10b981; font-weight: 700; font-size: 14px; }
-  #adset-ticker-bar button {
-    background: #10b981; color: #fff; border: none; border-radius: 5px;
-    padding: 6px 12px; cursor: pointer; font-size: 12px; font-weight: 600;
-    font-family: inherit;
-  }
-  #adset-ticker-bar button.secondary { background: rgba(255,255,255,.08); color: #94a3b8; }
-  #adset-ticker-bar button:hover { filter: brightness(1.15); }
-</style>
-<div id="adset-ticker-bar">
-  <span style="color:#94a3b8;font-size:11px">Adset selector</span>
-  <span style="color:#475569">·</span>
-  <span><span class="count">0</span> selected</span>
-  <button class="copy">📋 Copy list</button>
-  <button class="secondary preview">Preview</button>
-  <button class="secondary tick-visible" title="Tick every adset row visible in the current tab">All visible</button>
-  <button class="secondary clear">Clear</button>
-</div>
-<dialog id="adset-ticker-preview" style="background:#0d1024;color:#e2e8f0;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:18px;min-width:500px;max-width:80vw;max-height:80vh">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <strong style="font-size:13px">Selected ad sets (paste anywhere)</strong>
-    <button class="close" style="background:none;color:#94a3b8;border:none;cursor:pointer;font-size:18px">×</button>
-  </div>
-  <textarea readonly style="width:100%;height:300px;background:#0a0c1a;color:#e2e8f0;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:10px;font-family:'SF Mono',Menlo,monospace;font-size:11.5px;line-height:1.4;resize:vertical"></textarea>
-</dialog>
-<script>
-(function () {
-  const NATIVE_KEY = 'ppc_actions_v1';   // same key the page itself uses
-  // country name → 2-letter market code (lower-cased keys for safety)
-  const C2MKT = {
-    'united kingdom':'UK','united states':'US','canada':'CA','south africa':'ZA',
-    'australia':'AU','new zealand':'NZ','ireland':'IE','deutschland':'DE',
-    'germany':'DE','france':'FR',
-  };
-
-  function loadNative() {
-    try { return JSON.parse(localStorage.getItem(NATIVE_KEY) || '{}'); }
-    catch (e) { return {}; }
-  }
-  function checkedKeys() {
-    const all = loadNative();
-    return Object.keys(all).filter(k => all[k] && all[k].checked);
-  }
-  function agkeyToLine(agkey) {
-    // agkey format = "<adset_name>|<country_name>"
-    const i = agkey.lastIndexOf('|');
-    if (i < 0) return agkey;
-    const name = agkey.slice(0, i);
-    const country = agkey.slice(i + 1);
-    const mkt = C2MKT[country.toLowerCase()] || country;
-    return mkt + '/' + name;
-  }
-
-  // ── Bar + dialog wiring ─────────────────────────────────────
-  const bar = document.getElementById('adset-ticker-bar');
-  const dlg = document.getElementById('adset-ticker-preview');
-  const countEl = bar.querySelector('.count');
-  const textarea = dlg.querySelector('textarea');
-
-  function updateBar() {
-    const keys = checkedKeys();
-    const newCount = String(keys.length);
-    // Only write to DOM if value actually changed — avoids any chance of
-    // re-fire loops if anything else is observing.
-    if (countEl.textContent !== newCount) countEl.textContent = newCount;
-    const all = loadNative();
-    // Apply ticked highlight to corresponding rows (idempotent toggle)
-    document.querySelectorAll('tr[data-agkey]').forEach(tr => {
-      const k = tr.dataset.agkey;
-      const want = (all[k] && all[k].checked === true);
-      const has = tr.classList.contains('adset-row-ticked');
-      if (want && !has) tr.classList.add('adset-row-ticked');
-      else if (!want && has) tr.classList.remove('adset-row-ticked');
-    });
-  }
-
-  function copyList() {
-    const lines = checkedKeys().map(agkeyToLine).sort().join('
-');
-    navigator.clipboard.writeText(lines).then(() => {
-      const btn = bar.querySelector('.copy');
-      const orig = btn.textContent;
-      btn.textContent = '✓ Copied';
-      setTimeout(() => btn.textContent = orig, 1500);
-    });
-  }
-  function showPreview() {
-    textarea.value = checkedKeys().map(agkeyToLine).sort().join('
-') || '(none selected)';
-    if (typeof dlg.showModal === 'function') dlg.showModal();
-    else dlg.style.display = 'block';
-  }
-  function clearAll() {
-    const keys = checkedKeys();
-    if (!keys.length) return;
-    if (!confirm('Clear all ' + keys.length + ' ticked ad sets?')) return;
-    const all = loadNative();
-    keys.forEach(k => { if (all[k]) all[k].checked = false; });
-    localStorage.setItem(NATIVE_KEY, JSON.stringify(all));
-    document.querySelectorAll('input.action-cb').forEach(cb => {
-      const tr = cb.closest('tr');
-      if (tr && all[tr.dataset.agkey] && !all[tr.dataset.agkey].checked) cb.checked = false;
-    });
-    updateBar();
-  }
-  function tickAllVisible() {
-    const all = loadNative();
-    let n = 0;
-    document.querySelectorAll('.country-section.active tr[data-agkey]').forEach(tr => {
-      if (tr.offsetParent === null) return;     // not actually visible
-      const k = tr.dataset.agkey;
-      all[k] = { ...(all[k] || {}), checked: true };
-      const cb = tr.querySelector('input.action-cb');
-      if (cb) cb.checked = true;
-      n++;
-    });
-    localStorage.setItem(NATIVE_KEY, JSON.stringify(all));
-    updateBar();
-    if (n) {
-      const btn = bar.querySelector('.tick-visible');
-      const orig = btn.textContent;
-      btn.textContent = '✓ ' + n + ' ticked';
-      setTimeout(() => btn.textContent = orig, 1800);
-    }
-  }
-
-  bar.querySelector('.copy').addEventListener('click', copyList);
-  bar.querySelector('.preview').addEventListener('click', showPreview);
-  bar.querySelector('.tick-visible').addEventListener('click', tickAllVisible);
-  bar.querySelector('.clear').addEventListener('click', clearAll);
-  dlg.querySelector('.close').addEventListener('click', () => {
-    if (typeof dlg.close === 'function') dlg.close();
-    else dlg.style.display = 'none';
-  });
-
-  // ── Multi-tick UX: whole-row click toggles native checkbox; shift+click range ──
-  let LAST_TICKED = null;
-  document.addEventListener('click', (e) => {
-    // Skip clicks on the bar / dialog / interactive elements / notes
-    if (e.target.closest('#adset-ticker-bar, #adset-ticker-preview')) return;
-    if (e.target.closest('input.action-cb')) return;     // native handler will run
-    if (e.target.closest('a, button, .action-note, input:not(.action-cb), select, textarea')) return;
-    const tr = e.target.closest('tr[data-agkey]');
-    if (!tr) return;
-    const cb = tr.querySelector('input.action-cb');
-    if (!cb) return;
-    e.preventDefault();
-    const willCheck = !cb.checked;
-
-    // Shift+click range select within the same table
-    if (e.shiftKey && LAST_TICKED && LAST_TICKED !== tr) {
-      const sameTable = LAST_TICKED.closest('table') === tr.closest('table');
-      if (sameTable) {
-        const tbody = tr.parentNode;
-        const all = [...tbody.children].filter(c => c.dataset && c.dataset.agkey);
-        const i = all.indexOf(LAST_TICKED);
-        const j = all.indexOf(tr);
-        if (i >= 0 && j >= 0) {
-          const [lo, hi] = i < j ? [i, j] : [j, i];
-          for (let k = lo; k <= hi; k++) {
-            const cb2 = all[k].querySelector('input.action-cb');
-            if (cb2 && cb2.checked !== willCheck) {
-              cb2.checked = willCheck;
-              cb2.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-          }
-          LAST_TICKED = tr;
-          updateBar();
-          return;
-        }
-      }
-    }
-
-    cb.checked = willCheck;
-    cb.dispatchEvent(new Event('change', { bubbles: true }));
-    LAST_TICKED = tr;
-    updateBar();
-  });
-
-  // Listen for native checkbox changes (manual single-clicks)
-  document.addEventListener('change', (e) => {
-    if (e.target.classList?.contains('action-cb')) {
-      setTimeout(updateBar, 10);   // run after native save handler
-      LAST_TICKED = e.target.closest('tr[data-agkey]');
-    }
-  });
-
-  // Initial render
-  function start() {
-    setTimeout(updateBar, 200);   // give the page's renderTable() time to draw
-    setTimeout(updateBar, 800);   // belt-and-braces for slow renders
-    document.querySelectorAll('.tab').forEach(t =>
-      t.addEventListener('click', () => setTimeout(updateBar, 80)));
-    // NOTE: no MutationObserver — the v4 version caused an infinite loop.
-    // Tab clicks + the native `change` handler are sufficient to keep the
-    // bar fresh.
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-  else start();
-})();
-</script>
 <script>
 window.CAT_FATIGUE = [{"cat":"Driveway Installation","cty":"United Kingdom","last_ctr":1.0,"avg_ctr":1.82,"peak_ctr":3.29,"peak_idx":0,"drop_peak_pct":69.7,"drop_avg_pct":45.1,"rev_4wk":9589.0,"rev_last":1855.0,"spend_4wk":6845.0,"opportunity":6688.0,"ctrs8":"3.295,2.396,3.067,1.534,1.186,0.939,1.107,0.997","imps_last":128328},{"cat":"Tree Surgery & Removal","cty":"United Kingdom","last_ctr":1.04,"avg_ctr":1.49,"peak_ctr":2.88,"peak_idx":0,"drop_peak_pct":63.9,"drop_avg_pct":30.2,"rev_4wk":6903.0,"rev_last":1545.0,"spend_4wk":6825.0,"opportunity":4411.0,"ctrs8":"2.875,1.502,1.178,1.399,1.519,1.261,1.125,1.038","imps_last":173773},{"cat":"Landscaping","cty":"United Kingdom","last_ctr":1.52,"avg_ctr":1.63,"peak_ctr":2.1,"peak_idx":3,"drop_peak_pct":27.4,"drop_avg_pct":6.5,"rev_4wk":14386.0,"rev_last":2266.0,"spend_4wk":6801.0,"opportunity":3943.0,"ctrs8":"1.835,1.455,1.627,2.098,1.476,1.418,1.594,1.523","imps_last":87397},{"cat":"Garage Door Installation","cty":"United Kingdom","last_ctr":1.47,"avg_ctr":2.65,"peak_ctr":4.6,"peak_idx":1,"drop_peak_pct":67.9,"drop_avg_pct":44.3,"rev_4wk":3481.0,"rev_last":734.0,"spend_4wk":1994.0,"opportunity":2364.0,"ctrs8":"4.391,4.596,2.892,3.261,1.994,1.144,1.435,1.474","imps_last":24088},{"cat":"House Cleaning","cty":"United States","last_ctr":3.72,"avg_ctr":3.9,"peak_ctr":4.1,"peak_idx":4,"drop_peak_pct":9.3,"drop_avg_pct":4.7,"rev_4wk":24287.0,"rev_last":3947.0,"spend_4wk":14039.0,"opportunity":2258.0,"ctrs8":"4.097,3.963,3.97,4.048,4.098,3.748,3.576,3.717","imps_last":77426},{"cat":"Bathroom Installation & Remodel","cty":"Canada","last_ctr":3.22,"avg_ctr":4.32,"peak_ctr":7.01,"peak_idx":2,"drop_peak_pct":54.0,"drop_avg_pct":25.4,"rev_4wk":4061.0,"rev_last":846.0,"spend_4wk":1269.0,"opportunity":2194.0,"ctrs8":"4.662,4.354,7.01,4.551,3.201,3.815,3.729,3.222","imps_last":22561},{"cat":"Garden Clearance","cty":"United Kingdom","last_ctr":1.7,"avg_ctr":2.24,"peak_ctr":2.92,"peak_idx":0,"drop_peak_pct":41.5,"drop_avg_pct":24.0,"rev_4wk":4729.0,"rev_last":832.0,"spend_4wk":2929.0,"opportunity":1965.0,"ctrs8":"2.915,2.468,2.489,2.297,1.974,2.005,2.094,1.704","imps_last":79701},{"cat":"Electric Charge Points Installation","cty":"United Kingdom","last_ctr":1.47,"avg_ctr":2.06,"peak_ctr":2.86,"peak_idx":0,"drop_peak_pct":48.5,"drop_avg_pct":28.5,"rev_4wk":4021.0,"rev_last":732.0,"spend_4wk":3039.0,"opportunity":1950.0,"ctrs8":"2.856,2.019,2.347,2.302,2.294,1.642,1.536,1.471","imps_last":37188},{"cat":"Bookkeeping Services","cty":"United States","last_ctr":3.74,"avg_ctr":6.38,"peak_ctr":17.34,"peak_idx":0,"drop_peak_pct":78.4,"drop_avg_pct":41.4,"rev_4wk":2439.0,"rev_last":20.0,"spend_4wk":1123.0,"opportunity":1913.0,"ctrs8":"17.336,11.308,6.206,3.468,2.688,3.315,2.966,3.738","imps_last":6741},{"cat":"Gardening","cty":"United Kingdom","last_ctr":2.3,"avg_ctr":2.74,"peak_ctr":3.26,"peak_idx":4,"drop_peak_pct":29.5,"drop_avg_pct":16.0,"rev_4wk":6352.0,"rev_last":963.0,"spend_4wk":4917.0,"opportunity":1872.0,"ctrs8":"2.877,2.705,2.525,2.887,3.261,2.702,2.656,2.3","imps_last":81234},{"cat":"House Cleaning","cty":"Canada","last_ctr":2.6,"avg_ctr":2.52,"peak_ctr":3.51,"peak_idx":2,"drop_peak_pct":26.1,"drop_avg_pct":-2.8,"rev_4wk":7017.0,"rev_last":759.0,"spend_4wk":4004.0,"opportunity":1829.0,"ctrs8":"2.212,2.357,3.51,2.424,2.024,2.155,2.914,2.595","imps_last":48638},{"cat":"Web Design","cty":"United States","last_ctr":2.12,"avg_ctr":6.77,"peak_ctr":15.69,"peak_idx":0,"drop_peak_pct":86.5,"drop_avg_pct":68.7,"rev_4wk":2032.0,"rev_last":93.0,"spend_4wk":1798.0,"opportunity":1757.0,"ctrs8":"15.686,13.491,10.135,6.194,2.759,2.091,1.721,2.118","imps_last":2549},{"cat":"Painting & Decoration - Interior","cty":"United Kingdom","last_ctr":1.47,"avg_ctr":1.57,"peak_ctr":1.74,"peak_idx":4,"drop_peak_pct":15.3,"drop_avg_pct":6.4,"rev_4wk":9577.0,"rev_last":1632.0,"spend_4wk":6850.0,"opportunity":1463.0,"ctrs8":"1.483,1.443,1.434,1.709,1.735,1.669,1.616,1.47","imps_last":145231},{"cat":"Wedding Photography","cty":"United States","last_ctr":1.44,"avg_ctr":1.47,"peak_ctr":1.58,"peak_idx":2,"drop_peak_pct":8.8,"drop_avg_pct":2.0,"rev_4wk":14870.0,"rev_last":2350.0,"spend_4wk":9988.0,"opportunity":1307.0,"ctrs8":"1.46,1.481,1.581,1.548,1.422,1.384,1.453,1.442","imps_last":70611},{"cat":"Commercial & Office Cleaning","cty":"United States","last_ctr":2.46,"avg_ctr":2.66,"peak_ctr":3.73,"peak_idx":0,"drop_peak_pct":34.1,"drop_avg_pct":7.7,"rev_4wk":3813.0,"rev_last":720.0,"spend_4wk":2489.0,"opportunity":1299.0,"ctrs8":"3.728,2.763,2.815,2.718,2.47,2.268,2.081,2.458","imps_last":24977},{"cat":"Catering","cty":"United States","last_ctr":2.46,"avg_ctr":2.56,"peak_ctr":2.77,"peak_idx":2,"drop_peak_pct":11.2,"drop_avg_pct":3.9,"rev_4wk":10746.0,"rev_last":1458.0,"spend_4wk":8603.0,"opportunity":1206.0,"ctrs8":"2.655,2.655,2.77,2.549,2.401,2.498,2.478,2.459","imps_last":54773},{"cat":"Home Insulation","cty":"United Kingdom","last_ctr":1.5,"avg_ctr":3.27,"peak_ctr":8.02,"peak_idx":0,"drop_peak_pct":81.2,"drop_avg_pct":54.1,"rev_4wk":1226.0,"rev_last":93.0,"spend_4wk":1600.0,"opportunity":996.0,"ctrs8":"8.018,6.859,3.558,2.223,1.172,1.164,1.696,1.504","imps_last":25537},{"cat":"House Cleaning","cty":"United Kingdom","last_ctr":2.99,"avg_ctr":2.8,"peak_ctr":3.67,"peak_idx":3,"drop_peak_pct":18.7,"drop_avg_pct":-6.7,"rev_4wk":4820.0,"rev_last":669.0,"spend_4wk":2608.0,"opportunity":902.0,"ctrs8":"2.462,2.893,3.283,3.673,2.875,1.724,2.497,2.986","imps_last":23742},{"cat":"Property Extensions","cty":"Australia","last_ctr":1.49,"avg_ctr":1.91,"peak_ctr":2.38,"peak_idx":3,"drop_peak_pct":37.5,"drop_avg_pct":22.2,"rev_4wk":2374.0,"rev_last":237.0,"spend_4wk":628.0,"opportunity":891.0,"ctrs8":"2.112,1.309,1.85,2.383,2.161,2.103,1.898,1.489","imps_last":8730},{"cat":"Brick & Block Paving Services","cty":"United Kingdom","last_ctr":1.11,"avg_ctr":1.2,"peak_ctr":1.41,"peak_idx":2,"drop_peak_pct":20.9,"drop_avg_pct":7.4,"rev_4wk":4147.0,"rev_last":993.0,"spend_4wk":2903.0,"opportunity":865.0,"ctrs8":"1.149,1.134,1.405,1.352,1.296,1.108,1.054,1.112","imps_last":69336},{"cat":"Artificial Grass Installation","cty":"United Kingdom","last_ctr":1.6,"avg_ctr":1.68,"peak_ctr":1.85,"peak_idx":3,"drop_peak_pct":13.6,"drop_avg_pct":4.5,"rev_4wk":6353.0,"rev_last":930.0,"spend_4wk":3804.0,"opportunity":864.0,"ctrs8":"1.498,1.639,1.677,1.853,1.774,1.723,1.651,1.601","imps_last":106188},{"cat":"Fence & Gate Installation","cty":"United Kingdom","last_ctr":1.65,"avg_ctr":1.67,"peak_ctr":1.84,"peak_idx":4,"drop_peak_pct":10.2,"drop_avg_pct":1.2,"rev_4wk":6856.0,"rev_last":1466.0,"spend_4wk":4600.0,"opportunity":701.0,"ctrs8":"1.456,1.536,1.779,1.753,1.839,1.643,1.705,1.651","imps_last":139784},{"cat":"Property Management","cty":"Canada","last_ctr":1.32,"avg_ctr":2.06,"peak_ctr":5.56,"peak_idx":0,"drop_peak_pct":76.3,"drop_avg_pct":36.0,"rev_4wk":760.0,"rev_last":88.0,"spend_4wk":607.0,"opportunity":580.0,"ctrs8":"5.561,4.406,1.255,0.767,0.957,0.983,1.233,1.318","imps_last":12065},{"cat":"Painting & Decoration - Interior","cty":"Canada","last_ctr":1.68,"avg_ctr":1.9,"peak_ctr":2.47,"peak_idx":5,"drop_peak_pct":32.1,"drop_avg_pct":11.7,"rev_4wk":1669.0,"rev_last":179.0,"spend_4wk":509.0,"opportunity":535.0,"ctrs8":"1.389,1.511,1.994,2.301,2.148,2.474,1.733,1.681","imps_last":8624},{"cat":"Kitchen Installation & Remodelling","cty":"United Kingdom","last_ctr":1.39,"avg_ctr":1.52,"peak_ctr":1.67,"peak_idx":3,"drop_peak_pct":16.9,"drop_avg_pct":8.5,"rev_4wk":3044.0,"rev_last":303.0,"spend_4wk":2118.0,"opportunity":515.0,"ctrs8":"1.455,1.575,1.605,1.672,1.644,1.417,1.389,1.389","imps_last":26417},{"cat":"Solar Panel Installation","cty":"South Africa","last_ctr":2.23,"avg_ctr":2.43,"peak_ctr":3.07,"peak_idx":2,"drop_peak_pct":27.3,"drop_avg_pct":8.1,"rev_4wk":1841.0,"rev_last":262.0,"spend_4wk":558.0,"opportunity":503.0,"ctrs8":"2.121,2.019,3.073,2.314,2.439,2.553,2.683,2.233","imps_last":46623},{"cat":"Man & Van Services","cty":"United Kingdom","last_ctr":0.97,"avg_ctr":1.33,"peak_ctr":1.61,"peak_idx":3,"drop_peak_pct":40.0,"drop_avg_pct":27.6,"rev_4wk":1203.0,"rev_last":300.0,"spend_4wk":819.0,"opportunity":482.0,"ctrs8":"1.348,1.407,1.428,1.611,1.171,1.454,1.288,0.966","imps_last":26405},{"cat":"Painting & Decoration - Interior","cty":"New Zealand","last_ctr":0.92,"avg_ctr":1.06,"peak_ctr":1.44,"peak_idx":0,"drop_peak_pct":35.8,"drop_avg_pct":12.7,"rev_4wk":1327.0,"rev_last":193.0,"spend_4wk":604.0,"opportunity":475.0,"ctrs8":"1.436,1.37,0.88,1.041,1.125,0.79,0.882,0.922","imps_last":11061},{"cat":"End of Tenancy Cleaning","cty":"United Kingdom","last_ctr":1.16,"avg_ctr":1.02,"peak_ctr":1.3,"peak_idx":0,"drop_peak_pct":10.9,"drop_avg_pct":-14.5,"rev_4wk":4061.0,"rev_last":693.0,"spend_4wk":3699.0,"opportunity":442.0,"ctrs8":"1.305,1.174,0.908,0.913,0.82,0.914,0.929,1.163","imps_last":75377},{"cat":"DJ","cty":"United States","last_ctr":1.33,"avg_ctr":1.16,"peak_ctr":1.36,"peak_idx":5,"drop_peak_pct":2.6,"drop_avg_pct":-14.3,"rev_4wk":17064.0,"rev_last":3149.0,"spend_4wk":12824.0,"opportunity":438.0,"ctrs8":"1.003,1.032,1.078,1.176,1.096,1.363,1.219,1.328","imps_last":144322},{"cat":"Removal Companies","cty":"United Kingdom","last_ctr":1.14,"avg_ctr":1.19,"peak_ctr":1.46,"peak_idx":2,"drop_peak_pct":21.4,"drop_avg_pct":3.8,"rev_4wk":1626.0,"rev_last":217.0,"spend_4wk":780.0,"opportunity":348.0,"ctrs8":"0.972,1.206,1.456,1.269,1.132,1.13,1.206,1.144","imps_last":7695},{"cat":"General Builders","cty":"New Zealand","last_ctr":1.16,"avg_ctr":1.26,"peak_ctr":1.91,"peak_idx":1,"drop_peak_pct":39.2,"drop_avg_pct":7.7,"rev_4wk":876.0,"rev_last":474.0,"spend_4wk":360.0,"opportunity":343.0,"ctrs8":"1.873,1.91,0.991,1.034,1.172,0.784,1.145,1.162","imps_last":8780},{"cat":"End of Tenancy Cleaning","cty":"New Zealand","last_ctr":1.04,"avg_ctr":1.05,"peak_ctr":1.31,"peak_idx":0,"drop_peak_pct":20.7,"drop_avg_pct":1.0,"rev_4wk":1564.0,"rev_last":194.0,"spend_4wk":922.0,"opportunity":323.0,"ctrs8":"1.312,1.121,1.039,1.188,1.024,0.871,0.815,1.041","imps_last":16526},{"cat":"Photo Booth Hire","cty":"United States","last_ctr":2.47,"avg_ctr":2.37,"peak_ctr":2.58,"peak_idx":2,"drop_peak_pct":4.4,"drop_avg_pct":-4.1,"rev_4wk":7351.0,"rev_last":941.0,"spend_4wk":4598.0,"opportunity":322.0,"ctrs8":"2.212,2.334,2.583,2.431,2.323,2.206,2.431,2.47","imps_last":26918},{"cat":"Asbestos Removal & Surveys","cty":"United Kingdom","last_ctr":1.03,"avg_ctr":1.28,"peak_ctr":1.51,"peak_idx":5,"drop_peak_pct":31.3,"drop_avg_pct":19.2,"rev_4wk":966.0,"rev_last":117.0,"spend_4wk":788.0,"opportunity":302.0,"ctrs8":"1.315,1.309,1.167,1.286,1.424,1.506,1.202,1.035","imps_last":24154},{"cat":"Gutter Cleaning","cty":"United Kingdom","last_ctr":6.41,"avg_ctr":4.46,"peak_ctr":8.67,"peak_idx":1,"drop_peak_pct":26.1,"drop_avg_pct":-43.6,"rev_4wk":1044.0,"rev_last":160.0,"spend_4wk":925.0,"opportunity":272.0,"ctrs8":"8.487,8.672,2.374,1.9,1.663,2.631,3.561,6.409","imps_last":10907},{"cat":"Marquee Hire","cty":"United Kingdom","last_ctr":1.17,"avg_ctr":1.28,"peak_ctr":1.49,"peak_idx":3,"drop_peak_pct":21.7,"drop_avg_pct":9.1,"rev_4wk":1236.0,"rev_last":213.0,"spend_4wk":1127.0,"opportunity":269.0,"ctrs8":"1.139,1.366,1.356,1.49,1.314,1.243,1.185,1.166","imps_last":20833},{"cat":"General Builders","cty":"Ireland","last_ctr":0.88,"avg_ctr":1.66,"peak_ctr":2.62,"peak_idx":4,"drop_peak_pct":66.3,"drop_avg_pct":46.9,"rev_4wk":381.0,"rev_last":62.0,"spend_4wk":88.0,"opportunity":253.0,"ctrs8":"0.979,1.159,1.622,2.01,2.619,2.172,1.834,0.882","imps_last":5103},{"cat":"TV Installation & Mounting","cty":"United States","last_ctr":3.22,"avg_ctr":3.16,"peak_ctr":3.73,"peak_idx":4,"drop_peak_pct":13.7,"drop_avg_pct":-2.1,"rev_4wk":1676.0,"rev_last":141.0,"spend_4wk":1265.0,"opportunity":230.0,"ctrs8":"2.107,2.358,3.594,3.29,3.734,3.701,3.247,3.222","imps_last":10864},{"cat":"Tutoring","cty":"Deutschland","last_ctr":1.06,"avg_ctr":0.99,"peak_ctr":1.68,"peak_idx":0,"drop_peak_pct":37.3,"drop_avg_pct":-6.9,"rev_4wk":598.0,"rev_last":102.0,"spend_4wk":185.0,"opportunity":223.0,"ctrs8":"1.683,0.883,0.834,0.809,0.837,1.118,0.684,1.056","imps_last":2747},{"cat":"House Clearance","cty":"United Kingdom","last_ctr":1.49,"avg_ctr":1.45,"peak_ctr":1.65,"peak_idx":0,"drop_peak_pct":9.4,"drop_avg_pct":-3.0,"rev_4wk":2087.0,"rev_last":265.0,"spend_4wk":1817.0,"opportunity":196.0,"ctrs8":"1.648,1.609,1.215,1.363,1.354,1.401,1.51,1.493","imps_last":18824},{"cat":"Bathroom Installation & Remodel","cty":"United Kingdom","last_ctr":1.99,"avg_ctr":1.91,"peak_ctr":2.02,"peak_idx":5,"drop_peak_pct":1.4,"drop_avg_pct":-4.5,"rev_4wk":13941.0,"rev_last":2300.0,"spend_4wk":7758.0,"opportunity":193.0,"ctrs8":"1.731,1.832,1.795,1.942,1.986,2.021,1.961,1.993","imps_last":99280},{"cat":"Tree Surgery & Removal","cty":"Canada","last_ctr":1.94,"avg_ctr":1.86,"peak_ctr":2.31,"peak_idx":4,"drop_peak_pct":16.1,"drop_avg_pct":-4.1,"rev_4wk":1168.0,"rev_last":95.0,"spend_4wk":578.0,"opportunity":188.0,"ctrs8":"1.067,1.25,2.138,2.277,2.309,1.908,2.009,1.938","imps_last":14657},{"cat":"Tree Surgery & Removal","cty":"New Zealand","last_ctr":1.5,"avg_ctr":1.42,"peak_ctr":2.14,"peak_idx":1,"drop_peak_pct":29.7,"drop_avg_pct":-6.2,"rev_4wk":614.0,"rev_last":133.0,"spend_4wk":318.0,"opportunity":182.0,"ctrs8":"0,2.142,1.078,1.36,1.355,1.072,1.409,1.505","imps_last":5646},{"cat":"Commercial & Office Cleaning","cty":"New Zealand","last_ctr":0.56,"avg_ctr":1.04,"peak_ctr":1.72,"peak_idx":1,"drop_peak_pct":67.3,"drop_avg_pct":45.8,"rev_4wk":258.0,"rev_last":0.0,"spend_4wk":67.0,"opportunity":174.0,"ctrs8":"0,1.721,1.013,0,1.093,0.924,0.913,0.562","imps_last":2312},{"cat":"Property Management","cty":"Australia","last_ctr":1.41,"avg_ctr":1.57,"peak_ctr":2.26,"peak_idx":1,"drop_peak_pct":37.5,"drop_avg_pct":10.1,"rev_4wk":384.0,"rev_last":209.0,"spend_4wk":119.0,"opportunity":144.0,"ctrs8":"1.237,2.258,1.668,1.26,1.392,1.506,1.833,1.412","imps_last":2125},{"cat":"Man & Van Services","cty":"South Africa","last_ctr":1.03,"avg_ctr":1.27,"peak_ctr":1.76,"peak_idx":1,"drop_peak_pct":41.5,"drop_avg_pct":19.4,"rev_4wk":291.0,"rev_last":76.0,"spend_4wk":191.0,"opportunity":121.0,"ctrs8":"0,1.757,1.104,0.924,1.526,1.39,1.189,1.027","imps_last":22389},{"cat":"Painting & Decoration - Interior","cty":"Ireland","last_ctr":0.98,"avg_ctr":1.57,"peak_ctr":1.9,"peak_idx":4,"drop_peak_pct":48.5,"drop_avg_pct":37.8,"rev_4wk":232.0,"rev_last":21.0,"spend_4wk":96.0,"opportunity":112.0,"ctrs8":"1.536,1.519,1.629,1.785,1.903,1.6,1.648,0.98","imps_last":4183},{"cat":"Business Accounting Services","cty":"South Africa","last_ctr":0.87,"avg_ctr":0.76,"peak_ctr":1.07,"peak_idx":1,"drop_peak_pct":18.3,"drop_avg_pct":-15.1,"rev_4wk":605.0,"rev_last":260.0,"spend_4wk":197.0,"opportunity":111.0,"ctrs8":"0,1.069,0.677,0.674,0.629,0.626,0.763,0.873","imps_last":30117},{"cat":"CCTV Installation","cty":"South Africa","last_ctr":1.79,"avg_ctr":1.52,"peak_ctr":1.99,"peak_idx":2,"drop_peak_pct":9.9,"drop_avg_pct":-17.8,"rev_4wk":1103.0,"rev_last":189.0,"spend_4wk":535.0,"opportunity":110.0,"ctrs8":"0,0,1.991,1.148,1.252,1.429,1.517,1.793","imps_last":55881},{"cat":"Roof Repair","cty":"South Africa","last_ctr":1.23,"avg_ctr":1.19,"peak_ctr":1.44,"peak_idx":5,"drop_peak_pct":14.1,"drop_avg_pct":-3.5,"rev_4wk":758.0,"rev_last":183.0,"spend_4wk":325.0,"opportunity":107.0,"ctrs8":"1.071,1.016,1.212,1.009,1.246,1.436,1.303,1.233","imps_last":51754},{"cat":"Deck or Porch Construction","cty":"New Zealand","last_ctr":1.23,"avg_ctr":1.68,"peak_ctr":2.83,"peak_idx":3,"drop_peak_pct":56.8,"drop_avg_pct":27.0,"rev_4wk":182.0,"rev_last":0.0,"spend_4wk":128.0,"opportunity":103.0,"ctrs8":"0,1.521,1.428,2.833,2.0,1.474,1.258,1.225","imps_last":2040},{"cat":"Tutoring","cty":"United Kingdom","last_ctr":0.68,"avg_ctr":0.67,"peak_ctr":0.83,"peak_idx":5,"drop_peak_pct":19.0,"drop_avg_pct":-1.2,"rev_4wk":539.0,"rev_last":61.0,"spend_4wk":652.0,"opportunity":103.0,"ctrs8":"0.576,0.469,0.696,0.677,0.71,0.835,0.703,0.676","imps_last":9321},{"cat":"Limousine Hire","cty":"Canada","last_ctr":1.36,"avg_ctr":1.16,"peak_ctr":1.66,"peak_idx":2,"drop_peak_pct":17.9,"drop_avg_pct":-17.1,"rev_4wk":477.0,"rev_last":29.0,"spend_4wk":616.0,"opportunity":85.0,"ctrs8":"0.917,0.849,1.661,1.156,1.011,1.131,1.23,1.364","imps_last":10927},{"cat":"Accounting","cty":"Canada","last_ctr":2.06,"avg_ctr":5.18,"peak_ctr":14.19,"peak_idx":1,"drop_peak_pct":85.5,"drop_avg_pct":60.3,"rev_4wk":98.0,"rev_last":42.0,"spend_4wk":111.0,"opportunity":84.0,"ctrs8":"10.424,14.193,3.04,2.514,2.154,0,1.88,2.055","imps_last":4331},{"cat":"Landscaping","cty":"Ireland","last_ctr":1.16,"avg_ctr":1.23,"peak_ctr":1.57,"peak_idx":4,"drop_peak_pct":26.2,"drop_avg_pct":5.9,"rev_4wk":307.0,"rev_last":11.0,"spend_4wk":88.0,"opportunity":80.0,"ctrs8":"0,0,1.15,1.196,1.574,1.009,1.314,1.161","imps_last":4134},{"cat":"Tax Preparation","cty":"Canada","last_ctr":1.65,"avg_ctr":1.59,"peak_ctr":1.93,"peak_idx":4,"drop_peak_pct":14.6,"drop_avg_pct":-3.6,"rev_4wk":523.0,"rev_last":87.0,"spend_4wk":358.0,"opportunity":76.0,"ctrs8":"0,0,1.164,1.348,1.934,1.56,1.901,1.651","imps_last":5695},{"cat":"Property Management","cty":"New Zealand","last_ctr":1.69,"avg_ctr":1.59,"peak_ctr":1.89,"peak_idx":1,"drop_peak_pct":10.9,"drop_avg_pct":-5.9,"rev_4wk":594.0,"rev_last":85.0,"spend_4wk":203.0,"opportunity":65.0,"ctrs8":"1.812,1.894,1.526,1.516,1.679,1.052,1.586,1.688","imps_last":7821},{"cat":"HR and Payroll Services","cty":"South Africa","last_ctr":0.62,"avg_ctr":0.62,"peak_ctr":0.72,"peak_idx":2,"drop_peak_pct":14.4,"drop_avg_pct":-0.1,"rev_4wk":436.0,"rev_last":193.0,"spend_4wk":168.0,"opportunity":63.0,"ctrs8":"0,0,0.722,0.585,0.661,0.578,0.539,0.618","imps_last":29596},{"cat":"Pest Control","cty":"South Africa","last_ctr":0.77,"avg_ctr":0.92,"peak_ctr":1.02,"peak_idx":1,"drop_peak_pct":23.8,"drop_avg_pct":15.7,"rev_4wk":247.0,"rev_last":81.0,"spend_4wk":205.0,"opportunity":59.0,"ctrs8":"0.974,1.016,1.008,0.722,0.895,0.988,0.969,0.774","imps_last":54032},{"cat":"Web Design","cty":"New Zealand","last_ctr":1.35,"avg_ctr":1.32,"peak_ctr":2.34,"peak_idx":1,"drop_peak_pct":42.3,"drop_avg_pct":-2.3,"rev_4wk":138.0,"rev_last":51.0,"spend_4wk":151.0,"opportunity":58.0,"ctrs8":"1.204,2.343,1.871,1.081,0.702,0.831,1.185,1.351","imps_last":5476},{"cat":"Electricians","cty":"Ireland","last_ctr":0.79,"avg_ctr":1.08,"peak_ctr":1.43,"peak_idx":3,"drop_peak_pct":44.7,"drop_avg_pct":26.5,"rev_4wk":127.0,"rev_last":12.0,"spend_4wk":88.0,"opportunity":57.0,"ctrs8":"0,0,1.184,1.433,0.973,0.964,1.118,0.792","imps_last":5175},{"cat":"Accounting","cty":"New Zealand","last_ctr":0.88,"avg_ctr":1.28,"peak_ctr":1.93,"peak_idx":3,"drop_peak_pct":54.6,"drop_avg_pct":31.3,"rev_4wk":99.0,"rev_last":21.0,"spend_4wk":104.0,"opportunity":54.0,"ctrs8":"0,1.593,1.496,1.934,1.087,1.112,0.843,0.878","imps_last":2506},{"cat":"General Plumbing","cty":"Ireland","last_ctr":0.65,"avg_ctr":0.88,"peak_ctr":1.19,"peak_idx":4,"drop_peak_pct":45.1,"drop_avg_pct":25.5,"rev_4wk":111.0,"rev_last":19.0,"spend_4wk":91.0,"opportunity":50.0,"ctrs8":"0.88,0.704,0.892,0.78,1.192,0.973,0.95,0.654","imps_last":5350},{"cat":"Landscaping","cty":"New Zealand","last_ctr":1.49,"avg_ctr":1.28,"peak_ctr":1.61,"peak_idx":0,"drop_peak_pct":7.4,"drop_avg_pct":-16.4,"rev_4wk":656.0,"rev_last":124.0,"spend_4wk":341.0,"opportunity":49.0,"ctrs8":"1.612,1.101,1.058,1.198,1.119,1.152,1.522,1.492","imps_last":7709},{"cat":"Wedding Celebrants","cty":"New Zealand","last_ctr":1.02,"avg_ctr":1.18,"peak_ctr":1.89,"peak_idx":1,"drop_peak_pct":46.0,"drop_avg_pct":13.7,"rev_4wk":103.0,"rev_last":7.0,"spend_4wk":134.0,"opportunity":47.0,"ctrs8":"0,1.888,0.993,0.847,1.208,1.148,1.161,1.019","imps_last":5202},{"cat":"Web Design","cty":"Ireland","last_ctr":0.9,"avg_ctr":0.86,"peak_ctr":1.12,"peak_idx":2,"drop_peak_pct":19.2,"drop_avg_pct":-5.1,"rev_4wk":206.0,"rev_last":131.0,"spend_4wk":91.0,"opportunity":40.0,"ctrs8":"0,0,1.118,0.892,0.801,0.587,0.852,0.903","imps_last":3765},{"cat":"House Cleaning","cty":"New Zealand","last_ctr":1.71,"avg_ctr":1.43,"peak_ctr":1.85,"peak_idx":2,"drop_peak_pct":7.9,"drop_avg_pct":-19.0,"rev_4wk":342.0,"rev_last":44.0,"spend_4wk":380.0,"opportunity":27.0,"ctrs8":"1.497,1.319,1.852,1.123,1.05,1.417,1.496,1.705","imps_last":4106},{"cat":"Property Extensions","cty":"Ireland","last_ctr":0.59,"avg_ctr":0.84,"peak_ctr":1.12,"peak_idx":5,"drop_peak_pct":47.1,"drop_avg_pct":29.3,"rev_4wk":54.0,"rev_last":0.0,"spend_4wk":87.0,"opportunity":25.0,"ctrs8":"0,0,0.395,1.108,0.775,1.118,1.027,0.591","imps_last":4230},{"cat":"Personal Trainers","cty":"South Africa","last_ctr":1.19,"avg_ctr":1.25,"peak_ctr":1.45,"peak_idx":5,"drop_peak_pct":17.9,"drop_avg_pct":5.2,"rev_4wk":139.0,"rev_last":5.0,"spend_4wk":100.0,"opportunity":25.0,"ctrs8":"0,0,1.105,1.014,1.345,1.448,1.421,1.189","imps_last":8240},{"cat":"Wedding Photography","cty":"France","last_ctr":1.33,"avg_ctr":1.18,"peak_ctr":1.58,"peak_idx":4,"drop_peak_pct":16.0,"drop_avg_pct":-12.4,"rev_4wk":157.0,"rev_last":9.0,"spend_4wk":70.0,"opportunity":25.0,"ctrs8":"0.877,0.76,1.079,1.191,1.579,1.169,1.455,1.326","imps_last":1886},{"cat":"Deep Cleaning Services","cty":"South Africa","last_ctr":1.8,"avg_ctr":1.83,"peak_ctr":2.05,"peak_idx":4,"drop_peak_pct":12.3,"drop_avg_pct":1.6,"rev_4wk":194.0,"rev_last":39.0,"spend_4wk":109.0,"opportunity":24.0,"ctrs8":"0,0,1.535,1.757,2.05,1.89,1.93,1.797","imps_last":6512},{"cat":"Home Insulation","cty":"Ireland","last_ctr":1.23,"avg_ctr":1.26,"peak_ctr":1.45,"peak_idx":4,"drop_peak_pct":15.5,"drop_avg_pct":2.5,"rev_4wk":93.0,"rev_last":55.0,"spend_4wk":84.0,"opportunity":14.0,"ctrs8":"0,0,1.155,1.339,1.454,1.12,1.268,1.229","imps_last":4720},{"cat":"Security Guard Services","cty":"Australia","last_ctr":0.7,"avg_ctr":1.04,"peak_ctr":1.81,"peak_idx":1,"drop_peak_pct":61.4,"drop_avg_pct":32.8,"rev_4wk":20.0,"rev_last":0.0,"spend_4wk":187.0,"opportunity":12.0,"ctrs8":"1.309,1.806,1.277,0.889,0.674,0.952,0.697,0.697","imps_last":2008},{"cat":"Fence & Gate Installation","cty":"New Zealand","last_ctr":1.59,"avg_ctr":1.35,"peak_ctr":1.61,"peak_idx":0,"drop_peak_pct":1.3,"drop_avg_pct":-18.3,"rev_4wk":721.0,"rev_last":156.0,"spend_4wk":345.0,"opportunity":9.0,"ctrs8":"1.613,1.153,1.18,1.191,1.33,1.316,1.39,1.592","imps_last":11184},{"cat":"Private Investigators","cty":"United Kingdom","last_ctr":1.66,"avg_ctr":1.43,"peak_ctr":1.67,"peak_idx":0,"drop_peak_pct":0.6,"drop_avg_pct":-16.6,"rev_4wk":799.0,"rev_last":100.0,"spend_4wk":954.0,"opportunity":5.0,"ctrs8":"1.672,1.398,1.273,1.354,1.348,1.415,1.278,1.662","imps_last":23167}];
 window.FATIGUE_WEEKS_SHORT = ["18My", "25My", "1Jn", "8Jn", "15Jn", "22Jn", "29Jn", "6Jl"];
@@ -2745,5 +2518,303 @@ window.AN_TAB = true;
   else mountTabs();
 })();
 </script>
+<!-- ADSET-TICKER:v6 -->
+<style>
+  /* Bigger native action checkboxes — overrides the inline 13px */
+  input.action-cb {
+    width: 22px !important; height: 22px !important;
+    cursor: pointer !important;
+    accent-color: #10b981 !important;
+    margin: 0 6px !important;
+    vertical-align: middle !important;
+  }
+  /* Row-level visual: ticked rows get a green tint, all adset rows get a pointer cursor */
+  tr[data-agkey] { cursor: pointer; }
+  tr[data-agkey]:hover { background: rgba(255,255,255,.04) !important; }
+  tr[data-agkey].adset-row-ticked { background: rgba(16,185,129,.10) !important; }
+  tr[data-agkey].adset-row-ticked:hover { background: rgba(16,185,129,.15) !important; }
+
+  /* Floating copy-list bar */
+  #adset-ticker-bar {
+    position: fixed; bottom: 18px; right: 18px; z-index: 9998;
+    background: rgba(15,18,30,.95); border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px; padding: 10px 14px; display: flex;
+    align-items: center; gap: 10px;
+    color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12px; backdrop-filter: blur(6px);
+    box-shadow: 0 6px 24px rgba(0,0,0,.4);
+  }
+  #adset-ticker-bar .count { color: #10b981; font-weight: 700; font-size: 14px; }
+  #adset-ticker-bar button {
+    background: #10b981; color: #fff; border: none; border-radius: 5px;
+    padding: 6px 12px; cursor: pointer; font-size: 12px; font-weight: 600;
+    font-family: inherit;
+  }
+  #adset-ticker-bar button.secondary { background: rgba(255,255,255,.08); color: #94a3b8; }
+  #adset-ticker-bar button:hover { filter: brightness(1.15); }
+</style>
+<div id="adset-ticker-bar">
+  <span style="color:#94a3b8;font-size:11px">Actions</span>
+  <span style="color:#10b981;font-weight:700;font-size:14px"><span class="action-count">0</span></span>
+  <button class="copy-actions">🎯 Copy actions</button>
+  <button class="secondary preview">Preview</button>
+  <span style="color:#475569">·</span>
+  <span style="color:#94a3b8;font-size:11px"><span class="count">0</span> selected</span>
+  <button class="secondary copy">📋 Copy list</button>
+  <button class="secondary tick-visible" title="Tick every adset row visible in the current tab">All visible</button>
+  <button class="secondary clear">Clear</button>
+</div>
+<dialog id="adset-ticker-preview" style="background:#0d1024;color:#e2e8f0;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:18px;min-width:500px;max-width:80vw;max-height:80vh">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <strong style="font-size:13px">Selected ad sets (paste anywhere)</strong>
+    <button class="close" style="background:none;color:#94a3b8;border:none;cursor:pointer;font-size:18px">×</button>
+  </div>
+  <textarea readonly style="width:100%;height:300px;background:#0a0c1a;color:#e2e8f0;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:10px;font-family:'SF Mono',Menlo,monospace;font-size:11.5px;line-height:1.4;resize:vertical"></textarea>
+</dialog>
+<script>
+(function () {
+  const NATIVE_KEY = 'ppc_actions_v1';   // same key the page itself uses
+  // country name → 2-letter market code (lower-cased keys for safety)
+  const C2MKT = {
+    'united kingdom':'UK','united states':'US','canada':'CA','south africa':'ZA',
+    'australia':'AU','new zealand':'NZ','ireland':'IE','deutschland':'DE',
+    'germany':'DE','france':'FR',
+  };
+
+  function loadNative() {
+    try { return JSON.parse(localStorage.getItem(NATIVE_KEY) || '{}'); }
+    catch (e) { return {}; }
+  }
+  function checkedKeys() {
+    const all = loadNative();
+    return Object.keys(all).filter(k => all[k] && all[k].checked);
+  }
+  function agkeyToLine(agkey) {
+    // agkey format = "<adset_name>|<country_name>"
+    const i = agkey.lastIndexOf('|');
+    if (i < 0) return agkey;
+    const name = agkey.slice(0, i);
+    const country = agkey.slice(i + 1);
+    const mkt = C2MKT[country.toLowerCase()] || country;
+    return mkt + '/' + name;
+  }
+
+  // ── ACTION export: the operator's Action-dropdown decisions ─────────────
+  // This is the "copy over to execute" feature. It reads the live
+  // <select class="action-sel"> dropdowns (what the user actually changed),
+  // NOT the checkboxes. Independent of the native page code so it can't break.
+  const ACTION_LABELS = {
+    pause:'🔴 PAUSE', cut30:'🟠 −30% BUDGET', cut50:'🟠 −50% BUDGET',
+    scale10:'🔵 +10% BUDGET', scale20:'🔵 +20% BUDGET', firstwk25:'⚡ +25% FIRST-WEEK WINNER',
+    turn_off_ads:'🛑 TURN OFF ADS', sandbox_pause:'🔴 SANDBOX PAUSE', sandbox_scale:'🟩 SANDBOX SCALE',
+  };
+  const ACTION_ORDER = ['pause','cut30','cut50','scale10','scale20','firstwk25','turn_off_ads','sandbox_pause','sandbox_scale'];
+  function gatherActions() {
+    const seen = {};
+    document.querySelectorAll('select.action-sel').forEach(s => {
+      const v = s.value;
+      if (!v || v === 'hold') return;               // 'hold' = no action
+      const k = s.dataset.agkey || '';
+      const j = k.lastIndexOf('|');
+      const mkt = s.dataset.mkt || (C2MKT[(k.slice(j + 1)).toLowerCase()] || '');
+      const name = j >= 0 ? k.slice(0, j) : k;
+      seen[k] = { mkt, name, bucket: v };            // dedup by adset (last wins)
+    });
+    return Object.keys(seen).map(k => seen[k]);
+  }
+  function actionsText() {
+    const items = gatherActions(), by = {};
+    items.forEach(it => { (by[it.bucket] = by[it.bucket] || []).push(it.mkt + ' | ' + it.name); });
+    const out = ['# Adset action list — from /performance', ''];
+    let total = 0;
+    ACTION_ORDER.forEach(b => {
+      if (!by[b]) return;
+      out.push('## ' + (ACTION_LABELS[b] || b) + ' (' + by[b].length + ')');
+      by[b].sort().forEach(l => out.push('  - ' + l));
+      out.push('');
+      total += by[b].length;
+    });
+    return total ? out.join('\n') : '';
+  }
+
+  // ── Bar + dialog wiring ─────────────────────────────────────
+  const bar = document.getElementById('adset-ticker-bar');
+  const dlg = document.getElementById('adset-ticker-preview');
+  const countEl = bar.querySelector('.count');
+  const actionCountEl = bar.querySelector('.action-count');
+  const textarea = dlg.querySelector('textarea');
+
+  function flash(btn, msg) {
+    if (!btn) return;
+    const o = btn.textContent;
+    btn.textContent = msg;
+    setTimeout(() => { btn.textContent = o; }, 1500);
+  }
+  function updateActionCount() {
+    const n = String(gatherActions().length);
+    if (actionCountEl && actionCountEl.textContent !== n) actionCountEl.textContent = n;
+  }
+  function copyActions() {
+    const txt = actionsText();
+    const btn = bar.querySelector('.copy-actions');
+    if (!txt) { flash(btn, '⚠ no actions set'); return; }
+    navigator.clipboard.writeText(txt).then(() => flash(btn, '✓ Copied'))
+      .catch(() => { textarea.value = txt; if (dlg.showModal) dlg.showModal(); });
+  }
+
+  function updateBar() {
+    const keys = checkedKeys();
+    updateActionCount();
+    const newCount = String(keys.length);
+    // Only write to DOM if value actually changed — avoids any chance of
+    // re-fire loops if anything else is observing.
+    if (countEl.textContent !== newCount) countEl.textContent = newCount;
+    const all = loadNative();
+    // Apply ticked highlight to corresponding rows (idempotent toggle)
+    document.querySelectorAll('tr[data-agkey]').forEach(tr => {
+      const k = tr.dataset.agkey;
+      const want = (all[k] && all[k].checked === true);
+      const has = tr.classList.contains('adset-row-ticked');
+      if (want && !has) tr.classList.add('adset-row-ticked');
+      else if (!want && has) tr.classList.remove('adset-row-ticked');
+    });
+  }
+
+  function copyList() {
+    const lines = checkedKeys().map(agkeyToLine).sort().join('\n');
+    navigator.clipboard.writeText(lines).then(() => {
+      const btn = bar.querySelector('.copy');
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied';
+      setTimeout(() => btn.textContent = orig, 1500);
+    });
+  }
+  function showPreview() {
+    // Prefer the action decisions (the export that matters); fall back to the
+    // checked-adset name list when no actions are set.
+    const acts = actionsText();
+    textarea.value = acts
+      || (checkedKeys().map(agkeyToLine).sort().join('\n'))
+      || '(no actions set — change the Action dropdown on any adset row)';
+    if (typeof dlg.showModal === 'function') dlg.showModal();
+    else dlg.style.display = 'block';
+  }
+  function clearAll() {
+    const keys = checkedKeys();
+    if (!keys.length) return;
+    if (!confirm('Clear all ' + keys.length + ' ticked ad sets?')) return;
+    const all = loadNative();
+    keys.forEach(k => { if (all[k]) all[k].checked = false; });
+    localStorage.setItem(NATIVE_KEY, JSON.stringify(all));
+    document.querySelectorAll('input.action-cb').forEach(cb => {
+      const tr = cb.closest('tr');
+      if (tr && all[tr.dataset.agkey] && !all[tr.dataset.agkey].checked) cb.checked = false;
+    });
+    updateBar();
+  }
+  function tickAllVisible() {
+    const all = loadNative();
+    let n = 0;
+    document.querySelectorAll('.country-section.active tr[data-agkey]').forEach(tr => {
+      if (tr.offsetParent === null) return;     // not actually visible
+      const k = tr.dataset.agkey;
+      all[k] = { ...(all[k] || {}), checked: true };
+      const cb = tr.querySelector('input.action-cb');
+      if (cb) cb.checked = true;
+      n++;
+    });
+    localStorage.setItem(NATIVE_KEY, JSON.stringify(all));
+    updateBar();
+    if (n) {
+      const btn = bar.querySelector('.tick-visible');
+      const orig = btn.textContent;
+      btn.textContent = '✓ ' + n + ' ticked';
+      setTimeout(() => btn.textContent = orig, 1800);
+    }
+  }
+
+  bar.querySelector('.copy-actions').addEventListener('click', copyActions);
+  bar.querySelector('.copy').addEventListener('click', copyList);
+  bar.querySelector('.preview').addEventListener('click', showPreview);
+  bar.querySelector('.tick-visible').addEventListener('click', tickAllVisible);
+  bar.querySelector('.clear').addEventListener('click', clearAll);
+  // Keep the action count live as the operator changes Action dropdowns.
+  document.addEventListener('change', (e) => {
+    if (e.target.classList && e.target.classList.contains('action-sel')) {
+      setTimeout(updateActionCount, 10);   // after the native save handler
+    }
+  });
+  dlg.querySelector('.close').addEventListener('click', () => {
+    if (typeof dlg.close === 'function') dlg.close();
+    else dlg.style.display = 'none';
+  });
+
+  // ── Multi-tick UX: whole-row click toggles native checkbox; shift+click range ──
+  let LAST_TICKED = null;
+  document.addEventListener('click', (e) => {
+    // Skip clicks on the bar / dialog / interactive elements / notes
+    if (e.target.closest('#adset-ticker-bar, #adset-ticker-preview')) return;
+    if (e.target.closest('input.action-cb')) return;     // native handler will run
+    if (e.target.closest('a, button, .action-note, input:not(.action-cb), select, textarea')) return;
+    const tr = e.target.closest('tr[data-agkey]');
+    if (!tr) return;
+    const cb = tr.querySelector('input.action-cb');
+    if (!cb) return;
+    e.preventDefault();
+    const willCheck = !cb.checked;
+
+    // Shift+click range select within the same table
+    if (e.shiftKey && LAST_TICKED && LAST_TICKED !== tr) {
+      const sameTable = LAST_TICKED.closest('table') === tr.closest('table');
+      if (sameTable) {
+        const tbody = tr.parentNode;
+        const all = [...tbody.children].filter(c => c.dataset && c.dataset.agkey);
+        const i = all.indexOf(LAST_TICKED);
+        const j = all.indexOf(tr);
+        if (i >= 0 && j >= 0) {
+          const [lo, hi] = i < j ? [i, j] : [j, i];
+          for (let k = lo; k <= hi; k++) {
+            const cb2 = all[k].querySelector('input.action-cb');
+            if (cb2 && cb2.checked !== willCheck) {
+              cb2.checked = willCheck;
+              cb2.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          }
+          LAST_TICKED = tr;
+          updateBar();
+          return;
+        }
+      }
+    }
+
+    cb.checked = willCheck;
+    cb.dispatchEvent(new Event('change', { bubbles: true }));
+    LAST_TICKED = tr;
+    updateBar();
+  });
+
+  // Listen for native checkbox changes (manual single-clicks)
+  document.addEventListener('change', (e) => {
+    if (e.target.classList?.contains('action-cb')) {
+      setTimeout(updateBar, 10);   // run after native save handler
+      LAST_TICKED = e.target.closest('tr[data-agkey]');
+    }
+  });
+
+  // Initial render
+  function start() {
+    setTimeout(updateBar, 200);   // give the page's renderTable() time to draw
+    setTimeout(updateBar, 800);   // belt-and-braces for slow renders
+    document.querySelectorAll('.tab').forEach(t =>
+      t.addEventListener('click', () => setTimeout(updateBar, 80)));
+    // NOTE: no MutationObserver — the v4 version caused an infinite loop.
+    // Tab clicks + the native `change` handler are sufficient to keep the
+    // bar fresh.
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
+
 </body>
 </html>

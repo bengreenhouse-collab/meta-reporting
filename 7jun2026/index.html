@@ -1975,7 +1975,7 @@ init();
 </script>
 <!-- /style controls -->
 
-<!-- ADSET-TICKER:v5 -->
+<!-- ADSET-TICKER:v6 -->
 <style>
   /* Bigger native action checkboxes — overrides the inline 13px */
   input.action-cb {
@@ -2011,11 +2011,13 @@ init();
   #adset-ticker-bar button:hover { filter: brightness(1.15); }
 </style>
 <div id="adset-ticker-bar">
-  <span style="color:#94a3b8;font-size:11px">Adset selector</span>
-  <span style="color:#475569">·</span>
-  <span><span class="count">0</span> selected</span>
-  <button class="copy">📋 Copy list</button>
+  <span style="color:#94a3b8;font-size:11px">Actions</span>
+  <span style="color:#10b981;font-weight:700;font-size:14px"><span class="action-count">0</span></span>
+  <button class="copy-actions">🎯 Copy actions</button>
   <button class="secondary preview">Preview</button>
+  <span style="color:#475569">·</span>
+  <span style="color:#94a3b8;font-size:11px"><span class="count">0</span> selected</span>
+  <button class="secondary copy">📋 Copy list</button>
   <button class="secondary tick-visible" title="Tick every adset row visible in the current tab">All visible</button>
   <button class="secondary clear">Clear</button>
 </div>
@@ -2054,14 +2056,72 @@ init();
     return mkt + '/' + name;
   }
 
+  // ── ACTION export: the operator's Action-dropdown decisions ─────────────
+  // This is the "copy over to execute" feature. It reads the live
+  // <select class="action-sel"> dropdowns (what the user actually changed),
+  // NOT the checkboxes. Independent of the native page code so it can't break.
+  const ACTION_LABELS = {
+    pause:'🔴 PAUSE', cut30:'🟠 −30% BUDGET', cut50:'🟠 −50% BUDGET',
+    scale10:'🔵 +10% BUDGET', scale20:'🔵 +20% BUDGET', firstwk25:'⚡ +25% FIRST-WEEK WINNER',
+    turn_off_ads:'🛑 TURN OFF ADS', sandbox_pause:'🔴 SANDBOX PAUSE', sandbox_scale:'🟩 SANDBOX SCALE',
+  };
+  const ACTION_ORDER = ['pause','cut30','cut50','scale10','scale20','firstwk25','turn_off_ads','sandbox_pause','sandbox_scale'];
+  function gatherActions() {
+    const seen = {};
+    document.querySelectorAll('select.action-sel').forEach(s => {
+      const v = s.value;
+      if (!v || v === 'hold') return;               // 'hold' = no action
+      const k = s.dataset.agkey || '';
+      const j = k.lastIndexOf('|');
+      const mkt = s.dataset.mkt || (C2MKT[(k.slice(j + 1)).toLowerCase()] || '');
+      const name = j >= 0 ? k.slice(0, j) : k;
+      seen[k] = { mkt, name, bucket: v };            // dedup by adset (last wins)
+    });
+    return Object.keys(seen).map(k => seen[k]);
+  }
+  function actionsText() {
+    const items = gatherActions(), by = {};
+    items.forEach(it => { (by[it.bucket] = by[it.bucket] || []).push(it.mkt + ' | ' + it.name); });
+    const out = ['# Adset action list — from /performance', ''];
+    let total = 0;
+    ACTION_ORDER.forEach(b => {
+      if (!by[b]) return;
+      out.push('## ' + (ACTION_LABELS[b] || b) + ' (' + by[b].length + ')');
+      by[b].sort().forEach(l => out.push('  - ' + l));
+      out.push('');
+      total += by[b].length;
+    });
+    return total ? out.join('\n') : '';
+  }
+
   // ── Bar + dialog wiring ─────────────────────────────────────
   const bar = document.getElementById('adset-ticker-bar');
   const dlg = document.getElementById('adset-ticker-preview');
   const countEl = bar.querySelector('.count');
+  const actionCountEl = bar.querySelector('.action-count');
   const textarea = dlg.querySelector('textarea');
+
+  function flash(btn, msg) {
+    if (!btn) return;
+    const o = btn.textContent;
+    btn.textContent = msg;
+    setTimeout(() => { btn.textContent = o; }, 1500);
+  }
+  function updateActionCount() {
+    const n = String(gatherActions().length);
+    if (actionCountEl && actionCountEl.textContent !== n) actionCountEl.textContent = n;
+  }
+  function copyActions() {
+    const txt = actionsText();
+    const btn = bar.querySelector('.copy-actions');
+    if (!txt) { flash(btn, '⚠ no actions set'); return; }
+    navigator.clipboard.writeText(txt).then(() => flash(btn, '✓ Copied'))
+      .catch(() => { textarea.value = txt; if (dlg.showModal) dlg.showModal(); });
+  }
 
   function updateBar() {
     const keys = checkedKeys();
+    updateActionCount();
     const newCount = String(keys.length);
     // Only write to DOM if value actually changed — avoids any chance of
     // re-fire loops if anything else is observing.
@@ -2078,8 +2138,7 @@ init();
   }
 
   function copyList() {
-    const lines = checkedKeys().map(agkeyToLine).sort().join('
-');
+    const lines = checkedKeys().map(agkeyToLine).sort().join('\n');
     navigator.clipboard.writeText(lines).then(() => {
       const btn = bar.querySelector('.copy');
       const orig = btn.textContent;
@@ -2088,8 +2147,12 @@ init();
     });
   }
   function showPreview() {
-    textarea.value = checkedKeys().map(agkeyToLine).sort().join('
-') || '(none selected)';
+    // Prefer the action decisions (the export that matters); fall back to the
+    // checked-adset name list when no actions are set.
+    const acts = actionsText();
+    textarea.value = acts
+      || (checkedKeys().map(agkeyToLine).sort().join('\n'))
+      || '(no actions set — change the Action dropdown on any adset row)';
     if (typeof dlg.showModal === 'function') dlg.showModal();
     else dlg.style.display = 'block';
   }
@@ -2127,10 +2190,17 @@ init();
     }
   }
 
+  bar.querySelector('.copy-actions').addEventListener('click', copyActions);
   bar.querySelector('.copy').addEventListener('click', copyList);
   bar.querySelector('.preview').addEventListener('click', showPreview);
   bar.querySelector('.tick-visible').addEventListener('click', tickAllVisible);
   bar.querySelector('.clear').addEventListener('click', clearAll);
+  // Keep the action count live as the operator changes Action dropdowns.
+  document.addEventListener('change', (e) => {
+    if (e.target.classList && e.target.classList.contains('action-sel')) {
+      setTimeout(updateActionCount, 10);   // after the native save handler
+    }
+  });
   dlg.querySelector('.close').addEventListener('click', () => {
     if (typeof dlg.close === 'function') dlg.close();
     else dlg.style.display = 'none';
@@ -2202,5 +2272,6 @@ init();
   else start();
 })();
 </script>
+
 </body>
 </html>
