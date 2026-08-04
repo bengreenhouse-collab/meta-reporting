@@ -1567,7 +1567,8 @@ init();
       out.push('');
       total += by[b].length;
     });
-    return total ? out.join('\n') : '';
+    return total ? out.join('
+') : '';
   }
 
   // ── Bar + dialog wiring ─────────────────────────────────────
@@ -1614,7 +1615,8 @@ init();
   }
 
   function copyList() {
-    const lines = checkedKeys().map(agkeyToLine).sort().join('\n');
+    const lines = checkedKeys().map(agkeyToLine).sort().join('
+');
     navigator.clipboard.writeText(lines).then(() => {
       const btn = bar.querySelector('.copy');
       const orig = btn.textContent;
@@ -1627,7 +1629,8 @@ init();
     // checked-adset name list when no actions are set.
     const acts = actionsText();
     textarea.value = acts
-      || (checkedKeys().map(agkeyToLine).sort().join('\n'))
+      || (checkedKeys().map(agkeyToLine).sort().join('
+'))
       || '(no actions set — change the Action dropdown on any adset row)';
     if (typeof dlg.showModal === 'function') dlg.showModal();
     else dlg.style.display = 'block';
@@ -1748,6 +1751,5 @@ init();
   else start();
 })();
 </script>
-
 </body>
 </html>

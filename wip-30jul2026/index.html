@@ -2713,7 +2713,8 @@ window.AN_TAB = true;
       out.push('');
       total += by[b].length;
     });
-    return total ? out.join('\n') : '';
+    return total ? out.join('
+') : '';
   }
 
   // ── Bar + dialog wiring ─────────────────────────────────────
@@ -2760,7 +2761,8 @@ window.AN_TAB = true;
   }
 
   function copyList() {
-    const lines = checkedKeys().map(agkeyToLine).sort().join('\n');
+    const lines = checkedKeys().map(agkeyToLine).sort().join('
+');
     navigator.clipboard.writeText(lines).then(() => {
       const btn = bar.querySelector('.copy');
       const orig = btn.textContent;
@@ -2773,7 +2775,8 @@ window.AN_TAB = true;
     // checked-adset name list when no actions are set.
     const acts = actionsText();
     textarea.value = acts
-      || (checkedKeys().map(agkeyToLine).sort().join('\n'))
+      || (checkedKeys().map(agkeyToLine).sort().join('
+'))
       || '(no actions set — change the Action dropdown on any adset row)';
     if (typeof dlg.showModal === 'function') dlg.showModal();
     else dlg.style.display = 'block';
@@ -2894,6 +2897,5 @@ window.AN_TAB = true;
   else start();
 })();
 </script>
-
 </body>
 </html>

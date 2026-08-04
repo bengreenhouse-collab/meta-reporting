@@ -99,7 +99,7 @@ td{padding:7px 8px;vertical-align:middle}
 <div id="week-switcher-bar">
   <label for="week-switcher">Week</label>
   <select id="week-switcher">
-      <option value="wip-30jul2026">Mid-week · 30 Jul 2026 (so far)</option>
+      <option value="wip-4aug2026">Mid-week · 4 Aug 2026 (so far)</option>
       <option value="2aug2026" selected>w/e 2 Aug 2026</option>
       <option value="26jul2026">w/e 26 Jul 2026</option>
       <option value="19jul2026">w/e 19 Jul 2026</option>
@@ -2713,7 +2713,8 @@ window.AN_TAB = true;
       out.push('');
       total += by[b].length;
     });
-    return total ? out.join('\n') : '';
+    return total ? out.join('
+') : '';
   }
 
   // ── Bar + dialog wiring ─────────────────────────────────────
@@ -2760,7 +2761,8 @@ window.AN_TAB = true;
   }
 
   function copyList() {
-    const lines = checkedKeys().map(agkeyToLine).sort().join('\n');
+    const lines = checkedKeys().map(agkeyToLine).sort().join('
+');
     navigator.clipboard.writeText(lines).then(() => {
       const btn = bar.querySelector('.copy');
       const orig = btn.textContent;
@@ -2773,7 +2775,8 @@ window.AN_TAB = true;
     // checked-adset name list when no actions are set.
     const acts = actionsText();
     textarea.value = acts
-      || (checkedKeys().map(agkeyToLine).sort().join('\n'))
+      || (checkedKeys().map(agkeyToLine).sort().join('
+'))
       || '(no actions set — change the Action dropdown on any adset row)';
     if (typeof dlg.showModal === 'function') dlg.showModal();
     else dlg.style.display = 'block';
@@ -2894,6 +2897,5 @@ window.AN_TAB = true;
   else start();
 })();
 </script>
-
 </body>
 </html>
