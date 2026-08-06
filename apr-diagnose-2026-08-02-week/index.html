@@ -1,0 +1,116 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>APR Diagnose — w/e 2 Aug 2026</title>
+<style>
+*{box-sizing:border-box}
+body{background:#0a0c1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;margin:0;padding:22px 26px 60px}
+h1{font-size:19px;margin:0 0 3px} h2{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:#94a3b8;margin:22px 0 7px;font-weight:700}
+.sub{color:#64748b;font-size:11.5px;margin-bottom:14px}
+.verdict{background:linear-gradient(90deg,rgba(59,130,246,.14),rgba(59,130,246,.03));border-left:3px solid #3b82f6;border-radius:7px;padding:12px 14px;font-size:14px;line-height:1.55;margin-bottom:6px}
+.verdict b{color:#fff}
+.cards{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 4px}
+.card{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:9px 12px;min-width:118px;flex:1}
+.lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;font-weight:700}
+.val{font-size:19px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums}
+.dlt{font-size:11px;font-weight:700;font-variant-numeric:tabular-nums} .prev{font-size:9.5px;color:#475569;margin-top:1px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:#64748b;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.09);font-weight:700}
+td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04)}
+td.n,th.n{text-align:right} .sm{font-size:11px} .mut{color:#64748b}
+.pos{color:#10b981} .neg{color:#ef4444}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.two{display:flex;gap:18px;flex-wrap:wrap} .two>div{flex:1;min-width:340px}
+.wf{display:flex;gap:10px;align-items:stretch;margin:8px 0}
+.wfi{flex:1;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:10px 12px}
+.wfi .b{font-size:17px;font-weight:800}
+.spark{display:flex;gap:3px;align-items:flex-end;height:64px;margin:6px 0 2px}
+.sc{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.sb{width:100%;border-radius:2px 2px 0 0;min-height:2px} .sb.up{background:#10b981} .sb.dn{background:#ef4444}
+.sd{font-size:8px;color:#334155;margin-top:2px}
+.note{font-size:10.5px;color:#475569;margin-top:5px;line-height:1.5}
+</style></head><body>
+
+<h1>🔍 APR Diagnose — w/e 2 Aug 2026</h1>
+<div class="sub">vs w/e 26 Jul · week-over-week · all markets · Trading Data (Tableau) = source of truth for APR</div>
+
+<div class="verdict">APR fell £489. Biggest driver: <b>Efficiency (ROAS)</b> (−£6,892) — ROAS 1.58x → 1.50x on £97,553 of spend. Within efficiency, <b>Rev/bark</b> moved ROAS most.</div>
+
+<h2>1 · Headline &amp; exact decomposition</h2>
+<div class="cards">
+  <div class="card"><div class="lbl">APR</div><div class="val">£49,233</div><div class="dlt neg">−£489 (-1.0%)</div><div class="prev">was £49,722</div></div>
+  <div class="card"><div class="lbl">Revenue</div><div class="val">£146,786</div><div class="dlt pos">+£10,641 (+7.8%)</div><div class="prev">was £136,145</div></div>
+  <div class="card"><div class="lbl">Spend</div><div class="val">£97,553</div><div class="dlt pos">+£11,130 (+12.9%)</div><div class="prev">was £86,423</div></div>
+  <div class="card"><div class="lbl">ROAS</div><div class="val">1.50x</div><div class="dlt neg">-0.07x (-4.5%)</div><div class="prev">was 1.58x</div></div>
+  <div class="card"><div class="lbl">Barks</div><div class="val">20,358</div><div class="dlt pos">2,549 (+14.3%)</div><div class="prev">was 17,809</div></div>
+  <div class="card"><div class="lbl">CPL</div><div class="val">£4.79</div><div class="dlt pos">−£0 (-1.3%)</div><div class="prev">was £4.85</div></div>
+  <div class="card"><div class="lbl">Rev/bark</div><div class="val">£7.21</div><div class="dlt neg">−£0 (-5.7%)</div><div class="prev">was £7.64</div></div>
+</div>
+<div class="wf">
+  <div class="wfi"><div class="lbl">ΔAPR total</div><div class="b neg">−£489</div></div>
+  <div class="wfi"><div class="lbl">…from SPEND change</div><div class="b pos">+£6,403</div>
+    <div class="note">Δspend +£11,130 × (prior ROAS 1.58 − 1)</div></div>
+  <div class="wfi"><div class="lbl">…from EFFICIENCY (ROAS)</div><div class="b neg">−£6,892</div>
+    <div class="note">ΔROAS -0.071 × spend £97,553</div></div>
+  <div class="wfi"><div class="lbl">ROAS move split</div>
+    <div class="note" style="margin-top:4px">Rev/bark effect <b class="neg">-0.090x</b><br>
+    CPL effect <b class="pos">+0.019x</b><br>
+    <span class="mut">ROAS = Rev/bark ÷ CPL</span></div></div>
+</div>
+<div class="note">Decomposition is exact: ΔAPR = Δspend×(ROAS₀−1) + spend₁×ΔROAS = +£6,403 −£6,892 = −£489.</div>
+
+<h2>2 · APR trend — last 14 days</h2>
+<div class="spark"><div class="sc" title="2026-07-20: £9,041"><div class="sb up" style="height:85%"></div><div class="sd">20</div></div><div class="sc" title="2026-07-21: £8,857"><div class="sb up" style="height:83%"></div><div class="sd">21</div></div><div class="sc" title="2026-07-22: £7,049"><div class="sb up" style="height:66%"></div><div class="sd">22</div></div><div class="sc" title="2026-07-23: £7,342"><div class="sb up" style="height:69%"></div><div class="sd">23</div></div><div class="sc" title="2026-07-24: £6,713"><div class="sb up" style="height:63%"></div><div class="sd">24</div></div><div class="sc" title="2026-07-25: £5,031"><div class="sb up" style="height:47%"></div><div class="sd">25</div></div><div class="sc" title="2026-07-26: £5,690"><div class="sb up" style="height:53%"></div><div class="sd">26</div></div><div class="sc" title="2026-07-27: £10,653"><div class="sb up" style="height:100%"></div><div class="sd">27</div></div><div class="sc" title="2026-07-28: £9,077"><div class="sb up" style="height:85%"></div><div class="sd">28</div></div><div class="sc" title="2026-07-29: £8,907"><div class="sb up" style="height:84%"></div><div class="sd">29</div></div><div class="sc" title="2026-07-30: £7,719"><div class="sb up" style="height:72%"></div><div class="sd">30</div></div><div class="sc" title="2026-07-31: £6,099"><div class="sb up" style="height:57%"></div><div class="sd">31</div></div><div class="sc" title="2026-08-01: £3,118"><div class="sb up" style="height:29%"></div><div class="sd">01</div></div><div class="sc" title="2026-08-02: £3,662"><div class="sb up" style="height:34%"></div><div class="sd">02</div></div></div>
+
+<h2>3 · Where the spend went — ABO / CBO / Sandbox</h2>
+<table><thead><tr><th>Bucket</th><th class="n">Spend</th><th class="n">Δ</th><th class="n">Share</th><th class="n">Δshare</th>
+<th class="n">ROAS</th><th class="n">Δ</th><th class="n">APR</th><th class="n">ΔAPR</th><th class="n">Adsets</th></tr></thead>
+<tbody><tr><td><span class="dot" style="background:#22c55e"></span>ABO</td><td class="n">£58,311</td><td class="n pos">+£8,361</td><td class="n">60%</td><td class="n pos">+2.0pp</td><td class="n pos">1.45x</td><td class="n neg">-0.07</td><td class="n pos">£26,085</td><td class="n pos"><b>+£442</b></td><td class="n mut">251</td></tr><tr><td><span class="dot" style="background:#3b82f6"></span>CBO</td><td class="n">£13,420</td><td class="n pos">+£2,647</td><td class="n">14%</td><td class="n pos">+1.3pp</td><td class="n pos">1.60x</td><td class="n pos">+0.02</td><td class="n pos">£8,051</td><td class="n pos"><b>+£1,808</b></td><td class="n mut">128</td></tr><tr><td><span class="dot" style="background:#f59e0b"></span>Sandbox</td><td class="n">£25,822</td><td class="n pos">+£122</td><td class="n">26%</td><td class="n neg">-3.3pp</td><td class="n pos">1.58x</td><td class="n neg">-0.11</td><td class="n pos">£15,097</td><td class="n neg"><b>−£2,739</b></td><td class="n mut">156</td></tr></tbody></table>
+<div class="note">Bucket spend/revenue are adset-grain proportions applied to the true headline totals, so segments sum to real APR. Sandbox = test pen; a rising Sandbox share with ROAS&lt;1 is deliberate learning cost, not a leak.</div>
+
+<h2>4 · Newly launched adsets in this period — the learning tax</h2>
+<div class="cards">
+  <div class="card"><div class="lbl">New adsets live</div><div class="val">38</div><div class="prev">first spend inside w/e 2 Aug 2026</div></div>
+  <div class="card"><div class="lbl">Spend on new</div><div class="val">£2,214</div><div class="dlt mut">2.3% of all spend</div></div>
+  <div class="card"><div class="lbl">ROAS on new</div><div class="val pos">1.53x</div><div class="prev">vs 1.50x overall</div></div>
+  <div class="card"><div class="lbl">APR from new</div><div class="val pos">£1,172</div><div class="prev">already accretive</div></div>
+  <div class="card"><div class="lbl">Sandbox tests</div><div class="val">£887</div><div class="prev">14 adsets · 3.06x · APR £1,824</div></div>
+  <div class="card"><div class="lbl">New in BAU</div><div class="val">£1,327</div><div class="prev">24 adsets · 0.51x · APR −£651</div></div>
+</div>
+<div class="note">If APR fell and most of the drop sits here, it's <b>investment</b> (new creative learning) rather than decay. If new-ad spend is flat but APR still fell, the cause is BAU fatigue — see §5/§6.</div>
+
+<h2>5 · Category movers</h2>
+<div class="two">
+<div><table><thead><tr><th colspan="2">🔴 Biggest APR fallers</th><th class="n">ΔAPR</th><th class="n">APR</th><th class="n">Spend</th><th class="n">ROAS</th><th>Cause</th></tr></thead><tbody><tr><td class="mut">🇺🇸 US</td><td>Web Design</td><td class="n neg"><b>−£1,003</b></td><td class="n">−£276</td><td class="n">£867</td><td class="n neg">0.68x</td><td class="mut sm">ROAS -1.40 · spend +£193 · CPL +2.25 · R/B -30.94</td></tr><tr><td class="mut">🇺🇸 US</td><td>Immigration Lawyers</td><td class="n neg"><b>−£777</b></td><td class="n">£1,846</td><td class="n">£3,898</td><td class="n pos">1.47x</td><td class="mut sm">ROAS -0.26 · spend +£336 · R/B -2.14</td></tr><tr><td class="mut">🇺🇸 US</td><td>Photo Booth Hire</td><td class="n neg"><b>−£649</b></td><td class="n">£551</td><td class="n">£1,466</td><td class="n pos">1.38x</td><td class="mut sm">ROAS -0.45 · R/B -1.03</td></tr><tr><td class="mut">🇬🇧 UK</td><td>Home & Domiciliary Care</td><td class="n neg"><b>−£630</b></td><td class="n">£1,213</td><td class="n">£4,593</td><td class="n pos">1.26x</td><td class="mut sm">ROAS -0.15 · spend +£89 · R/B -2.61</td></tr><tr><td class="mut">🇬🇧 UK</td><td>Patio Services</td><td class="n neg"><b>−£603</b></td><td class="n">£578</td><td class="n">£2,142</td><td class="n pos">1.27x</td><td class="mut sm">ROAS -0.36 · spend +£272 · CPL +1.01 · R/B -2.17</td></tr><tr><td class="mut">🇬🇧 UK</td><td>Pressure Washing</td><td class="n neg"><b>−£574</b></td><td class="n">−£198</td><td class="n">£1,129</td><td class="n neg">0.82x</td><td class="mut sm">ROAS -0.53 · spend +£83 · CPL +5.88 · R/B -2.41</td></tr><tr><td class="mut">🇬🇧 UK</td><td>Roof Repair</td><td class="n neg"><b>−£531</b></td><td class="n">−£177</td><td class="n">£449</td><td class="n neg">0.61x</td><td class="mut sm">ROAS -1.08 · spend −£70 · CPL +12.69 · R/B -18.90</td></tr><tr><td class="mut">🇺🇸 US</td><td>Wedding Photography</td><td class="n neg"><b>−£522</b></td><td class="n">£750</td><td class="n">£3,242</td><td class="n pos">1.23x</td><td class="mut sm">ROAS -0.20 · spend +£286 · CPL +0.60</td></tr><tr><td class="mut">🇬🇧 UK</td><td>Artificial Grass Installation</td><td class="n neg"><b>−£521</b></td><td class="n">£496</td><td class="n">£1,483</td><td class="n pos">1.33x</td><td class="mut sm">ROAS -0.47 · spend +£216 · R/B -1.91</td></tr><tr><td class="mut">🇬🇧 UK</td><td>Brick & Block Paving Services</td><td class="n neg"><b>−£518</b></td><td class="n">£504</td><td class="n">£980</td><td class="n pos">1.51x</td><td class="mut sm">ROAS -0.93 · spend +£273 · CPL +2.05 · R/B -4.22</td></tr><tr><td class="mut">🇺🇸 US</td><td>Dog Training</td><td class="n neg"><b>−£442</b></td><td class="n">£1,283</td><td class="n">£2,765</td><td class="n pos">1.46x</td><td class="mut sm">ROAS -0.25 · spend +£341</td></tr><tr><td class="mut">🇳🇿 NZ</td><td>General Builders</td><td class="n neg"><b>−£315</b></td><td class="n">−£67</td><td class="n">£252</td><td class="n neg">0.73x</td><td class="mut sm">ROAS -1.48 · spend +£48 · CPL +9.45 · R/B -20.56</td></tr></tbody></table></div>
+<div><table><thead><tr><th colspan="2">🟢 Biggest APR gainers</th><th class="n">ΔAPR</th><th class="n">APR</th><th class="n">Spend</th><th class="n">ROAS</th><th>Cause</th></tr></thead><tbody><tr><td class="mut">🇺🇸 US</td><td>Architectural Services</td><td class="n pos"><b>+£1,376</b></td><td class="n">£2,125</td><td class="n">£3,166</td><td class="n pos">1.67x</td><td class="mut sm">ROAS +0.43 · spend +£24 · CPL -2.33 · R/B +2.56</td></tr><tr><td class="mut">🇺🇸 US</td><td>Bookkeeping Services</td><td class="n pos"><b>+£1,147</b></td><td class="n">£1,398</td><td class="n">£807</td><td class="n pos">2.73x</td><td class="mut sm">ROAS +1.38 · spend +£98 · CPL -10.72 · R/B +31.83</td></tr><tr><td class="mut">🇺🇸 US</td><td>Security Guard Services</td><td class="n pos"><b>+£1,046</b></td><td class="n">£1,836</td><td class="n">£517</td><td class="n pos">4.55x</td><td class="mut sm">ROAS +2.14 · spend −£42 · CPL -0.81 · R/B +40.56</td></tr><tr><td class="mut">🇨🇦 CA</td><td>Bathroom Installation & Remodel</td><td class="n pos"><b>+£795</b></td><td class="n">£1,398</td><td class="n">£1,023</td><td class="n pos">2.37x</td><td class="mut sm">ROAS +0.50 · spend +£330 · CPL -0.75 · R/B +1.81</td></tr><tr><td class="mut">🇺🇸 US</td><td>Residential Interior Designers</td><td class="n pos"><b>+£768</b></td><td class="n">£1,498</td><td class="n">£832</td><td class="n pos">2.80x</td><td class="mut sm">ROAS +0.64 · spend +£201 · R/B +7.18</td></tr><tr><td class="mut">🇺🇸 US</td><td>House Cleaning</td><td class="n pos"><b>+£645</b></td><td class="n">£2,845</td><td class="n">£6,975</td><td class="n pos">1.41x</td><td class="mut sm">ROAS +0.05 · spend +£814</td></tr><tr><td class="mut">🇺🇸 US</td><td>Catering</td><td class="n pos"><b>+£539</b></td><td class="n">£899</td><td class="n">£2,391</td><td class="n pos">1.38x</td><td class="mut sm">ROAS +0.23 · spend −£75 · CPL -0.61</td></tr><tr><td class="mut">🇺🇸 US</td><td>DJ</td><td class="n pos"><b>+£456</b></td><td class="n">£1,424</td><td class="n">£4,652</td><td class="n pos">1.31x</td><td class="mut sm">ROAS +0.10</td></tr><tr><td class="mut">🇿🇦 ZA</td><td>General Builders</td><td class="n pos"><b>+£442</b></td><td class="n">£1,024</td><td class="n">£283</td><td class="n pos">4.61x</td><td class="mut sm">spend +£124 · R/B +1.70</td></tr><tr><td class="mut">🇺🇸 US</td><td>Limousine Hire</td><td class="n pos"><b>+£392</b></td><td class="n">£811</td><td class="n">£1,033</td><td class="n pos">1.79x</td><td class="mut sm">ROAS +0.08 · spend +£437 · CPL +0.80 · R/B +1.62</td></tr><tr><td class="mut">🇺🇸 US</td><td>Motivational Speaking</td><td class="n pos"><b>+£374</b></td><td class="n">£637</td><td class="n">£310</td><td class="n pos">3.06x</td><td class="mut sm">ROAS +1.32 · spend −£50 · CPL -2.72 · R/B +12.38</td></tr><tr><td class="mut">🇺🇸 US</td><td>Commercial & Office Cleaning</td><td class="n pos"><b>+£371</b></td><td class="n">£1,458</td><td class="n">£1,269</td><td class="n pos">2.15x</td><td class="mut sm">ROAS +0.14 · spend +£190 · R/B +1.42</td></tr></tbody></table></div>
+</div>
+
+<h2>6 · Other APR drivers</h2>
+<div class="cards">
+  <div class="card"><div class="lbl">Loss-making spend share</div><div class="val neg">23%</div>
+    <div class="dlt pos">+5.9pp</div><div class="prev">spend on adsets at ROAS&lt;1</div></div>
+  <div class="card"><div class="lbl">Zero-revenue spend</div><div class="val neg">£1,064</div><div class="prev">12 adsets ≥£20, £0 revenue</div></div>
+  <div class="card"><div class="lbl">CTR</div><div class="val">1.65%</div>
+    <div class="dlt neg">-0.02pp</div><div class="prev">fatigue proxy · was 1.68%</div></div>
+  <div class="card"><div class="lbl">% revenue from partners</div><div class="val">12%</div>
+    <div class="dlt neg">-0.6pp</div><div class="prev">mix shift moves Rev/bark</div></div>
+</div>
+
+<div class="two" style="margin-top:14px">
+<div><h2 style="margin-top:4px">By market</h2>
+<table><thead><tr><th>Market</th><th class="n">Spend</th><th class="n">Δ</th><th class="n">Share</th><th class="n">ROAS</th><th class="n">Δ</th><th class="n">ΔAPR</th></tr></thead>
+<tbody><tr><td>🇬🇧 UK</td><td class="n">£38,462</td><td class="n pos">+£3,151</td><td class="n">39%</td><td class="n pos">1.39x</td><td class="n neg">-0.13</td><td class="n neg"><b>−£3,454</b></td></tr><tr><td>🇺🇸 US</td><td class="n">£37,606</td><td class="n pos">+£2,817</td><td class="n">39%</td><td class="n pos">1.53x</td><td class="n pos">+0.04</td><td class="n pos"><b>+£2,831</b></td></tr><tr><td>🇨🇦 CA</td><td class="n">£6,498</td><td class="n pos">+£1,559</td><td class="n">7%</td><td class="n pos">1.89x</td><td class="n neg">-0.03</td><td class="n pos"><b>+£1,222</b></td></tr><tr><td>🇿🇦 ZA</td><td class="n">£6,387</td><td class="n pos">+£2,022</td><td class="n">7%</td><td class="n pos">1.49x</td><td class="n neg">-0.16</td><td class="n pos"><b>+£299</b></td></tr><tr><td>🇦🇺 AU</td><td class="n">£4,485</td><td class="n pos">+£846</td><td class="n">5%</td><td class="n pos">2.07x</td><td class="n neg">-0.31</td><td class="n neg"><b>−£229</b></td></tr><tr><td>🇳🇿 NZ</td><td class="n">£3,854</td><td class="n pos">+£840</td><td class="n">4%</td><td class="n pos">1.09x</td><td class="n neg">-0.34</td><td class="n neg"><b>−£947</b></td></tr><tr><td>🇮🇪 IE</td><td class="n">£191</td><td class="n neg">−£69</td><td class="n">0%</td><td class="n pos">1.02x</td><td class="n neg">-0.53</td><td class="n neg"><b>−£139</b></td></tr><tr><td>🇫🇷 FR</td><td class="n">£42</td><td class="n neg">−£23</td><td class="n">0%</td><td class="n pos">3.98x</td><td class="n pos">+1.40</td><td class="n pos"><b>+£22</b></td></tr><tr><td>🇩🇪 DE</td><td class="n">£29</td><td class="n neg">−£12</td><td class="n">0%</td><td class="n pos">3.04x</td><td class="n neg">-1.70</td><td class="n neg"><b>−£94</b></td></tr></tbody></table></div>
+<div><h2 style="margin-top:4px">By creative format</h2>
+<table><thead><tr><th>Format</th><th class="n">Spend</th><th class="n">Δ</th><th class="n">Share</th><th class="n">ROAS</th><th class="n">Δ</th><th class="n">ΔAPR</th></tr></thead>
+<tbody><tr><td> Static</td><td class="n">£36,589</td><td class="n pos">+£5,434</td><td class="n">38%</td><td class="n pos">1.43x</td><td class="n neg">-0.12</td><td class="n neg"><b>−£1,405</b></td></tr><tr><td> Other</td><td class="n">£29,232</td><td class="n pos">+£4,809</td><td class="n">30%</td><td class="n pos">1.65x</td><td class="n pos">+0.00</td><td class="n pos"><b>+£3,217</b></td></tr><tr><td> DC</td><td class="n">£16,615</td><td class="n pos">+£107</td><td class="n">17%</td><td class="n pos">1.58x</td><td class="n neg">-0.18</td><td class="n neg"><b>−£2,882</b></td></tr><tr><td> Video (UGC)</td><td class="n">£13,704</td><td class="n pos">+£1,387</td><td class="n">14%</td><td class="n pos">1.33x</td><td class="n neg">-0.11</td><td class="n neg"><b>−£921</b></td></tr><tr><td> Video</td><td class="n">£1,413</td><td class="n neg">−£608</td><td class="n">1%</td><td class="n pos">1.07x</td><td class="n pos">+0.77</td><td class="n pos"><b>+£1,503</b></td></tr></tbody></table></div>
+</div>
+
+<div class="two" style="margin-top:14px">
+<div><h2 style="margin-top:4px">By bid strategy</h2>
+<table><thead><tr><th>Bid</th><th class="n">Spend</th><th class="n">Δ</th><th class="n">Share</th><th class="n">ROAS</th><th class="n">Δ</th><th class="n">ΔAPR</th></tr></thead>
+<tbody><tr><td> Highest volume</td><td class="n">£67,618</td><td class="n pos">+£5,549</td><td class="n">69%</td><td class="n pos">1.48x</td><td class="n neg">-0.10</td><td class="n neg"><b>−£3,580</b></td></tr><tr><td> ROAS goal</td><td class="n">£20,996</td><td class="n pos">+£5,346</td><td class="n">22%</td><td class="n pos">1.67x</td><td class="n pos">+0.05</td><td class="n pos"><b>+£4,323</b></td></tr><tr><td> Cost cap</td><td class="n">£8,616</td><td class="n pos">+£223</td><td class="n">9%</td><td class="n pos">1.25x</td><td class="n neg">-0.14</td><td class="n neg"><b>−£1,136</b></td></tr><tr><td> Unknown</td><td class="n">£322</td><td class="n pos">+£12</td><td class="n">0%</td><td class="n pos">2.48x</td><td class="n neg">-0.37</td><td class="n neg"><b>−£96</b></td></tr></tbody></table></div>
+<div><h2 style="margin-top:4px">Zero-revenue adsets (direct bleed)</h2>
+<table><thead><tr><th>Mkt</th><th>Adset</th><th class="n">Spend</th><th class="n">Impr</th></tr></thead>
+<tbody><tr><td class="mut">🇬🇧 UK</td><td class="sm">42_Painting & Decoration_UK_LPV4CONTROL_LPV5CONTROL_Video_</td><td class="n neg">£283</td><td class="n mut">31,322</td></tr><tr><td class="mut">🇬🇧 UK</td><td class="sm">42_Painting & Decoration_UK_Static_BenAIBulk_Tap_OPUS</td><td class="n neg">£237</td><td class="n mut">29,735</td></tr><tr><td class="mut">🇬🇧 UK</td><td class="sm">PAUSED-152_Security_Guard_Services_Sandbox_Batch2_DC</td><td class="n neg">£105</td><td class="n mut">27,091</td></tr><tr><td class="mut">🇨🇦 CA</td><td class="sm">1138_Bathroom Install_CA_UGC_1_ACTIVE</td><td class="n neg">£80</td><td class="n mut">3,807</td></tr><tr><td class="mut">🇬🇧 UK</td><td class="sm">1976_Property_Extensions_Sandbox_Batch2_DC</td><td class="n neg">£61</td><td class="n mut">5,046</td></tr><tr><td class="mut">🇬🇧 UK</td><td class="sm">1077_Fence_and_Gate_Installation_Sandbox_Video</td><td class="n neg">£59</td><td class="n mut">6,909</td></tr><tr><td class="mut">🇳🇿 NZ</td><td class="sm">1456_Business_Consulting_NZ_Static_AdFactory_3Styles</td><td class="n neg">£44</td><td class="n mut">9,508</td></tr><tr><td class="mut">🇺🇸 US</td><td class="sm">1820_Bookkeeping_Services_US_Whiteboard</td><td class="n neg">£43</td><td class="n mut">2,219</td></tr><tr><td class="mut">🇨🇦 CA</td><td class="sm">1463_Financial_Advisors_PromotedABO_PurchaseROAS</td><td class="n neg">£41</td><td class="n mut">3,375</td></tr><tr><td class="mut">🇬🇧 UK</td><td class="sm">1670_Home_and_Domiciliary_Care_PromotedABO_PurchaseROAS</td><td class="n neg">£40</td><td class="n mut">3,289</td></tr><tr><td class="mut">🇺🇸 US</td><td class="sm">137_Pest_Control_US_Batch1</td><td class="n neg">£37</td><td class="n mut">2,010</td></tr><tr><td class="mut">🇳🇿 NZ</td><td class="sm">89_Accounting_NZ_ROASTest_NoFloor</td><td class="n neg">£32</td><td class="n mut">3,474</td></tr></tbody></table></div>
+</div>
+
+<div class="note" style="margin-top:20px">Built by <b>/apr-diagnose</b> · APR &amp; funnel metrics from Trading Data (response_value, full marketplace revenue); bucket / format / bid / new-launch splits from PPC Adgroup Stats proportions reconciled onto the headline. Freshest day under-reads APR slightly (Bark PPR revenue matures) — treat a single-day drop as directional.</div>
+</body></html>
