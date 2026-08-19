@@ -1,0 +1,641 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audience Network by Category · UK/US/CA · 8-month</title>
+<style>
+:root{--bg:#f7f7f4;--surface:#fff;--border:#e5e4e1;--ink:#1c1c1a;--faint:#7a7a76;}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:13px}
+main{max-width:1240px;margin:0 auto;padding:26px 22px 80px}
+h1{font-size:22px;margin:0 0 3px}
+.sub{color:var(--faint);font-size:12px;margin-bottom:18px;line-height:1.5}
+.tabbtns{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border)}
+.tabbtn{background:none;border:none;padding:9px 16px;font-size:14px;font-weight:600;color:var(--faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabbtn.active{color:var(--ink);border-bottom-color:#6366f1}
+.tab{display:none} .tab.active{display:block}
+.statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 15px}
+.stat .l{color:var(--faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em}
+.stat .v{font-size:21px;font-weight:600;margin-top:2px} .stat .v.small{font-size:13px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);vertical-align:middle}
+th{background:#fafaf8;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.cat{font-weight:600;max-width:200px}
+.reason{color:var(--faint);font-size:11.5px;max-width:290px;line-height:1.4}
+.verdict{font-weight:700;font-size:11px;padding:2px 8px;border-radius:5px;letter-spacing:.03em}
+.spkcell{padding:4px 6px} .spk{display:block}
+.tailnote{color:var(--faint);font-size:11.5px;margin-top:10px;font-style:italic}
+tr:last-child td{border-bottom:none}
+.legend{font-size:11px;color:var(--faint);margin-top:14px;line-height:1.6}
+.legend b{color:var(--ink)}
+</style></head><body><main>
+<h1>Audience Network by Category — UK / US / CA</h1>
+<div class="sub">
+<b>Source of truth: Tableau</b> (Trading Data · Leadgen, LUID 080b1147) — channel <b>PPC&nbsp;-&nbsp;Meta&nbsp;-&nbsp;Other</b> = your reconciled Audience Network (+Threads) bucket. <b>Not</b> Meta-pixel API.<br>
+Window: <b>8 months, Nov 2025 → Jun 2026</b> (monthly). ROAS = PPR Revenue ÷ Marketing Spend. Breakeven on PPR = 1.00x (dashed line in ROAS sparkline). FB+IG ROAS = same category's Facebook+Instagram blended, as the keep/cut benchmark.<br>
+<b>Sorted by AN APR contribution</b> (AN Rev − AN Spend, first column). <b style="color:#16a34a">▲</b> / <b style="color:#dc2626">▼</b> next to AN ROAS = above / below the FB+IG benchmark.
+</div>
+<div class="tabbtns"><button class="tabbtn active" onclick="showTab('UK')" id="btn-UK">🇬🇧 UK</button><button class="tabbtn" onclick="showTab('US')" id="btn-US">🇺🇸 US</button><button class="tabbtn" onclick="showTab('CA')" id="btn-CA">🇨🇦 CA</button></div>
+<section class="tab" id="tab-UK">
+      <div class="statrow">
+        <div class="stat"><div class="l">8mo AN Spend</div><div class="v">£33.3k</div></div>
+        <div class="stat"><div class="l">8mo AN Revenue</div><div class="v">£112.1k</div></div>
+        <div class="stat"><div class="l">AN ROAS (blended)</div><div class="v" style="color:#16a34a">3.37x</div></div>
+        <div class="stat"><div class="l">Verdicts</div><div class="v small"><span style="color:#16a34a">11 keep</span> · <span style="color:#d97706">3 trim</span> · <span style="color:#dc2626">11 cut</span></div></div>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Category</th><th class="num">APR contrib</th><th class="num">AN Spend</th><th class="num">AN Rev</th>
+          <th class="num">AN ROAS</th><th class="num">FB+IG ROAS</th><th class="num">AN&nbsp;%</th>
+          <th>Spend 8mo</th><th>ROAS 8mo</th><th>Verdict</th><th>Why</th>
+        </tr></thead>
+        <tbody><tr>
+          <td class="cat">Driveway Installation</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£12.0k</td>
+          <td class="num">£2.0k</td>
+          <td class="num">£14.0k</td>
+          <td class="num"><b>6.95x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.12x</td>
+          <td class="num">1%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="20.4" width="9.1" height="4.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.1" width="9.1" height="0.9" fill="#6366f1" rx="0.6"/><rect x="27.9" y="14.1" width="9.1" height="10.9" fill="#6366f1" rx="0.6"/><rect x="41.0" y="19.0" width="9.1" height="6.0" fill="#6366f1" rx="0.6"/><rect x="54.0" y="21.9" width="9.1" height="3.1" fill="#6366f1" rx="0.6"/><rect x="67.0" y="23.3" width="9.1" height="1.7" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="19.1" width="9.1" height="5.9" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,14.3 L16.3,3.0 L30.6,21.3 L44.9,20.9 L59.1,20.7 L73.4,22.0 L87.7,23.0 L102.0,22.9" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="14.3" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="21.3" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="20.9" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="20.7" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="22.0" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="22.9" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 6.95x ≥ FB/IG vs FB/IG 1.12x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Home & Domiciliary Care</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£8.2k</td>
+          <td class="num">£1.3k</td>
+          <td class="num">£9.5k</td>
+          <td class="num"><b>7.11x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.27x</td>
+          <td class="num">1%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="17.0" width="9.1" height="8.0" fill="#6366f1" rx="0.6"/><rect x="14.9" y="18.1" width="9.1" height="6.9" fill="#6366f1" rx="0.6"/><rect x="27.9" y="10.0" width="9.1" height="15.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="19.1" width="9.1" height="5.9" fill="#6366f1" rx="0.6"/><rect x="54.0" y="16.2" width="9.1" height="8.8" fill="#6366f1" rx="0.6"/><rect x="67.0" y="10.3" width="9.1" height="14.7" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="15.8" width="9.1" height="9.2" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,3.0 L16.3,10.6 L30.6,15.7 L44.9,10.6 L59.1,19.1 L73.4,21.3 L87.7,22.0 L102.0,18.8" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="10.6" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="15.7" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="10.6" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="19.1" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="21.3" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="22.0" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="18.8" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 7.11x ≥ FB/IG vs FB/IG 1.27x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Patio Services</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£7.4k</td>
+          <td class="num">£305</td>
+          <td class="num">£7.7k</td>
+          <td class="num"><b>25.24x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.10x</td>
+          <td class="num">0%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="13.6" width="9.1" height="11.4" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.2" width="9.1" height="0.8" fill="#6366f1" rx="0.6"/><rect x="27.9" y="4.9" width="9.1" height="20.1" fill="#6366f1" rx="0.6"/><rect x="41.0" y="19.0" width="9.1" height="6.0" fill="#6366f1" rx="0.6"/><rect x="54.0" y="20.4" width="9.1" height="4.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="9.5" width="9.1" height="15.5" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="22.6" width="9.1" height="2.4" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,20.3 L16.3,3.0 L30.6,22.8 L44.9,22.7 L59.1,22.0 L73.4,22.8 L87.7,22.8 L102.0,22.2" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="20.3" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="22.8" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="22.7" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="22.0" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="22.8" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="22.8" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="22.2" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 25.24x ≥ FB/IG vs FB/IG 1.10x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Landscaping</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£5.7k</td>
+          <td class="num">£489</td>
+          <td class="num">£6.2k</td>
+          <td class="num"><b>12.68x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.46x</td>
+          <td class="num">1%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="17.0" width="9.1" height="8.0" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="10.2" width="9.1" height="14.8" fill="#6366f1" rx="0.6"/><rect x="41.0" y="22.5" width="9.1" height="2.5" fill="#6366f1" rx="0.6"/><rect x="54.0" y="21.6" width="9.1" height="3.4" fill="#6366f1" rx="0.6"/><rect x="67.0" y="6.9" width="9.1" height="18.1" fill="#6366f1" rx="0.6"/><rect x="80.0" y="6.4" width="9.1" height="18.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,21.5 L30.6,21.2 L44.9,9.5 L59.1,3.0 L73.4,18.5 L87.7,17.6 L102.0,21.4" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="21.5" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="21.2" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="9.5" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="18.5" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="17.6" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="21.4" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 12.68x ≥ FB/IG vs FB/IG 1.46x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Painting & Decoration - Interior</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£5.2k</td>
+          <td class="num">£210</td>
+          <td class="num">£5.5k</td>
+          <td class="num"><b>25.96x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.16x</td>
+          <td class="num">0%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="24.2" width="9.1" height="0.8" fill="#6366f1" rx="0.6"/><rect x="14.9" y="23.1" width="9.1" height="1.9" fill="#6366f1" rx="0.6"/><rect x="27.9" y="17.2" width="9.1" height="7.8" fill="#6366f1" rx="0.6"/><rect x="41.0" y="18.0" width="9.1" height="7.0" fill="#6366f1" rx="0.6"/><rect x="54.0" y="15.5" width="9.1" height="9.5" fill="#6366f1" rx="0.6"/><rect x="67.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="80.0" y="19.2" width="9.1" height="5.8" fill="#6366f1" rx="0.6"/><rect x="93.0" y="21.4" width="9.1" height="3.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,3.0 L16.3,15.3 L30.6,19.1 L44.9,18.9 L59.1,19.8 L73.4,22.4 L87.7,20.2 L102.0,19.6" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="15.3" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="19.1" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="18.9" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="19.8" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="22.4" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="20.2" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="19.6" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 25.96x ≥ FB/IG vs FB/IG 1.16x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Tree Surgery & Removal</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£4.3k</td>
+          <td class="num">£1.5k</td>
+          <td class="num">£5.7k</td>
+          <td class="num"><b>3.91x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.22x</td>
+          <td class="num">2%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="20.2" width="9.1" height="4.8" fill="#6366f1" rx="0.6"/><rect x="14.9" y="16.1" width="9.1" height="8.9" fill="#6366f1" rx="0.6"/><rect x="27.9" y="17.0" width="9.1" height="8.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="22.9" width="9.1" height="2.1" fill="#6366f1" rx="0.6"/><rect x="54.0" y="21.1" width="9.1" height="3.9" fill="#6366f1" rx="0.6"/><rect x="67.0" y="17.5" width="9.1" height="7.5" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="20.9" width="9.1" height="4.1" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,13.7 L16.3,17.3 L30.6,17.4 L44.9,3.0 L59.1,6.8 L73.4,15.6 L87.7,22.1 L102.0,17.9" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="13.7" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="17.3" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="17.4" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="6.8" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="15.6" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="22.1" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="17.9" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 3.91x ≥ FB/IG vs FB/IG 1.22x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Roof Repair</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£3.6k</td>
+          <td class="num">£13.3k</td>
+          <td class="num">£16.9k</td>
+          <td class="num"><b>1.27x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.10x</td>
+          <td class="num">12%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="24.2" width="9.1" height="0.8" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.4" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="20.2" width="9.1" height="4.8" fill="#6366f1" rx="0.6"/><rect x="41.0" y="21.5" width="9.1" height="3.5" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="20.0" width="9.1" height="5.0" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="22.1" x2="104" y2="22.1" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,3.0 L16.3,8.1 L30.6,21.0 L44.9,21.4 L59.1,22.9 L73.4,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="8.1" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="21.0" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="21.4" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="22.9" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#d97706;background:#fef3c7">TRIM</span></td>
+          <td class="reason">AN 1.27x vs FB/IG 1.10x (116%). Marginal — cap/monitor, don't scale.</td>
+        </tr><tr>
+          <td class="cat">Wedding Photography</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£3.5k</td>
+          <td class="num">£438</td>
+          <td class="num">£3.9k</td>
+          <td class="num"><b>8.95x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.12x</td>
+          <td class="num">1%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="23.0" width="9.1" height="2.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="24.6" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="20.4" width="9.1" height="4.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="23.8" width="9.1" height="1.2" fill="#6366f1" rx="0.6"/><rect x="80.0" y="7.5" width="9.1" height="17.5" fill="#6366f1" rx="0.6"/><rect x="93.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M30.6,13.7 L44.9,3.0 L59.1,21.3 L73.4,17.6 L87.7,22.6 L102.0,22.8" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="30.6" cy="13.7" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="21.3" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="17.6" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="22.6" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="22.8" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 8.95x ≥ FB/IG vs FB/IG 1.12x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Bathroom Installation & Remodel</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£3.2k</td>
+          <td class="num">£415</td>
+          <td class="num">£3.6k</td>
+          <td class="num"><b>8.72x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.31x</td>
+          <td class="num">0%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="23.7" width="9.1" height="1.3" fill="#6366f1" rx="0.6"/><rect x="14.9" y="23.8" width="9.1" height="1.2" fill="#6366f1" rx="0.6"/><rect x="27.9" y="16.9" width="9.1" height="8.1" fill="#6366f1" rx="0.6"/><rect x="41.0" y="20.8" width="9.1" height="4.2" fill="#6366f1" rx="0.6"/><rect x="54.0" y="19.1" width="9.1" height="5.9" fill="#6366f1" rx="0.6"/><rect x="67.0" y="6.4" width="9.1" height="18.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="16.6" width="9.1" height="8.4" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,3.0 L16.3,7.4 L30.6,15.4 L44.9,17.6 L59.1,17.7 L73.4,21.2 L87.7,21.7 L102.0,20.5" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="7.4" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="15.4" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="17.6" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="17.7" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="21.2" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="21.7" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="20.5" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 8.72x ≥ FB/IG vs FB/IG 1.31x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Brick & Block Paving Services</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£3.1k</td>
+          <td class="num">£290</td>
+          <td class="num">£3.4k</td>
+          <td class="num"><b>11.70x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.04x</td>
+          <td class="num">1%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="15.7" width="9.1" height="9.3" fill="#6366f1" rx="0.6"/><rect x="14.9" y="23.6" width="9.1" height="1.4" fill="#6366f1" rx="0.6"/><rect x="27.9" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="17.2" width="9.1" height="7.8" fill="#6366f1" rx="0.6"/><rect x="54.0" y="21.3" width="9.1" height="3.7" fill="#6366f1" rx="0.6"/><rect x="67.0" y="22.3" width="9.1" height="2.7" fill="#6366f1" rx="0.6"/><rect x="80.0" y="17.6" width="9.1" height="7.4" fill="#6366f1" rx="0.6"/><rect x="93.0" y="19.7" width="9.1" height="5.3" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,18.1 L16.3,3.0 L30.6,22.9 L44.9,22.8 L59.1,21.7 L73.4,20.8 L87.7,22.3 L102.0,22.8" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="18.1" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="22.9" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="22.8" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="21.7" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="20.8" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="22.3" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="22.8" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 11.70x ≥ FB/IG vs FB/IG 1.04x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Fence & Gate Installation</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£2.8k</td>
+          <td class="num">£245</td>
+          <td class="num">£3.1k</td>
+          <td class="num"><b>12.56x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.20x</td>
+          <td class="num">0%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="23.4" width="9.1" height="1.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.5" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="15.4" width="9.1" height="9.6" fill="#6366f1" rx="0.6"/><rect x="41.0" y="20.6" width="9.1" height="4.4" fill="#6366f1" rx="0.6"/><rect x="54.0" y="21.8" width="9.1" height="3.2" fill="#6366f1" rx="0.6"/><rect x="67.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="80.0" y="13.5" width="9.1" height="11.5" fill="#6366f1" rx="0.6"/><rect x="93.0" y="21.6" width="9.1" height="3.4" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,17.4 L16.3,3.0 L30.6,22.2 L44.9,20.8 L59.1,19.2 L73.4,22.0 L87.7,21.7 L102.0,18.8" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="17.4" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="22.2" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="20.8" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="19.2" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="22.0" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="21.7" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="18.8" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 12.56x ≥ FB/IG vs FB/IG 1.20x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Gutter Cleaning</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£778</td>
+          <td class="num">£296</td>
+          <td class="num">£1.1k</td>
+          <td class="num"><b>3.63x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">0.94x</td>
+          <td class="num">2%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="23.6" width="9.1" height="1.4" fill="#6366f1" rx="0.6"/><rect x="14.9" y="22.3" width="9.1" height="2.7" fill="#6366f1" rx="0.6"/><rect x="27.9" y="19.1" width="9.1" height="5.9" fill="#6366f1" rx="0.6"/><rect x="41.0" y="24.5" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="18.3" width="9.1" height="6.7" fill="#6366f1" rx="0.6"/><rect x="67.0" y="24.5" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="18.4" width="9.1" height="6.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="22.7" x2="104" y2="22.7" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,5.8 L16.3,19.1 L30.6,22.5 L44.9,3.0 L59.1,22.9 L73.4,15.7 L87.7,23.0 L102.0,22.6" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="5.8" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="19.1" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="22.5" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="22.9" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="15.7" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="22.6" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 3.63x ≥ FB/IG vs FB/IG 0.94x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Solar Panel Installation</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£460</td>
+          <td class="num">£2.1k</td>
+          <td class="num">£2.6k</td>
+          <td class="num"><b>1.22x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">0.63x</td>
+          <td class="num">14%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="14.9" y="23.9" width="9.1" height="1.1" fill="#6366f1" rx="0.6"/><rect x="27.9" y="14.3" width="9.1" height="10.7" fill="#6366f1" rx="0.6"/><rect x="41.0" y="14.0" width="9.1" height="11.0" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.1" width="9.1" height="21.9" fill="#6366f1" rx="0.6"/><rect x="67.0" y="22.5" width="9.1" height="2.5" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="22.4" x2="104" y2="22.4" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,21.6 L16.3,3.0 L30.6,23.0 L44.9,23.0 L59.1,23.0 L73.4,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="21.6" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#d97706;background:#fef3c7">TRIM</span></td>
+          <td class="reason">AN 1.22x vs FB/IG 0.63x (193%). Marginal — cap/monitor, don't scale.</td>
+        </tr><tr>
+          <td class="cat">Boiler Installation or Replacement</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£94</td>
+          <td class="num">£514</td>
+          <td class="num">£608</td>
+          <td class="num"><b>1.18x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.14x</td>
+          <td class="num">3%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="41.0" y="23.8" width="9.1" height="1.2" fill="#6366f1" rx="0.6"/><rect x="54.0" y="18.5" width="9.1" height="6.5" fill="#6366f1" rx="0.6"/><rect x="67.0" y="6.1" width="9.1" height="18.9" fill="#6366f1" rx="0.6"/><rect x="80.0" y="16.8" width="9.1" height="8.2" fill="#6366f1" rx="0.6"/><rect x="93.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="22.1" x2="104" y2="22.1" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M44.9,3.0 L59.1,22.2 L73.4,22.1 L87.7,22.5 L102.0,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="44.9" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="22.2" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="22.1" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="22.5" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#d97706;background:#fef3c7">TRIM</span></td>
+          <td class="reason">AN 1.18x vs FB/IG 1.14x (104%). Marginal — cap/monitor, don't scale.</td>
+        </tr><tr>
+          <td class="cat">Property Extensions</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-191</td>
+          <td class="num">£1.4k</td>
+          <td class="num">£1.2k</td>
+          <td class="num"><b>0.86x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.40x</td>
+          <td class="num">6%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="14.9" y="22.2" width="9.1" height="2.8" fill="#6366f1" rx="0.6"/><rect x="27.9" y="24.5" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="41.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="21.8" x2="104" y2="21.8" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,23.0 L16.3,17.7 L30.6,3.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="16.3" cy="17.7" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="3.0" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.86x — loss on PPR vs FB/IG 1.40x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Double Glazing</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-193</td>
+          <td class="num">£426</td>
+          <td class="num">£233</td>
+          <td class="num"><b>0.55x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">0.73x</td>
+          <td class="num">10%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="17.4" width="9.1" height="7.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="19.3" width="9.1" height="5.7" fill="#6366f1" rx="0.6"/><rect x="41.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="54.0" y="11.8" width="9.1" height="13.2" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="23.7" width="9.1" height="1.3" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="17.5" x2="104" y2="17.5" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,23.0 L30.6,3.0 L44.9,21.4 L59.1,23.0 L87.7,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="30.6" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="21.4" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.55x — loss on PPR vs FB/IG 0.73x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Pressure Washing</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-238</td>
+          <td class="num">£385</td>
+          <td class="num">£147</td>
+          <td class="num"><b>0.38x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.65x</td>
+          <td class="num">12%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="7.2" width="9.1" height="17.8" fill="#6366f1" rx="0.6"/><rect x="41.0" y="19.7" width="9.1" height="5.3" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M30.6,23.0 L44.9,23.0 L102.0,11.3" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="30.6" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="11.3" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.38x — loss on PPR vs FB/IG 1.65x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Garage Door Installation</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-284</td>
+          <td class="num">£905</td>
+          <td class="num">£621</td>
+          <td class="num"><b>0.69x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.17x</td>
+          <td class="num">2%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="23.4" width="9.1" height="1.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="22.6" width="9.1" height="2.4" fill="#6366f1" rx="0.6"/><rect x="27.9" y="24.9" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="41.0" y="24.9" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="24.8" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="80.0" y="9.3" width="9.1" height="15.7" fill="#6366f1" rx="0.6"/><rect x="93.0" y="18.5" width="9.1" height="6.5" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="22.8" x2="104" y2="22.8" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,22.2 L16.3,22.7 L30.6,3.0 L44.9,19.1 L59.1,11.7 L73.4,23.0 L87.7,23.0 L102.0,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="22.2" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="22.7" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="19.1" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="11.7" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.69x — loss on PPR vs FB/IG 1.17x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Roofing Installation or Replacement</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-409</td>
+          <td class="num">£545</td>
+          <td class="num">£136</td>
+          <td class="num"><b>0.25x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.94x</td>
+          <td class="num">37%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="12.6" width="9.1" height="12.4" fill="#6366f1" rx="0.6"/><rect x="41.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="5.7" width="9.1" height="19.3" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M30.6,11.7 L73.4,16.4 L87.7,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="30.6" cy="11.7" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="16.4" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.25x — loss on PPR vs FB/IG 1.94x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Home Insulation</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-491</td>
+          <td class="num">£1.0k</td>
+          <td class="num">£526</td>
+          <td class="num"><b>0.52x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.08x</td>
+          <td class="num">4%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="24.6" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.4" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="23.4" width="9.1" height="1.6" fill="#6366f1" rx="0.6"/><rect x="41.0" y="23.3" width="9.1" height="1.7" fill="#6366f1" rx="0.6"/><rect x="54.0" y="24.0" width="9.1" height="1.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="22.8" width="9.1" height="2.2" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="17.8" width="9.1" height="7.2" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="20.7" x2="104" y2="20.7" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,3.0 L16.3,17.4 L30.6,19.1 L44.9,17.1 L59.1,23.0 L73.4,21.1 L87.7,22.4 L102.0,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="17.4" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="19.1" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="17.1" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="21.1" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="22.4" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.52x — loss on PPR vs FB/IG 1.08x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Search Engine Optimization (SEO) Specialists</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-523</td>
+          <td class="num">£523</td>
+          <td class="num">£0</td>
+          <td class="num"><b>0.00x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">0.50x</td>
+          <td class="num">36%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="16.9" width="9.1" height="8.1" fill="#6366f1" rx="0.6"/><rect x="14.9" y="23.8" width="9.1" height="1.2" fill="#6366f1" rx="0.6"/><rect x="27.9" y="21.8" width="9.1" height="3.2" fill="#6366f1" rx="0.6"/><rect x="41.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,23.0 L16.3,23.0 L30.6,23.0 L44.9,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="16.3" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="30.6" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.00x — loss on PPR vs FB/IG 0.50x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Architectural Services</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-599</td>
+          <td class="num">£728</td>
+          <td class="num">£129</td>
+          <td class="num"><b>0.18x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.25x</td>
+          <td class="num">9%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="23.0" width="9.1" height="2.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="21.9" width="9.1" height="3.1" fill="#6366f1" rx="0.6"/><rect x="67.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="80.0" y="18.4" width="9.1" height="6.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="10.0" x2="104" y2="10.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M30.6,15.3 L59.1,3.0 L73.4,23.0 L87.7,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="30.6" cy="15.3" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.18x — loss on PPR vs FB/IG 1.25x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Unassigned</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-604</td>
+          <td class="num">£604</td>
+          <td class="num">£0</td>
+          <td class="num"><b>0.00x</b></td>
+          <td class="num">0.00x</td>
+          <td class="num">5%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="22.0" width="9.1" height="3.0" fill="#6366f1" rx="0.6"/><rect x="14.9" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="27.9" y="9.7" width="9.1" height="15.3" fill="#6366f1" rx="0.6"/><rect x="41.0" y="10.1" width="9.1" height="14.9" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="16.0" width="9.1" height="9.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="17.0" width="9.1" height="8.0" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,23.0 L16.3,23.0 L30.6,23.0 L44.9,23.0 L87.7,23.0 L102.0,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="16.3" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="30.6" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.00x — loss on PPR (no FB/IG comp). Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Security Guard Services</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-868</td>
+          <td class="num">£868</td>
+          <td class="num">£0</td>
+          <td class="num"><b>0.00x</b></td>
+          <td class="num">0.00x</td>
+          <td class="num">42%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="24.6" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="17.7" width="9.1" height="7.3" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M30.6,23.0 L87.7,23.0 L102.0,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="30.6" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.00x — loss on PPR (no FB/IG comp). Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Property Management</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-1.3k</td>
+          <td class="num">£1.3k</td>
+          <td class="num">£52</td>
+          <td class="num"><b>0.04x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">0.68x</td>
+          <td class="num">28%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="14.8" width="9.1" height="10.2" fill="#6366f1" rx="0.6"/><rect x="41.0" y="9.0" width="9.1" height="16.0" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="3.1" width="9.1" height="21.9" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M30.6,23.0 L44.9,19.5 L59.1,23.0 L73.4,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="30.6" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="19.5" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.04x — loss on PPR vs FB/IG 0.68x. Exclude AN placement here.</td>
+        </tr></tbody>
+      </table>
+      <div class="tailnote">+ 32 more categories with negligible AN spend (&lt;£200 over 8mo), £1.2k total — treated as noise, no verdict.</div>
+    </section><section class="tab" id="tab-US">
+      <div class="statrow">
+        <div class="stat"><div class="l">8mo AN Spend</div><div class="v">£32.3k</div></div>
+        <div class="stat"><div class="l">8mo AN Revenue</div><div class="v">£49.4k</div></div>
+        <div class="stat"><div class="l">AN ROAS (blended)</div><div class="v" style="color:#16a34a">1.53x</div></div>
+        <div class="stat"><div class="l">Verdicts</div><div class="v small"><span style="color:#16a34a">10 keep</span> · <span style="color:#d97706">0 trim</span> · <span style="color:#dc2626">6 cut</span></div></div>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Category</th><th class="num">APR contrib</th><th class="num">AN Spend</th><th class="num">AN Rev</th>
+          <th class="num">AN ROAS</th><th class="num">FB+IG ROAS</th><th class="num">AN&nbsp;%</th>
+          <th>Spend 8mo</th><th>ROAS 8mo</th><th>Verdict</th><th>Why</th>
+        </tr></thead>
+        <tbody><tr>
+          <td class="cat">Wedding Photography</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£5.6k</td>
+          <td class="num">£377</td>
+          <td class="num">£5.9k</td>
+          <td class="num"><b>15.78x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.29x</td>
+          <td class="num">0%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="8.9" width="9.1" height="16.1" fill="#6366f1" rx="0.6"/><rect x="14.9" y="22.3" width="9.1" height="2.7" fill="#6366f1" rx="0.6"/><rect x="27.9" y="12.8" width="9.1" height="12.2" fill="#6366f1" rx="0.6"/><rect x="41.0" y="14.1" width="9.1" height="10.9" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="20.7" width="9.1" height="4.3" fill="#6366f1" rx="0.6"/><rect x="80.0" y="18.4" width="9.1" height="6.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="14.3" width="9.1" height="10.7" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,15.6 L16.3,3.0 L30.6,11.3 L44.9,13.0 L59.1,15.9 L73.4,8.6 L87.7,16.0 L102.0,17.2" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="15.6" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="11.3" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="13.0" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="15.9" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="8.6" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="16.0" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="17.2" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 15.78x ≥ FB/IG vs FB/IG 1.29x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">DJ</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£4.1k</td>
+          <td class="num">£420</td>
+          <td class="num">£4.5k</td>
+          <td class="num"><b>10.76x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.28x</td>
+          <td class="num">0%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="16.9" width="9.1" height="8.1" fill="#6366f1" rx="0.6"/><rect x="14.9" y="19.0" width="9.1" height="6.0" fill="#6366f1" rx="0.6"/><rect x="27.9" y="7.8" width="9.1" height="17.2" fill="#6366f1" rx="0.6"/><rect x="41.0" y="9.3" width="9.1" height="15.7" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="5.4" width="9.1" height="19.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="6.3" width="9.1" height="18.7" fill="#6366f1" rx="0.6"/><rect x="93.0" y="5.7" width="9.1" height="19.3" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,15.3 L16.3,15.3 L30.6,4.5 L44.9,13.1 L59.1,9.5 L73.4,4.5 L87.7,3.0 L102.0,10.7" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="15.3" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="15.3" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="4.5" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="13.1" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="9.5" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="4.5" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="10.7" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 10.76x ≥ FB/IG vs FB/IG 1.28x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Dog Training</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£3.8k</td>
+          <td class="num">£1.2k</td>
+          <td class="num">£5.1k</td>
+          <td class="num"><b>4.15x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.22x</td>
+          <td class="num">1%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="20.3" width="9.1" height="4.7" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.1" width="9.1" height="0.9" fill="#6366f1" rx="0.6"/><rect x="27.9" y="22.0" width="9.1" height="3.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="22.2" width="9.1" height="2.8" fill="#6366f1" rx="0.6"/><rect x="54.0" y="11.9" width="9.1" height="13.1" fill="#6366f1" rx="0.6"/><rect x="67.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.3" width="9.1" height="21.7" fill="#6366f1" rx="0.6"/><rect x="93.0" y="13.3" width="9.1" height="11.7" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,13.1 L16.3,3.0 L30.6,11.5 L44.9,14.3 L59.1,20.8 L73.4,21.8 L87.7,21.9 L102.0,20.8" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="13.1" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="11.5" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="14.3" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="20.8" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="21.8" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="21.9" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="20.8" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 4.15x ≥ FB/IG vs FB/IG 1.22x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">House Cleaning</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£2.8k</td>
+          <td class="num">£2.2k</td>
+          <td class="num">£5.0k</td>
+          <td class="num"><b>2.25x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.40x</td>
+          <td class="num">2%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="22.3" width="9.1" height="2.7" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.7" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="22.7" width="9.1" height="2.3" fill="#6366f1" rx="0.6"/><rect x="41.0" y="23.2" width="9.1" height="1.8" fill="#6366f1" rx="0.6"/><rect x="54.0" y="10.4" width="9.1" height="14.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="80.0" y="5.8" width="9.1" height="19.2" fill="#6366f1" rx="0.6"/><rect x="93.0" y="7.6" width="9.1" height="17.4" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,11.7 L16.3,5.0 L30.6,3.0 L44.9,8.5 L59.1,20.4 L73.4,22.0 L87.7,20.8 L102.0,20.7" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="11.7" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="5.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="8.5" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="20.4" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="22.0" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="20.8" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="20.7" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 2.25x ≥ FB/IG vs FB/IG 1.40x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Catering</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£2.7k</td>
+          <td class="num">£308</td>
+          <td class="num">£3.0k</td>
+          <td class="num"><b>9.68x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.25x</td>
+          <td class="num">0%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="23.2" width="9.1" height="1.8" fill="#6366f1" rx="0.6"/><rect x="14.9" y="23.9" width="9.1" height="1.1" fill="#6366f1" rx="0.6"/><rect x="27.9" y="14.7" width="9.1" height="10.3" fill="#6366f1" rx="0.6"/><rect x="41.0" y="5.8" width="9.1" height="19.2" fill="#6366f1" rx="0.6"/><rect x="54.0" y="4.8" width="9.1" height="20.2" fill="#6366f1" rx="0.6"/><rect x="67.0" y="10.1" width="9.1" height="14.9" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="5.1" width="9.1" height="19.9" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,18.0 L16.3,3.0 L30.6,18.3 L44.9,21.4 L59.1,21.3 L73.4,19.6 L87.7,21.2 L102.0,21.9" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="18.0" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="18.3" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="21.4" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="21.3" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="19.6" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="21.2" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="21.9" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 9.68x ≥ FB/IG vs FB/IG 1.25x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Architectural Services</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£1.9k</td>
+          <td class="num">£862</td>
+          <td class="num">£2.8k</td>
+          <td class="num"><b>3.25x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.59x</td>
+          <td class="num">1%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="20.2" width="9.1" height="4.8" fill="#6366f1" rx="0.6"/><rect x="14.9" y="20.1" width="9.1" height="4.9" fill="#6366f1" rx="0.6"/><rect x="27.9" y="18.7" width="9.1" height="6.3" fill="#6366f1" rx="0.6"/><rect x="41.0" y="15.4" width="9.1" height="9.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="9.6" width="9.1" height="15.4" fill="#6366f1" rx="0.6"/><rect x="80.0" y="4.6" width="9.1" height="20.4" fill="#6366f1" rx="0.6"/><rect x="93.0" y="10.1" width="9.1" height="14.9" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="22.9" x2="104" y2="22.9" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,11.8 L16.3,15.2 L30.6,3.0 L44.9,19.6 L59.1,23.0 L73.4,19.6 L87.7,20.7 L102.0,19.9" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="11.8" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="15.2" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="19.6" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="19.6" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="20.7" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="19.9" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 3.25x ≥ FB/IG vs FB/IG 1.59x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Immigration Lawyers</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£1.1k</td>
+          <td class="num">£1.7k</td>
+          <td class="num">£2.8k</td>
+          <td class="num"><b>1.60x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.48x</td>
+          <td class="num">2%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="23.6" width="9.1" height="1.4" fill="#6366f1" rx="0.6"/><rect x="14.9" y="19.1" width="9.1" height="5.9" fill="#6366f1" rx="0.6"/><rect x="27.9" y="12.2" width="9.1" height="12.8" fill="#6366f1" rx="0.6"/><rect x="41.0" y="17.9" width="9.1" height="7.1" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="13.5" width="9.1" height="11.5" fill="#6366f1" rx="0.6"/><rect x="80.0" y="13.0" width="9.1" height="12.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="18.8" width="9.1" height="6.2" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="21.7" x2="104" y2="21.7" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,3.0 L16.3,13.7 L30.6,19.4 L44.9,16.0 L59.1,23.0 L73.4,21.3 L87.7,16.7 L102.0,17.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="13.7" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="19.4" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="16.0" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="21.3" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="16.7" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="17.0" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 1.60x ≥ FB/IG vs FB/IG 1.48x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Residential Interior Designers</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£952</td>
+          <td class="num">£466</td>
+          <td class="num">£1.4k</td>
+          <td class="num"><b>3.04x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.45x</td>
+          <td class="num">2%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="20.0" width="9.1" height="5.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="18.3" width="9.1" height="6.7" fill="#6366f1" rx="0.6"/><rect x="54.0" y="11.0" width="9.1" height="14.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="18.1" width="9.1" height="6.9" fill="#6366f1" rx="0.6"/><rect x="80.0" y="6.9" width="9.1" height="18.1" fill="#6366f1" rx="0.6"/><rect x="93.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="23.0" x2="104" y2="23.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M30.6,3.0 L44.9,18.5 L59.1,19.0 L73.4,10.3 L87.7,22.7 L102.0,15.7" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="30.6" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="18.5" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="19.0" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="10.3" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="22.7" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="15.7" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 3.04x ≥ FB/IG vs FB/IG 1.45x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Personal Trainers</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£528</td>
+          <td class="num">£326</td>
+          <td class="num">£854</td>
+          <td class="num"><b>2.62x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">1.19x</td>
+          <td class="num">1%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="19.2" width="9.1" height="5.8" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.5" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="17.2" width="9.1" height="7.8" fill="#6366f1" rx="0.6"/><rect x="41.0" y="16.4" width="9.1" height="8.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="11.1" width="9.1" height="13.9" fill="#6366f1" rx="0.6"/><rect x="80.0" y="11.3" width="9.1" height="13.7" fill="#6366f1" rx="0.6"/><rect x="93.0" y="14.9" width="9.1" height="10.1" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="19.1" x2="104" y2="19.1" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,9.2 L16.3,23.0 L30.6,3.2 L44.9,3.0 L59.1,12.8 L73.4,15.8 L87.7,20.3 L102.0,16.5" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="9.2" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="30.6" cy="3.2" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="59.1" cy="12.8" r="1.6" fill="#16a34a"/><circle cx="73.4" cy="15.8" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="20.3" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="16.5" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 2.62x ≥ FB/IG vs FB/IG 1.19x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Accounting</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£278</td>
+          <td class="num">£266</td>
+          <td class="num">£544</td>
+          <td class="num"><b>2.05x</b> <span style="color:#16a34a" title="AN ROAS above FB+IG">▲</span></td>
+          <td class="num">0.68x</td>
+          <td class="num">12%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="22.6" width="9.1" height="2.4" fill="#6366f1" rx="0.6"/><rect x="41.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="14.2" x2="104" y2="14.2" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,3.0 L30.6,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#16a34a;background:#dcfce7">KEEP</span></td>
+          <td class="reason">AN 2.05x ≥ FB/IG vs FB/IG 0.68x. AN pulling its weight — let it run.</td>
+        </tr><tr>
+          <td class="cat">Mobile Software Development</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-432</td>
+          <td class="num">£432</td>
+          <td class="num">£0</td>
+          <td class="num"><b>0.00x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">0.41x</td>
+          <td class="num">52%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="6.4" width="9.1" height="18.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="41.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,23.0 L44.9,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.00x — loss on PPR vs FB/IG 0.41x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Unassigned</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-812</td>
+          <td class="num">£812</td>
+          <td class="num">£0</td>
+          <td class="num"><b>0.00x</b></td>
+          <td class="num">0.00x</td>
+          <td class="num">7%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="16.0" width="9.1" height="9.0" fill="#6366f1" rx="0.6"/><rect x="14.9" y="23.5" width="9.1" height="1.5" fill="#6366f1" rx="0.6"/><rect x="27.9" y="16.3" width="9.1" height="8.7" fill="#6366f1" rx="0.6"/><rect x="41.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="19.5" width="9.1" height="5.5" fill="#6366f1" rx="0.6"/><rect x="80.0" y="6.5" width="9.1" height="18.5" fill="#6366f1" rx="0.6"/><rect x="93.0" y="20.1" width="9.1" height="4.9" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,23.0 L16.3,23.0 L30.6,23.0 L44.9,23.0 L73.4,23.0 L87.7,23.0 L102.0,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="16.3" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="30.6" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.00x — loss on PPR (no FB/IG comp). Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Security Guard Services</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-1.2k</td>
+          <td class="num">£2.0k</td>
+          <td class="num">£760</td>
+          <td class="num"><b>0.38x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.46x</td>
+          <td class="num">13%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.6" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="13.1" width="9.1" height="11.9" fill="#6366f1" rx="0.6"/><rect x="54.0" y="24.6" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="23.6" width="9.1" height="1.4" fill="#6366f1" rx="0.6"/><rect x="93.0" y="23.1" width="9.1" height="1.9" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="22.8" x2="104" y2="22.8" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M16.3,23.0 L30.6,22.9 L44.9,23.0 L59.1,22.8 L73.4,3.0 L87.7,23.0 L102.0,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="16.3" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="30.6" cy="22.9" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="22.8" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.38x — loss on PPR vs FB/IG 1.46x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Bookkeeping Services</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-3.0k</td>
+          <td class="num">£7.9k</td>
+          <td class="num">£4.9k</td>
+          <td class="num"><b>0.62x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.23x</td>
+          <td class="num">21%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="21.1" width="9.1" height="3.9" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.3" width="9.1" height="0.7" fill="#6366f1" rx="0.6"/><rect x="27.9" y="18.6" width="9.1" height="6.4" fill="#6366f1" rx="0.6"/><rect x="41.0" y="15.5" width="9.1" height="9.5" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="16.2" width="9.1" height="8.8" fill="#6366f1" rx="0.6"/><rect x="80.0" y="20.7" width="9.1" height="4.3" fill="#6366f1" rx="0.6"/><rect x="93.0" y="23.7" width="9.1" height="1.3" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="21.1" x2="104" y2="21.1" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,15.8 L16.3,3.0 L30.6,22.2 L44.9,22.0 L59.1,22.8 L73.4,23.0 L87.7,22.6 L102.0,22.4" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="15.8" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="22.2" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="22.0" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="22.8" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="22.6" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="22.4" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.62x — loss on PPR vs FB/IG 1.23x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Web Design</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-3.3k</td>
+          <td class="num">£6.1k</td>
+          <td class="num">£2.8k</td>
+          <td class="num"><b>0.46x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.32x</td>
+          <td class="num">9%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="21.1" width="9.1" height="3.9" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.6" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="22.6" width="9.1" height="2.4" fill="#6366f1" rx="0.6"/><rect x="41.0" y="14.2" width="9.1" height="10.8" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="18.3" width="9.1" height="6.7" fill="#6366f1" rx="0.6"/><rect x="80.0" y="12.2" width="9.1" height="12.8" fill="#6366f1" rx="0.6"/><rect x="93.0" y="19.9" width="9.1" height="5.1" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="11.5" x2="104" y2="11.5" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,13.7 L16.3,6.0 L30.6,3.0 L44.9,17.3 L59.1,19.3 L73.4,18.2 L87.7,23.0 L102.0,17.4" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="13.7" r="1.6" fill="#dc2626"/><circle cx="16.3" cy="6.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="17.3" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="19.3" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="18.2" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="17.4" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.46x — loss on PPR vs FB/IG 1.32x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Search Engine Optimization (SEO) Specialists</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-5.2k</td>
+          <td class="num">£6.0k</td>
+          <td class="num">£743</td>
+          <td class="num"><b>0.12x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">0.54x</td>
+          <td class="num">34%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="19.6" width="9.1" height="5.4" fill="#6366f1" rx="0.6"/><rect x="14.9" y="20.3" width="9.1" height="4.7" fill="#6366f1" rx="0.6"/><rect x="27.9" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="18.3" width="9.1" height="6.7" fill="#6366f1" rx="0.6"/><rect x="54.0" y="24.8" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,19.2 L16.3,21.9 L30.6,20.2 L44.9,21.4 L59.1,23.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="19.2" r="1.6" fill="#dc2626"/><circle cx="16.3" cy="21.9" r="1.6" fill="#dc2626"/><circle cx="30.6" cy="20.2" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="21.4" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="23.0" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.12x — loss on PPR vs FB/IG 0.54x. Exclude AN placement here.</td>
+        </tr></tbody>
+      </table>
+      <div class="tailnote">+ 19 more categories with negligible AN spend (&lt;£200 over 8mo), £853 total — treated as noise, no verdict.</div>
+    </section><section class="tab" id="tab-CA">
+      <div class="statrow">
+        <div class="stat"><div class="l">8mo AN Spend</div><div class="v">£3.2k</div></div>
+        <div class="stat"><div class="l">8mo AN Revenue</div><div class="v">£3.8k</div></div>
+        <div class="stat"><div class="l">AN ROAS (blended)</div><div class="v" style="color:#16a34a">1.18x</div></div>
+        <div class="stat"><div class="l">Verdicts</div><div class="v small"><span style="color:#16a34a">0 keep</span> · <span style="color:#d97706">0 trim</span> · <span style="color:#dc2626">4 cut</span></div></div>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Category</th><th class="num">APR contrib</th><th class="num">AN Spend</th><th class="num">AN Rev</th>
+          <th class="num">AN ROAS</th><th class="num">FB+IG ROAS</th><th class="num">AN&nbsp;%</th>
+          <th>Spend 8mo</th><th>ROAS 8mo</th><th>Verdict</th><th>Why</th>
+        </tr></thead>
+        <tbody><tr>
+          <td class="cat">Property Extensions</td>
+          <td class="num" style="color:#16a34a;font-weight:700">£19</td>
+          <td class="num">£253</td>
+          <td class="num">£272</td>
+          <td class="num"><b>1.08x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.87x</td>
+          <td class="num">2%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="15.5" width="9.1" height="9.5" fill="#6366f1" rx="0.6"/><rect x="14.9" y="23.6" width="9.1" height="1.4" fill="#6366f1" rx="0.6"/><rect x="27.9" y="12.5" width="9.1" height="12.5" fill="#6366f1" rx="0.6"/><rect x="41.0" y="14.4" width="9.1" height="10.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="14.1" width="9.1" height="10.9" fill="#6366f1" rx="0.6"/><rect x="80.0" y="21.9" width="9.1" height="3.1" fill="#6366f1" rx="0.6"/><rect x="93.0" y="24.4" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="20.6" x2="104" y2="20.6" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,18.8 L16.3,23.0 L30.6,21.8 L44.9,23.0 L59.1,20.7 L73.4,18.8 L87.7,17.4 L102.0,3.0" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="18.8" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="30.6" cy="21.8" r="1.6" fill="#dc2626"/><circle cx="44.9" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="20.7" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="18.8" r="1.6" fill="#16a34a"/><circle cx="87.7" cy="17.4" r="1.6" fill="#16a34a"/><circle cx="102.0" cy="3.0" r="1.6" fill="#16a34a"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 1.08x well below vs FB/IG 1.87x (57% of FB/IG). Exclude AN.</td>
+        </tr><tr>
+          <td class="cat">General Builders</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-135</td>
+          <td class="num">£448</td>
+          <td class="num">£313</td>
+          <td class="num"><b>0.70x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">0.79x</td>
+          <td class="num">8%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="21.0" width="9.1" height="4.0" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.0" width="9.1" height="1.0" fill="#6366f1" rx="0.6"/><rect x="27.9" y="18.0" width="9.1" height="7.0" fill="#6366f1" rx="0.6"/><rect x="41.0" y="14.3" width="9.1" height="10.7" fill="#6366f1" rx="0.6"/><rect x="54.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="67.0" y="8.3" width="9.1" height="16.7" fill="#6366f1" rx="0.6"/><rect x="80.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="93.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="18.7" x2="104" y2="18.7" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,3.0 L16.3,23.0 L30.6,18.4 L44.9,21.3 L59.1,23.0 L73.4,19.6" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="16.3" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="30.6" cy="18.4" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="21.3" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="19.6" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.70x — loss on PPR vs FB/IG 0.79x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Accounting</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-174</td>
+          <td class="num">£236</td>
+          <td class="num">£62</td>
+          <td class="num"><b>0.26x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">0.98x</td>
+          <td class="num">29%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="14.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="27.9" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="41.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="54.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="67.0" y="25.0" width="9.1" height="0.6" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="23.0" width="9.1" height="2.0" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="3.0" x2="104" y2="3.0" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M87.7,23.0 L102.0,16.2" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="87.7" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="16.2" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.26x — loss on PPR vs FB/IG 0.98x. Exclude AN placement here.</td>
+        </tr><tr>
+          <td class="cat">Bathroom Installation & Remodel</td>
+          <td class="num" style="color:#dc2626;font-weight:700">£-742</td>
+          <td class="num">£1.3k</td>
+          <td class="num">£558</td>
+          <td class="num"><b>0.43x</b> <span style="color:#dc2626" title="AN ROAS below FB+IG">▼</span></td>
+          <td class="num">1.76x</td>
+          <td class="num">7%</td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><rect x="1.9" y="23.2" width="9.1" height="1.8" fill="#6366f1" rx="0.6"/><rect x="14.9" y="24.3" width="9.1" height="0.7" fill="#6366f1" rx="0.6"/><rect x="27.9" y="18.9" width="9.1" height="6.1" fill="#6366f1" rx="0.6"/><rect x="41.0" y="18.9" width="9.1" height="6.1" fill="#6366f1" rx="0.6"/><rect x="54.0" y="13.5" width="9.1" height="11.5" fill="#6366f1" rx="0.6"/><rect x="67.0" y="13.5" width="9.1" height="11.5" fill="#6366f1" rx="0.6"/><rect x="80.0" y="3.0" width="9.1" height="22.0" fill="#6366f1" rx="0.6"/><rect x="93.0" y="18.8" width="9.1" height="6.2" fill="#6366f1" rx="0.6"/></svg></td>
+          <td class="spkcell"><svg viewBox="0 0 104 26" width="104" height="26" class="spk"><line x1="0" y1="15.2" x2="104" y2="15.2" stroke="#d1d5db" stroke-width="0.8" stroke-dasharray="2,2"/><path d="M2.0,23.0 L16.3,3.0 L30.6,12.6 L44.9,21.4 L59.1,19.7 L73.4,22.4 L87.7,19.5 L102.0,21.3" fill="none" stroke="#0ea5e9" stroke-width="1.4"/><circle cx="2.0" cy="23.0" r="1.6" fill="#dc2626"/><circle cx="16.3" cy="3.0" r="1.6" fill="#16a34a"/><circle cx="30.6" cy="12.6" r="1.6" fill="#16a34a"/><circle cx="44.9" cy="21.4" r="1.6" fill="#dc2626"/><circle cx="59.1" cy="19.7" r="1.6" fill="#dc2626"/><circle cx="73.4" cy="22.4" r="1.6" fill="#dc2626"/><circle cx="87.7" cy="19.5" r="1.6" fill="#dc2626"/><circle cx="102.0" cy="21.3" r="1.6" fill="#dc2626"/></svg></td>
+          <td><span class="verdict" style="color:#dc2626;background:#fee2e2">CUT</span></td>
+          <td class="reason">AN 0.43x — loss on PPR vs FB/IG 1.76x. Exclude AN placement here.</td>
+        </tr></tbody>
+      </table>
+      <div class="tailnote">+ 30 more categories with negligible AN spend (&lt;£200 over 8mo), £947 total — treated as noise, no verdict.</div>
+    </section>
+<div class="legend">
+<b>Verdict logic</b> — <b style="color:#16a34a">KEEP</b>: AN ROAS ≥ 95% of FB/IG and ≥1.3x (AN earns its place, safe to let placement run). <b style="color:#d97706">TRIM</b>: marginal / below benchmark but profitable — cap, don't scale. <b style="color:#dc2626">CUT</b>: loss-making on PPR (&lt;1.0x) or &lt;70% of FB/IG — exclude AN placement.<br>
+Only categories with ≥£200 AN spend over 8mo get a verdict; the long tail of near-zero AN categories is noise (Audience Network is already excluded from new ads, so most delivery is legacy live-adset spillover).
+</div>
+</main>
+<script>
+function showTab(c){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+c).classList.add('active');
+  document.getElementById('btn-'+c).classList.add('active');
+}
+document.getElementById('tab-UK').classList.add('active');
+</script></body></html>
